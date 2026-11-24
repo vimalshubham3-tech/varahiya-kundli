@@ -4813,9 +4813,10 @@ var RJAIN_NOTE='जैन दृष्टि: ग्रह निमित्त
     h+='<h3>माह के प्रमुख व्रत व पर्व</h3>'+(pv.length?'<ul class="ul">'+pv.map(function(z){return '<li>'+E(z)+'</li>';}).join('')+'</ul>':'<p class="kmeta">इस माह में विशेष पर्व नहीं।</p>');
     h+='<h3>तीर्थंकर दर्पण (इस माह के कल्याणक)</h3>'+(kv.length?'<ul class="ul">'+kv.map(function(z){return '<li>'+E(z)+'</li>';}).join('')+'</ul>':'<p class="kmeta">इस माह में कोई कल्याणक नहीं।</p>');
     // शुभ मुहूर्त
-    h+='<h3>माह के शुभ मुहूर्त (तारीख़ें)</h3><ul class="ul">';
-    Object.keys(MU).forEach(function(k){var r=muhurtaScan(k,y,mo,1,days24(y,mo),c[2],c[3]);h+='<li><b>'+E(k)+':</b> '+(r.length?r.map(function(z){return z.dd;}).join(', '):'इस माह में नहीं')+'</li>';});
-    h+='</ul>';
+    h+='<h3>माह के शुभ मुहूर्त — तारीख़ व समय सहित</h3><div class="tw"><table><thead><tr><th>कार्य</th><th>शुभ दिन — श्रेष्ठ समय</th></tr></thead><tbody>';
+    Object.keys(MUX).forEach(function(k){var r=muhurtaScanX(k,y,mo,1,days24(y,mo),c[2],c[3],-1,-1);
+      h+='<tr><td><b>'+E(k)+'</b></td><td>'+(r.length?r.map(function(z){var tm=(z.ws&&z.ws.length)?z.ws.slice(0,2).join('; '):'अभिजित '+hmS(z.ab[0])+'–'+hmS(z.ab[1]);return '<b>'+z.dd+'</b> '+z.vara.slice(0,3)+' — '+E(tm)+(z.sp&&z.sp.length?' ('+E(z.sp.join(', '))+')':'');}).join('<br>'):'इस माह में नहीं')+'</td></tr>';});
+    h+='</tbody></table></div>';
     // विशेष योग तालिका
     var sy=[];D2.forEach(function(x){var g=x.yw.good.filter(function(z){return z.indexOf('रवि योग')<0;});if(g.length)sy.push('<tr><td>'+x.d+'</td><td>'+E(g.join('; '))+'</td></tr>');});
     h+='<h3>सर्वार्थ सिद्धि · अमृत सिद्धि · पुष्य · पुष्कर योग (समय सहित)</h3>'+(sy.length?'<div class="tw"><table><tbody>'+sy.join('')+'</tbody></table></div>':'<p class="kmeta">इस माह में नहीं।</p>');
