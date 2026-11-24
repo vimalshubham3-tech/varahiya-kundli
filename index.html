@@ -1142,7 +1142,7 @@ function panchangHTML(d,title,showPl){
    +'<tr><td>अभिजित मुहूर्त (शुभ)</td><td>'+hmS(d.abhijit[0])+' – '+hmS(d.abhijit[1])+'</td></tr>'
    +'</tbody></table></div>';
   if(showPl) h+='<h3>आज के ग्रह (गोचर)</h3><p class="kmeta">'+pc.P.map((p,i)=>PL_H[i]+' '+RASHI_H[rashiOf(p.lon)]+(p.retro&&i<7?' (व)':'')).join(' · ')+'</p>';
-  return h+'<p class="kmeta">समय अनुमानित हैं (स्थान के निर्देशांक से, ±5 मिनट)। व्रत-त्योहार व मुहूर्त के लिए स्थानीय पंचांग से मिलान करें।</p></div>';
+  return h+'<p class="kmeta">सूर्योदय-सूर्यास्त व अन्य समय चुने गए स्थान के निर्देशांक से खगोलीय गणना द्वारा निकाले गए हैं।</p></div>';
 }
 /* ---- अष्टकवर्ग ---- */
 const AVT=[
@@ -4430,7 +4430,7 @@ var RJAIN_NOTE='जैन दृष्टि: ग्रह निमित्त
   });
   var d=D.createElement('div');d.className='panel';
   var n=istNow(),p2=function(x){return String(x).padStart(2,'0');};
-  d.innerHTML='<h3>मासिक पंचांग-विचार — निर्णय सागर शैली (नीमच)</h3><p class="kmeta">निर्णय सागर पंचांग नीमच (म.प्र.) से छपने वाला लोकप्रिय हिंदी पंचांग है, जिसमें तिथि-नक्षत्र के साथ भद्रा, पंचक, मूल-विचार आदि दिए जाते हैं। यहाँ वही विचार चुने महीने के हर दिन के लिए गणना से बनता है। यह उस पुस्तक की प्रति नहीं है; छपे पंचांग से कुछ मिनट/घड़ी का अंतर संभव है — विवाह आदि निर्णायक कार्य में अपने क्षेत्र के पंचांग से मिलान कर लें।</p>'+
+  d.innerHTML='<h3>मासिक पंचांग-विचार — निर्णय सागर शैली (नीमच)</h3><p class="kmeta">निर्णय सागर पंचांग नीमच (म.प्र.) से छपने वाला लोकप्रिय हिंदी पंचांग है, जिसमें तिथि-नक्षत्र के साथ भद्रा, पंचक, मूल-विचार आदि दिए जाते हैं। यहाँ वही विचार चुने महीने के हर दिन के लिए गणना से बनता है। भद्रा, पंचक व मूल का समय चुने स्थान के लिए खगोलीय गणना से निकाला गया है।</p>'+
    '<label for="nm_m">महीना</label><input id="nm_m" type="month" value="'+n.y+'-'+p2(n.mo)+'">'+
    '<label for="nm_c">स्थान</label><select id="nm_c">'+cityOpts()+'</select>'+
    '<button class="go" id="nm_go" type="button">महीने का पंचांग-विचार देखें</button><div id="nm_res"></div>';
@@ -4439,12 +4439,15 @@ var RJAIN_NOTE='जैन दृष्टि: ग्रह निमित्त
   var MOOL=[0,8,9,17,18,26];
   function dayInfo(y,mo,dd,c){
     var pd=panchangDay(y,mo,dd,c[2],c[3],5.5),sr=pd.sun.rise,ss=pd.sun.set,bh=[],pk=false,ml=false,tchg=null,t0=pd.pc.t;
-    for(var h=0;h<24;h+=1){
-      var jd=toJD(y,mo,dd,Math.floor(h),0,5.5),pc=panchangAt(jd);
-      if(pc.kn.indexOf('विष्टि')>=0)bh.push(h);
-      if(pc.moonR===10||pc.moonR===11)pk=true;
-      if(MOOL.indexOf(pc.nak)>=0)ml=true;
+    function isB(h){return panchangAt(toJD(y,mo,dd,Math.floor(h),Math.round((h%1)*60),5.5)).kn.indexOf('विष्टि')>=0;}
+    var prev=isB(0),st0=prev?0:null;
+    for(var h=1;h<=24;h+=1){
+      var cur=isB(Math.min(h,23.99));
+      if(h<24){var pc=panchangAt(toJD(y,mo,dd,h,0,5.5));if(pc.moonR===10||pc.moonR===11)pk=true;if(MOOL.indexOf(pc.nak)>=0)ml=true;}
+      if(cur!==prev){var lo=h-1,hi=h;for(var q=0;q<7;q++){var mid=(lo+hi)/2;if(isB(mid)===prev)lo=mid;else hi=mid;}
+        if(!prev)st0=hi;else{bh.push([st0,hi]);st0=null;}prev=cur;}
     }
+    if(prev&&st0!==null)bh.push([st0,24]);
     return {pd:pd,bh:bh,pk:pk,ml:ml};
   }
   D.getElementById('nm_go').addEventListener('click',function(){
@@ -4453,12 +4456,12 @@ var RJAIN_NOTE='जैन दृष्टि: ग्रह निमित्त
     var y=v[0],mo=v[1],days=new Date(Date.UTC(y,mo,0)).getUTCDate(),h='<div class="res-card"><h3>'+E(c[0])+' — '+mo+'/'+y+'</h3><div class="tw"><table><thead><tr><th>दिन</th><th>तिथि (सूर्योदय)</th><th>नक्षत्र</th><th>उदय–अस्त</th><th>विशेष</th></tr></thead><tbody>';
     for(var dd=1;dd<=days;dd++){
       var r=dayInfo(y,mo,dd,c),pd=r.pd,pc=pd.pc,sp=[];
-      if(r.bh.length)sp.push('भद्रा ~'+hmS(r.bh[0])+'–'+hmS(r.bh[r.bh.length-1]+1));
+      r.bh.forEach(function(b){sp.push('भद्रा '+hmS(b[0])+'–'+hmS(b[1]));});
       if(r.pk)sp.push('पंचक');
       if(r.ml)sp.push('मूल');
       h+='<tr'+(sp.length?' style="background:#fff6e6"':'')+'><td>'+dd+' '+pd.vara.slice(0,3)+'</td><td>'+E(pc.paksha.charAt(0)==='श'?'शु. ':'कृ. ')+E(pc.tn)+'</td><td>'+E(NAK_H[pc.nak])+'</td><td>'+hmS(pd.sun.rise)+'–'+hmS(pd.sun.set)+'</td><td>'+E(sp.join(' · ')||'—')+'</td></tr>';
     }
-    o.innerHTML=h+'</tbody></table></div><p class="kmeta">भद्रा = विष्टि करण का अनुमानित घंटे-स्तर समय (घंटे की गणना, ±1 घंटा)। पंचक = चंद्र कुंभ/मीन में (उस दिन किसी भी समय)। मूल = अश्विनी, आश्लेषा, मघा, ज्येष्ठा, मूल, रेवती नक्षत्र (गंडमूल) उस दिन किसी भी समय। रंगीन पंक्ति = विशेष विचार वाला दिन। शुभ कार्य के लिए मुहूर्त टैब से पूरी जाँच करें।</p></div>';
+    o.innerHTML=h+'</tbody></table></div><p class="kmeta">भद्रा = विष्टि करण का आरंभ-समाप्ति समय (मिनट तक की गणना)। पंचक = चंद्र कुंभ/मीन में (उस दिन किसी भी समय)। मूल = अश्विनी, आश्लेषा, मघा, ज्येष्ठा, मूल, रेवती नक्षत्र (गंडमूल) उस दिन किसी भी समय। रंगीन पंक्ति = विशेष विचार वाला दिन। शुभ कार्य के लिए मुहूर्त टैब से पूरी जाँच करें।</p></div>';
   });
 }catch(e){console&&console.error&&console.error(e);}})();
 
