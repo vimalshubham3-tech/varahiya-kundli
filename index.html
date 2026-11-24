@@ -4623,19 +4623,60 @@ var RJAIN_NOTE='जैन दृष्टि: ग्रह निमित्त
       prevH=h;}
     segs.push({n:cur,a:a,b:sr+24});return segs;
   }
+  function fmtA(y,mo,dd,h){var f=Math.floor(h/24),m=Math.round((h-f*24)*60);if(m>=1440){f+=1;m-=1440;}var dt=new Date(Date.UTC(y,mo-1,dd)+f*86400000);return p2(Math.floor(m/60))+':'+p2(m%60)+' ('+dt.getUTCDate()+'/'+(dt.getUTCMonth()+1)+')';}
+  function pAt(y,mo,dd,h){var H=Math.floor(h);return panchangAt(toJD(y,mo,dd,H,Math.round((h-H)*60),5.5));}
+  // दिन (सूर्योदय → अगला सूर्योदय) की समय-रेखा
+  function timeline(y,mo,dd,sr){
+    var tr=trans(y,mo,dd,sr),cuts=[sr,sr+24],k;
+    for(k in tr)tr[k].forEach(function(x){if(x.h>sr&&x.h<sr+24)cuts.push(x.h);});
+    cuts.sort(function(a,b){return a-b;});
+    var out=[],i;
+    for(i=0;i<cuts.length-1;i++){if(cuts[i+1]-cuts[i]<0.002)continue;var m=(cuts[i]+cuts[i+1])/2,q=pAt(y,mo,dd,m);out.push({a:cuts[i],b:cuts[i+1],t:q.t,nak:q.nak,kn:q.kn,mr:q.moonR,sn:Math.floor(((q.P[0].lon%360)+360)%360/(360/27))});}
+    return out;
+  }
+  function mergeW(map){var res=[];Object.keys(map).forEach(function(nm){var w=map[nm],cur=null;w.forEach(function(x){if(cur&&Math.abs(cur.b-x.a)<0.003)cur.b=x.b;else{if(cur)res.push([nm,cur.a,cur.b]);cur={a:x.a,b:x.b};}});if(cur)res.push([nm,cur.a,cur.b]);});return res.filter(function(w){return w[2]-w[1]>=0.08;});}
+  var RAVI=[4,6,9,10,13,20],DWI=[4,13,22],TRI=[2,6,11,15,20,24],MOOLN=[0,8,9,17,18,26];
   function yogaWin(y,mo,dd,c,wd){
-    var sr=sunTimes(y,mo,dd,c[2],c[3],5.5).rise,res=[];
-    nakSegs(y,mo,dd,sr).forEach(function(g){
-      var tg=[];
-      if(SARV[wd].indexOf(g.n)>=0)tg.push('सर्वार्थ सिद्धि');
-      if(AMRT[wd]===g.n)tg.push('अमृत सिद्धि');
-      if(g.n===7&&wd===0)tg.push('रवि-पुष्य');
-      if(g.n===7&&wd===4)tg.push('गुरु-पुष्य');
-      tg.forEach(function(x){res.push(x+' '+hh(g.a)+'–'+hh(g.b)+' ('+NAK_H[g.n]+')');});
-      var bd=[];if(YAMG[wd]===g.n)bd.push('यमघंट');if(MRTY[wd]===g.n)bd.push('मृत्यु योग');
-      if(tg.length&&bd.length)res.push('— इसी नक्षत्र में '+bd.join('/')+' का दोष');
+    var sr=sunTimes(y,mo,dd,c[2],c[3],5.5).rise,tl=timeline(y,mo,dd,sr),good={},bad={};
+    function add(o,nm,x){(o[nm]=o[nm]||[]).push({a:x.a,b:x.b});}
+    tl.forEach(function(x){
+      var b=x.t>15?x.t-15:x.t;if(x.t===30)b=15;
+      if(SARV[wd].indexOf(x.nak)>=0)add(good,'सर्वार्थ सिद्धि',x);
+      if(AMRT[wd]===x.nak)add(good,'अमृत सिद्धि',x);
+      if(x.nak===7&&wd===0)add(good,'रवि-पुष्य',x);
+      if(x.nak===7&&wd===4)add(good,'गुरु-पुष्य',x);
+      if([0,2,6].indexOf(wd)>=0&&(b===2||b===7||b===12)){if(DWI.indexOf(x.nak)>=0)add(good,'द्विपुष्कर (फल दुगुना)',x);if(TRI.indexOf(x.nak)>=0)add(good,'त्रिपुष्कर (फल तिगुना)',x);}
+      if(RAVI.indexOf((x.nak-x.sn+27)%27+1)>=0)add(good,'रवि योग (शुभ)',x);
+      if(YAMG[wd]===x.nak)add(bad,'यमघंट',x);
+      if(MRTY[wd]===x.nak)add(bad,'मृत्यु योग',x);
+      if(MOOLN.indexOf(x.nak)>=0)add(bad,'गंडमूल नक्षत्र ('+NAK_H[x.nak]+')',x);
+      if(x.mr===10||x.mr===11)add(bad,'पंचक (चंद्र कुंभ/मीन)',x);
     });
-    return res;
+    var f=function(a){return mergeW(a).map(function(w){return w[0]+' '+hh(w[1])+'–'+hh(w[2]);});};
+    return {good:f(good),bad:f(bad)};
+  }
+  // ---- भद्रा विचार ----
+  var VASA={0:'स्वर्ग',1:'स्वर्ग',2:'स्वर्ग',7:'स्वर्ग',5:'पाताल',6:'पाताल',8:'पाताल',9:'पाताल',3:'पृथ्वी',4:'पृथ्वी',10:'पृथ्वी',11:'पृथ्वी'};
+  function bhadraDay(y,mo,dd){
+    var res=[],isB=function(h){return pAt(y,mo,dd,h).kn.indexOf('विष्टि')>=0;},h,prev,q,lo,hi,m;
+    var step=0.25,pv=isB(-16),stH=pv?-16:null;
+    for(h=-16+step;h<=44;h+=step){
+      var cur=isB(h);
+      if(cur!==prev&&cur!==pv){}
+      if(cur!==pv){lo=h-step;hi=h;for(q=0;q<9;q++){m=(lo+hi)/2;if(isB(m)===pv)lo=m;else hi=m;}
+        if(!pv)stH=hi;else{if(stH!==null&&stH>=0&&stH<24)res.push([stH,hi]);stH=null;}pv=cur;}
+    }
+    return res.map(function(s){
+      var segs=[],a=s[0],mr=pAt(y,mo,dd,a+0.01).moonR,t;
+      for(t=a+0.25;t<=s[1]+0.001;t+=0.25){var tt=Math.min(t,s[1]-0.001),r2=pAt(y,mo,dd,tt).moonR;
+        if(r2!==mr){var l=t-0.25,hh2=tt;for(q=0;q<9;q++){m=(l+hh2)/2;if(pAt(y,mo,dd,m).moonR===mr)l=m;else hh2=m;}segs.push({a:a,b:hh2,r:mr});a=hh2;mr=r2;}}
+      segs.push({a:a,b:s[1],r:mr});
+      return {a:s[0],b:s[1],mukh:[s[0],Math.min(s[0]+2,s[1])],puch:[Math.max(s[1]-1.2,s[0]),s[1]],segs:segs};
+    });
+  }
+  function bhadraText(y,mo,dd,sp){
+    var v=sp.segs.map(function(g){var l=VASA[g.r];return RASHI_H[g.r]+' चंद्र: '+l+' वास'+(l==='पृथ्वी'?' (शुभ कार्य वर्जित)':' (प्रभाव नहीं)');});
+    return 'भद्रा '+fmtA(y,mo,dd,sp.a)+' से '+fmtA(y,mo,dd,sp.b)+' · मुख '+fmtA(y,mo,dd,sp.mukh[0])+'–'+fmtA(y,mo,dd,sp.mukh[1])+' · पुच्छ '+fmtA(y,mo,dd,sp.puch[0])+'–'+fmtA(y,mo,dd,sp.puch[1])+' · '+v.join('; ');
   }
   var VN=['रविवार','सोमवार','मंगलवार','बुधवार','गुरुवार','शुक्रवार','शनिवार'];
   function dstr(r){return p2(r.d)+'/'+p2(r.mo)+'/'+r.y+' ('+VN[r.wd].slice(0,3)+')';}
@@ -4703,7 +4744,9 @@ var RJAIN_NOTE='जैन दृष्टि: ग्रह निमित्त
     var r={y:y,mo:mo,d:dd,wd:pd.wd,t:pv.t,pm:pv.t>15?(lm.m+1)%12:lm.m,adhik:lm.adhik,skip:0,nk:pv.nak,dup:false,dupNext:false},kk=kalOn(r);
     var pvx=parvaOn(r).concat(kk.length?[]:[]),yw=yogaWin(y,mo,dd,c,pd.wd);
     if(pvx.length)h+='<div class="mg"><p><b>आज के व्रत/पर्व:</b> '+E(pvx.join('; '))+'</p></div>';
-    if(yw.length)h+='<div class="mg"><p><b>विशेष योग:</b> '+E(yw.join('; '))+'</p></div>';
+    if(yw.good.length)h+='<div class="mg"><p><b>शुभ योग:</b> '+E(yw.good.join('; '))+'</p></div>';
+    if(yw.bad.length)h+='<div class="mg"><p><b>सावधानी के योग:</b> '+E(yw.bad.join('; '))+'</p></div>';
+    var bsp=bhadraDay(y,mo,dd);if(bsp.length)h+='<div class="mg"><p><b>भद्रा-विचार:</b> '+E(bsp.map(function(sp){return bhadraText(y,mo,dd,sp);}).join(' | '))+'</p></div>';
     if(kk.length)h+='<div class="mg"><p><b>आज के कल्याणक:</b> '+E(kk.join('; '))+'</p></div>';
     if([2,5,8,11,14].indexOf(pc.t>15?pc.t-15:pc.t)>=0||pc.t===15||pc.t===30)h+='<p class="kmeta">आज जैन पर्व-तिथि है (2, 5, 8, 11, 14, पूर्णिमा/अमावस्या) — संयम, हरी का त्याग व स्वाध्याय की परंपरा।</p>';
     try{h+=choghadiyaHTML(y,mo,dd,c[2],c[3],5.5);}catch(e){}
@@ -4712,6 +4755,7 @@ var RJAIN_NOTE='जैन दृष्टि: ग्रह निमित्त
       h+='</tbody></table></div>';}catch(e){}
     return h+'<p class="kmeta">सभी समय चुने गए स्थान के निर्देशांक से खगोलीय गणना द्वारा निकाले गए हैं। संवत् विक्रम (चैत्रादि) व वीर निर्वाण (कार्तिक शुक्ल प्रतिपदा से) के अनुसार हैं।</p></div>';
   }
+  window.__yw=yogaWin;window.__bd=bhadraDay;window.__bt=bhadraText;
   // ---- पैनल ----
   var pn=D.createElement('div');pn.id='pane-h';pn.hidden=true;
   var n=istNow(),cO=cityOpts(),opts=KAL.map(function(k,i){return '<option value="'+i+'">'+(i+1)+'. '+E(k.n)+'</option>';}).join('');
@@ -4720,6 +4764,7 @@ var RJAIN_NOTE='जैन दृष्टि: ग्रह निमित्त
    '<div class="panel"><h3>पूर्ण दैनिक पंचांग</h3><label for="hp_d">तारीख़</label><input id="hp_d" type="date" value="'+n.y+'-'+p2(n.mo)+'-'+p2(n.dd)+'"><label for="hp_c">स्थान</label><select id="hp_c">'+cO+'</select><button class="go" id="hp_go" type="button">पंचांग देखें</button><div id="hp_res"></div></div>'+
    '<div class="panel"><h3>जैन तिथि दर्पण (मासिक)</h3><label for="hd_m">महीना</label><input id="hd_m" type="month" value="'+n.y+'-'+p2(n.mo)+'"><label for="hd_c">स्थान</label><select id="hd_c">'+cO+'</select><button class="go" id="hd_go" type="button">तिथि-दर्पण देखें</button><div id="hd_res"></div></div>'+
    '<div class="panel"><h3>व्रत · पर्व · उत्सव कैलेंडर (वार्षिक)</h3><p class="kmeta">दिगंबर परंपरा के पर्व (अष्टान्हिका, दसलक्षण, सोलहकारण, रत्नत्रय, क्षमावाणी, दीपावली आदि), रोहिणी व्रत व पंचकल्याणक।</p><label for="ha_y">वर्ष</label><input id="ha_y" type="number" min="1950" max="2050" value="'+n.y+'"><label for="ha_c">स्थान</label><select id="ha_c">'+cO+'</select><label><input id="ha_yg" type="checkbox"> सर्वार्थ/अमृत सिद्धि व रवि-गुरु पुष्य के दिन भी जोड़ें (समय सहित)</label><button class="go" id="ha_go" type="button">वार्षिक कैलेंडर देखें</button><div id="ha_res"></div></div>'+
+   '<div class="panel"><h3>भद्रा विचार</h3><p class="kmeta">विष्टि करण (भद्रा) का आरंभ-अंत, मुख (पहली 5 घड़ी) व पुच्छ (अंतिम 3 घड़ी) तथा चंद्र-राशि से भद्रा का वास (स्वर्ग/पाताल/पृथ्वी)।</p><label for="hb_m">महीना</label><input id="hb_m" type="month" value="'+n.y+'-'+p2(n.mo)+'"><label for="hb_c">स्थान</label><select id="hb_c">'+cO+'</select><button class="go" id="hb_go" type="button">भद्रा देखें</button><div id="hb_res"></div></div>'+
    '<div class="panel"><h3>पंचकल्याणक</h3><label for="hk_t">तीर्थंकर</label><select id="hk_t"><option value="-1">सभी चौबीस (तालिका)</option>'+opts+'</select><label for="hk_c">स्थान (तारीख़ों के लिए)</label><select id="hk_c">'+cO+'</select><button class="go" id="hk_go" type="button">कल्याणक देखें</button><button class="go" id="hk_nx" type="button">आगामी 90 दिन के कल्याणक</button><div id="hk_res"></div></div>';
   pg.parentNode.insertBefore(pn,pg.nextSibling);
   function city(id){return CITIES[+D.getElementById(id).value];}
@@ -4737,7 +4782,8 @@ var RJAIN_NOTE='जैन दृष्टि: ग्रह निमित्त
       else if([2,5,8,11,14].indexOf(b)>=0)tags.push('पर्व-तिथि');
       kalOn(r).forEach(function(x){tags.push(x);});
       parvaOn(r).forEach(function(x){tags.push(x);});
-      yogaWin(r.y,r.mo,r.d,c,r.wd).forEach(function(x){tags.push(x);});
+      var yw=yogaWin(r.y,r.mo,r.d,c,r.wd);yw.good.forEach(function(x){if(x.indexOf('रवि योग')<0)tags.push(x);});yw.bad.forEach(function(x){tags.push('⚠ '+x);});
+      bhadraDay(r.y,r.mo,r.d).forEach(function(sp){tags.push(bhadraText(r.y,r.mo,r.d,sp));});
       h+='<tr'+(tags.length?' style="background:#fff6e6"':'')+'><td>'+r.d+' '+VN[r.wd].slice(0,3)+'</td><td>'+E(tName(r.t))+'</td><td>'+MN[r.pm]+(r.adhik?' (अधिक)':'')+'</td><td>'+E(tags.join('; '))+'</td></tr>';
     }
     o.innerHTML=h+'</tbody></table></div><p class="kmeta">जैन परंपरा: जो तिथि सूर्योदय के बाद कम से कम 6 घड़ी (2 घं. 24 मिं.) रहे, वही उस दिन व्रत-पर्व के लिए मान्य है; इसी नियम से तिथि ली गई है। पर्व-तिथि = 2, 5, 8, 11, 14। तिथि का क्षय होने पर कल्याणक पिछले दिन दर्शाया जाता है।</p></div>';});
@@ -4760,9 +4806,18 @@ var RJAIN_NOTE='जैन दृष्टि: ग्रह निमित्त
     var nd=Math.round((Date.UTC(y+1,0,1)-Date.UTC(y,0,1))/86400000)-1,rows=scan(Date.UTC(y,0,1),nd,c[2],c[3]),h='<div class="res-card"><h2 class="kh">'+E(c[0])+' — व्रत-पर्व-उत्सव '+y+'</h2><div class="tw"><table><thead><tr><th>तारीख़</th><th>व्रत-तिथि</th><th>विवरण</th></tr></thead><tbody>';
     rows.forEach(function(r){
       var t=kalOn(r).concat(parvaOn(r));
-      if(yg)yogaWin(r.y,r.mo,r.d,c,r.wd).forEach(function(x){t.push(x);});
+      if(yg){var yv=yogaWin(r.y,r.mo,r.d,c,r.wd);yv.good.forEach(function(x){if(x.indexOf('रवि योग')<0)t.push(x);});}
       if(t.length)h+='<tr><td>'+dstr(r)+'</td><td>'+E(MN[r.pm]+' '+tName(r.t))+'</td><td>'+E(t.join('; '))+'</td></tr>';});
     o.innerHTML=h+'</tbody></table></div><p class="kmeta">तिथि जैन नियम (सूर्योदय के बाद 6 घड़ी) से ली गई है। पर्वों का निर्धारण दिगंबर परंपरा के हिंदी (पूर्णिमांत) मास से है।</p></div>';});
+  D.getElementById('hb_go').addEventListener('click',function(){
+    var v=D.getElementById('hb_m').value.split('-').map(Number),o=D.getElementById('hb_res');
+    if(v.length<2||!v[0]){o.innerHTML='<p class="warn">महीना चुनें।</p>';return;}
+    var days=new Date(Date.UTC(v[0],v[1],0)).getUTCDate(),h='<div class="res-card"><h2 class="kh">भद्रा — '+v[1]+'/'+v[0]+'</h2><div class="tw"><table><thead><tr><th>भद्रा (आरंभ → अंत)</th><th>मुख · पुच्छ</th><th>वास (चंद्र राशि से)</th></tr></thead><tbody>',cnt=0,d;
+    for(d=0;d<=days;d++){var dt=new Date(Date.UTC(v[0],v[1]-1,d)),Y=dt.getUTCFullYear(),M=dt.getUTCMonth()+1,Dd=dt.getUTCDate();
+      bhadraDay(Y,M,Dd).forEach(function(sp){
+        var endAbs=Date.UTC(Y,M-1,Dd)+sp.b*3600000;if(endAbs<=Date.UTC(v[0],v[1]-1,1))return;if(Date.UTC(Y,M-1,Dd)>=Date.UTC(v[0],v[1],1))return;cnt++;
+        h+='<tr><td>'+fmtA(Y,M,Dd,sp.a)+' → '+fmtA(Y,M,Dd,sp.b)+'</td><td>मुख '+fmtA(Y,M,Dd,sp.mukh[0])+'–'+fmtA(Y,M,Dd,sp.mukh[1])+'<br>पुच्छ '+fmtA(Y,M,Dd,sp.puch[0])+'–'+fmtA(Y,M,Dd,sp.puch[1])+'</td><td>'+sp.segs.map(function(g){var l=VASA[g.r];return E(RASHI_H[g.r])+' चंद्र: <b>'+l+'</b>'+(l==='पृथ्वी'?' (अशुभ)':'');}).join('<br>')+'</td></tr>';});}
+    o.innerHTML=cnt?h+'</tbody></table></div><p class="kmeta">परंपरा: भद्रा पृथ्वी लोक में हो तभी शुभ कार्य (विवाह, गृह-प्रवेश, यात्रा आदि) में बाधक मानी जाती है; स्वर्ग या पाताल वास में उसका प्रभाव नहीं माना जाता। मुख त्याज्य, पुच्छ में कार्य किया जा सकता है। (स्थान का भेद इसमें नहीं पड़ता; समय IST।)</p></div>':'<p class="kmeta">इस महीने में भद्रा नहीं मिली।</p>';});
   // टैब
   var b=D.createElement('button');b.type='button';b.className='tab';b.id='tab-h';b.setAttribute('role','tab');b.setAttribute('aria-selected','false');b.setAttribute('data-i','tabH');
   var a=D.getElementById('tab-g');a.parentNode.insertBefore(b,a.nextSibling);
@@ -4771,26 +4826,18 @@ var RJAIN_NOTE='जैन दृष्टि: ग्रह निमित्त
   applyLang();
 }catch(e){console&&console.error&&console.error(e);}})();
 
-/* v64: सर्वार्थ/अमृत सिद्धि व पुष्य योग — समय-खंड सहित */
+/* v65: सभी शुभ/अशुभ योग समय सहित (सर्वार्थ, अमृत, पुष्य, द्विपुष्कर, त्रिपुष्कर, रवि योग, यमघंट, पंचक, गंडमूल) */
 (function(){try{
   specialDaysHTML=function(y,mo,dd,days,lat,lon){
-    var hhf=function(h){var m=Math.round(h*60),d=Math.floor(m/1440);m=m%1440;return String(Math.floor(m/60)).padStart(2,'0')+':'+String(m%60).padStart(2,'0')+(d>0?' (अगले दिन)':'');};
-    var h='<div class="res-card"><h2 class="kh">सर्वार्थ सिद्धि / अमृत सिद्धि / पुष्य योग</h2><div class="tw"><table><thead><tr><th>तारीख़</th><th>वार</th><th>योग व समय</th><th>बाधा</th></tr></thead><tbody>',n=0;
+    var h='<div class="res-card"><h2 class="kh">सर्वार्थ · अमृत सिद्धि · पुष्य · द्विपुष्कर · त्रिपुष्कर · रवि योग</h2><div class="tw"><table><thead><tr><th>तारीख़</th><th>वार</th><th>शुभ योग व समय</th><th>सावधानी</th></tr></thead><tbody>',n=0;
     for(var d=0;d<days;d++){
-      var dt=new Date(Date.UTC(y,mo-1,dd+d)),Y=dt.getUTCFullYear(),M=dt.getUTCMonth()+1,D2=dt.getUTCDate(),wd=dt.getUTCDay(),sr=sunTimes(Y,M,D2,lat,lon,5.5).rise;
-      var at=function(x){var H=Math.floor(x);return panchangAt(toJD(Y,M,D2,H,Math.round((x-H)*60),5.5)).nak;};
-      var segs=[],cur=at(sr),a=sr,prev=sr,k;
-      for(k=1;k<=48;k++){var x=sr+k*0.5,v=at(x);if(v!==cur){var lo=prev,hi=x;for(var q=0;q<9;q++){var m=(lo+hi)/2;if(at(m)===cur)lo=m;else hi=m;}segs.push({n:cur,a:a,b:hi});a=hi;cur=v;}prev=x;}
-      segs.push({n:cur,a:a,b:sr+24});
-      var out=[],bd=[];
-      segs.forEach(function(g){var tg=[];
-        if(SARV[wd].includes(g.n))tg.push('सर्वार्थ सिद्धि');if(AMRT[wd]===g.n)tg.push('अमृत सिद्धि');if(g.n===7&&wd===4)tg.push('गुरु-पुष्य');if(g.n===7&&wd===0)tg.push('रवि-पुष्य');
-        tg.forEach(function(t){out.push(t+' '+hhf(g.a)+'–'+hhf(g.b)+' ('+NAK_H[g.n]+')');});
-        if(tg.length){if(YAMG[wd]===g.n)bd.push('यमघंट');if(MRTY[wd]===g.n)bd.push('मृत्यु योग');}});
-      if(!out.length)continue;n++;
-      h+='<tr><td>'+String(D2).padStart(2,'0')+'/'+String(M).padStart(2,'0')+'/'+Y+'</td><td>'+VARA_N[wd]+'</td><td>'+out.join('<br>')+'</td><td>'+(bd.join(', ')||'—')+'</td></tr>';
+      var dt=new Date(Date.UTC(y,mo-1,dd+d)),Y=dt.getUTCFullYear(),M=dt.getUTCMonth()+1,D2=dt.getUTCDate(),wd=dt.getUTCDay();
+      var r=window.__yw(Y,M,D2,[0,0,lat,lon],wd);
+      var g=r.good.filter(function(x){return x.indexOf('रवि योग')<0;});
+      if(!g.length)continue;n++;
+      h+='<tr><td>'+String(D2).padStart(2,'0')+'/'+String(M).padStart(2,'0')+'/'+Y+'</td><td>'+VARA_N[wd]+'</td><td>'+g.join('<br>')+'</td><td>'+(r.bad.join('<br>')||'—')+'</td></tr>';
     }
-    return h+'</tbody></table></div>'+(n?'':'<p>इस अवधि में नहीं मिला।</p>')+'<p class="kmeta">समय नक्षत्र के सूर्योदय से अगले सूर्योदय तक के खंड का है। वार-नक्षत्र सारणी प्रचलित पंचांग-स्रोतों के अनुसार; भद्रा का समय मासिक पंचांग-विचार में देखें।</p></div>';
+    return h+'</tbody></table></div>'+(n?'':'<p>इस अवधि में नहीं मिला।</p>')+'<p class="kmeta">समय सूर्योदय से अगले सूर्योदय तक के खंडों में हैं। द्विपुष्कर/त्रिपुष्कर: द्वितीया, सप्तमी, द्वादशी तिथि + रवि/मंगल/शनिवार + निर्धारित नक्षत्र। (रवि योग रोज़ कई घंटे बनता है, इसलिए वह पूर्ण पंचांग में दिखता है।) भद्रा का विचार जैन टैब के "भद्रा विचार" में देखें।</p></div>';
   };
 }catch(e){console&&console.error&&console.error(e);}})();
 
