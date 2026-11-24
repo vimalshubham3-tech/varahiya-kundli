@@ -4712,7 +4712,7 @@ var RJAIN_NOTE='जैन दृष्टि: ग्रह निमित्त
   }
   function sam(y,mo,pc,lm){
     var early=(mo<=4&&lm.m>=8);
-    var after=(mo>=10&&(lm.m>7||(lm.m===7&&pc.t<=15)));
+    var after=(mo>=10&&lm.m>=7);
     return {vs:early?y+56:y+57,sk:early?y-79:y-78,vn:after?y+527:y+526};
   }
   function fullPanchang(y,mo,dd,c){
@@ -4776,7 +4776,7 @@ var RJAIN_NOTE='जैन दृष्टि: ग्रह निमित्त
   function calHTML(y,mo,c){
     var D2=calData(y,mo,c),h='';
     var f=D2[0],l=D2[D2.length-1];
-    var pcf=panchangAt(toJD(y,mo,1,12,0,5.5)),lmf=lunarMonthOf(toJD(y,mo,1,12,0,5.5)),sm=sam(y,mo,pcf,lmf);
+    var dl=days24(y,mo),pcf=panchangAt(toJD(y,mo,1,12,0,5.5)),lmf=lunarMonthOf(toJD(y,mo,1,12,0,5.5)),sm1=sam(y,mo,pcf,lmf),pcl=panchangAt(toJD(y,mo,dl,12,0,5.5)),lml=lunarMonthOf(toJD(y,mo,dl,12,0,5.5)),sm2=sam(y,mo,pcl,lml),jn=function(a,b){return a===b?a:a+'–'+b;},sm={vn:jn(sm1.vn,sm2.vn),vs:jn(sm1.vs,sm2.vs),sk:jn(sm1.sk,sm2.sk)};
     h+='<div class="res-card" id="jc_card"><h2 class="kh">जैन पंचांग — '+['','जनवरी','फ़रवरी','मार्च','अप्रैल','मई','जून','जुलाई','अगस्त','सितंबर','अक्टूबर','नवंबर','दिसंबर'][mo]+' '+y+' · '+E(c[0])+'</h2>'
      +'<p class="kmeta">वीर निर्वाण सं. '+sm.vn+' · विक्रम सं. '+sm.vs+' · शक सं. '+sm.sk+' · '+E(MN[f.pm]+' '+(f.t<=15?'शुक्ल':'कृष्ण'))+' से '+E(MN[l.pm]+' '+(l.t<=15?'शुक्ल':'कृष्ण'))+' तक (पूर्णिमांत)</p>'
      +'<button class="go" id="jc_print" type="button">प्रिंट / PDF</button><div class="tw"><table class="jc"><thead><tr>'+VN.map(function(v){return '<th>'+v.slice(0,3)+'</th>';}).join('')+'</tr></thead><tbody><tr>';
