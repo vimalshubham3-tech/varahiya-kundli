@@ -5123,6 +5123,98 @@ var RJAIN_NOTE='जैन दृष्टि: ग्रह निमित्त
     o.innerHTML='<div class="res-card"><ul class="ul">'+msgs.map(function(m){return '<li>'+m+'</li>';}).join('')+'</ul></div>';});
 }catch(e){console&&console.error&&console.error(e);}})();
 
+
+
+/* ===== v75: सदस्यता (लाइसेंस-कोड) ===== */
+(function(){try{
+var D=document;
+var VJ_PUB={"kty":"EC","crv":"P-256","x":"3PXJFO5Ze1eZgV1V199GWtIQ4h70MO1BhdDU9vYCsUE","y":"D9kPGDRr8glUZMIouOsJBr1Tug5W5M5lEVws1sF44JM"};
+var PRICE="₹149 प्रति वर्ष", PRICE_AM="149", UPI_ID="", UPI_NAME="Vimal Kumar Jain", HELP_WA="919977004518", TRIAL_DAYS=7;
+function ld(k,d){try{var v=localStorage.getItem(k);return v?JSON.parse(v):d;}catch(e){return d;}}
+function sv(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}
+var TK="vj_trial_v1", LK="vj_lic_v1";
+var tr=ld(TK,null); if(!tr){tr={ts:Date.now()};sv(TK,tr);}
+function trialLeft(){var d=TRIAL_DAYS-Math.floor((Date.now()-tr.ts)/864e5);return d>0?d:0;}
+var LS={pending:false,valid:false,end:null};
+function b64u(t){t=t.replace(/-/g,"+").replace(/_/g,"/");while(t.length%4)t+="=";var r=atob(t),u=new Uint8Array(r.length);for(var i=0;i<r.length;i++)u[i]=r.charCodeAt(i);return u;}
+function verifyLic(mobile,code){
+  return new Promise(function(res){
+    try{
+      var m=/^(\d{2})(\d{2})\.([A-Za-z0-9_-]{60,120})$/.exec(code); if(!m||!window.crypto||!crypto.subtle) return res(null);
+      var yy=m[1]+m[2],mo=+m[2]; if(mo<1||mo>12) return res(null);
+      var data=new TextEncoder().encode(mobile+"|"+yy+"|vj1");
+      crypto.subtle.importKey("jwk",VJ_PUB,{name:"ECDSA",namedCurve:"P-256"},false,["verify"]).then(function(k){
+        return crypto.subtle.verify({name:"ECDSA",hash:"SHA-256"},k,b64u(m[3]),data);
+      }).then(function(ok){
+        if(!ok) return res(null);
+        res({end:new Date(2000+(+m[1]),mo,0,23,59,59)});
+      }).catch(function(){res(null);});
+    }catch(e){res(null);}
+  });
+}
+function applyLic(i){LS.pending=false;LS.valid=!!i;LS.end=i?i.end:null;}
+(function(){var l=ld(LK,null);if(l&&l.mobile&&l.code){LS.pending=true;verifyLic(l.mobile,l.code).then(function(i){applyLic(i);lockPanels();try{if(st.shown)renderResult();if(st.bShown)renderBirth();}catch(e){}});}})();
+function licOk(){return LS.valid&&LS.end&&Date.now()<=LS.end.getTime();}
+window.vjPrem=function(){return !!(licOk()||LS.pending||trialLeft()>0);};
+function stat(){
+  var e=LS.end,f=e?e.getDate()+"/"+(e.getMonth()+1)+"/"+e.getFullYear():"";
+  if(licOk()) return "✅ सदस्यता चालू — "+f+" तक";
+  if(LS.valid&&e) return "⚠ आपकी सदस्यता समाप्त हो चुकी है ("+f+")";
+  var t=trialLeft(); return t>0?("🎁 मुफ़्त आज़माइश: "+t+" दिन शेष"):"मुफ़्त संस्करण";
+}
+function lockPanels(){
+  ["vx69","mp70"].forEach(function(id){
+    var p=D.getElementById(id); if(!p) return;
+    var o=D.getElementById("vjlk_"+id); if(o) o.remove();
+    if(window.vjPrem()){p.style.display="";return;}
+    p.style.display="none";
+    var d=D.createElement("div");d.id="vjlk_"+id;d.className="panel";
+    d.innerHTML="<h3>🔒 "+(id==="vx69"?"वास्तु उपाय — विस्तृत अनुभाग":"वास्तु माप-विचार (प्रभाव, दिक्कत व विधि)")+"</h3><p class=\"kmeta\">यह भाग सदस्यता में उपलब्ध है।</p><button class=\"vjupb\" type=\"button\">⭐ सदस्यता देखें</button>";
+    p.parentNode.insertBefore(d,p);
+  });
+}
+var sty=D.createElement("style");
+sty.textContent=".vjupb{display:block;width:100%;margin:10px 0;padding:11px;border:0;border-radius:10px;background:#7a3b10;color:#fff;font:inherit;font-weight:700}.vjplan{background:#fff7e0;border:1px solid #e6d3a0;border-radius:10px;padding:10px;margin:8px 0;line-height:1.6;font-size:14px}.vjplan b{color:#7a3b10}";
+D.head.appendChild(sty);
+function esc2(s){return String(s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c];});}
+window.vjUpsell=function(why){
+  var o=D.createElement("div");o.className="vjov";
+  o.innerHTML='<div class="vjbox"><h3>⭐ वरहिया ज्योतिष दर्शन — सदस्यता</h3>'+
+   (why?'<p style="color:#9a3412"><b>'+esc2(why)+'</b> सदस्यों के लिए है।</p>':'')+
+   '<div class="vjplan"><b>'+esc2(stat())+'</b></div>'+
+   '<div class="vjplan"><b>मुफ़्त:</b> कुंडली, पंचांग, गुण-मिलान (अंक व निर्णय), शुभ मुहूर्त, जैन तिथि-पर्व, अंक ज्योतिष, 3 कुंडलियाँ सहेजना।<br><b>सदस्यता में:</b> मिलान का विस्तृत फल व उपाय + PDF रिपोर्ट; वास्तु उपाय व माप-विचार; असीमित सहेजी कुंडलियाँ व क्लाउड बैकअप।<br><b>शुल्क: '+PRICE+'</b><br><small>वरहिया समाज के बंधु रियायत हेतु हेल्प डेस्क से संपर्क करें।</small></div>'+
+   '<p><b>चरण 1:</b> भुगतान करें।</p>'+(UPI_ID?'<a class="b" style="display:block;text-align:center;text-decoration:none" href="upi://pay?pa='+encodeURIComponent(UPI_ID)+'&pn='+encodeURIComponent(UPI_NAME)+'&am='+PRICE_AM+'&cu=INR&tn=Varahiya%20Jyotish">💳 UPI से ₹'+PRICE_AM+' भरें</a>':'<small>भुगतान का विवरण WhatsApp पर हेल्प डेस्क से लें।</small>')+
+   '<label for="vj_sm">आपका मोबाइल नंबर</label><input id="vj_sm" type="tel" inputmode="numeric" maxlength="10" value="'+esc2((ld(LK,{})||{}).mobile||"")+'">'+
+   '<button class="b" id="vj_sw" type="button">📲 WhatsApp पर कोड माँगें</button>'+
+   '<p><b>चरण 2:</b> कोड मिलने पर यहाँ भरें।</p><label for="vj_sc">सदस्यता-कोड</label><input id="vj_sc" type="text" autocomplete="off" placeholder="WhatsApp से मिला पूरा कोड यहाँ चिपकाएँ">'+
+   '<button class="b" id="vj_sa" type="button">✔ सक्रिय करें</button><button class="b g" id="vj_sx" type="button">बंद करें</button><div id="vj_smsg" style="margin-top:8px;font-size:14px"></div></div>';
+  D.body.appendChild(o);
+  o.addEventListener("click",function(e){if(e.target===o)o.remove();});
+  var $=function(s){return o.querySelector(s);},msg=function(t){$("#vj_smsg").textContent=t;};
+  $("#vj_sx").onclick=function(){o.remove();};
+  $("#vj_sw").onclick=function(){
+    var m=$("#vj_sm").value.replace(/\D/g,"");if(m.length!==10){msg("10 अंक का मोबाइल नंबर भरें।");return;}
+    window.open("https://wa.me/"+HELP_WA+"?text="+encodeURIComponent("जय जिनेन्द्र 🙏\nवरहिया ज्योतिष दर्शन की सदस्यता ("+PRICE+") के लिए भुगतान कर दिया है। कृपया सदस्यता-कोड भेजें।\nमेरा मोबाइल: "+m+"\n(भुगतान का स्क्रीनशॉट साथ भेज रहा/रही हूँ)"),"_blank");
+  };
+  $("#vj_sa").onclick=function(){
+    var m=$("#vj_sm").value.replace(/\D/g,""),c=$("#vj_sc").value.replace(/\s/g,"");
+    if(m.length!==10||!c){msg("मोबाइल नंबर व कोड दोनों भरें।");return;}
+    msg("जाँच रहे हैं…");
+    verifyLic(m,c).then(function(i){
+      if(!i){msg("कोड इस मोबाइल नंबर के लिए सही नहीं है। नंबर व पूरा कोड दोबारा जाँचें।");return;}
+      if(Date.now()>i.end.getTime()){msg("यह कोड समाप्त हो चुका है। नया कोड लें।");return;}
+      sv(LK,{mobile:m,code:c});applyLic(i);lockPanels();
+      msg("✅ सदस्यता सक्रिय हो गई — "+i.end.getDate()+"/"+(i.end.getMonth()+1)+"/"+i.end.getFullYear()+" तक। धन्यवाद 🙏");
+      try{if(st.shown)renderResult();if(st.bShown)renderBirth();}catch(e){}
+    });
+  };
+};
+D.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest(".vjupb");if(b)window.vjUpsell();});
+var br=D.querySelector(".brand");
+if(br){var b=D.createElement("button");b.type="button";b.className="pbtn";b.textContent="⭐ सदस्यता";b.onclick=function(){window.vjUpsell();};br.appendChild(b);}
+lockPanels();
+}catch(e){console.error("v75",e);}})();
+
 /* ===== v72: मिलान का विस्तृत फल + PDF रिपोर्ट ===== */
 (function(){try{
 var D=document;
@@ -5212,18 +5304,20 @@ function phalHTML(R){
   h+='<p class="disc">'+(R.mgText?'यह फल जन्म-विवरण (चंद्र-नक्षत्र) से निकाला गया है, इसलिए नाम-आधारित मिलान से अधिक सटीक है।':'यह फल नाम के पहले अक्षर से निकले नक्षत्र-राशि पर आधारित है। जन्म-विवरण से मिलान करने पर परिणाम अधिक सटीक मिलता है।')+' गुण-मिलान विवाह-विचार का एक अंग है। साथ में मंगल-दोष, कुंडली, स्वास्थ्य, स्वभाव और दोनों परिवारों की सहमति का भी विचार करें।</p></div>';
   return h;
 }
+function lockHTML(R){return '<div class="phal"><h3>📖 विस्तृत फल</h3><div class="ov"><b>'+esc(overallText(R.total))+'</b></div><div class="pk"><h4>🔒 सदस्यों के लिए</h4><div>आठों कूट का अलग-अलग विस्तृत फल, कमज़ोर कूट के उपाय, जीवन-क्षेत्र-वार सार और PDF रिपोर्ट सदस्यता में उपलब्ध है।</div><button class="vjupb" type="button">⭐ सदस्यता देखें</button></div></div>';}
 var _rh=resultHTML;
 resultHTML=function(R){
   var s=_rh.apply(this,arguments);
   if(lang!=='hi') return s;
   var ix=s.lastIndexOf('<button class="copy"');
   if(ix<0) return s;
+  if(window.vjPrem&&!window.vjPrem()) return s.slice(0,ix)+lockHTML(R)+s.slice(ix);
   return s.slice(0,ix)+phalHTML(R)+'<button class="pmbtn" type="button">📄 PDF रिपोर्ट बनाएँ / सहेजें</button>'+s.slice(ix);
 };
 var _st=summaryText;
 summaryText=function(R){
   var s=_st.apply(this,arguments);
-  if(lang!=='hi') return s;
+  if(lang!=='hi'||(window.vjPrem&&!window.vjPrem())) return s;
   s+='\n\n'+overallText(R.total);
   R.rows.forEach(function(r,i){var k=kootText(i,r,R);s+='\n• '+KOOTA_N.hi[i]+' ('+fmt(r.got)+'/'+r.max+'): '+k[0];});
   return s;
@@ -5312,6 +5406,7 @@ function bind(person,k,nameId,dateId,full){
     if(full){var u=D.getElementById(k+"_unk");p.unk=!!(u&&u.checked);p.time=g(k+"_time");p.place=g(k+"_place");p.lat=g(k+"_lat");p.lon=g(k+"_lon");p.off=g(k+"_off")||"5.5";}
     var a=list(),ix=-1;
     a.forEach(function(x,i){if(x.name===p.name&&x.date===p.date)ix=i;});
+    if(ix<0&&a.length>=3&&window.vjPrem&&!window.vjPrem()){window.vjUpsell("3 से अधिक कुंडलियाँ सहेजना");return;}
     if(ix>=0){
       /* पूरी प्रविष्टि को केवल नाम-तिथि वाली प्रविष्टि से न मिटाएँ */
       if(!full&&a[ix].time) {alert("यह कुंडली पहले से पूरे विवरण के साथ सहेजी है।");return;}
@@ -5350,7 +5445,7 @@ function manage(){
     (a.length?a.map(function(p){return '<div class="it"><span>'+esc(lbl(p))+'</span><button type="button" data-d="'+esc(p.id)+'">हटाएँ</button></div>';}).join(""):'<p>अभी कोई कुंडली सहेजी नहीं है। किसी भी कुंडली या मिलान-फ़ॉर्म में नाम व जन्म-विवरण भरकर 💾 सहेजें दबाएँ।</p>')+
     '</div><button class="b" id="vj_ex" type="button">⬇ बैकअप फ़ाइल सहेजें</button><button class="b g" id="vj_im" type="button">⬆ बैकअप से वापस लाएँ</button><input id="vj_f" type="file" accept=".json,application/json" hidden><button class="b" id="vj_cl" type="button">☁ क्लाउड बैकअप (किसी भी फ़ोन पर वापस पाएँ)</button><button class="b g" id="vj_x" type="button">बंद करें</button><small>फ़ोन की सफ़ाई या ब्राउज़र-डेटा हटाने पर सहेजी कुंडलियाँ मिट सकती हैं। इसलिए कभी-कभी बैकअप सहेज लें।</small>');
   o.querySelector("#vj_x").onclick=function(){o.remove();};
-  o.querySelector("#vj_cl").onclick=function(){o.remove();cloud();};
+  o.querySelector("#vj_cl").onclick=function(){o.remove();if(window.vjPrem&&!window.vjPrem()){window.vjUpsell("क्लाउड बैकअप");return;}cloud();};
   o.querySelectorAll("[data-d]").forEach(function(b){b.onclick=function(){var id=b.getAttribute("data-d");saveList(list().filter(function(x){return x.id!==id;}));refreshAll();o.remove();manage();};});
   o.querySelector("#vj_ex").onclick=function(){
     try{var bl=new Blob([JSON.stringify(list(),null,1)],{type:"application/json"});var u=URL.createObjectURL(bl);var l=D.createElement("a");l.href=u;l.download="varahiya-kundli-backup.json";D.body.appendChild(l);l.click();l.remove();setTimeout(function(){URL.revokeObjectURL(u);},2000);}catch(e){alert("बैकअप नहीं बन सका।");}
