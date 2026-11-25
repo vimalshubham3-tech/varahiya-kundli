@@ -131,7 +131,7 @@ tr.cur td{background:#fdf1d2;font-weight:600}
 .about b{color:var(--maroon)}.about p{margin:4px 0}
 @media print{.brand .pbtn,.nmtools,.totop,.lang,.about{display:none!important}.brand{background:#fff;color:#000;border-bottom:2px solid #000}.brand b{color:#000}.brand span{color:#000}#nm_body{font-size:13px}}
 </style>
-<meta name="vj-ver" content="96">
+<meta name="vj-ver" content="97">
 </head>
 <body>
 <div class="brand"><b id="t-brand"></b><span id="t-slogan"></span></div>
@@ -5556,7 +5556,7 @@ D.addEventListener("change",function(e){
 
 /* ===== v79: नए संस्करण की सूचना ===== */
 (function(){try{
-var D=document,VER=96,SITE="https://vimalshubham3-tech.github.io/varahiya-kundli/";
+var D=document,VER=97,SITE="https://vimalshubham3-tech.github.io/varahiya-kundli/";
 var st=D.createElement("style");
 st.textContent="#vj_upd{position:fixed;left:8px;right:8px;bottom:8px;z-index:9998;background:#7a3b10;color:#fff;border-radius:12px;padding:10px 12px;display:flex;gap:8px;align-items:center;font-size:14px;box-shadow:0 2px 10px rgba(0,0,0,.35)}#vj_upd span{flex:1}#vj_upd button,#vj_upd a{border:0;border-radius:8px;padding:8px 10px;background:#fff;color:#7a3b10;font:inherit;font-weight:700;text-decoration:none}#vj_upd .x{background:transparent;color:#fff;padding:8px}@media print{#vj_upd{display:none!important}}";
 D.head.appendChild(st);
@@ -5642,6 +5642,23 @@ bar.insertBefore(l,bar.firstChild);
   setMode=function(m){o(m);pn.hidden=m!=='l';b.setAttribute('aria-selected',m==='l');};
   b.addEventListener('click',function(){setMode('l');try{b.scrollIntoView({inline:'center',block:'nearest',behavior:'smooth'});}catch(e){}});
   applyLang();
+}catch(e){console&&console.error&&console.error(e);}})();
+
+/* v97: जैन ज्योतिष टैब में केवलज्ञान प्रश्न चूड़ामणि की विषय-सूची (पृष्ठ-संख्या मुद्रित ग्रंथ की) */
+(function(){try{
+  var D=document,pj=D.getElementById('pane-j');if(!pj)return;
+  var S=[
+   ['प्रस्तावना',[['जैन ज्योतिष की महत्ता',11],['जैन ज्योतिष के भेद-प्रभेद (पाटीगणित, रेखागणित, बीजगणित, त्रिकोणमिति, प्रतिमा-गणित)',14],['पंचांग-निर्माण गणित: तिथि, वार, नक्षत्र, योग, करण',22],['जन्मपत्र-निर्माण गणित: लग्न-साधन',24],['जैन फलित ज्योतिष: होराशास्त्र, संहिता, मुहूर्त, सामुद्रिक, प्रश्न, स्वप्न, निमित्तशास्त्र',25],['जैन प्रश्नशास्त्र का मूलाधार',31],['जैन प्रश्नशास्त्र का विकासक्रम',34],['केवलज्ञान प्रश्न चूड़ामणि का विषय-परिचय',40],['प्रश्न निकालने की विधि',46],['उपयोगी प्रश्न: कार्य-सिद्धि, लाभालाभ, चोरी, प्रवासी, गर्भिणी, रोगी, मुकदमा',50],['ग्रन्थकार व रचनाकाल',56]]],
+   ['ग्रन्थ (मूल पाठ की टीका)',[['अक्षरों का वर्ग-विभाजन',61],['इष्टकाल बनाने के नियम',65],['लग्न बनाने का सूक्ष्म नियम',66],['प्रश्नाक्षरों से लग्न निकालना',67],['पाँचों वर्गों के योग और उनके फल',69],['संयुक्त प्रश्नाक्षर और उनका फल',73],['आरूढ़ राशिबोधक चक्र',74],['असंयुक्त, अभिहत, अनभिहत व अभिघातित प्रश्नाक्षर और उनके फल',76],['आलिंगित, अभिधूमित व दग्ध प्रश्नाक्षर',81],['उत्तर और अधर प्रश्नाक्षरों का फल; उत्तर के नौ भेद',83],['योनिविभाग: जीव, धातु, मूल योनि के भेद',90],['चोरी गयी वस्तु का विशेष विचार',116],['मूक प्रश्न विचार; मुष्टिका प्रश्न विचार',117],['लाभालाभ प्रश्न विचार',120],['मास, पक्ष व तिथि विचार',126],['नष्टजातक बनाने की विधि',138],['गमनागमन, लाभालाभ व शुभाशुभ प्रश्न विचार',142],['चवर्ग पञ्चाधिकार: सिंहावलोकन, गजावलोकन, नद्यावर्त, मण्डूकप्लवन, अश्वमोहित चक्र',148],['कवर्ग से शवर्ग तक चक्र विचार व फलाफल',154],['चिन्तामणि चक्र व सर्ववर्गांकानयन से नाम निकालना',162]]],
+   ['परिशिष्ट 1 — मुहूर्त-प्रकरण',[['नक्षत्र, योग, करण के नाम; शुभ कार्यों में त्याज्य',165],['सीमन्तोन्नयन, पुंसवन, जातकर्म, नामकर्म, अन्नप्राशन, मुण्डन, अक्षरारम्भ',166],['विद्यारम्भ, यज्ञोपवीत, वाग्दान व विवाह मुहूर्त',172],['यात्रा-मुहूर्त व चक्र',175],['गृहनिर्माण, नूतन गृहप्रवेश, जीर्णगृह प्रवेश मुहूर्त',177],['कुआँ, दुकान, व्यापार, वस्त्र-आभूषण, बगीचा आदि के मुहूर्त',177],['नौकरी, मुकदमा, औषध-निर्माण, मन्त्रसिद्धि, सर्वारम्भ व मन्दिर-निर्माण मुहूर्त',183],['प्रतिमा-निर्माण, प्रतिष्ठा एवं होमाहुति मुहूर्त',185]]],
+   ['परिशिष्ट 2 — जन्मपत्री बनाने की विधि',[['इष्टकाल साधन के नियम; भयात और भभोग साधन',187],['जन्मनक्षत्र का चरण, जन्मलग्न निकालने की विधि',189],['जन्मपत्री लिखने की विधि; लग्नसारणी',190],['विंशोत्तरी दशा निकालने की विधि; दशाचक्र व उदाहरण',193],['अन्तर्दशा विचार; चन्द्रान्तर व भौमान्तर दशा चक्र',197]]]
+  ];
+  var h='<div class="panel"><h3>केवलज्ञान प्रश्न चूड़ामणि — विषय-सूची</h3><p class="kmeta">डॉ. नेमिचन्द्र शास्त्री, ज्योतिषाचार्य कृत टीका; प्रकाशक: भारतीय ज्ञानपीठ। नीचे पृष्ठ-संख्या मुद्रित पुस्तक की है। ग्रंथ का पाठ इस ऐप में नहीं रखा गया है; पुस्तक प्रकाशक या अपने पुस्तकालय से प्राप्त करें। ऐप का "प्रश्न चूड़ामणि" टैब इसी ग्रंथ के पृ. 61–93 के स्पष्ट नियमों पर आधारित है।</p>';
+  S.forEach(function(sec){
+    h+='<details style="margin:6px 0"><summary><b>'+sec[0]+'</b></summary><div class="tw"><table><tbody>'+sec[1].map(function(r){return '<tr><td>'+r[0]+'</td><td style="white-space:nowrap">पृ. '+r[1]+'</td></tr>';}).join('')+'</tbody></table></div></details>';
+  });
+  h+='<p class="kmeta">ये परंपरागत जैन प्रश्न-नियम हैं; गंभीर विषयों (रोग, गर्भ, मुकदमा) में चिकित्सक/वकील की सलाह अवश्य लें।</p></div>';
+  var w=D.createElement('div');w.innerHTML=h;pj.appendChild(w.firstChild);
 }catch(e){console&&console.error&&console.error(e);}})();
 
 </script>
