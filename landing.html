@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>वरहिया जैन ज्योतिष दर्शन – कुंडली, मिलान, पंचांग व मुहूर्त | निःशुल्क</title>
+<meta name="description" content="वरहिया समाज के लिए निःशुल्क ऐप: जन्म कुंडली, गुण-मिलान, जैन पंचांग, पंच कल्याणक, शुभ मुहूर्त और वास्तु, सरल हिंदी में। लॉगिन नहीं।">
+<meta property="og:title" content="वरहिया जैन ज्योतिष दर्शन – निःशुल्क ऐप">
+<meta property="og:description" content="कुंडली, मिलान, जैन पंचांग, मुहूर्त और वास्तु, एक ही ऐप में, हिंदी में।">
+<meta name="theme-color" content="#7E1810">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🪔</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rozha+One&family=Mukta:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --sindoor:#7E1810; --sindoor-2:#A3241A; --deep:#3E0B07;
+  --haldi:#E9A626; --haldi-soft:#FBE3A6;
+  --ivory:#FFF9EE; --paper:#FFFDF8; --ink:#2B1810; --muted:#6E5546;
+  --leaf:#2E6B3B; --line:#EBD9BC;
+  color-scheme:light;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Mukta','Noto Sans Devanagari','Nirmala UI','Mangal',system-ui,sans-serif;
+  font-size:18px;line-height:1.6;color:var(--ink);background:var(--ivory);
+  padding-bottom:calc(84px + env(safe-area-inset-bottom,0px));
+  -webkit-font-smoothing:antialiased;
+}
+img{max-width:100%;display:block}
+h1,h2,h3{font-family:'Rozha One','Mukta',serif;font-weight:400;line-height:1.2;color:var(--deep)}
+h2{font-size:clamp(28px,6vw,40px);margin-bottom:18px}
+.wrap{max-width:1040px;margin:0 auto;padding:0 20px}
+.narrow{max-width:680px;margin:0 auto}
+section{padding:56px 0}
+a:focus-visible,button:focus-visible,summary:focus-visible{outline:3px solid var(--haldi);outline-offset:3px;border-radius:6px}
+
+/* offer strip */
+.strip{background:var(--deep);color:var(--haldi-soft);text-align:center;font-size:15px;padding:8px 14px;padding-top:calc(8px + env(safe-area-inset-top,0px))}
+.strip b{color:#fff}
+
+/* hero */
+.hero{
+  background:
+    radial-gradient(ellipse at 70% 40%,rgba(233,166,38,.18),transparent 60%),
+    linear-gradient(180deg,#FFF4DD 0%,var(--ivory) 100%);
+  padding:26px 0 44px;position:relative;overflow:hidden;
+}
+.hero::before{ /* vastu mandala 9x9 grid */
+  content:"";position:absolute;right:-120px;top:-60px;width:520px;height:520px;opacity:.13;
+  background:
+    repeating-linear-gradient(0deg,var(--sindoor) 0 1px,transparent 1px 57.7px),
+    repeating-linear-gradient(90deg,var(--sindoor) 0 1px,transparent 1px 57.7px);
+  border:2px solid var(--sindoor);transform:rotate(45deg);pointer-events:none;
+}
+.hero-grid{display:grid;grid-template-columns:1fr;gap:26px;align-items:center;position:relative}
+.hero-grid .book{order:-1;width:min(190px,52vw)}
+.two>div+div{margin-top:44px}
+.hero h1{font-size:clamp(34px,8.4vw,58px);color:var(--sindoor)}
+.hero .sub{font-size:clamp(18px,4.4vw,21px);color:var(--muted);margin:14px 0 22px;max-width:30ch}
+.book{position:relative;width:min(270px,72vw);margin:0 auto;transform:rotate(-3deg)}
+.book img{border-radius:4px 10px 10px 4px;box-shadow:-10px 0 0 -4px #5a120c inset, 0 24px 40px -12px rgba(62,11,7,.55), 0 4px 10px rgba(62,11,7,.25)}
+.book::before{content:"";position:absolute;left:0;top:0;bottom:0;width:12px;background:linear-gradient(90deg,rgba(0,0,0,.35),rgba(255,255,255,.15) 60%,transparent);border-radius:4px 0 0 4px;z-index:1}
+.seal{position:absolute;right:-22px;bottom:-14px;width:84px;height:84px;border-radius:50%;background:var(--sindoor);color:#fff;display:grid;place-content:center;text-align:center;border:3px solid var(--haldi);box-shadow:0 8px 18px rgba(62,11,7,.35);transform:rotate(6deg)}
+.seal small{font-size:13px;line-height:1}
+.seal strong{font-family:'Rozha One',serif;font-size:32px;line-height:1;color:var(--haldi-soft)}
+
+.price-line{display:flex;align-items:baseline;gap:12px;margin-bottom:14px;flex-wrap:wrap}
+.price-line .now{font-family:'Rozha One',serif;font-size:44px;color:var(--sindoor);line-height:1}
+.price-line .was{font-size:20px;color:var(--muted);text-decoration:line-through}
+.price-line .tag{background:var(--leaf);color:#fff;font-size:14px;font-weight:700;padding:2px 10px;border-radius:20px}
+
+.cta{
+  display:flex;align-items:center;justify-content:center;gap:10px;width:100%;max-width:420px;
+  background:linear-gradient(180deg,#F4B93A,var(--haldi));color:var(--deep);
+  font-weight:800;font-size:21px;text-decoration:none;padding:16px 22px;border-radius:12px;
+  border:2px solid #C98710;box-shadow:0 5px 0 #A86D08,0 10px 24px rgba(168,109,8,.35);
+  transition:transform .08s,box-shadow .08s;
+}
+.cta:active{transform:translateY(4px);box-shadow:0 1px 0 #A86D08}
+.cta svg{flex:none}
+.trust{display:flex;flex-wrap:wrap;gap:8px 18px;margin-top:16px;font-size:15px;color:var(--muted)}
+.trust span{display:flex;align-items:center;gap:6px}
+.trust svg{color:var(--leaf)}
+
+/* compass */
+.compass-sec{background:var(--deep);color:#F7E9D2}
+.compass-sec h2{color:var(--haldi-soft)}
+.compass-sec .lead{color:#E3CDB0;margin-bottom:26px}
+.compass-layout{display:grid;gap:28px;align-items:center}
+.dial{position:relative;width:min(330px,86vw);aspect-ratio:1;margin:0 auto}
+.dial .ring{position:absolute;inset:14%;border-radius:50%;border:2px solid rgba(233,166,38,.5);
+  background:repeating-conic-gradient(from -22.5deg,rgba(233,166,38,.10) 0 45deg,rgba(233,166,38,.02) 45deg 90deg)}
+.needle{position:absolute;left:50%;top:18%;width:18px;height:64%;margin-left:-9px;
+  background:linear-gradient(180deg,var(--haldi) 50%,#9b7a60 50%);clip-path:polygon(50% 0,100% 50%,50% 100%,0 50%);
+  transition:transform .5s cubic-bezier(.3,1.4,.5,1)}
+.hub{position:absolute;left:50%;top:50%;width:22px;height:22px;margin:-11px;border-radius:50%;background:var(--haldi);border:3px solid var(--deep)}
+.dir{position:absolute;width:62px;height:62px;margin:-31px;border-radius:50%;border:2px solid rgba(233,166,38,.55);
+  background:#5a160f;color:#F7E9D2;font:700 15px/1.05 'Mukta',sans-serif;cursor:pointer;display:grid;place-content:center;text-align:center}
+.dir small{display:block;font-size:11px;font-weight:500;opacity:.8}
+.dir[aria-pressed="true"]{background:var(--haldi);color:var(--deep);border-color:#fff}
+.tip{background:#FFF9EE;color:var(--ink);border-radius:14px;padding:22px;min-height:170px;border-left:6px solid var(--haldi)}
+.tip h3{color:var(--sindoor);font-size:26px;margin-bottom:6px}
+.tip p{font-size:17px}
+.tip .more{margin-top:12px;font-size:15px;color:var(--muted)}
+
+/* lists */
+.problems{display:grid;gap:10px;margin:8px 0 18px}
+.problems li{list-style:none;background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:12px 16px 12px 46px;position:relative}
+.problems li::before{content:"";position:absolute;left:16px;top:50%;width:16px;height:16px;margin-top:-8px;border-radius:50%;border:3px solid var(--sindoor-2)}
+.bridge{font-size:19px}
+.bridge b{color:var(--sindoor)}
+
+.inside{display:grid;gap:0;border-top:1px solid var(--line)}
+.inside li{list-style:none;display:flex;gap:14px;padding:14px 4px;border-bottom:1px solid var(--line)}
+.inside .ic{flex:none;width:28px;height:28px;border-radius:50%;background:var(--leaf);color:#fff;display:grid;place-content:center;margin-top:2px}
+
+.who{display:flex;flex-wrap:wrap;gap:10px}
+.who span{background:var(--haldi-soft);color:var(--deep);font-weight:500;padding:8px 16px;border-radius:30px}
+
+.bonus-sec{background:linear-gradient(180deg,#FFF0D2,#FFF9EE)}
+.bonus{display:grid;gap:14px}
+.bonus div{background:var(--paper);border:2px dashed var(--haldi);border-radius:12px;padding:16px 18px;display:flex;justify-content:space-between;gap:12px;align-items:center}
+.bonus b{display:block;font-size:19px}
+.bonus small{color:var(--muted);font-size:15px}
+.bonus .free{flex:none;background:var(--sindoor);color:#fff;font-weight:800;font-size:14px;padding:4px 12px;border-radius:6px}
+
+.steps{counter-reset:s;display:grid;gap:16px}
+.steps li{list-style:none;counter-increment:s;display:flex;gap:16px;align-items:flex-start}
+.steps li::before{content:counter(s);flex:none;width:44px;height:44px;border-radius:50%;background:var(--sindoor);color:var(--haldi-soft);font-family:'Rozha One',serif;font-size:24px;display:grid;place-content:center}
+.steps b{display:block;font-size:19px}
+.steps span{color:var(--muted);font-size:16px}
+
+/* offer box */
+.offer{background:var(--paper);border:3px solid var(--sindoor);border-radius:18px;padding:28px 22px;text-align:center;box-shadow:0 18px 40px -18px rgba(62,11,7,.4);position:relative}
+.offer .ribbon{position:absolute;top:-16px;left:50%;transform:translateX(-50%);background:var(--sindoor);color:#fff;font-weight:700;font-size:15px;padding:4px 18px;border-radius:20px;white-space:nowrap}
+.offer h2{margin-bottom:6px}
+.offer ul{text-align:left;margin:18px auto;max-width:340px}
+.offer li{list-style:none;padding:5px 0 5px 30px;position:relative}
+.offer li::before{content:"✓";position:absolute;left:4px;color:var(--leaf);font-weight:800}
+.offer .price-line{justify-content:center}
+.offer .cta{margin:6px auto 0}
+.offer .note{font-size:14px;color:var(--muted);margin-top:14px}
+
+/* faq */
+details{border-bottom:1px solid var(--line)}
+summary{cursor:pointer;list-style:none;font-weight:700;padding:16px 36px 16px 0;position:relative}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";position:absolute;right:6px;top:10px;font-size:26px;color:var(--sindoor);transition:transform .2s}
+details[open] summary::after{transform:rotate(45deg)}
+details p{padding:0 0 16px;color:var(--muted)}
+
+footer{background:var(--deep);color:#CDB59A;font-size:14px;padding:30px 0 20px;text-align:center}
+footer a{color:var(--haldi-soft)}
+.disclaimer{max-width:640px;margin:0 auto 14px}
+
+/* sticky bar */
+.sticky{position:fixed;left:0;right:0;bottom:0;z-index:20;background:rgba(62,11,7,.97);
+  padding:10px 16px calc(10px + env(safe-area-inset-bottom,0px));display:flex;align-items:center;gap:12px;justify-content:center;
+  transform:translateY(110%);transition:transform .3s;box-shadow:0 -6px 20px rgba(0,0,0,.25)}
+.sticky.show{transform:none}
+.sticky .p{color:#fff;line-height:1.1;flex:none}
+.sticky .p s{color:#C9A88A;font-size:14px;display:block}
+.sticky .p b{font-family:'Rozha One',serif;font-size:28px;color:var(--haldi-soft)}
+.sticky .cta{font-size:18px;padding:12px 16px;max-width:280px;box-shadow:0 4px 0 #A86D08}
+
+@media (min-width:820px){
+  section{padding:80px 0}
+  .hero{padding:64px 0 80px}
+  .hero-grid{grid-template-columns:1.15fr .85fr;gap:48px}
+  .hero-grid .book{order:0;width:300px}
+  .two>div+div{margin-top:0}
+  .compass-layout{grid-template-columns:1fr 1fr}
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start}
+  .bonus{grid-template-columns:repeat(3,1fr)}
+  .bonus div{flex-direction:column;align-items:flex-start}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+
+.phone{width:min(250px,68vw);margin:0 auto;background:#fff;border:3px solid var(--deep);border-radius:26px;padding:14px 12px 16px;box-shadow:0 24px 40px -14px rgba(62,11,7,.5);transform:rotate(-2deg);position:relative}
+.phone .bar{background:var(--sindoor);color:var(--haldi-soft);border-radius:12px;text-align:center;padding:10px 8px;font-family:'Rozha One',serif;font-size:15px;line-height:1.25}
+.phone .chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.phone .chips span{background:var(--haldi-soft);color:var(--deep);font-size:13px;font-weight:700;padding:5px 10px;border-radius:14px}
+.phone .row{margin-top:10px;border:1px solid var(--line);border-radius:10px;padding:8px 10px;font-size:14px;color:var(--muted)}
+.phone .row b{color:var(--deep)}
+.feat{display:grid;gap:14px}
+.feat div{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:16px 18px}
+.feat b{display:block;font-size:19px;color:var(--sindoor);margin-bottom:4px}
+.feat span{color:var(--muted);font-size:16px}
+.share{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;max-width:420px;margin:14px auto 0;background:#25D366;color:#073B1E;font-weight:800;font-size:19px;text-decoration:none;padding:14px 20px;border-radius:12px}
+@media (min-width:820px){.feat{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+
+<div class="strip">🎉 परिचय-ऑफर: <b>28 फ़रवरी 2027 तक सभी सुविधाएँ निःशुल्क</b></div>
+
+<header class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <h1>कुंडली, पंचांग, मिलान और मुहूर्त, एक ही ऐप में</h1>
+      <p class="sub">वरहिया समाज के लिए बना ऐप, सरल हिंदी में। जैन तिथि, पंच कल्याणक और पर्व सहित।</p>
+      <div class="price-line"><span class="now">निःशुल्क</span><span class="tag">28/2/2027 तक</span></div>
+      <a class="cta open" href="#">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7"/><path d="M8 7h9v9"/></svg>
+        ऐप खोलें (निःशुल्क)
+      </a>
+      <div class="trust">
+        <span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" aria-hidden="true"><path d="m5 12 5 5 9-10"/></svg>लॉगिन नहीं</span>
+        <span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" aria-hidden="true"><path d="m5 12 5 5 9-10"/></svg>पूरा हिंदी में</span>
+        <span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" aria-hidden="true"><path d="m5 12 5 5 9-10"/></svg>मोबाइल पर सीधे खुलता है</span>
+      </div>
+    </div>
+    <div class="phone" aria-hidden="true">
+      <div class="bar">वरहिया जैन ज्योतिष दर्शन</div>
+      <div class="chips"><span>कुंडली</span><span>मिलान</span><span>पंचांग</span><span>मुहूर्त</span><span>वास्तु</span><span>जैन संस्कार</span></div>
+      <div class="row"><b>गुण-मिलान</b> · 36 में से अंक व विस्तृत फल</div>
+      <div class="row"><b>जैन तिथि</b> · पंच कल्याणक व पर्व</div>
+      <div class="row"><b>शुभ मुहूर्त</b> · तारीख़ व समय सहित</div>
+    </div>
+  </div>
+</header>
+
+<section>
+  <div class="wrap">
+    <h2>इस ऐप में क्या-क्या है</h2>
+    <div class="feat">
+      <div><b>जन्म कुंडली व फलादेश</b><span>जन्म-विवरण से कुंडली, ग्रह-स्थिति, दशा और फल।</span></div>
+      <div><b>गुण-मिलान: नाम से और जन्म से</b><span>36 गुण, मांगलिक विचार, हर कूट का विस्तृत फल व उपाय, और PDF रिपोर्ट।</span></div>
+      <div><b>जैन पंचांग</b><span>जैन तिथि, पंच कल्याणक, पर्व, वीर निर्वाण संवत, भद्रा और सर्वार्थ सिद्धि जैसे योग, समय सहित।</span></div>
+      <div><b>शुभ मुहूर्त</b><span>विवाह, गृह-प्रवेश, वाहन-ख़रीद सहित अनेक कार्यों के मुहूर्त, तारीख़ और समय के साथ।</span></div>
+      <div><b>वास्तु</b><span>दिशा, कमरे, द्वार और माप-विचार, कारण, प्रभाव और उपाय सहित।</span></div>
+      <div><b>जैन संस्कार व अंक ज्योतिष</b><span>संस्कारों की जानकारी और नाम/जन्म-तिथि से अंक विचार।</span></div>
+      <div><b>कुंडलियाँ सहेजें</b><span>परिवार की कुंडलियाँ एक बार सहेजें, फिर बार-बार भरना नहीं।</span></div>
+      <div><b>दो भाषाएँ</b><span>हिंदी और अंग्रेज़ी, एक बटन से।</span></div>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:0">
+  <div class="wrap narrow">
+    <h2>यह ऐप किसके लिए है</h2>
+    <div class="who">
+      <span>वरहिया समाज के परिवार</span><span>विवाह-योग्य युवक-युवतियों के माता-पिता</span><span>पंडित व विद्वान</span>
+      <span>नया घर या दुकान बनाने वाले</span><span>जैन पर्व-तिथि देखने वाले</span><span>शुभ कार्य की तारीख़ खोजने वाले</span>
+    </div>
+  </div>
+</section>
+
+<section class="bonus-sec">
+  <div class="wrap">
+    <h2>शुरू करना आसान है</h2>
+    <ol class="steps narrow">
+      <li><div><b>नीचे का बटन दबाकर ऐप खोलें</b><span>कोई डाउनलोड या लॉगिन नहीं</span></div></li>
+      <li><div><b>एक बार पंजीकरण करें</b><span>नाम, मोबाइल और शहर, ताकि हेल्प डेस्क आपको नई सुविधाओं की जानकारी दे सके</span></div></li>
+      <li><div><b>कुंडली देखें, मिलान करें, मुहूर्त खोजें</b><span>ब्राउज़र के मेनू से "होम स्क्रीन पर जोड़ें" करने पर ऐप की तरह खुलेगा</span></div></li>
+    </ol>
+  </div>
+</section>
+
+<section id="offer" style="padding-top:20px">
+  <div class="wrap narrow">
+    <div class="offer">
+      <span class="ribbon">परिचय-ऑफर</span>
+      <h2>28 फ़रवरी 2027 तक सब निःशुल्क</h2>
+      <p style="color:var(--muted)">कुंडली, पंचांग, मिलान, मुहूर्त और वास्तु, सब कुछ खुला है।</p>
+      <ul>
+        <li>कुंडली, पंचांग, मुहूर्त, गुण-मिलान: निःशुल्क</li>
+        <li>विस्तृत मिलान-फल व PDF रिपोर्ट: अभी निःशुल्क</li>
+        <li>वास्तु उपाय व माप-विचार: अभी निःशुल्क</li>
+        <li>असीमित कुंडलियाँ सहेजना: अभी निःशुल्क</li>
+        <li>उसके बाद कुछ ख़ास सुविधाएँ सदस्यता में (₹149 प्रति वर्ष); मुख्य सुविधाएँ निःशुल्क रहेंगी</li>
+      </ul>
+      <a class="cta open" href="#">ऐप खोलें (निःशुल्क)</a>
+      <a class="share" id="wa" href="#">📲 WhatsApp पर परिवार को भेजें</a>
+      <p class="note">कृपया अपने परिवार और समाज के समूहों में भी भेजें।</p>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:20px">
+  <div class="wrap narrow">
+    <h2>अक्सर पूछे जाने वाले सवाल</h2>
+    <details><summary>क्या सच में निःशुल्क है?</summary><p>हाँ। 28 फ़रवरी 2027 तक ऐप की सभी सुविधाएँ निःशुल्क हैं। उसके बाद मुख्य सुविधाएँ निःशुल्क रहेंगी और कुछ ख़ास सुविधाएँ सदस्यता (₹149 प्रति वर्ष) में होंगी।</p></details>
+    <details><summary>क्या लॉगिन या डाउनलोड करना पड़ेगा?</summary><p>नहीं। लिंक खोलते ही ऐप चलता है। केवल पहली बार नाम, मोबाइल और शहर से पंजीकरण करना होता है।</p></details>
+    <details><summary>मेरी कुंडली की जानकारी कहाँ रहती है?</summary><p>जन्म-विवरण और सहेजी कुंडलियाँ आपके अपने फ़ोन में रहती हैं। पंजीकरण में केवल नाम, मोबाइल और शहर, आपकी सहमति से, वरहिया हेल्प डेस्क को WhatsApp से भेजे जाते हैं।</p></details>
+    <details><summary>पंचांग कितना सटीक है?</summary><p>गणना खगोलीय सूत्रों से की जाती है और स्थान के अनुसार सूर्योदय आदि निकाले जाते हैं। फिर भी अलग-अलग पंचांगों में गणना-पद्धति के कारण कुछ मिनट का अंतर हो सकता है। विवाह जैसे बड़े शुभ कार्य के लिए अपने विद्वान पंडित से भी पुष्टि कर लें।</p></details>
+    <details><summary>फ़ोन में ऐप की तरह कैसे रखें?</summary><p>ब्राउज़र (Chrome) के तीन बिंदु वाले मेनू में "होम स्क्रीन पर जोड़ें" चुनें। फिर वह आइकन से सीधे खुलेगा।</p></details>
+    <details><summary>कोई दिक्कत आए तो?</summary><p>वरहिया हेल्प डेस्क को WhatsApp पर संदेश भेजें: 99770 04518।</p></details>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p class="disclaimer">अस्वीकरण: ज्योतिष, मुहूर्त और वास्तु की जानकारी पारंपरिक मान्यताओं पर आधारित सामान्य मार्गदर्शन है। किसी विशेष परिणाम की गारंटी नहीं दी जाती। महत्त्वपूर्ण निर्णय योग्य विद्वान से परामर्श के बाद लें।</p>
+    <p>संपर्क (WhatsApp): <a href="https://wa.me/919977004518">99770 04518</a></p>
+    <p style="margin-top:8px">वरहिया हेल्प डेस्क · विमल कुमार जैन, एडवोकेट · © <span id="yr"></span></p>
+  </div>
+</footer>
+
+<div class="sticky" id="sticky" aria-hidden="true">
+  <div class="p"><b>निःशुल्क</b></div>
+  <a class="cta open" href="#" tabindex="-1">ऐप खोलें</a>
+</div>
+
+<script>
+var APP_URL="https://vimalshubham3-tech.github.io/varahiya-kundli/";
+document.querySelectorAll('.open').forEach(function(a){a.href=APP_URL;});
+var msg="जय जिनेन्द्र 🙏\nवरहिया जैन ज्योतिष दर्शन ऐप, 28 फ़रवरी 2027 तक निःशुल्क।\nकुंडली, गुण-मिलान, जैन पंचांग, शुभ मुहूर्त और वास्तु, हिंदी में।\n\n"+APP_URL;
+document.getElementById('wa').href="https://wa.me/?text="+encodeURIComponent(msg);
+var sticky=document.getElementById('sticky'),hero=document.querySelector('.hero'),offer=document.getElementById('offer');
+function onScroll(){
+  var past=hero.getBoundingClientRect().bottom<0;
+  var ob=offer.getBoundingClientRect(),inOffer=ob.top<window.innerHeight&&ob.bottom>0;
+  var show=past&&!inOffer;sticky.classList.toggle('show',show);
+  sticky.setAttribute('aria-hidden',show?'false':'true');
+  sticky.querySelector('a').tabIndex=show?0:-1;
+}
+window.addEventListener('scroll',onScroll,{passive:true});onScroll();
+document.getElementById('yr').textContent=new Date().getFullYear();
+</script>
+</body>
+</html>
