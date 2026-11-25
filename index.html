@@ -136,7 +136,7 @@ tr.cur td{background:#fdf1d2;font-weight:600}
 .about b{color:var(--maroon)}.about p{margin:4px 0}
 @media print{.brand .pbtn,.nmtools,.totop,.lang,.about{display:none!important}.brand{background:#fff;color:#000;border-bottom:2px solid #000}.brand b{color:#000}.brand span{color:#000}#nm_body{font-size:13px}}
 </style>
-<meta name="vj-ver" content="101">
+<meta name="vj-ver" content="102">
 </head>
 <body>
 <div class="brand"><b id="t-brand"></b><span id="t-slogan"></span></div>
@@ -5561,7 +5561,7 @@ D.addEventListener("change",function(e){
 
 /* ===== v79: नए संस्करण की सूचना ===== */
 (function(){try{
-var D=document,VER=101,SITE="https://vimalshubham3-tech.github.io/varahiya-kundli/";
+var D=document,VER=102,SITE="https://vimalshubham3-tech.github.io/varahiya-kundli/";
 var st=D.createElement("style");
 st.textContent="#vj_upd{position:fixed;left:8px;right:8px;bottom:8px;z-index:9998;background:#7a3b10;color:#fff;border-radius:12px;padding:10px 12px;display:flex;gap:8px;align-items:center;font-size:14px;box-shadow:0 2px 10px rgba(0,0,0,.35)}#vj_upd span{flex:1}#vj_upd button,#vj_upd a{border:0;border-radius:8px;padding:8px 10px;background:#fff;color:#7a3b10;font:inherit;font-weight:700;text-decoration:none}#vj_upd .x{background:transparent;color:#fff;padding:8px}@media print{#vj_upd{display:none!important}}";
 D.head.appendChild(st);
@@ -5664,6 +5664,39 @@ bar.insertBefore(l,bar.firstChild);
   });
   h+='<p class="kmeta">ये परंपरागत जैन प्रश्न-नियम हैं; गंभीर विषयों (रोग, गर्भ, मुकदमा) में चिकित्सक/वकील की सलाह अवश्य लें।</p></div>';
   var w=D.createElement('div');w.innerHTML=h;pj.appendChild(w.firstChild);
+}catch(e){console&&console.error&&console.error(e);}})();
+
+/* v102: "ऐप फ़ोन में रखें" — एक दबाव में इंस्टॉल (Android), iPhone के लिए निर्देश */
+(function(){try{
+  var D=document,DK="vj_inst_x";
+  if(window.matchMedia&&window.matchMedia("(display-mode: standalone)").matches)return;
+  if(navigator.standalone)return;
+  if(location.protocol==="https:"&&"serviceWorker" in navigator){try{navigator.serviceWorker.register("sw.js");}catch(e){}}
+  var dp=null;
+  function dismissed(){try{return +localStorage.getItem(DK)>Date.now();}catch(e){return false;}}
+  function later(){try{localStorage.setItem(DK,String(Date.now()+7*864e5));}catch(e){}}
+  function bar(html){
+    if(D.getElementById("vj_inst")||dismissed())return null;
+    var d=D.createElement("div");d.id="vj_inst";
+    d.style.cssText="background:#fff4d6;border-bottom:2px solid #c9a227;padding:10px 12px;display:flex;gap:10px;align-items:center;font-size:15px;line-height:1.4;color:#3b1d0a";
+    d.innerHTML=html+'<button type="button" id="vj_inst_x" aria-label="बंद करें" style="margin-left:auto;border:0;background:transparent;font-size:22px;line-height:1;color:#6b1d2a">×</button>';
+    var br=D.querySelector(".brand");if(br&&br.parentNode)br.parentNode.insertBefore(d,br.nextSibling);else D.body.insertBefore(d,D.body.firstChild);
+    d.querySelector("#vj_inst_x").onclick=function(){later();d.remove();};
+    return d;
+  }
+  window.addEventListener("beforeinstallprompt",function(e){
+    e.preventDefault();dp=e;
+    var d=bar('<span>📲 इस ऐप को फ़ोन में रख लें, फिर आइकन से सीधे खुलेगा।</span><button type="button" id="vj_inst_go" style="border:0;border-radius:10px;background:#6b1d2a;color:#fff;padding:9px 14px;font:inherit;font-weight:700;white-space:nowrap">इंस्टॉल करें</button>');
+    if(d)d.querySelector("#vj_inst_go").onclick=function(){
+      if(!dp)return;dp.prompt();
+      dp.userChoice.then(function(){dp=null;var x=D.getElementById("vj_inst");if(x)x.remove();});
+    };
+  });
+  window.addEventListener("appinstalled",function(){var x=D.getElementById("vj_inst");if(x)x.remove();});
+  var ua=navigator.userAgent||"";
+  if(/iphone|ipad|ipod/i.test(ua)&&/safari/i.test(ua)&&!/crios|fxios/i.test(ua)){
+    bar('<span>📲 फ़ोन में रखने के लिए नीचे <b>Share (⬆️)</b> दबाएँ, फिर <b>"Add to Home Screen"</b> चुनें।</span>');
+  }
 }catch(e){console&&console.error&&console.error(e);}})();
 
 </script>
