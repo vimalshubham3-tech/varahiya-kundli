@@ -136,7 +136,7 @@ tr.cur td{background:#fdf1d2;font-weight:600}
 .about b{color:var(--maroon)}.about p{margin:4px 0}
 @media print{.brand .pbtn,.nmtools,.totop,.lang,.about{display:none!important}.brand{background:#fff;color:#000;border-bottom:2px solid #000}.brand b{color:#000}.brand span{color:#000}#nm_body{font-size:13px}}
 </style>
-<meta name="vj-ver" content="111">
+<meta name="vj-ver" content="112">
 </head>
 <body>
 <div class="brand"><b id="t-brand"></b><span id="t-slogan"></span></div>
@@ -5563,7 +5563,7 @@ D.addEventListener("change",function(e){
 
 /* ===== v79: नए संस्करण की सूचना ===== */
 (function(){try{
-var D=document,VER=111,SITE="https://vimalshubham3-tech.github.io/varahiya-kundli/";
+var D=document,VER=112,SITE="https://vimalshubham3-tech.github.io/varahiya-kundli/";
 var st=D.createElement("style");
 st.textContent="#vj_upd{position:fixed;left:8px;right:8px;bottom:8px;z-index:9998;background:#7a3b10;color:#fff;border-radius:12px;padding:10px 12px;display:flex;gap:8px;align-items:center;font-size:14px;box-shadow:0 2px 10px rgba(0,0,0,.35)}#vj_upd span{flex:1}#vj_upd button,#vj_upd a{border:0;border-radius:8px;padding:8px 10px;background:#fff;color:#7a3b10;font:inherit;font-weight:700;text-decoration:none}#vj_upd .x{background:transparent;color:#fff;padding:8px}@media print{#vj_upd{display:none!important}}";
 D.head.appendChild(st);
@@ -5850,24 +5850,26 @@ if(fb&&!document.getElementById("vj_pl")){var d=document.createElement("div");d.
     };
     if(/[?&]rf=1/.test(location.search)){setTimeout(function(){setMode('t');},300);}
     if(/[?&]jt=1/.test(location.search)){setTimeout(function(){setMode('h');},300);}
-    // पहली स्क्रीन पर ही सूचना चालू करने का न्योता (अंतिम टैब तक जाना न पड़े)
+    // पहली स्क्रीन पर सूचना चालू करने की पट्टी — "बाद में" का विकल्प नहीं; अनुमति मिलने तक हर बार आती है
     try{
-      var sk=+(localStorage.getItem('vj_pn_skip')||0);
-      if(Notification.permission==='default'&&localStorage.getItem('vj_reg_v1')&&Date.now()-sk>7*864e5){
-        setTimeout(function(){
-          var pbn=D.createElement('div');pbn.id='vj_pnb';
-          pbn.style.cssText='position:fixed;left:8px;right:8px;top:8px;z-index:99999;background:#fff7e0;border:1px solid #d9a441;border-radius:12px;padding:10px;box-shadow:0 2px 10px #0003;font-size:14px';
-          pbn.innerHTML='🔔 <b>रोज़ सुबह जैन तिथि, कल्याणक, पर्व व राशिफल की सूचना पाएँ</b><div style="margin-top:6px"><button type="button" id="pnb_y">✔ सूचना चालू करें</button> <button type="button" id="pnb_n">बाद में</button></div>';
-          D.body.appendChild(pbn);
-          D.getElementById('pnb_n').onclick=function(){try{localStorage.setItem('vj_pn_skip',String(Date.now()));}catch(e){}pbn.remove();};
-          D.getElementById('pnb_y').onclick=function(){
-            var r=pb.onclick();
-            Promise.resolve(r).then(function(){
-              if(Notification.permission==='granted'){pbn.innerHTML='✅ <b>सूचना चालू हो गई।</b> हर सुबह लगभग 6 बजे आएगी।';setTimeout(function(){pbn.remove();},2500);}
-              else{try{localStorage.setItem('vj_pn_skip',String(Date.now()));}catch(e){}pbn.remove();}
-            });
-          };
-        },2500);
+      if(localStorage.getItem('vj_reg_v1')){
+        var pr=Notification.permission;
+        if(pr==='granted'){setTimeout(function(){pb.onclick();},1500);} // अनुमति है तो चुपचाप सदस्यता ताज़ा/दोबारा भेजें
+        else{
+          setTimeout(function(){
+            var pbn=D.createElement('div');pbn.id='vj_pnb';
+            pbn.style.cssText='position:fixed;left:8px;right:8px;top:8px;z-index:99999;background:#fff7e0;border:1px solid #d9a441;border-radius:12px;padding:10px;box-shadow:0 2px 10px #0003;font-size:14px';
+            if(pr==='denied'){pbn.innerHTML='🔔 <b>सूचना अवरुद्ध है।</b> जैन तिथि, कल्याणक, पर्व व राशिफल की रोज़ की सूचना पाने के लिए Chrome में ⋮ → सेटिंग → साइट सेटिंग → सूचनाएँ में इस साइट को <b>अनुमति (Allow)</b> दें।';D.body.appendChild(pbn);return;}
+            pbn.innerHTML='🔔 <b>रोज़ सुबह जैन तिथि, कल्याणक, पर्व व राशिफल की सूचना पाने के लिए अनुमति दें</b><div style="margin-top:6px"><button type="button" id="pnb_y">✔ सूचना चालू करें</button></div>';
+            D.body.appendChild(pbn);
+            D.getElementById('pnb_y').onclick=function(){
+              Promise.resolve(pb.onclick()).then(function(){
+                if(Notification.permission==='granted'){pbn.innerHTML='✅ <b>सूचना चालू हो गई।</b> हर सुबह लगभग 6 बजे आएगी।';setTimeout(function(){pbn.remove();},2500);}
+                else{pbn.innerHTML='🔔 <b>अनुमति नहीं मिली।</b> सूचना पाने के लिए Chrome ⋮ → सेटिंग → साइट सेटिंग → सूचनाएँ में इस साइट को Allow दें।';}
+              });
+            };
+          },2500);
+        }
       }
     }catch(e){}
   })();
