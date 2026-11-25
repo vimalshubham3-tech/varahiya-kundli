@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src 'self' data:; connect-src 'self'; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="theme-color" content="#1f3a5f">
-<meta name="kn-ver" content="5">
+<meta name="kn-ver" content="6">
 <title>निःशुल्क कानूनी मार्गदर्शन</title>
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="../icon-192.png">
@@ -332,7 +332,9 @@ var T=[
  h:["वरिष्ठ नागरिक हेल्पलाइन 14567 पर सलाह ली जा सकती है।","SDM कार्यालय में सादे काग़ज़ पर आवेदन दें।"],
  d:["आयु और संबंध का प्रमाण, आमदनी का ब्यौरा"]}
 ];
-var CATS=["सभी"];T.forEach(function(x){if(CATS.indexOf(x.cat)<0)CATS.push(x.cat);});
+var MAP={"fir": "पुलिस व अपराध", "arrest": "पुलिस व अपराध", "bail": "पुलिस व अपराध", "policecomp": "पुलिस व अपराध", "cheating": "पुलिस व अपराध", "atrocities": "पुलिस व अपराध", "cyber": "पुलिस व अपराध", "maint": "परिवार व महिला", "dv": "परिवार व महिला", "divorce": "परिवार व महिला", "marriagereg": "परिवार व महिला", "adoption": "परिवार व महिला", "posh": "परिवार व महिला", "daughter": "परिवार व महिला", "succession": "परिवार व महिला", "heirdoc": "परिवार व महिला", "child": "परिवार व महिला", "will": "परिवार व महिला", "land": "ज़मीन व मकान", "propbuy": "ज़मीन व मकान", "neighbour": "ज़मीन व मकान", "tenant": "ज़मीन व मकान", "consumer": "पैसा व बैंक", "cheque": "पैसा व बैंक", "bankloan": "पैसा व बैंक", "insurance": "पैसा व बैंक", "legalnotice": "पैसा व बैंक", "accident": "पैसा व बैंक", "labour": "पैसा व बैंक", "rti": "सरकारी काम", "schemes": "सरकारी काम", "samiti": "सरकारी काम", "affidavit": "सरकारी काम", "electricity": "सरकारी काम", "ration": "सरकारी काम", "birth": "सरकारी काम", "traffic": "सरकारी काम", "legal-aid": "अदालत व मदद", "lokadalat": "अदालत व मदद", "summons": "अदालत व मदद", "civilcrim": "अदालत व मदद", "ecourts": "अदालत व मदद", "disability": "अदालत व मदद", "senior": "अदालत व मदद"};T.forEach(function(x){if(MAP[x.id])x.cat=MAP[x.id];});
+var TOP=["fir", "rti", "land", "cheque", "dv", "consumer", "legal-aid", "cyber", "daughter", "bankloan"],TOPC="⭐ ज़्यादा काम के";
+var CATS=["सभी",TOPC];T.forEach(function(x){if(CATS.indexOf(x.cat)<0)CATS.push(x.cat);});
 var $=function(i){return document.getElementById(i);},cur="सभी",term="";
 function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});}
 function ul(a){return"<ul>"+a.map(function(x){return"<li>"+esc(x)+"</li>";}).join("")+"</ul>";}
@@ -343,7 +345,7 @@ function share(x){
 function render(){
  var q=term.trim().toLowerCase(),L=$("list"),out=[];
  T.forEach(function(x){
-  if(cur!=="सभी"&&x.cat!==cur)return;
+  if(cur===TOPC){if(TOP.indexOf(x.id)<0)return;}else if(cur!=="सभी"&&x.cat!==cur)return;
   var hay=(x.t+" "+x.s+" "+x.a.join(" ")+" "+x.h.join(" ")+" "+(x.d||[]).join(" ")).toLowerCase();
   if(q&&hay.indexOf(q)<0)return;out.push(x);
  });
