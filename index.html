@@ -5244,6 +5244,142 @@ D.addEventListener('click',function(e){
 });
 }catch(e){console.error('v72',e);}})();
 
+/* ===== v73: सहेजी कुंडलियाँ + उपयोगकर्ता पंजीकरण (वैकल्पिक) ===== */
+(function(){try{
+var D=document, KEY="vj_kundli_v1", RKEY="vj_reg_v1", OKEY="vj_opens_v1";
+var HELP_WA="919977004518";
+/* वैकल्पिक: Google Form से भी पंजीकरण सीधे पहुँचे तो यहाँ भरें (अभी खाली = केवल WhatsApp) */
+var REG_ENDPOINT="", REG_KEYS={name:"",mobile:"",city:""};
+function ld(k,d){try{var v=localStorage.getItem(k);return v?JSON.parse(v):d;}catch(e){return d;}}
+function sv(k,v){try{localStorage.setItem(k,JSON.stringify(v));return true;}catch(e){return false;}}
+function list(){var a=ld(KEY,[]);return Array.isArray(a)?a:[];}
+function lbl(p){
+  var s=p.name||"(बिना नाम)";
+  if(p.date){var x=p.date.split("-");s+=" — "+x[2]+"/"+x[1]+"/"+x[0];}
+  if(p.time&&!p.unk) s+=" "+p.time;
+  if(p.place!==""&&p.place!=null&&p.place!=="other"&&CITIES[+p.place]) s+=" · "+CITIES[+p.place][0];
+  return s;
+}
+function ev(el,n){el.dispatchEvent(new Event(n,{bubbles:true}));}
+function setv(el,v,evs){if(!el)return;el.value=v;(evs||["input","change"]).forEach(function(n){ev(el,n);});}
+function bind(person,k,nameId,dateId,full){
+  if(person.getAttribute("data-sv")) return; person.setAttribute("data-sv","1");
+  var tb=D.createElement("div"); tb.className="svbar";
+  tb.innerHTML='<select class="svsel" aria-label="सहेजी कुंडली चुनें"></select><button type="button" class="svsave">💾 सहेजें</button>';
+  person.insertBefore(tb,person.children[1]||null);
+  var sel=tb.querySelector(".svsel");
+  function fill(){
+    var a=list(),cur=sel.value;
+    sel.innerHTML='<option value="">📂 सहेजी कुंडली चुनें ('+a.length+')…</option>'+a.map(function(p){return '<option value="'+esc(p.id)+'">'+esc(lbl(p))+'</option>';}).join("");
+    sel.value=cur;
+  }
+  tb.__fill=fill; fill();
+  sel.addEventListener("change",function(){
+    var p=list().filter(function(x){return x.id===sel.value;})[0]; if(!p) return;
+    if(full){
+      var u=D.getElementById(k+"_unk"); if(u){u.checked=!!p.unk;ev(u,"change");}
+      setv(D.getElementById(k+"_name"),p.name||"");
+      setv(D.getElementById(k+"_date"),p.date||"");
+      setv(D.getElementById(k+"_time"),p.time||"");
+      var pl=D.getElementById(k+"_place"); if(pl){pl.value=(p.place==null?"":p.place);ev(pl,"change");}
+      if(p.place==="other"){setv(D.getElementById(k+"_lat"),p.lat||"");setv(D.getElementById(k+"_lon"),p.lon||"");}
+      setv(D.getElementById(k+"_off"),p.off||"5.5");
+    }else{
+      setv(D.getElementById(nameId),p.name||""); setv(D.getElementById(dateId),p.date||"");
+    }
+  });
+  tb.querySelector(".svsave").addEventListener("click",function(){
+    var g=function(id){var e=D.getElementById(id);return e?e.value:"";};
+    var nm=g(nameId).trim(), dt=g(dateId);
+    if(!nm||!dt){alert("सहेजने के लिए नाम और जन्म-तिथि भरें।");return;}
+    var p={id:"",name:nm,date:dt,time:"",unk:false,place:"",lat:"",lon:"",off:"5.5"};
+    if(full){var u=D.getElementById(k+"_unk");p.unk=!!(u&&u.checked);p.time=g(k+"_time");p.place=g(k+"_place");p.lat=g(k+"_lat");p.lon=g(k+"_lon");p.off=g(k+"_off")||"5.5";}
+    var a=list(),ix=-1;
+    a.forEach(function(x,i){if(x.name===p.name&&x.date===p.date)ix=i;});
+    if(ix>=0){
+      /* पूरी प्रविष्टि को केवल नाम-तिथि वाली प्रविष्टि से न मिटाएँ */
+      if(!full&&a[ix].time) {alert("यह कुंडली पहले से पूरे विवरण के साथ सहेजी है।");return;}
+      p.id=a[ix].id;a[ix]=p;
+    }else{p.id="k"+Date.now().toString(36)+Math.floor(Math.random()*1e4).toString(36);a.unshift(p);}
+    if(!sv(KEY,a)){alert("इस ब्राउज़र में सहेजना संभव नहीं (प्राइवेट मोड?)।");return;}
+    refreshAll(); sel.value=p.id;
+    var b=tb.querySelector(".svsave"),o=b.textContent;b.textContent="✔ सहेज लिया";setTimeout(function(){b.textContent=o;},1400);
+  });
+}
+function refreshAll(){D.querySelectorAll(".svbar").forEach(function(t){if(t.__fill)t.__fill();});}
+function scan(){
+  D.querySelectorAll(".person").forEach(function(p){
+    var n=p.querySelector('input[id$="_name"]'),d=p.querySelector('input[id$="_date"]');
+    if(n&&d&&n.id.slice(0,-5)===d.id.slice(0,-5)){bind(p,n.id.slice(0,-5),n.id,d.id,true);return;}
+    var gn=p.querySelector("#gn,#bn"),gd=p.querySelector("#gd,#bd");
+    if(gn&&gd) bind(p,"",gn.id,gd.id,false);
+  });
+}
+scan();
+D.querySelectorAll(".tab").forEach(function(b){b.addEventListener("click",function(){setTimeout(scan,50);});});
+
+/* ---- मॉडल ---- */
+var css=D.createElement("style");
+css.textContent=".svbar{display:flex;gap:6px;margin:6px 0}.svbar select{flex:1;min-width:0;padding:8px;border-radius:8px;border:1px solid #cdb98a;background:#fffdf7;font:inherit}.svbar button{padding:8px 10px;border:0;border-radius:8px;background:#7a3b10;color:#fff;font:inherit;white-space:nowrap}.vjov{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:9999;display:flex;align-items:flex-end;justify-content:center}.vjbox{background:#fffdf7;width:100%;max-width:520px;max-height:88vh;overflow:auto;border-radius:16px 16px 0 0;padding:16px;box-sizing:border-box}.vjbox h3{margin:0 0 8px}.vjbox label{display:block;margin:8px 0 2px;font-size:14px}.vjbox input[type=text],.vjbox input[type=tel]{width:100%;box-sizing:border-box;padding:9px;border:1px solid #cdb98a;border-radius:8px;font:inherit}.vjbox .b{display:block;width:100%;margin-top:10px;padding:11px;border:0;border-radius:10px;font:inherit;font-weight:700;background:#7a3b10;color:#fff}.vjbox .b.g{background:#e9e1cc;color:#333}.vjbox .it{display:flex;gap:8px;align-items:center;border-bottom:1px solid #eadfc4;padding:6px 0;font-size:14px}.vjbox .it span{flex:1}.vjbox .it button{border:0;background:#f4d9d2;border-radius:6px;padding:5px 9px}.vjbox small{color:#6b5b3a}@media print{.svbar,.vjov{display:none!important}}";
+D.head.appendChild(css);
+function modal(html){
+  var o=D.createElement("div");o.className="vjov";o.innerHTML='<div class="vjbox">'+html+'</div>';
+  o.addEventListener("click",function(e){if(e.target===o)o.remove();});
+  D.body.appendChild(o);return o;
+}
+/* ---- सहेजी कुंडलियाँ प्रबंधन ---- */
+function manage(){
+  var a=list();
+  var o=modal('<h3>💾 सहेजी कुंडलियाँ</h3><small>ये केवल इसी फ़ोन/ब्राउज़र में सहेजी हैं, कहीं भेजी नहीं जातीं।</small><div id="vj_l">'+
+    (a.length?a.map(function(p){return '<div class="it"><span>'+esc(lbl(p))+'</span><button type="button" data-d="'+esc(p.id)+'">हटाएँ</button></div>';}).join(""):'<p>अभी कोई कुंडली सहेजी नहीं है। किसी भी कुंडली या मिलान-फ़ॉर्म में नाम व जन्म-विवरण भरकर 💾 सहेजें दबाएँ।</p>')+
+    '</div><button class="b" id="vj_ex" type="button">⬇ बैकअप फ़ाइल सहेजें</button><button class="b g" id="vj_im" type="button">⬆ बैकअप से वापस लाएँ</button><input id="vj_f" type="file" accept=".json,application/json" hidden><button class="b g" id="vj_x" type="button">बंद करें</button><small>फ़ोन की सफ़ाई या ब्राउज़र-डेटा हटाने पर सहेजी कुंडलियाँ मिट सकती हैं। इसलिए कभी-कभी बैकअप सहेज लें।</small>');
+  o.querySelector("#vj_x").onclick=function(){o.remove();};
+  o.querySelectorAll("[data-d]").forEach(function(b){b.onclick=function(){var id=b.getAttribute("data-d");sv(KEY,list().filter(function(x){return x.id!==id;}));refreshAll();o.remove();manage();};});
+  o.querySelector("#vj_ex").onclick=function(){
+    try{var bl=new Blob([JSON.stringify(list(),null,1)],{type:"application/json"});var u=URL.createObjectURL(bl);var l=D.createElement("a");l.href=u;l.download="varahiya-kundli-backup.json";D.body.appendChild(l);l.click();l.remove();setTimeout(function(){URL.revokeObjectURL(u);},2000);}catch(e){alert("बैकअप नहीं बन सका।");}
+  };
+  o.querySelector("#vj_im").onclick=function(){o.querySelector("#vj_f").click();};
+  o.querySelector("#vj_f").onchange=function(e){
+    var f=e.target.files&&e.target.files[0];if(!f)return;var r=new FileReader();
+    r.onload=function(){try{var inc=JSON.parse(r.result),cur=list(),n=0;if(!Array.isArray(inc))throw 0;
+      inc.forEach(function(p){if(p&&p.name&&p.date&&!cur.some(function(x){return x.name===p.name&&x.date===p.date;})){p.id=p.id||("k"+Date.now().toString(36)+n);cur.push(p);n++;}});
+      sv(KEY,cur);refreshAll();o.remove();alert(n+" कुंडली वापस जोड़ी गईं।");}catch(x){alert("यह बैकअप फ़ाइल पढ़ी नहीं जा सकी।");}};
+    r.readAsText(f);
+  };
+}
+/* ---- उपयोगकर्ता पंजीकरण (वैकल्पिक, सहमति से) ---- */
+function reg(){
+  var r=ld(RKEY,{});
+  var o=modal('<h3>🙏 उपयोगकर्ता पंजीकरण (वैकल्पिक)</h3><small>वरहिया हेल्प डेस्क को यह जानने में मदद मिलती है कि ऐप का उपयोग कौन कर रहा है, ताकि नई सुविधाओं व सूचनाओं की जानकारी दी जा सके। आपकी कुंडली या जन्म-विवरण इसमें नहीं भेजा जाता। केवल नीचे का नाम, मोबाइल व स्थान, और वह भी आपके खुद दबाने पर।</small>'+
+    '<label for="vj_n">नाम</label><input id="vj_n" type="text" value="'+esc(r.name||"")+'" autocomplete="name">'+
+    '<label for="vj_m">मोबाइल नंबर</label><input id="vj_m" type="tel" inputmode="numeric" maxlength="10" value="'+esc(r.mobile||"")+'" autocomplete="tel">'+
+    '<label for="vj_c">शहर / गाँव</label><input id="vj_c" type="text" value="'+esc(r.city||"")+'">'+
+    '<label style="display:flex;gap:6px;align-items:flex-start"><input id="vj_ok" type="checkbox"> <span>मैं सहमत हूँ कि यह जानकारी वरहिया हेल्प डेस्क को भेजी जाए।</span></label>'+
+    '<button class="b" id="vj_s" type="button">📲 WhatsApp से भेजें</button><button class="b g" id="vj_l" type="button">बाद में</button>');
+  o.querySelector("#vj_l").onclick=function(){o.remove();};
+  o.querySelector("#vj_s").onclick=function(){
+    var n=o.querySelector("#vj_n").value.trim(),m=o.querySelector("#vj_m").value.replace(/\D/g,""),c=o.querySelector("#vj_c").value.trim();
+    if(!n||m.length!==10){alert("नाम व 10 अंकों का मोबाइल नंबर भरें।");return;}
+    if(!o.querySelector("#vj_ok").checked){alert("भेजने के लिए सहमति पर टिक करें।");return;}
+    sv(RKEY,{name:n,mobile:m,city:c,done:1,ts:Date.now()});
+    if(REG_ENDPOINT){try{var q=new URLSearchParams();q.append(REG_KEYS.name,n);q.append(REG_KEYS.mobile,m);q.append(REG_KEYS.city,c);fetch(REG_ENDPOINT,{method:"POST",mode:"no-cors",body:q});}catch(e){}}
+    var msg="जय जिनेन्द्र 🙏\nमैंने *वरहिया ज्योतिष दर्शन* ऐप के लिए पंजीकरण किया है।\nनाम: "+n+"\nमोबाइल: "+m+"\nस्थान: "+(c||"—");
+    window.open("https://wa.me/"+HELP_WA+"?text="+encodeURIComponent(msg),"_blank");
+    o.remove();
+  };
+}
+/* हैडर बटन */
+var br=D.querySelector(".brand");
+if(br){
+  var b1=D.createElement("button");b1.type="button";b1.className="pbtn";b1.textContent="💾 सहेजी कुंडलियाँ";b1.onclick=manage;br.appendChild(b1);
+  var b2=D.createElement("button");b2.type="button";b2.className="pbtn";b2.textContent="🙏 पंजीकरण";b2.onclick=reg;br.appendChild(b2);
+}
+/* पहली बार व कुछ-कुछ खुलने पर पंजीकरण का न्योता */
+var n=(ld(OKEY,0)|0)+1; sv(OKEY,n);
+var rr=ld(RKEY,{});
+if(!rr.done&&(n===1||n===4||n===9)) setTimeout(reg,1500);
+}catch(e){console.error("v73",e);}})();
+
 </script>
 </body>
 </html>
