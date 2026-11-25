@@ -136,7 +136,7 @@ tr.cur td{background:#fdf1d2;font-weight:600}
 .about b{color:var(--maroon)}.about p{margin:4px 0}
 @media print{.brand .pbtn,.nmtools,.totop,.lang,.about{display:none!important}.brand{background:#fff;color:#000;border-bottom:2px solid #000}.brand b{color:#000}.brand span{color:#000}#nm_body{font-size:13px}}
 </style>
-<meta name="vj-ver" content="104">
+<meta name="vj-ver" content="105">
 </head>
 <body>
 <div class="brand"><b id="t-brand"></b><span id="t-slogan"></span></div>
@@ -5561,7 +5561,7 @@ D.addEventListener("change",function(e){
 
 /* ===== v79: नए संस्करण की सूचना ===== */
 (function(){try{
-var D=document,VER=104,SITE="https://vimalshubham3-tech.github.io/varahiya-kundli/";
+var D=document,VER=105,SITE="https://vimalshubham3-tech.github.io/varahiya-kundli/";
 var st=D.createElement("style");
 st.textContent="#vj_upd{position:fixed;left:8px;right:8px;bottom:8px;z-index:9998;background:#7a3b10;color:#fff;border-radius:12px;padding:10px 12px;display:flex;gap:8px;align-items:center;font-size:14px;box-shadow:0 2px 10px rgba(0,0,0,.35)}#vj_upd span{flex:1}#vj_upd button,#vj_upd a{border:0;border-radius:8px;padding:8px 10px;background:#fff;color:#7a3b10;font:inherit;font-weight:700;text-decoration:none}#vj_upd .x{background:transparent;color:#fff;padding:8px}@media print{#vj_upd{display:none!important}}";
 D.head.appendChild(st);
@@ -5743,14 +5743,14 @@ if(fb&&!document.getElementById("vj_pl")){var d=document.createElement("div");d.
   [[3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,0,1,2]];
   var TY=['क्षिप्र (हल्का)','उग्र','मिश्र','स्थिर (ध्रुव)','मृदु (कोमल)','तीक्ष्ण','चर (चल)','क्षिप्र (हल्का)','तीक्ष्ण','उग्र','उग्र','स्थिर (ध्रुव)','क्षिप्र (हल्का)','मृदु (कोमल)','चर (चल)','मिश्र','मृदु (कोमल)','तीक्ष्ण','तीक्ष्ण','उग्र','स्थिर (ध्रुव)','चर (चल)','चर (चल)','चर (चल)','उग्र','स्थिर (ध्रुव)','मृदु (कोमल)'];
   var TYN={'क्षिप्र (हल्का)':'शीघ्र होने वाले कार्य, व्यापार व आरंभ के लिए उपयुक्त माना जाता है।','उग्र':'कठोर प्रकृति; शुभ-माँगलिक कार्यों में प्रायः टाले जाते हैं।','मिश्र':'मिला-जुला फल; सामान्य कार्य ठीक, बड़े माँगलिक कार्य विद्वान से पूछकर।','स्थिर (ध्रुव)':'स्थायी कार्य (गृह-निर्माण, नींव, विवाह, पदग्रहण) के लिए उपयुक्त माना जाता है।','मृदु (कोमल)':'कोमल प्रकृति; विवाह, कला, वस्त्र-आभूषण व मंगल कार्यों में शुभ माना जाता है।','तीक्ष्ण':'तीव्र प्रकृति; शुभ कार्यों में प्रायः टाले जाते हैं।','चर (चल)':'यात्रा, वाहन व चलायमान कार्यों के लिए उपयुक्त माना जाता है।'};
-  var h='<div class="panel"><h3>🌙 नक्षत्र विवरण (27 नक्षत्र)</h3><label for="nt_k">नक्षत्र चुनें</label><select id="nt_k" style="width:100%;font:inherit;padding:10px">'+NAK_H.map(function(n,i){return '<option value="'+i+'">'+(i+1)+'. '+n+'</option>';}).join('')+'</select><div id="nt_r"></div></div>'+
+  var h='<div class="panel"><h3>🔆 दैनिक राशिफल</h3><label for="rf_d">तारीख़</label><input id="rf_d" type="date"><p class="kmeta" id="rf_m"></p><div id="rf_r"></div></div><div class="panel"><h3>🌙 नक्षत्र विवरण (27 नक्षत्र)</h3><label for="nt_k">नक्षत्र चुनें</label><select id="nt_k" style="width:100%;font:inherit;padding:10px">'+NAK_H.map(function(n,i){return '<option value="'+i+'">'+(i+1)+'. '+n+'</option>';}).join('')+'</select><div id="nt_r"></div></div>'+
   '<div class="panel"><h3>🕒 महीने के राहुकाल, गुलिक व अभिजित मुहूर्त</h3><label for="nt_c">स्थान</label><select id="nt_c"></select><label for="nt_m">महीना</label><input id="nt_m" type="month"><button class="go" id="nt_go" type="button">महीने की सूची देखें</button><div id="nt_mr"></div></div>';
   pn.innerHTML=h;
   var anchor=D.getElementById('pane-l')||D.getElementById('pane-h');
   anchor.parentNode.insertBefore(pn,anchor.nextSibling);
   var b=D.createElement('button');b.type='button';b.className='tab';b.id='tab-t';b.setAttribute('role','tab');b.setAttribute('aria-selected','false');b.setAttribute('data-i','tabT');
   var a=D.getElementById('tab-l')||D.getElementById('tab-h');a.parentNode.insertBefore(b,a.nextSibling);
-  I18N.hi.tabT='नक्षत्र व मासिक समय';I18N.en.tabT='Nakshatra & Monthly Timings';
+  I18N.hi.tabT='राशिफल, नक्षत्र व समय';I18N.en.tabT='Nakshatra & Monthly Timings';
   function nak(i){
     var ru=[],g;for(var p=0;p<4;p++){g=Math.floor((i*4+p)/9);if(ru.indexOf(g)<0)ru.push(g);}
     var t=TY[i];
@@ -5780,6 +5780,34 @@ if(fb&&!document.getElementById("vj_pl")){var d=document.createElement("div");d.
     }
     D.getElementById('nt_mr').innerHTML='<p><b>'+c[0]+'</b> — '+v[1]+'/'+v[0]+'</p><div class="tw"><table><thead><tr><th>दिन</th><th>सूर्योदय–अस्त</th><th>राहुकाल</th><th>गुलिक</th><th>अभिजित</th></tr></thead><tbody>'+rows+'</tbody></table></div><p class="kmeta">समय गणित से निकाले अनुमानित हैं (कुछ मिनट का अंतर संभव)। महत्त्वपूर्ण कार्य से पहले पंडित जी से पुष्टि करें।</p>';
   });
+
+  var RF=[
+   [4,'चंद्रमा आपकी ही राशि में है। मन में उत्साह व आत्मविश्वास रहेगा। अपने स्वास्थ्य व स्वभाव पर ध्यान दें; दिन अच्छा चलेगा।'],
+   [3,'धन व परिवार के विषय सामान्य रहेंगे। वाणी में मधुरता रखें, खर्च सोच-समझकर करें।'],
+   [5,'साहस, परिश्रम और छोटी यात्राओं का शुभ दिन। भाई-बंधुओं का सहयोग मिलेगा।'],
+   [2,'मन कुछ भारी रह सकता है। घर, वाहन व माता-स्वास्थ्य पर ध्यान दें। शांत रहकर कार्य करें।'],
+   [3,'विद्या, संतान व रचनात्मक कार्यों में मध्यम फल। जल्दबाज़ी में निर्णय न लें।'],
+   [5,'बाधाओं पर विजय का दिन। रुके कार्य बनेंगे, विरोधी शांत रहेंगे; सेहत ठीक रहेगी।'],
+   [4,'जीवनसाथी व साझेदारों से अच्छा तालमेल। मिलना-जुलना और संवाद लाभकारी रहेगा।'],
+   [1,'दिन संभलकर चलने का है। नया जोखिम, बहस व अनावश्यक खर्च से बचें; धैर्य रखें।'],
+   [3,'भाग्य का साथ मध्यम है। बड़ों का आशीर्वाद व धर्म-कार्य मन को शांति देंगे।'],
+   [5,'कार्यक्षेत्र में प्रगति व सम्मान का दिन। अपने काम को अच्छे से प्रस्तुत करें।'],
+   [5,'आय, मित्र व मनोकामना-पूर्ति के लिए शुभ दिन। लंबे समय से रुका लाभ मिल सकता है।'],
+   [2,'खर्च व थकान अधिक रहेगी। विश्राम करें, दान-पुण्य करें और नई प्रतिबद्धताओं से बचें।']];
+  function star(n){return '★★★★★'.slice(0,n)+'☆☆☆☆☆'.slice(0,5-n);}
+  function rf(){
+    var v=D.getElementById('rf_d').value.split('-').map(Number);if(!v[0])return;
+    var P=panchangAt(toJD(v[0],v[1],v[2],6,0,5.5)),mr=P.moonR,pin=-1;
+    try{pin=+(localStorage.getItem('vj_rf_pin')||-1);}catch(e){}
+    D.getElementById('rf_m').textContent='चंद्र-राशि: '+RASHI_H[mr]+' (चंद्र-गोचर के आधार पर सामान्य संकेत; व्यक्तिगत फल हेतु जन्म-कुंडली देखें)। अपनी राशि को ऊपर रखने के लिए ☆ दबाएँ।';
+    var ord=[];for(var r=0;r<12;r++)ord.push(r);
+    ord.sort(function(a,b){return (a===pin?-1:0)-(b===pin?-1:0)||a-b;});
+    D.getElementById('rf_r').innerHTML=ord.map(function(r){var hs=(mr-r+12)%12,t=RF[hs];
+      return '<div style="border:1px solid #e7d9b8;border-radius:10px;padding:8px 10px;margin:6px 0"><b>'+RASHI_H[r]+'</b> <span style="color:#b45309">'+star(t[0])+'</span> <button type="button" data-p="'+r+'" style="float:right;border:0;background:none;font-size:20px">'+(r===pin?'★':'☆')+'</button><div>'+t[1]+'</div></div>';}).join('')+'<p class="kmeta">केवल मार्गदर्शन के लिए। महत्त्वपूर्ण निर्णयों के लिए योग्य ज्योतिषी से परामर्श करें।</p>';
+    Array.prototype.forEach.call(D.querySelectorAll('#rf_r button[data-p]'),function(bt){bt.onclick=function(){var p=+bt.getAttribute('data-p');try{localStorage.setItem('vj_rf_pin',String(p===pin?-1:p));}catch(e){}rf();};});
+  }
+  D.getElementById('rf_d').value=n.y+'-'+String(n.mo).padStart(2,'0')+'-'+String(n.dd).padStart(2,'0');
+  D.getElementById('rf_d').addEventListener('change',rf);rf();
   var o=setMode;
   setMode=function(m){o(m);pn.hidden=m!=='t';b.setAttribute('aria-selected',m==='t');};
   b.addEventListener('click',function(){setMode('t');try{b.scrollIntoView({inline:'center',block:'nearest',behavior:'smooth'});}catch(e){}});
