@@ -131,7 +131,7 @@ tr.cur td{background:#fdf1d2;font-weight:600}
 .about b{color:var(--maroon)}.about p{margin:4px 0}
 @media print{.brand .pbtn,.nmtools,.totop,.lang,.about{display:none!important}.brand{background:#fff;color:#000;border-bottom:2px solid #000}.brand b{color:#000}.brand span{color:#000}#nm_body{font-size:13px}}
 </style>
-<meta name="vj-ver" content="84">
+<meta name="vj-ver" content="85">
 </head>
 <body>
 <div class="brand"><b id="t-brand"></b><span id="t-slogan"></span></div>
@@ -5441,9 +5441,9 @@ D.querySelectorAll(".tab").forEach(function(b){b.addEventListener("click",functi
 var css=D.createElement("style");
 css.textContent=".svbar{display:flex;gap:6px;margin:6px 0}.svbar select{flex:1;min-width:0;padding:8px;border-radius:8px;border:1px solid #cdb98a;background:#fffdf7;font:inherit}.svbar button{padding:8px 10px;border:0;border-radius:8px;background:#7a3b10;color:#fff;font:inherit;white-space:nowrap}.vjov{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:9999;display:flex;align-items:flex-end;justify-content:center}.vjbox{background:#fffdf7;width:100%;max-width:520px;max-height:88vh;overflow:auto;border-radius:16px 16px 0 0;padding:16px;box-sizing:border-box}.vjbox h3{margin:0 0 8px}.vjbox label{display:block;margin:8px 0 2px;font-size:14px}.vjbox input[type=text],.vjbox input[type=tel]{width:100%;box-sizing:border-box;padding:9px;border:1px solid #cdb98a;border-radius:8px;font:inherit}.vjbox .b{display:block;width:100%;margin-top:10px;padding:11px;border:0;border-radius:10px;font:inherit;font-weight:700;background:#7a3b10;color:#fff}.vjbox .b.g{background:#e9e1cc;color:#333}.vjbox .it{display:flex;gap:8px;align-items:center;border-bottom:1px solid #eadfc4;padding:6px 0;font-size:14px}.vjbox .it span{flex:1}.vjbox .it button{border:0;background:#f4d9d2;border-radius:6px;padding:5px 9px}.vjbox small{color:#6b5b3a}@media print{.svbar,.vjov{display:none!important}}";
 D.head.appendChild(css);
-function modal(html){
+function modal(html,lock){
   var o=D.createElement("div");o.className="vjov";o.innerHTML='<div class="vjbox">'+html+'</div>';
-  o.addEventListener("click",function(e){if(e.target===o)o.remove();});
+  if(!lock)o.addEventListener("click",function(e){if(e.target===o)o.remove();});
   D.body.appendChild(o);return o;
 }
 /* ---- सहेजी कुंडलियाँ प्रबंधन ---- */
@@ -5502,18 +5502,19 @@ function cloud(){
   };
 }
 /* ---- उपयोगकर्ता पंजीकरण (वैकल्पिक, सहमति से) ---- */
-function reg(){
+function reg(force){
+  if(D.getElementById("vj_regm"))return;
   var r=ld(RKEY,{});
-  var o=modal('<h3>🙏 उपयोगकर्ता पंजीकरण (वैकल्पिक)</h3><small>वरहिया हेल्प डेस्क को यह जानने में मदद मिलती है कि ऐप का उपयोग कौन कर रहा है, ताकि नई सुविधाओं व सूचनाओं की जानकारी दी जा सके। आपकी कुंडली या जन्म-विवरण इसमें नहीं भेजा जाता। केवल नीचे का नाम, मोबाइल व स्थान, और वह भी आपके खुद दबाने पर।</small>'+
+  var o=modal('<h3 id="vj_regm">🙏 उपयोगकर्ता पंजीकरण</h3>'+(force?'<p><b>ऐप निःशुल्क है। आगे बढ़ने के लिए कृपया एक बार पंजीकरण करें।</b></p>':'')+'<small>वरहिया हेल्प डेस्क को यह जानने में मदद मिलती है कि ऐप का उपयोग कौन कर रहा है, ताकि नई सुविधाओं व सूचनाओं की जानकारी दी जा सके। आपकी कुंडली या जन्म-विवरण इसमें नहीं भेजा जाता। केवल नीचे का नाम, मोबाइल व स्थान, और वह भी आपके खुद दबाने पर।</small>'+
     '<label for="vj_n">नाम</label><input id="vj_n" type="text" value="'+esc(r.name||"")+'" autocomplete="name">'+
     '<label for="vj_m">मोबाइल नंबर</label><input id="vj_m" type="tel" inputmode="numeric" maxlength="10" value="'+esc(r.mobile||"")+'" autocomplete="tel">'+
     '<label for="vj_c">शहर / गाँव</label><input id="vj_c" type="text" value="'+esc(r.city||"")+'">'+
     '<label style="display:flex;gap:6px;align-items:flex-start"><input id="vj_ok" type="checkbox"> <span>मैं सहमत हूँ कि यह जानकारी वरहिया हेल्प डेस्क को भेजी जाए।</span></label>'+
-    '<button class="b" id="vj_s" type="button">📲 WhatsApp से भेजें</button><button class="b g" id="vj_l" type="button">बाद में</button>');
-  o.querySelector("#vj_l").onclick=function(){o.remove();};
+    '<button class="b" id="vj_s" type="button">'+(force?'📲 WhatsApp से भेजें और आगे बढ़ें':'📲 WhatsApp से भेजें')+'</button>'+(force?'':'<button class="b g" id="vj_l" type="button">बाद में</button>'),force);
+  var lb=o.querySelector("#vj_l");if(lb)lb.onclick=function(){o.remove();};
   o.querySelector("#vj_s").onclick=function(){
     var n=o.querySelector("#vj_n").value.trim(),m=o.querySelector("#vj_m").value.replace(/\D/g,""),c=o.querySelector("#vj_c").value.trim();
-    if(!n||m.length!==10){alert("नाम व 10 अंकों का मोबाइल नंबर भरें।");return;}
+    if(!n||m.length!==10||(force&&!c)){alert("नाम, 10 अंकों का मोबाइल नंबर"+(force?" और शहर/गाँव":"")+" भरें।");return;}
     if(!o.querySelector("#vj_ok").checked){alert("भेजने के लिए सहमति पर टिक करें।");return;}
     sv(RKEY,{name:n,mobile:m,city:c,done:1,ts:Date.now()});
     if(CLOUD_URL){try{fetch(CLOUD_URL,{method:"POST",mode:"no-cors",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify({type:"reg",name:n,mobile:m,city:c})});}catch(e){}}
@@ -5531,7 +5532,7 @@ if(br){
 /* पहली बार व कुछ-कुछ खुलने पर पंजीकरण का न्योता */
 var n=(ld(OKEY,0)|0)+1; sv(OKEY,n);
 var rr=ld(RKEY,{});
-if(!rr.done&&(n===1||n===4||n===9)) setTimeout(reg,1500);
+if(!rr.done) setTimeout(function(){reg(true);},600);
 }catch(e){console.error("v74",e);}})();
 
 /* ===== v78: स्थान का डिफ़ॉल्ट — सुमावली की जगह अंतिम चुना हुआ शहर (पहली बार: दिल्ली) ===== */
@@ -5552,7 +5553,7 @@ D.addEventListener("change",function(e){
 
 /* ===== v79: नए संस्करण की सूचना ===== */
 (function(){try{
-var D=document,VER=84,SITE="https://vimalshubham3-tech.github.io/varahiya-kundli/";
+var D=document,VER=85,SITE="https://vimalshubham3-tech.github.io/varahiya-kundli/";
 var st=D.createElement("style");
 st.textContent="#vj_upd{position:fixed;left:8px;right:8px;bottom:8px;z-index:9998;background:#7a3b10;color:#fff;border-radius:12px;padding:10px 12px;display:flex;gap:8px;align-items:center;font-size:14px;box-shadow:0 2px 10px rgba(0,0,0,.35)}#vj_upd span{flex:1}#vj_upd button,#vj_upd a{border:0;border-radius:8px;padding:8px 10px;background:#fff;color:#7a3b10;font:inherit;font-weight:700;text-decoration:none}#vj_upd .x{background:transparent;color:#fff;padding:8px}@media print{#vj_upd{display:none!important}}";
 D.head.appendChild(st);
