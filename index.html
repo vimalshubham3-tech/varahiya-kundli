@@ -5123,6 +5123,127 @@ var RJAIN_NOTE='जैन दृष्टि: ग्रह निमित्त
     o.innerHTML='<div class="res-card"><ul class="ul">'+msgs.map(function(m){return '<li>'+m+'</li>';}).join('')+'</ul></div>';});
 }catch(e){console&&console.error&&console.error(e);}})();
 
+/* ===== v72: मिलान का विस्तृत फल + PDF रिपोर्ट ===== */
+(function(){try{
+var D=document;
+var st0=D.createElement('style');
+st0.textContent='.phal{margin-top:14px}.phal h3{margin:6px 0}.phal .ov{background:#fff7e0;border:1px solid #e6d3a0;border-radius:10px;padding:10px;margin:8px 0;line-height:1.6}.phal table{width:100%;border-collapse:collapse;margin:8px 0;font-size:14px}.phal th,.phal td{border:1px solid #e3d6b8;padding:5px 7px;text-align:left}.phal th{background:#f6efdc}.phal .pk{border:1px solid #e6d9bd;border-radius:10px;padding:10px;margin:8px 0;background:#fffdf7;break-inside:avoid;line-height:1.6}.phal .pk h4{margin:0 0 4px;font-size:15px}.phal .pk .vs{font-size:12px;color:#6b5b3a;margin-bottom:4px}.phal .pk .up{margin-top:6px;font-size:13px;background:#f6f0e0;padding:6px 8px;border-radius:6px}.phal .pk.zero{border-color:#e0a79b;background:#fff6f3}.pmbtn{display:block;width:100%;margin:10px 0;padding:11px;border:0;border-radius:10px;background:#7a3b10;color:#fff;font:inherit;font-weight:700}#pm_sheet{display:none}#pm_sheet h2{margin:0 0 2px}.pmhd{border-bottom:2px solid #000;margin-bottom:10px;padding-bottom:6px}@media print{body.pm>*:not(#pm_sheet){display:none!important}body.pm #pm_sheet{display:block!important;padding:8px;font-size:13px;color:#000}body.pm #pm_sheet .pk{background:#fff}body.pm #pm_sheet svg{max-width:130px}}';
+D.head.appendChild(st0);
+
+var UP_COMMON="उपाय (जैन परंपरा, सात्त्विक): दोनों साथ मिलकर प्रतिदिन णमोकार मंत्र की माला (108 जाप), जिनमंदिर में दर्शन-अभिषेक व शांतिधारा, यथाशक्ति पात्र/औषधि/शास्त्र-दान और जीव-रक्षा।";
+function bandOf(got,max){return got>=max?2:(got>0?1:0);}
+function nm(r,k){return r.N[lang][r[k]];}
+function kootText(i,r,R){
+  var G=R.G,B=R.B,s,u="";
+  if(i===0){
+    if(r.got>=1){s="वर्ण (कार्य-स्वभाव व अहं का मेल) अनुकूल है। दोनों का जीवन-दृष्टिकोण एक-दूसरे का पूरक रहेगा और निर्णयों में परस्पर आदर बना रहेगा।";}
+    else{s="वर्ण-क्रम में अंतर है ("+nm(r,"g")+" व "+nm(r,"b")+")। कार्य-शैली या अहं के कारण कभी-कभी मतभेद हो सकता है। यह कूट केवल 1 अंक का है, इसलिए इसका प्रभाव सबसे हल्का माना जाता है।";u="घर के बड़े निर्णय दोनों मिलकर लें और एक-दूसरे की बात पूरी सुनें। "+UP_COMMON;}
+  }else if(i===1){
+    if(r.got>=2){s="वश्य (आपसी आकर्षण व प्रभाव) उत्तम है। दोनों एक-दूसरे को सहज समझेंगे और घर में सहमति आसान रहेगी।";}
+    else if(r.got>=1){s="वश्य मध्यम है। आपसी आकर्षण ठीक रहेगा, पर कभी एक का पक्ष भारी पड़ सकता है।";u="छोटी बातों में लचीलापन रखें, बड़े विषयों पर शांति से चर्चा करें।";}
+    else{s="वश्य कमज़ोर है ("+nm(r,"g")+" व "+nm(r,"b")+")। एक साथी का दूसरे पर हावी होना या आपसी खिंचाव संभव है।";u="निर्णयों में बराबरी रखें। "+UP_COMMON;}
+  }else if(i===2){
+    if(r.got>=3){s="तारा-कूट दोनों ओर शुभ है ("+nm(r,"g")+" / "+nm(r,"b")+")। परंपरा में यह आपसी हित, स्वास्थ्य और भाग्य में सहायक माना जाता है।";}
+    else if(r.got>0){s="तारा-कूट एक ओर से अशुभ है ("+nm(r,"g")+" / "+nm(r,"b")+")। एक साथी को स्वास्थ्य या कार्य-सिद्धि में कुछ बाधा-सी अनुभव हो सकती है।";u="अशुभ तारा के दिन शुभ कार्य का आरंभ न करें। तारा-शांति के लिए जिनपूजन व दान। "+UP_COMMON;}
+    else{s="तारा-कूट दोनों ओर अशुभ है ("+nm(r,"g")+" / "+nm(r,"b")+")। परंपरा में स्वास्थ्य, कार्य-सिद्धि और घरेलू सुख में रुकावट मानी जाती है।";u="विवाह-मुहूर्त का चयन सावधानी से करें, घर में नियमित पूजन-स्वाध्याय रखें। "+UP_COMMON;}
+  }else if(i===3){
+    var yg=nm(r,"g"),yb=nm(r,"b");
+    if(r.got>=4){s="योनि-कूट श्रेष्ठ है ("+yg+" / "+yb+")। शारीरिक व मानसिक अनुकूलता तथा स्वाभाविक निकटता उत्तम रहेगी।";}
+    else if(r.got>=3){s="योनि-कूट अच्छा है ("+yg+" / "+yb+")। दाम्पत्य-निकटता सहज रहेगी।";}
+    else if(r.got>=2){s="योनि-कूट सामान्य है ("+yg+" / "+yb+")। अनुकूलता ठीक है, पर कभी दूरी महसूस हो सकती है।";u="साथ समय बिताना, साथ पूजन-भोजन व तीर्थ-यात्रा आपसी निकटता बढ़ाती है।";}
+    else if(r.got>=1){s="योनि-कूट कमज़ोर है ("+yg+" / "+yb+")। स्वभाव की रुचियों में अंतर और निकटता में कमी संभव है।";u="साझा रुचि व साझा दिनचर्या बनाएँ। "+UP_COMMON;}
+    else{s="योनि-वैर है ("+yg+" / "+yb+")। परंपरा में स्वभावगत विरोध व आत्मीयता में कमी मानी जाती है।";u="परस्पर संवाद व धैर्य रखें। "+UP_COMMON;}
+  }else if(i===4){
+    var la=nm(r,"g"),lb=nm(r,"b");
+    if(r.got>=4){s="ग्रह-मैत्री उत्तम है (राशि-स्वामी "+la+" व "+lb+")। विचार, मन और समझ का गहरा मेल रहेगा। यह कूट दाम्पत्य-सामंजस्य का आधार माना जाता है।";}
+    else if(r.got>=3){s="ग्रह-मैत्री ठीक है (राशि-स्वामी "+la+" व "+lb+")। आपसी समझ बन जाएगी, कभी-कभी दृष्टिकोण अलग हो सकते हैं।";u="विचार भिन्न हों तो पहले सुनें, फिर बोलें।";}
+    else{s="ग्रह-मैत्री कमज़ोर है (राशि-स्वामी "+la+" व "+lb+")। विचारों में भिन्नता व बहस की प्रवृत्ति रह सकती है।";u="साथ बैठकर स्वाध्याय (जिनवाणी पाठ) व शांत संवाद की आदत डालें। "+UP_COMMON;}
+  }else if(i===5){
+    var ga=nm(r,"g"),gb=nm(r,"b");
+    if(r.got>=6){s="गण-कूट पूर्ण है (दोनों "+ga+" गण)। स्वभाव एक-सा होने से घर का वातावरण शांत रहेगा।";}
+    else if(r.got>=5){s="गण-कूट अच्छा है (वर "+ga+" गण, कन्या "+gb+" गण)। स्वभाव में अधिक अंतर नहीं है।";}
+    else if(r.got>=3){s="गण-कूट मध्यम है (वर "+ga+" गण, कन्या "+gb+" गण)। स्वभाव में कुछ अंतर रहेगा, समझदारी से निभ जाता है।";u="एक-दूसरे के स्वभाव को स्वीकार करने का अभ्यास करें।";}
+    else if(r.got>=1){s="गण-कूट कमज़ोर है (वर "+ga+" गण, कन्या "+gb+" गण)। स्वभाव में अंतर के कारण कलह की संभावना रहती है।";u="क्रोध के समय मौन रखें, बाद में शांति से बात करें। "+UP_COMMON;}
+    else{s="गण-दोष है (वर "+ga+" गण, कन्या "+gb+" गण)। परंपरा में स्वभाव का बड़ा अंतर व कलह की आशंका मानी जाती है।";u="विवाह से पहले दोनों परिवार स्वभाव पर खुलकर बात करें। "+UP_COMMON;}
+  }else if(i===6){
+    var d=((R.B.r-R.G.r+12)%12)+1;
+    if(r.got>=7){s="भकूट शुभ है। दोनों की राशियों का आपसी स्थान अनुकूल है। परंपरा में यह धन-सुख, परिवार-वृद्धि और आपसी प्रेम के लिए अच्छा माना जाता है।";}
+    else{
+      var typ=(d===2||d===12)?"द्विर्द्वादश (2-12): खर्च, धन-प्रबंध व आर्थिक खिंचाव में सावधानी":((d===5||d===9)?"नवम-पंचम (5-9): संतान-पक्ष व पारिवारिक सुख में सावधानी":"षडाष्टक (6-8): आपसी तनाव व स्वास्थ्य-पक्ष में विशेष सावधानी");
+      s="भकूट-दोष है — "+typ+"।";
+      var lg=LORD[R.G.r],lb2=LORD[R.B.r];
+      if(lg===lb2||(REL[lg][lb2]===2&&REL[lb2][lg]===2)) s+=" राशि-स्वामी समान या परस्पर मित्र हैं, इसलिए परंपरा में इस दोष का परिहार (निवारण) माना जाता है।";
+      u="धन का साझा हिसाब रखें, फ़िज़ूलख़र्ची से बचें। "+UP_COMMON;
+    }
+  }else{
+    var na=nm(r,"g"),nb=nm(r,"b");
+    if(r.got>=8){s="नाड़ी भिन्न है ("+na+" / "+nb+")। परंपरा में यह स्वास्थ्य, संतान और वंश-परंपरा के लिए श्रेष्ठ संकेत है।";}
+    else{
+      s="नाड़ी-दोष है (दोनों की नाड़ी "+na+")। परंपरा में संतान व स्वास्थ्य के विषय में सावधानी मानी जाती है। इसका सबसे अधिक महत्त्व (8 अंक) है।";
+      var pr=[]; if(G.r===B.r&&G.n!==B.n) pr.push("राशि एक पर नक्षत्र भिन्न"); if(G.n===B.n&&G.r!==B.r) pr.push("नक्षत्र एक पर राशि भिन्न");
+      if(pr.length) s+=" "+pr.join(" व ")+" होने से परंपरा में परिहार माना जाता है।";
+      u="विवाह से पूर्व दोनों की स्वास्थ्य-जाँच करा लेना व्यावहारिक रूप से भी उचित है। "+UP_COMMON;
+    }
+  }
+  return [s,u];
+}
+var AREAS=[["मन, स्वभाव व समझ (योनि, ग्रह-मैत्री, गण)",[3,4,5]],["स्वास्थ्य, संतान व वंश (नाड़ी)",[7]],["धन, परिवार व आपसी प्रेम (भकूट)",[6]],["भाग्य व आपसी हित (तारा)",[2]],["आपसी प्रभाव व सहमति (वश्य, वर्ण)",[1,0]]];
+function overallText(total){
+  if(total>=33) return "समग्र फल: उत्तम मेल। परंपरा के अनुसार दाम्पत्य, परिवार और संतान-सुख के लिए अत्यंत अनुकूल संकेत हैं।";
+  if(total>=25) return "समग्र फल: अच्छा मेल। विवाह के लिए अनुकूल है। जिन कूटों में अंक कम हैं, उन पर साधारण ध्यान व उपाय पर्याप्त रहते हैं।";
+  if(total>=18) return "समग्र फल: मध्यम मेल। विवाह संभव है, पर कमज़ोर कूटों पर ध्यान, उपाय और कुंडली के अन्य योग (मंगल, दशा, ग्रह-स्थिति) की जाँच ज़रूरी है।";
+  return "समग्र फल: गुण-मेल कमज़ोर है। परंपरा में सीधे स्वीकार करने की सलाह नहीं दी जाती। दोनों की पूरी कुंडली, मंगल-दोष और ग्रह-दशा किसी जानकार विद्वान से दिखवाकर ही निर्णय लें।";
+}
+function phalHTML(R){
+  var rows=R.rows,total=R.total,h="",i;
+  h+='<div class="phal"><h3>📖 विस्तृत फल</h3><div class="ov"><b>'+esc(overallText(total))+'</b><br>कुल '+fmt(total)+' / 36 अंक।';
+  var good=[],weak=[];
+  rows.forEach(function(r,i){var b=bandOf(r.got,r.max);if(b===2)good.push(KOOTA_N.hi[i]);else if(r.got<=r.max*0.34)weak.push(KOOTA_N.hi[i]);});
+  if(good.length) h+='<br>पूरे अंक वाले कूट: '+esc(good.join(", "))+'।';
+  if(weak.length) h+='<br>ध्यान देने योग्य कूट: '+esc(weak.join(", "))+'।';
+  h+='</div>';
+  h+='<table><tr><th>जीवन-क्षेत्र</th><th>अंक</th><th>स्थिति</th></tr>';
+  AREAS.forEach(function(a){var g=0,m=0;a[1].forEach(function(k){g+=rows[k].got;m+=rows[k].max;});var p=g/m;h+='<tr><td>'+esc(a[0])+'</td><td>'+fmt(g)+' / '+m+'</td><td>'+(p>=0.75?"उत्तम":(p>=0.5?"ठीक":"कमज़ोर"))+'</td></tr>';});
+  h+='</table>';
+  rows.forEach(function(r,i){
+    var kt=kootText(i,r,R),b=bandOf(r.got,r.max);
+    h+='<div class="pk'+(r.got===0?' zero':'')+'"><h4>'+(i+1)+'. '+esc(KOOTA_N.hi[i])+' — '+fmt(r.got)+' / '+r.max+'</h4><div class="vs">'+esc(t('groom'))+': '+esc(r.N[lang][r.g])+' · '+esc(t('bride'))+': '+esc(r.N[lang][r.b])+'</div><div>'+esc(kt[0])+'</div>'+(kt[1]?'<div class="up">'+esc(kt[1])+'</div>':'')+'</div>';
+  });
+  h+='<p class="disc">'+(R.mgText?'यह फल जन्म-विवरण (चंद्र-नक्षत्र) से निकाला गया है, इसलिए नाम-आधारित मिलान से अधिक सटीक है।':'यह फल नाम के पहले अक्षर से निकले नक्षत्र-राशि पर आधारित है। जन्म-विवरण से मिलान करने पर परिणाम अधिक सटीक मिलता है।')+' गुण-मिलान विवाह-विचार का एक अंग है। साथ में मंगल-दोष, कुंडली, स्वास्थ्य, स्वभाव और दोनों परिवारों की सहमति का भी विचार करें।</p></div>';
+  return h;
+}
+var _rh=resultHTML;
+resultHTML=function(R){
+  var s=_rh.apply(this,arguments);
+  if(lang!=='hi') return s;
+  var ix=s.lastIndexOf('<button class="copy"');
+  if(ix<0) return s;
+  return s.slice(0,ix)+phalHTML(R)+'<button class="pmbtn" type="button">📄 PDF रिपोर्ट बनाएँ / सहेजें</button>'+s.slice(ix);
+};
+var _st=summaryText;
+summaryText=function(R){
+  var s=_st.apply(this,arguments);
+  if(lang!=='hi') return s;
+  s+='\n\n'+overallText(R.total);
+  R.rows.forEach(function(r,i){var k=kootText(i,r,R);s+='\n• '+KOOTA_N.hi[i]+' ('+fmt(r.got)+'/'+r.max+'): '+k[0];});
+  return s;
+};
+D.addEventListener('click',function(e){
+  var b=e.target.closest&&e.target.closest('.pmbtn'); if(!b) return;
+  var card=b.closest('.res-card'); if(!card) return;
+  var old=D.getElementById('pm_sheet'); if(old) old.remove();
+  var c=card.cloneNode(true);
+  Array.prototype.forEach.call(c.querySelectorAll('.copy,.pmbtn'),function(x){x.remove();});
+  var sh=D.createElement('div'); sh.id='pm_sheet';
+  var now=new Date(),ds=now.getDate()+'/'+(now.getMonth()+1)+'/'+now.getFullYear();
+  sh.innerHTML='<div class="pmhd"><h2>वरहिया ज्योतिष दर्शन — गुण-मिलान रिपोर्ट</h2><div>दिनांक: '+ds+'</div></div>'+c.innerHTML+'<p style="margin-top:12px;font-size:12px;border-top:1px solid #000;padding-top:6px">वरहिया हेल्प डेस्क — विमल कुमार जैन, एडवोकेट</p>';
+  D.body.appendChild(sh); D.body.classList.add('pm');
+  var done=function(){D.body.classList.remove('pm');var x=D.getElementById('pm_sheet');if(x)x.remove();window.removeEventListener('afterprint',done);};
+  window.addEventListener('afterprint',done);
+  setTimeout(function(){window.print();},100);
+});
+}catch(e){console.error('v72',e);}})();
+
 </script>
 </body>
 </html>
