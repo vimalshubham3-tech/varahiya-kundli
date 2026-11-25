@@ -131,7 +131,7 @@ tr.cur td{background:#fdf1d2;font-weight:600}
 .about b{color:var(--maroon)}.about p{margin:4px 0}
 @media print{.brand .pbtn,.nmtools,.totop,.lang,.about{display:none!important}.brand{background:#fff;color:#000;border-bottom:2px solid #000}.brand b{color:#000}.brand span{color:#000}#nm_body{font-size:13px}}
 </style>
-<meta name="vj-ver" content="83">
+<meta name="vj-ver" content="84">
 </head>
 <body>
 <div class="brand"><b id="t-brand"></b><span id="t-slogan"></span></div>
@@ -5135,6 +5135,9 @@ var PRICE="₹149 प्रति वर्ष", PRICE_AM="149", UPI_ID="9977004
 function ld(k,d){try{var v=localStorage.getItem(k);return v?JSON.parse(v):d;}catch(e){return d;}}
 function sv(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}
 var TK="vj_trial_v1", LK="vj_lic_v1";
+var FREE_UNTIL=new Date(2027,1,28,23,59,59);
+function freeNow(){return Date.now()<=FREE_UNTIL.getTime();}
+function freeTxt(){return FREE_UNTIL.getDate()+"/"+(FREE_UNTIL.getMonth()+1)+"/"+FREE_UNTIL.getFullYear();}
 var tr=ld(TK,null); if(!tr){tr={ts:Date.now()};sv(TK,tr);}
 function trialLeft(){var d=TRIAL_DAYS-Math.floor((Date.now()-tr.ts)/864e5);return d>0?d:0;}
 var LS={pending:false,valid:false,end:null};
@@ -5157,8 +5160,10 @@ function verifyLic(mobile,code){
 function applyLic(i){LS.pending=false;LS.valid=!!i;LS.end=i?i.end:null;}
 (function(){var l=ld(LK,null);if(l&&l.mobile&&l.code){LS.pending=true;verifyLic(l.mobile,l.code).then(function(i){applyLic(i);lockPanels();try{if(st.shown)renderResult();if(st.bShown)renderBirth();}catch(e){}});}})();
 function licOk(){return LS.valid&&LS.end&&Date.now()<=LS.end.getTime();}
-window.vjPrem=function(){return !!(licOk()||LS.pending||trialLeft()>0);};
+window.vjPrem=function(){return !!(freeNow()||licOk()||LS.pending||trialLeft()>0);};
+window.vjFree=function(){return freeNow()?freeTxt():"";};
 function stat(){
+  if(freeNow()) return "🎉 परिचय-अवधि: सभी सुविधाएँ "+freeTxt()+" तक निःशुल्क";
   var e=LS.end,f=e?e.getDate()+"/"+(e.getMonth()+1)+"/"+e.getFullYear():"";
   if(licOk()) return "✅ सदस्यता चालू — "+f+" तक";
   if(LS.valid&&e) return "⚠ आपकी सदस्यता समाप्त हो चुकी है ("+f+")";
@@ -5185,17 +5190,17 @@ window.vjUpsell=function(why){
    (why?'<p style="color:#9a3412"><b>'+esc2(why)+'</b> सदस्यों के लिए है।</p>':'')+
    '<div class="vjplan"><b>'+esc2(stat())+'</b></div>'+
    '<div class="vjplan"><b>मुफ़्त:</b> कुंडली, पंचांग, गुण-मिलान (अंक व निर्णय), शुभ मुहूर्त, जैन तिथि-पर्व, अंक ज्योतिष, 3 कुंडलियाँ सहेजना।<br><b>सदस्यता में:</b> मिलान का विस्तृत फल व उपाय + PDF रिपोर्ट; वास्तु उपाय व माप-विचार; असीमित सहेजी कुंडलियाँ व क्लाउड बैकअप।<br><b>शुल्क: '+PRICE+'</b><br><small>वरहिया समाज के बंधु रियायत हेतु हेल्प डेस्क से संपर्क करें।</small></div>'+
-   '<p><b>चरण 1:</b> भुगतान करें।</p>'+(UPI_ID?('<div class="vjplan" style="text-align:center">'+QRSVG+'<br>UPI ID: <b>'+UPI_ID+'</b> <button type="button" id="vj_cpu" class="vjupb" style="display:inline-block;width:auto;padding:5px 10px;margin:4px">📋 कॉपी</button><br><small>PhonePe, GPay, Paytm आदि किसी भी UPI ऐप से QR स्कैन करें या यह UPI ID डालकर ₹'+PRICE_AM+' भेजें।</small>'+(/Android|iPhone|iPad/i.test(navigator.userAgent)?'<a class="b" style="display:block;text-align:center;text-decoration:none;margin-top:8px" href="'+(/Android/i.test(navigator.userAgent)?'intent://pay?pa='+encodeURIComponent(UPI_ID)+'&pn='+encodeURIComponent(UPI_NAME)+'&am='+PRICE_AM+'&cu=INR&tn=Varahiya%20Jyotish#Intent;scheme=upi;end':'upi://pay?pa='+encodeURIComponent(UPI_ID)+'&pn='+encodeURIComponent(UPI_NAME)+'&am='+PRICE_AM+'&cu=INR&tn=Varahiya%20Jyotish')+'">💳 UPI ऐप खोलें (₹'+PRICE_AM+')</a><small style=\"display:block;margin-top:6px\">ऐप न खुले (कुछ ब्राउज़र/ऐप में बंद रहता है) तो ऊपर UPI ID कॉपी करके अपने UPI ऐप में भेजें। या इस QR का स्क्रीनशॉट लेकर PhonePe/GPay में गैलरी से QR चुनें।</small>':'')+'</div>'):'<small>भुगतान का विवरण WhatsApp पर हेल्प डेस्क से लें।</small>')+
-   '<label for="vj_sm">आपका मोबाइल नंबर</label><input id="vj_sm" type="tel" inputmode="numeric" maxlength="10" value="'+esc2((ld(LK,{})||{}).mobile||"")+'">'+
-   '<button class="b" id="vj_sw" type="button">📲 WhatsApp पर कोड माँगें</button>'+
-   '<p><b>चरण 2:</b> कोड मिलने पर यहाँ भरें।</p><label for="vj_sc">सदस्यता-कोड</label><input id="vj_sc" type="text" autocomplete="off" placeholder="WhatsApp से मिला पूरा कोड यहाँ चिपकाएँ">'+
+   (freeNow()?'<p>इस अवधि में कुछ भी भुगतान नहीं करना है। सदस्यता <b>'+PRICE+'</b> की रहेगी, पर अभी सब कुछ खुला है।</p>':('<p><b>चरण 1:</b> भुगतान करें।</p>'+(UPI_ID?('<div class="vjplan" style="text-align:center">'+QRSVG+'<br>UPI ID: <b>'+UPI_ID+'</b> <button type="button" id="vj_cpu" class="vjupb" style="display:inline-block;width:auto;padding:5px 10px;margin:4px">📋 कॉपी</button><br><small>PhonePe, GPay, Paytm आदि किसी भी UPI ऐप से QR स्कैन करें या यह UPI ID डालकर ₹'+PRICE_AM+' भेजें।</small>'+(/Android|iPhone|iPad/i.test(navigator.userAgent)?'<a class="b" style="display:block;text-align:center;text-decoration:none;margin-top:8px" href="'+(/Android/i.test(navigator.userAgent)?'intent://pay?pa='+encodeURIComponent(UPI_ID)+'&pn='+encodeURIComponent(UPI_NAME)+'&am='+PRICE_AM+'&cu=INR&tn=Varahiya%20Jyotish#Intent;scheme=upi;end':'upi://pay?pa='+encodeURIComponent(UPI_ID)+'&pn='+encodeURIComponent(UPI_NAME)+'&am='+PRICE_AM+'&cu=INR&tn=Varahiya%20Jyotish')+'">💳 UPI ऐप खोलें (₹'+PRICE_AM+')</a><small style=\"display:block;margin-top:6px\">ऐप न खुले (कुछ ब्राउज़र/ऐप में बंद रहता है) तो ऊपर UPI ID कॉपी करके अपने UPI ऐप में भेजें। या इस QR का स्क्रीनशॉट लेकर PhonePe/GPay में गैलरी से QR चुनें।</small>':'')+'</div>'):'<small>भुगतान का विवरण WhatsApp पर हेल्प डेस्क से लें।</small>')+
+   ''))+'<label for="vj_sm">आपका मोबाइल नंबर</label><input id="vj_sm" type="tel" inputmode="numeric" maxlength="10" value="'+esc2((ld(LK,{})||{}).mobile||"")+'">'+
+   (freeNow()?'':'<button class="b" id="vj_sw" type="button">📲 WhatsApp पर कोड माँगें</button>')+
+   (freeNow()?'<p><small>पहले से सदस्यता-कोड मिला हो तो भरें।</small></p>':'<p><b>चरण 2:</b> कोड मिलने पर यहाँ भरें।</p>')+'<label for="vj_sc">सदस्यता-कोड</label><input id="vj_sc" type="text" autocomplete="off" placeholder="WhatsApp से मिला पूरा कोड यहाँ चिपकाएँ">'+
    '<button class="b" id="vj_sa" type="button">✔ सक्रिय करें</button><button class="b g" id="vj_sx" type="button">बंद करें</button><div id="vj_smsg" style="margin-top:8px;font-size:14px"></div></div>';
   D.body.appendChild(o);
   o.addEventListener("click",function(e){if(e.target===o)o.remove();});
   var $=function(s){return o.querySelector(s);},msg=function(t){$("#vj_smsg").textContent=t;};
   var cu=o.querySelector("#vj_cpu");if(cu)cu.onclick=function(){try{navigator.clipboard.writeText(UPI_ID).then(function(){cu.textContent="✔ कॉपी हुआ";});}catch(e){var ta=D.createElement("textarea");ta.value=UPI_ID;D.body.appendChild(ta);ta.select();try{D.execCommand("copy");cu.textContent="✔ कॉपी हुआ";}catch(x){}ta.remove();}};
   $("#vj_sx").onclick=function(){o.remove();};
-  $("#vj_sw").onclick=function(){
+  var swb=$("#vj_sw");if(swb)swb.onclick=function(){
     var m=$("#vj_sm").value.replace(/\D/g,"");if(m.length!==10){msg("10 अंक का मोबाइल नंबर भरें।");return;}
     window.open("https://wa.me/"+HELP_WA+"?text="+encodeURIComponent("जय जिनेन्द्र 🙏\nवरहिया ज्योतिष दर्शन की सदस्यता ("+PRICE+") के लिए भुगतान कर दिया है। कृपया सदस्यता-कोड भेजें।\nमेरा मोबाइल: "+m+"\n(भुगतान का स्क्रीनशॉट साथ भेज रहा/रही हूँ)"),"_blank");
   };
@@ -5547,7 +5552,7 @@ D.addEventListener("change",function(e){
 
 /* ===== v79: नए संस्करण की सूचना ===== */
 (function(){try{
-var D=document,VER=83,SITE="https://vimalshubham3-tech.github.io/varahiya-kundli/";
+var D=document,VER=84,SITE="https://vimalshubham3-tech.github.io/varahiya-kundli/";
 var st=D.createElement("style");
 st.textContent="#vj_upd{position:fixed;left:8px;right:8px;bottom:8px;z-index:9998;background:#7a3b10;color:#fff;border-radius:12px;padding:10px 12px;display:flex;gap:8px;align-items:center;font-size:14px;box-shadow:0 2px 10px rgba(0,0,0,.35)}#vj_upd span{flex:1}#vj_upd button,#vj_upd a{border:0;border-radius:8px;padding:8px 10px;background:#fff;color:#7a3b10;font:inherit;font-weight:700;text-decoration:none}#vj_upd .x{background:transparent;color:#fff;padding:8px}@media print{#vj_upd{display:none!important}}";
 D.head.appendChild(st);
@@ -5585,7 +5590,7 @@ var bar=D.createElement("div");bar.id="vj_tools";
 br.parentNode.insertBefore(bar,br.nextSibling);
 function move(){Array.prototype.slice.call(br.querySelectorAll(".pbtn")).forEach(function(b){bar.appendChild(b);});}
 move();
-var _al=applyLang;applyLang=function(){_al.apply(this,arguments);var t=D.getElementById("t-tag");if(t)t.textContent=(lang==="hi")?"मुख्य सुविधाएँ निःशुल्क · लॉगिन नहीं · ऑफ़लाइन भी चलता है":"Core features free · No login · Works offline";};
+var _al=applyLang;applyLang=function(){_al.apply(this,arguments);var t=D.getElementById("t-tag");if(t)t.textContent=(lang==="hi")?((window.vjFree&&window.vjFree())?"सभी सुविधाएँ "+window.vjFree()+" तक निःशुल्क · लॉगिन नहीं · ऑफ़लाइन भी चलता है":"मुख्य सुविधाएँ निःशुल्क · लॉगिन नहीं · ऑफ़लाइन भी चलता है"):"Free · No login · Works offline";};
 applyLang();
 }catch(e){console.error("v80",e);}})();
 
