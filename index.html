@@ -5244,15 +5244,31 @@ D.addEventListener('click',function(e){
 });
 }catch(e){console.error('v72',e);}})();
 
-/* ===== v73: सहेजी कुंडलियाँ + उपयोगकर्ता पंजीकरण (वैकल्पिक) ===== */
+/* ===== v74: सहेजी कुंडलियाँ + उपयोगकर्ता पंजीकरण (वैकल्पिक) ===== */
 (function(){try{
 var D=document, KEY="vj_kundli_v1", RKEY="vj_reg_v1", OKEY="vj_opens_v1";
 var HELP_WA="919977004518";
 /* वैकल्पिक: Google Form से भी पंजीकरण सीधे पहुँचे तो यहाँ भरें (अभी खाली = केवल WhatsApp) */
-var REG_ENDPOINT="", REG_KEYS={name:"",mobile:"",city:""};
+/* क्लाउड: Google Apps Script वेब-ऐप का लिंक यहाँ भरें (खाली = क्लाउड बंद) */
+var CLOUD_URL="";
+var CKEY="vj_cloud_v1";
 function ld(k,d){try{var v=localStorage.getItem(k);return v?JSON.parse(v):d;}catch(e){return d;}}
 function sv(k,v){try{localStorage.setItem(k,JSON.stringify(v));return true;}catch(e){return false;}}
 function list(){var a=ld(KEY,[]);return Array.isArray(a)?a:[];}
+function saveList(a){var ok=sv(KEY,a);if(ok)push();return ok;}
+function hex(buf){return Array.prototype.map.call(new Uint8Array(buf),function(b){return ("0"+b.toString(16)).slice(-2);}).join("");}
+function mkKey(m,pin){
+  var s0=m+":"+pin+":vj-varahiya";
+  try{return crypto.subtle.digest("SHA-256",new TextEncoder().encode(s0)).then(hex);}
+  catch(e){var h=5381;for(var i=0;i<s0.length;i++)h=((h<<5)+h+s0.charCodeAt(i))|0;return Promise.resolve("w"+(h>>>0).toString(16));}
+}
+function push(){
+  var c=ld(CKEY,null); if(!CLOUD_URL||!c) return;
+  try{fetch(CLOUD_URL,{method:"POST",mode:"no-cors",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify({type:"sync",key:c.key,mobile:c.mobile,profiles:list()})});}catch(e){}
+}
+function pull(key){
+  return fetch(CLOUD_URL+"?key="+encodeURIComponent(key)).then(function(r){return r.json();});
+}
 function lbl(p){
   var s=p.name||"(बिना नाम)";
   if(p.date){var x=p.date.split("-");s+=" — "+x[2]+"/"+x[1]+"/"+x[0];}
@@ -5301,7 +5317,7 @@ function bind(person,k,nameId,dateId,full){
       if(!full&&a[ix].time) {alert("यह कुंडली पहले से पूरे विवरण के साथ सहेजी है।");return;}
       p.id=a[ix].id;a[ix]=p;
     }else{p.id="k"+Date.now().toString(36)+Math.floor(Math.random()*1e4).toString(36);a.unshift(p);}
-    if(!sv(KEY,a)){alert("इस ब्राउज़र में सहेजना संभव नहीं (प्राइवेट मोड?)।");return;}
+    if(!saveList(a)){alert("इस ब्राउज़र में सहेजना संभव नहीं (प्राइवेट मोड?)।");return;}
     refreshAll(); sel.value=p.id;
     var b=tb.querySelector(".svsave"),o=b.textContent;b.textContent="✔ सहेज लिया";setTimeout(function(){b.textContent=o;},1400);
   });
@@ -5332,9 +5348,10 @@ function manage(){
   var a=list();
   var o=modal('<h3>💾 सहेजी कुंडलियाँ</h3><small>ये केवल इसी फ़ोन/ब्राउज़र में सहेजी हैं, कहीं भेजी नहीं जातीं।</small><div id="vj_l">'+
     (a.length?a.map(function(p){return '<div class="it"><span>'+esc(lbl(p))+'</span><button type="button" data-d="'+esc(p.id)+'">हटाएँ</button></div>';}).join(""):'<p>अभी कोई कुंडली सहेजी नहीं है। किसी भी कुंडली या मिलान-फ़ॉर्म में नाम व जन्म-विवरण भरकर 💾 सहेजें दबाएँ।</p>')+
-    '</div><button class="b" id="vj_ex" type="button">⬇ बैकअप फ़ाइल सहेजें</button><button class="b g" id="vj_im" type="button">⬆ बैकअप से वापस लाएँ</button><input id="vj_f" type="file" accept=".json,application/json" hidden><button class="b g" id="vj_x" type="button">बंद करें</button><small>फ़ोन की सफ़ाई या ब्राउज़र-डेटा हटाने पर सहेजी कुंडलियाँ मिट सकती हैं। इसलिए कभी-कभी बैकअप सहेज लें।</small>');
+    '</div><button class="b" id="vj_ex" type="button">⬇ बैकअप फ़ाइल सहेजें</button><button class="b g" id="vj_im" type="button">⬆ बैकअप से वापस लाएँ</button><input id="vj_f" type="file" accept=".json,application/json" hidden><button class="b" id="vj_cl" type="button">☁ क्लाउड बैकअप (किसी भी फ़ोन पर वापस पाएँ)</button><button class="b g" id="vj_x" type="button">बंद करें</button><small>फ़ोन की सफ़ाई या ब्राउज़र-डेटा हटाने पर सहेजी कुंडलियाँ मिट सकती हैं। इसलिए कभी-कभी बैकअप सहेज लें।</small>');
   o.querySelector("#vj_x").onclick=function(){o.remove();};
-  o.querySelectorAll("[data-d]").forEach(function(b){b.onclick=function(){var id=b.getAttribute("data-d");sv(KEY,list().filter(function(x){return x.id!==id;}));refreshAll();o.remove();manage();};});
+  o.querySelector("#vj_cl").onclick=function(){o.remove();cloud();};
+  o.querySelectorAll("[data-d]").forEach(function(b){b.onclick=function(){var id=b.getAttribute("data-d");saveList(list().filter(function(x){return x.id!==id;}));refreshAll();o.remove();manage();};});
   o.querySelector("#vj_ex").onclick=function(){
     try{var bl=new Blob([JSON.stringify(list(),null,1)],{type:"application/json"});var u=URL.createObjectURL(bl);var l=D.createElement("a");l.href=u;l.download="varahiya-kundli-backup.json";D.body.appendChild(l);l.click();l.remove();setTimeout(function(){URL.revokeObjectURL(u);},2000);}catch(e){alert("बैकअप नहीं बन सका।");}
   };
@@ -5343,8 +5360,42 @@ function manage(){
     var f=e.target.files&&e.target.files[0];if(!f)return;var r=new FileReader();
     r.onload=function(){try{var inc=JSON.parse(r.result),cur=list(),n=0;if(!Array.isArray(inc))throw 0;
       inc.forEach(function(p){if(p&&p.name&&p.date&&!cur.some(function(x){return x.name===p.name&&x.date===p.date;})){p.id=p.id||("k"+Date.now().toString(36)+n);cur.push(p);n++;}});
-      sv(KEY,cur);refreshAll();o.remove();alert(n+" कुंडली वापस जोड़ी गईं।");}catch(x){alert("यह बैकअप फ़ाइल पढ़ी नहीं जा सकी।");}};
+      saveList(cur);refreshAll();o.remove();alert(n+" कुंडली वापस जोड़ी गईं।");}catch(x){alert("यह बैकअप फ़ाइल पढ़ी नहीं जा सकी।");}};
     r.readAsText(f);
+  };
+}
+/* ---- क्लाउड बैकअप / वापसी ---- */
+function cloud(){
+  var c=ld(CKEY,{});
+  var on=!!CLOUD_URL;
+  var o=modal('<h3>☁ क्लाउड बैकअप</h3>'+(on?'':'<p style="color:#9a3412"><b>क्लाउड सुविधा अभी चालू नहीं है।</b> (हेल्प डेस्क द्वारा चालू होने पर यहीं से काम करेगी।)</p>')+
+    '<small>मोबाइल नंबर व गुप्त PIN से आपकी सहेजी कुंडलियाँ क्लाउड में रखी जाती हैं। नया फ़ोन लेने या ब्राउज़र-डेटा हटने पर इसी नंबर व PIN से वापस पाएँ। PIN याद रखें, यह दोबारा नहीं बताया जा सकेगा।</small>'+
+    '<label for="vj_cm">मोबाइल नंबर</label><input id="vj_cm" type="tel" inputmode="numeric" maxlength="10" value="'+esc(c.mobile||"")+'">'+
+    '<label for="vj_cp">गुप्त PIN (4 से 6 अंक)</label><input id="vj_cp" type="tel" inputmode="numeric" maxlength="6" autocomplete="off">'+
+    '<label style="display:flex;gap:6px;align-items:flex-start"><input id="vj_cok" type="checkbox"> <span>मैं सहमत हूँ कि मेरी सहेजी कुंडलियों (नाम व जन्म-विवरण) की प्रति वरहिया हेल्प डेस्क के क्लाउड में बैकअप के लिए रखी जाए।</span></label>'+
+    '<button class="b" id="vj_cu" type="button">☁ चालू करें व बैकअप भेजें</button><button class="b g" id="vj_cd" type="button">⬇ क्लाउड से वापस लाएँ</button><button class="b g" id="vj_cx" type="button">बंद करें</button><div id="vj_cmsg" style="margin-top:8px;font-size:14px"></div>');
+  var msg=function(t){o.querySelector("#vj_cmsg").textContent=t;};
+  o.querySelector("#vj_cx").onclick=function(){o.remove();};
+  function cred(){
+    var m=o.querySelector("#vj_cm").value.replace(/\D/g,""),p=o.querySelector("#vj_cp").value.replace(/\D/g,"");
+    if(!on){msg("क्लाउड अभी चालू नहीं है।");return null;}
+    if(m.length!==10||p.length<4){msg("10 अंक का मोबाइल व 4-6 अंक का PIN भरें।");return null;}
+    return {m:m,p:p};
+  }
+  o.querySelector("#vj_cu").onclick=function(){
+    var c1=cred(); if(!c1) return;
+    if(!o.querySelector("#vj_cok").checked){msg("सहमति पर टिक करें।");return;}
+    mkKey(c1.m,c1.p).then(function(k){sv(CKEY,{mobile:c1.m,key:k});push();msg("✔ बैकअप भेज दिया गया। अब हर बार सहेजने पर अपने आप क्लाउड में जुड़ेगा।");});
+  };
+  o.querySelector("#vj_cd").onclick=function(){
+    var c1=cred(); if(!c1) return; msg("खोज रहे हैं…");
+    mkKey(c1.m,c1.p).then(pull.bind(null)).then(function(r){
+      var inc=(r&&r.profiles)||[],cur=list(),n=0;
+      inc.forEach(function(p){if(p&&p.name&&p.date&&!cur.some(function(x){return x.name===p.name&&x.date===p.date;})){p.id=p.id||("k"+Date.now().toString(36)+n);cur.push(p);n++;}});
+      sv(KEY,cur);refreshAll();
+      mkKey(c1.m,c1.p).then(function(k){sv(CKEY,{mobile:c1.m,key:k});});
+      msg(inc.length?("✔ "+n+" नई कुंडली वापस जोड़ी गईं (क्लाउड में कुल "+inc.length+")।"):"इस नंबर व PIN से कोई बैकअप नहीं मिला।");
+    }).catch(function(){msg("क्लाउड से संपर्क नहीं हो सका। नेट जाँचकर दोबारा देखें।");});
   };
 }
 /* ---- उपयोगकर्ता पंजीकरण (वैकल्पिक, सहमति से) ---- */
@@ -5362,7 +5413,7 @@ function reg(){
     if(!n||m.length!==10){alert("नाम व 10 अंकों का मोबाइल नंबर भरें।");return;}
     if(!o.querySelector("#vj_ok").checked){alert("भेजने के लिए सहमति पर टिक करें।");return;}
     sv(RKEY,{name:n,mobile:m,city:c,done:1,ts:Date.now()});
-    if(REG_ENDPOINT){try{var q=new URLSearchParams();q.append(REG_KEYS.name,n);q.append(REG_KEYS.mobile,m);q.append(REG_KEYS.city,c);fetch(REG_ENDPOINT,{method:"POST",mode:"no-cors",body:q});}catch(e){}}
+    if(CLOUD_URL){try{fetch(CLOUD_URL,{method:"POST",mode:"no-cors",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify({type:"reg",name:n,mobile:m,city:c})});}catch(e){}}
     var msg="जय जिनेन्द्र 🙏\nमैंने *वरहिया ज्योतिष दर्शन* ऐप के लिए पंजीकरण किया है।\nनाम: "+n+"\nमोबाइल: "+m+"\nस्थान: "+(c||"—");
     window.open("https://wa.me/"+HELP_WA+"?text="+encodeURIComponent(msg),"_blank");
     o.remove();
@@ -5378,7 +5429,7 @@ if(br){
 var n=(ld(OKEY,0)|0)+1; sv(OKEY,n);
 var rr=ld(RKEY,{});
 if(!rr.done&&(n===1||n===4||n===9)) setTimeout(reg,1500);
-}catch(e){console.error("v73",e);}})();
+}catch(e){console.error("v74",e);}})();
 
 </script>
 </body>
