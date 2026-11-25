@@ -131,7 +131,7 @@ tr.cur td{background:#fdf1d2;font-weight:600}
 .about b{color:var(--maroon)}.about p{margin:4px 0}
 @media print{.brand .pbtn,.nmtools,.totop,.lang,.about{display:none!important}.brand{background:#fff;color:#000;border-bottom:2px solid #000}.brand b{color:#000}.brand span{color:#000}#nm_body{font-size:13px}}
 </style>
-<meta name="vj-ver" content="99">
+<meta name="vj-ver" content="100">
 </head>
 <body>
 <div class="brand"><b id="t-brand"></b><span id="t-slogan"></span></div>
@@ -5511,7 +5511,7 @@ function reg(force){
   var o=modal('<h3 id="vj_regm">🙏 उपयोगकर्ता पंजीकरण</h3>'+(force?'<p><b>ऐप निःशुल्क है। आगे बढ़ने के लिए कृपया एक बार पंजीकरण करें।</b></p>':'')+'<small>वरहिया हेल्प डेस्क को यह जानने में मदद मिलती है कि ऐप का उपयोग कौन कर रहा है, ताकि नई सुविधाओं व सूचनाओं की जानकारी दी जा सके। आपकी कुंडली या जन्म-विवरण इसमें नहीं भेजा जाता। केवल नीचे का नाम, मोबाइल व स्थान, और वह भी आपके खुद दबाने पर।</small>'+
     '<label for="vj_n">नाम</label><input id="vj_n" type="text" value="'+esc(r.name||"")+'" autocomplete="name">'+
     '<label for="vj_m">मोबाइल नंबर</label><input id="vj_m" type="tel" inputmode="numeric" maxlength="10" value="'+esc(r.mobile||"")+'" autocomplete="tel">'+
-    '<label for="vj_c">शहर / गाँव</label><input id="vj_c" type="text" value="'+esc(r.city||"")+'">'+
+    '<label for="vj_c">शहर / गाँव</label><input id="vj_c" type="text" list="vj_cl" autocomplete="off" placeholder="सूची से चुनें या अपना गाँव लिखें" value="'+esc(r.city||"")+'"><datalist id="vj_cl">'+CITIES.map(function(x){return '<option value="'+esc(x[0])+'">';}).join("")+'</datalist>'+
     '<label style="display:flex;gap:6px;align-items:flex-start"><input id="vj_ok" type="checkbox"> <span>मैं सहमत हूँ कि यह जानकारी वरहिया हेल्प डेस्क को भेजी जाए।</span></label>'+
     '<button class="b" id="vj_s" type="button">'+(force?'📲 WhatsApp से भेजें और आगे बढ़ें':'📲 WhatsApp से भेजें')+'</button>'+(force?'':'<button class="b g" id="vj_l" type="button">बाद में</button>'),force);
   var lb=o.querySelector("#vj_l");if(lb)lb.onclick=function(){o.remove();};
@@ -5556,7 +5556,7 @@ D.addEventListener("change",function(e){
 
 /* ===== v79: नए संस्करण की सूचना ===== */
 (function(){try{
-var D=document,VER=99,SITE="https://vimalshubham3-tech.github.io/varahiya-kundli/";
+var D=document,VER=100,SITE="https://vimalshubham3-tech.github.io/varahiya-kundli/";
 var st=D.createElement("style");
 st.textContent="#vj_upd{position:fixed;left:8px;right:8px;bottom:8px;z-index:9998;background:#7a3b10;color:#fff;border-radius:12px;padding:10px 12px;display:flex;gap:8px;align-items:center;font-size:14px;box-shadow:0 2px 10px rgba(0,0,0,.35)}#vj_upd span{flex:1}#vj_upd button,#vj_upd a{border:0;border-radius:8px;padding:8px 10px;background:#fff;color:#7a3b10;font:inherit;font-weight:700;text-decoration:none}#vj_upd .x{background:transparent;color:#fff;padding:8px}@media print{#vj_upd{display:none!important}}";
 D.head.appendChild(st);
