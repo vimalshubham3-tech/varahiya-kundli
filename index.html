@@ -136,7 +136,7 @@ tr.cur td{background:#fdf1d2;font-weight:600}
 .about b{color:var(--maroon)}.about p{margin:4px 0}
 @media print{.brand .pbtn,.nmtools,.totop,.lang,.about{display:none!important}.brand{background:#fff;color:#000;border-bottom:2px solid #000}.brand b{color:#000}.brand span{color:#000}#nm_body{font-size:13px}}
 </style>
-<meta name="vj-ver" content="103">
+<meta name="vj-ver" content="104">
 </head>
 <body>
 <div class="brand"><b id="t-brand"></b><span id="t-slogan"></span></div>
@@ -5561,7 +5561,7 @@ D.addEventListener("change",function(e){
 
 /* ===== v79: नए संस्करण की सूचना ===== */
 (function(){try{
-var D=document,VER=103,SITE="https://vimalshubham3-tech.github.io/varahiya-kundli/";
+var D=document,VER=104,SITE="https://vimalshubham3-tech.github.io/varahiya-kundli/";
 var st=D.createElement("style");
 st.textContent="#vj_upd{position:fixed;left:8px;right:8px;bottom:8px;z-index:9998;background:#7a3b10;color:#fff;border-radius:12px;padding:10px 12px;display:flex;gap:8px;align-items:center;font-size:14px;box-shadow:0 2px 10px rgba(0,0,0,.35)}#vj_upd span{flex:1}#vj_upd button,#vj_upd a{border:0;border-radius:8px;padding:8px 10px;background:#fff;color:#7a3b10;font:inherit;font-weight:700;text-decoration:none}#vj_upd .x{background:transparent;color:#fff;padding:8px}@media print{#vj_upd{display:none!important}}";
 D.head.appendChild(st);
@@ -5727,6 +5727,63 @@ window.vjPriv=function(){
 };
 var fb=document.querySelector("#pane-l");
 if(fb&&!document.getElementById("vj_pl")){var d=document.createElement("div");d.id="vj_pl";d.style.cssText="text-align:center;margin:14px 0;font-size:14px";d.innerHTML='<a href="#" onclick="vjPriv();return false" style="color:#7c2d12;text-decoration:underline">🔒 गोपनीयता नीति</a>';fb.appendChild(d);}
+}catch(e){console&&console.error&&console.error(e);}})();
+
+/* v104: नक्षत्र विवरण + महीने के शुभ-अशुभ समय */
+(function(){try{
+  var D=document,pn=D.createElement('div');pn.id='pane-t';pn.hidden=true;
+  var LORD=['केतु','शुक्र','सूर्य','चंद्र','मंगल','राहु','गुरु','शनि','बुध'];
+  var GANA=['देव','मनुष्य','राक्षस','मनुष्य','मनुष्य','देव'];
+  var G={0:'देव',1:'मनुष्य',2:'राक्षस'};
+  var GN=[0,1,2,1,0,1,0,0,2,2,1,1,0,2,0,2,0,2,2,1,1,0,2,2,1,1,0];
+  var ND=[0,1,2,2,1,0,0,1,2,2,1,0,0,1,2,0,1,0,0,1,2,2,1,0,0,1,2];
+  var NDN=['आदि (वात)','मध्य (पित्त)','अंत्य (कफ)'];
+  var YO=['घोड़ा','हाथी','भेड़','साँप','साँप','कुत्ता','बिल्ली','भेड़','बिल्ली','चूहा','चूहा','गाय','भैंस','बाघ','भैंस','बाघ','हिरण','हिरण','कुत्ता','बंदर','नेवला','बंदर','सिंह','घोड़ा','सिंह','गाय','हाथी'];
+  var PR={};
+  [[3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,0,1,2]];
+  var TY=['क्षिप्र (हल्का)','उग्र','मिश्र','स्थिर (ध्रुव)','मृदु (कोमल)','तीक्ष्ण','चर (चल)','क्षिप्र (हल्का)','तीक्ष्ण','उग्र','उग्र','स्थिर (ध्रुव)','क्षिप्र (हल्का)','मृदु (कोमल)','चर (चल)','मिश्र','मृदु (कोमल)','तीक्ष्ण','तीक्ष्ण','उग्र','स्थिर (ध्रुव)','चर (चल)','चर (चल)','चर (चल)','उग्र','स्थिर (ध्रुव)','मृदु (कोमल)'];
+  var TYN={'क्षिप्र (हल्का)':'शीघ्र होने वाले कार्य, व्यापार व आरंभ के लिए उपयुक्त माना जाता है।','उग्र':'कठोर प्रकृति; शुभ-माँगलिक कार्यों में प्रायः टाले जाते हैं।','मिश्र':'मिला-जुला फल; सामान्य कार्य ठीक, बड़े माँगलिक कार्य विद्वान से पूछकर।','स्थिर (ध्रुव)':'स्थायी कार्य (गृह-निर्माण, नींव, विवाह, पदग्रहण) के लिए उपयुक्त माना जाता है।','मृदु (कोमल)':'कोमल प्रकृति; विवाह, कला, वस्त्र-आभूषण व मंगल कार्यों में शुभ माना जाता है।','तीक्ष्ण':'तीव्र प्रकृति; शुभ कार्यों में प्रायः टाले जाते हैं।','चर (चल)':'यात्रा, वाहन व चलायमान कार्यों के लिए उपयुक्त माना जाता है।'};
+  var h='<div class="panel"><h3>🌙 नक्षत्र विवरण (27 नक्षत्र)</h3><label for="nt_k">नक्षत्र चुनें</label><select id="nt_k" style="width:100%;font:inherit;padding:10px">'+NAK_H.map(function(n,i){return '<option value="'+i+'">'+(i+1)+'. '+n+'</option>';}).join('')+'</select><div id="nt_r"></div></div>'+
+  '<div class="panel"><h3>🕒 महीने के राहुकाल, गुलिक व अभिजित मुहूर्त</h3><label for="nt_c">स्थान</label><select id="nt_c"></select><label for="nt_m">महीना</label><input id="nt_m" type="month"><button class="go" id="nt_go" type="button">महीने की सूची देखें</button><div id="nt_mr"></div></div>';
+  pn.innerHTML=h;
+  var anchor=D.getElementById('pane-l')||D.getElementById('pane-h');
+  anchor.parentNode.insertBefore(pn,anchor.nextSibling);
+  var b=D.createElement('button');b.type='button';b.className='tab';b.id='tab-t';b.setAttribute('role','tab');b.setAttribute('aria-selected','false');b.setAttribute('data-i','tabT');
+  var a=D.getElementById('tab-l')||D.getElementById('tab-h');a.parentNode.insertBefore(b,a.nextSibling);
+  I18N.hi.tabT='नक्षत्र व मासिक समय';I18N.en.tabT='Nakshatra & Monthly Timings';
+  function nak(i){
+    var ru=[],g;for(var p=0;p<4;p++){g=Math.floor((i*4+p)/9);if(ru.indexOf(g)<0)ru.push(g);}
+    var t=TY[i];
+    D.getElementById('nt_r').innerHTML='<div class="tw"><table><tbody>'+
+     '<tr><td>क्रम</td><td>'+(i+1)+' / 27</td></tr>'+
+     '<tr><td>राशि</td><td>'+ru.map(function(x){return RASHI_H[x];}).join(' / ')+'</td></tr>'+
+     '<tr><td>स्वामी ग्रह</td><td>'+LORD[i%9]+'</td></tr>'+
+     '<tr><td>गण</td><td>'+G[GN[i]]+'</td></tr>'+
+     '<tr><td>योनि (प्राणी)</td><td>'+YO[i]+'</td></tr>'+
+     '<tr><td>नाड़ी</td><td>'+NDN[ND[i]]+'</td></tr>'+
+     '<tr><td>प्रकृति</td><td>'+t+'</td></tr>'+
+     '<tr><td>नाम के अक्षर (पद 1–4)</td><td><b>'+VA_NAK[i].join(' · ')+'</b></td></tr></tbody></table></div>'+
+     '<p>'+TYN[t]+'</p><p class="kmeta">शांति हेतु: देव-शास्त्र-गुरु की पूजा, णमोकार मंत्र का जाप व यथाशक्ति दान। ग्रह-विशेष के उपाय के लिए योग्य विद्वान से परामर्श लें।</p>';
+  }
+  var ks=D.getElementById('nt_k');ks.addEventListener('change',function(){nak(+ks.value);});nak(0);
+  var cs=D.getElementById('nt_c');cs.innerHTML=cityOpts();
+  var base=D.getElementById('pn_place');if(base)cs.value=base.value;
+  var n=istNow();D.getElementById('nt_m').value=n.y+'-'+String(n.mo).padStart(2,'0');
+  var DN=['रवि','सोम','मंगल','बुध','गुरु','शुक्र','शनि'];
+  function ap(x){x=((x%24)+24)%24;var H=Math.floor(x),M=Math.round((x-H)*60);if(M===60){H=(H+1)%24;M=0;}var s=H>=12?'PM':'AM',h12=H%12||12;return h12+':'+String(M).padStart(2,'0')+' '+s;}
+  D.getElementById('nt_go').addEventListener('click',function(){
+    var v=D.getElementById('nt_m').value.split('-').map(Number),c=CITIES[+cs.value];if(!v[0])return;
+    var dim=new Date(Date.UTC(v[0],v[1],0)).getUTCDate(),rows='',td=istNow();
+    for(var d=1;d<=dim;d++){
+      var p=panchangDay(v[0],v[1],d,c[2],c[3],5.5),cur=(td.y===v[0]&&td.mo===v[1]&&td.dd===d);
+      rows+='<tr'+(cur?' style="background:#fef3c7"':'')+'><td><b>'+d+'</b><br>'+DN[p.wd]+'</td><td>'+hmS(p.sun.rise)+'–'+hmS(p.sun.set)+'</td><td style="color:#b91c1c">'+ap(p.rahu[0])+'–'+ap(p.rahu[1])+'</td><td style="color:#b45309">'+ap(p.gulika[0])+'–'+ap(p.gulika[1])+'</td><td style="color:#15803d">'+ap(p.abhijit[0])+'–'+ap(p.abhijit[1])+'</td></tr>';
+    }
+    D.getElementById('nt_mr').innerHTML='<p><b>'+c[0]+'</b> — '+v[1]+'/'+v[0]+'</p><div class="tw"><table><thead><tr><th>दिन</th><th>सूर्योदय–अस्त</th><th>राहुकाल</th><th>गुलिक</th><th>अभिजित</th></tr></thead><tbody>'+rows+'</tbody></table></div><p class="kmeta">समय गणित से निकाले अनुमानित हैं (कुछ मिनट का अंतर संभव)। महत्त्वपूर्ण कार्य से पहले पंडित जी से पुष्टि करें।</p>';
+  });
+  var o=setMode;
+  setMode=function(m){o(m);pn.hidden=m!=='t';b.setAttribute('aria-selected',m==='t');};
+  b.addEventListener('click',function(){setMode('t');try{b.scrollIntoView({inline:'center',block:'nearest',behavior:'smooth'});}catch(e){}});
+  applyLang();
 }catch(e){console&&console.error&&console.error(e);}})();
 </script>
 </body>
