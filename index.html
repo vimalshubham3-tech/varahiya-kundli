@@ -4244,7 +4244,7 @@ var RJAIN_NOTE='जैन दृष्टि: ग्रह निमित्त
   D.getElementById('hr_go').addEventListener('click',function(){
     var v=D.getElementById('hr_d').value.split('-').map(Number);if(v.length<3||!v[0]){D.getElementById('hr_res').innerHTML='<p class="warn">तारीख़ चुनें।</p>';return;}
     D.getElementById('hr_res').innerHTML=horaFor(D.getElementById('hr_p').value,v[0],v[1],v[2],CITIES[+D.getElementById('hr_c').value]);});
-  D.getElementById('hr_now').innerHTML=horaNow(CITIES[0]);
+  D.getElementById('hr_now').innerHTML=horaNow(CITIES[(function(){try{var v=localStorage.getItem('vj_city');return v!==null&&CITIES[+v]?+v:102;}catch(e){return 102;}})()]);
   // टैब
   var b=D.createElement('button');b.type='button';b.className='tab';b.id='tab-g';b.setAttribute('role','tab');b.setAttribute('aria-selected','false');b.setAttribute('data-i','tabG');
   var a=D.getElementById('tab-z')||D.getElementById('tab-w');a.parentNode.insertBefore(b,a.nextSibling);
@@ -5525,6 +5525,22 @@ var n=(ld(OKEY,0)|0)+1; sv(OKEY,n);
 var rr=ld(RKEY,{});
 if(!rr.done&&(n===1||n===4||n===9)) setTimeout(reg,1500);
 }catch(e){console.error("v74",e);}})();
+
+/* ===== v78: स्थान का डिफ़ॉल्ट — सुमावली की जगह अंतिम चुना हुआ शहर (पहली बार: दिल्ली) ===== */
+(function(){try{
+var D=document,KEYC="vj_city";
+function cur(){try{var v=localStorage.getItem(KEYC);if(v!==null&&CITIES[+v])return +v;}catch(e){}return 102;}
+function isCity(s){return s&&s.tagName==="SELECT"&&s.options.length>50&&!s.querySelector('option[value=""]')&&!/^b[a-z]_place$/.test(s.id);}
+function apply(s){if(isCity(s)&&!s.getAttribute("data-vjc")){s.setAttribute("data-vjc","1");s.value=String(cur());}}
+function all(){D.querySelectorAll("select").forEach(apply);}
+all();
+new MutationObserver(function(){all();}).observe(D.body,{childList:true,subtree:true});
+D.addEventListener("change",function(e){
+  var s=e.target;if(!isCity(s))return;
+  try{localStorage.setItem(KEYC,s.value);}catch(x){}
+  D.querySelectorAll("select").forEach(function(o){if(o!==s&&isCity(o)&&o.querySelector('option[value="'+s.value+'"]'))o.value=s.value;});
+},true);
+}catch(e){console.error("v78",e);}})();
 
 </script>
 </body>
