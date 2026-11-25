@@ -156,7 +156,7 @@ input[type=date],input[type=time]{min-height:48px}
 .about b{color:var(--maroon)}.about p{margin:4px 0}
 @media print{.brand .pbtn,.nmtools,.totop,.lang,.about{display:none!important}.brand{background:#fff;color:#000;border-bottom:2px solid #000}.brand b{color:#000}.brand span{color:#000}#nm_body{font-size:13px}}
 </style>
-<meta name="vj-ver" content="153">
+<meta name="vj-ver" content="154">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <script>try{if(window.top!==window.self){document.documentElement.style.display='none';window.top.location=window.self.location;}}catch(e){document.documentElement.style.display='none';}</script>
 
@@ -5586,7 +5586,7 @@ D.addEventListener("change",function(e){
 
 /* ===== v79: नए संस्करण की सूचना ===== */
 (function(){try{
-var D=document,VER=153,SITE="https://vimalshubham3-tech.github.io/varahiya-kundli/";
+var D=document,VER=154,SITE="https://vimalshubham3-tech.github.io/varahiya-kundli/";
 var st=D.createElement("style");
 st.textContent="#vj_upd{position:fixed;left:8px;right:8px;bottom:8px;z-index:9998;background:#7a3b10;color:#fff;border-radius:12px;padding:10px 12px;display:flex;gap:8px;align-items:center;font-size:14px;box-shadow:0 2px 10px rgba(0,0,0,.35)}#vj_upd span{flex:1}#vj_upd button,#vj_upd a{border:0;border-radius:8px;padding:8px 10px;background:#fff;color:#7a3b10;font:inherit;font-weight:700;text-decoration:none}#vj_upd .x{background:transparent;color:#fff;padding:8px}@media print{#vj_upd{display:none!important}}";
 D.head.appendChild(st);
@@ -6021,6 +6021,99 @@ f.style.cssText="text-align:center;font-size:11px;opacity:.75;padding:10px 8px 1
 f.textContent="\u00a9 विमल कुमार जैन, वरहिया हेल्प डेस्क, सर्वाधिकार सुरक्षित";
 document.body.appendChild(f);
 }catch(e){}})();
+
+/* ===== v154: व्यक्तित्व विकास टैब ===== */
+(function(){try{
+  var D=document;
+  var RS=[
+   ["मेष","साहस और पहल करने की शक्ति","जल्दबाज़ी और ग़ुस्से में निर्णय","कोई भी बड़ा निर्णय लेने से पहले 10 मिनट रुकें।"],
+   ["वृषभ","धैर्य, स्थिरता और भरोसेमंद स्वभाव","ज़िद और बदलाव से हिचक","हफ़्ते में एक नई चीज़ सीखें, चाहे छोटी हो।"],
+   ["मिथुन","बातचीत और जल्दी सीखने की क्षमता","ध्यान का भटकना","25 मिनट एक समय में एक ही काम करें।"],
+   ["कर्क","संवेदनशीलता और देखभाल का भाव","ज़्यादा चिंता और मनोदशा का उतार-चढ़ाव","रोज़ 10 मिनट शांत बैठें और मन की बात डायरी में लिखें।"],
+   ["सिंह","नेतृत्व और आत्मविश्वास","अहंकार और प्रशंसा की चाह","रोज़ किसी की सच्ची सराहना करें।"],
+   ["कन्या","विश्लेषण और व्यवस्था की क्षमता","ज़रूरत से ज़्यादा आलोचना, अपनी भी","रोज़ एक काम 'जितना हुआ, काफ़ी है' मानकर पूरा करें।"],
+   ["तुला","संतुलन और न्यायप्रियता","निर्णय में देरी","छोटे निर्णय 2 मिनट में लें।"],
+   ["वृश्चिक","गहरी इच्छाशक्ति और एकाग्रता","शंका और मन में गाँठ बाँधना","रात को सोने से पहले क्षमा-भाव से मन हल्का करें।"],
+   ["धनु","आशावाद और ज्ञान की प्यास","लापरवाही और बिना सोचे बोल देना","वादा करने से पहले एक पल सोचें और लिख लें।"],
+   ["मकर","अनुशासन और कड़ी मेहनत","ज़रूरत से ज़्यादा गंभीरता और आराम की कमी","हफ़्ते में एक दिन परिवार के साथ बिना काम का समय बिताएँ।"],
+   ["कुंभ","नई सोच और समाज-हित की भावना","अलग-थलग रहना","हर हफ़्ते एक पुराने परिचित से बात करें।"],
+   ["मीन","करुणा और कल्पनाशीलता","भ्रम और टालमटोल","सुबह दिन के 3 मुख्य काम लिखें और पहले वही करें।"]
+  ];
+  var Q=[
+   ["समय","मैं अपने दिन के काम पहले से तय करके चलता/चलती हूँ।"],
+   ["आत्मविश्वास","नई जगह या नए लोगों के बीच मैं सहज रहता/रहती हूँ।"],
+   ["संवाद","मैं दूसरों की बात पूरी सुनकर फिर जवाब देता/देती हूँ।"],
+   ["क्रोध","ग़ुस्सा आने पर मैं रुककर शांत हो पाता/पाती हूँ।"],
+   ["सीखना","मैं रोज़ कुछ पढ़ता/पढ़ती या नया सीखता/सीखती हूँ।"],
+   ["दिनचर्या","मेरा सोने-जागने और भोजन का समय लगभग तय रहता है।"],
+   ["धन","मैं अपनी आमदनी का कुछ हिस्सा नियमित रूप से बचाता/बचाती हूँ।"],
+   ["कृतज्ञता","मैं रोज़ किसी बात के लिए आभार प्रकट करता/करती हूँ।"]
+  ];
+  var TP={
+   "समय":["रात को अगले दिन के 3 काम लिख लें।","सबसे कठिन काम सुबह सबसे पहले करें।"],
+   "आत्मविश्वास":["रोज़ एक छोटा काम ऐसा करें जिससे थोड़ी झिझक हो।","सभा या परिवार में हफ़्ते में एक बार अपनी बात रखें।"],
+   "संवाद":["जवाब देने से पहले एक साँस रुकें।","सामने वाले की बात अपने शब्दों में दोहराकर पूछें कि क्या मैंने ठीक समझा।"],
+   "क्रोध":["ग़ुस्से में 10 तक गिनें और गहरी साँस लें।","क्रोध की बात बाद में, शांत होकर कहें।"],
+   "सीखना":["रोज़ 15 मिनट कोई अच्छी पुस्तक या स्वाध्याय पढ़ें।","हर हफ़्ते एक नई बात सीखकर किसी को सिखाएँ।"],
+   "दिनचर्या":["सोने और उठने का समय हर दिन लगभग एक रखें।","भोजन समय पर और सादा रखें।"],
+   "धन":["हर आमदनी पर पहले बचत अलग करें, फिर ख़र्च।","महीने में एक बार ख़र्च की सूची देखें।"],
+   "कृतज्ञता":["रात को आज की 3 अच्छी बातें लिखें।","किसी एक व्यक्ति को धन्यवाद कहें।"]
+  };
+  var HB=["सुबह उठकर 5 मिनट शांत बैठें।","आज किसी से मुस्कुराकर बात करें।","आज किसी की सच्ची प्रशंसा करें।","आज फ़ोन का उपयोग एक घंटा कम करें।","आज कोई एक अच्छा काम चुपचाप करें, बताएँ नहीं।","आज 15 मिनट स्वाध्याय पढ़ें।","आज जो कहना है, पहले मन में एक बार दोहराएँ।","आज भोजन ध्यान से, बिना स्क्रीन देखे करें।","आज किसी बुज़ुर्ग से हालचाल पूछें।","आज एक काम जो टल रहा है, उसे पूरा करें।","आज किसी से क्षमा माँगें या क्षमा करें।","आज थोड़ा पैदल चलें या हल्का व्यायाम करें।","आज किसी ज़रूरतमंद की छोटी मदद करें।","आज रात को सोने से पहले 3 आभार लिखें।","आज ग़ुस्सा आए तो 10 तक गिनें।","आज एक नया शब्द या नई बात सीखें।","आज कमरे या मेज़ की सफ़ाई करें।","आज अपना बजट या ख़र्च देखें।","आज बिना बीच में बोले किसी की पूरी बात सुनें।","आज सुबह की धूप में 5 मिनट बिताएँ।","आज किसी पुराने मित्र को संदेश भेजें।","आज एक काम में 25 मिनट पूरा ध्यान दें।","आज अपने माता-पिता या बड़ों के पैर छुएँ या नमन करें।","आज किसी की निंदा न करें।","आज अपने लक्ष्य की तरफ़ एक छोटा क़दम उठाएँ।","आज देर रात तक जागने से बचें।","आज पानी पर्याप्त पिएँ।","आज किसी को बिना माँगे सलाह न दें।","आज अपनी एक अच्छी बात पहचानें।","आज मौन का 10 मिनट अभ्यास करें।"];
+  var JV=[
+   ["अहिंसा","वाणी, विचार और व्यवहार से किसी को दुख न पहुँचाएँ। आज एक कठोर शब्द कम बोलें।"],
+   ["सत्य","छोटी बात में भी सच बोलें। बढ़ा-चढ़ाकर कहने की आदत पहचानें।"],
+   ["अचौर्य","किसी का समय, विचार या सामान बिना पूछे न लें।"],
+   ["संयम","खान-पान, बोलचाल और मोबाइल पर मर्यादा रखें।"],
+   ["अपरिग्रह","ज़रूरत से ज़्यादा जोड़ने की आदत घटाएँ। बेकार सामान किसी ज़रूरतमंद को दें।"],
+   ["अनेकांत","हर बात को दूसरे के दृष्टिकोण से भी देखें। 'मैं ही सही' की जगह 'शायद यह भी सही' सोचें।"],
+   ["क्षमा","रात को सोने से पहले मन से किसी को क्षमा कर दें और स्वयं भी क्षमा माँग लें।"],
+   ["स्वाध्याय","रोज़ कुछ समय आत्मा और जीवन पर अच्छा पढ़ें या सुनें।"],
+   ["सामायिक/ध्यान","रोज़ कुछ समय शांत बैठकर मन को स्थिर करने का अभ्यास करें।"],
+   ["दान","अपनी क्षमता के अनुसार नियमित रूप से सेवा या दान करें।"]
+  ];
+  function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});}
+  var pn=D.createElement('div');pn.id='pane-pd';pn.hidden=true;
+  var d=new Date(),doy=Math.floor((d-new Date(d.getFullYear(),0,0))/86400000),tod=HB[doy%HB.length];
+  var h='<div class="panel"><h3>🌟 व्यक्तित्व विकास</h3><p class="kmeta">सरल हिंदी में आत्म-सुधार के सुझाव। यह सामान्य मार्गदर्शन है, चिकित्सा या मनोवैज्ञानिक सलाह नहीं।</p>'+
+   '<div class="res-card"><h3 style="margin-top:0">💡 आज की आदत</h3><p id="pd_td" style="font-size:17px;margin:4px 0">'+esc(tod)+'</p><button type="button" class="go" id="pd_wa" style="font-size:15px;padding:11px">📤 WhatsApp पर भेजें</button></div>'+
+   '<div class="res-card" style="margin-top:12px"><h3 style="margin-top:0">♈ राशि के अनुसार सुझाव</h3><p class="kmeta">ज्योतिष में बताई सामान्य प्रवृत्तियों के आधार पर। हर व्यक्ति अलग होता है।</p><label for="pd_r">अपनी चंद्र-राशि चुनें</label><select id="pd_r"><option value="">— चुनें —</option>'+RS.map(function(x,i){return'<option value="'+i+'">'+x[0]+'</option>';}).join('')+'</select><div id="pd_rr"></div></div>'+
+   '<div class="res-card" style="margin-top:12px"><h3 style="margin-top:0">📋 आत्म-मूल्यांकन (8 प्रश्न)</h3><p class="kmeta">ईमानदारी से चुनें। उत्तर कहीं भेजे या सहेजे नहीं जाते।</p><div id="pd_q"></div><button type="button" class="go" id="pd_go" style="font-size:15px;padding:12px">परिणाम देखें</button><div id="pd_res"></div></div>'+
+   '<div class="res-card" style="margin-top:12px"><h3 style="margin-top:0">🎯 21 दिन की आदत-ट्रैकर</h3><p class="kmeta">एक अच्छी आदत चुनें और हर दिन पूरा होने पर निशान लगाएँ। यह केवल आपके फ़ोन में रहता है।</p><label for="pd_h">आपकी आदत</label><input id="pd_h" type="text" maxlength="60" placeholder="जैसे: रोज़ 15 मिनट स्वाध्याय"><div id="pd_g" style="display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin:10px 0"></div><p class="kmeta" id="pd_gc"></p></div>'+
+   '<div class="res-card" style="margin-top:12px"><h3 style="margin-top:0">🪷 जैन मूल्यों से व्यक्तित्व</h3><p class="kmeta">सामान्य जीवन में अपनाने योग्य छोटे अभ्यास।</p>'+JV.map(function(x){return'<p style="margin:7px 0"><b style="color:var(--maroon)">'+x[0]+':</b> '+esc(x[1])+'</p>';}).join('')+'</div></div>';
+  pn.innerHTML=h;
+  var anchor=D.getElementById('pane-t')||D.getElementById('pane-l')||D.getElementById('pane-h');
+  anchor.parentNode.insertBefore(pn,anchor.nextSibling);
+  var b=D.createElement('button');b.type='button';b.className='tab';b.id='tab-pd';b.setAttribute('role','tab');b.setAttribute('aria-selected','false');b.setAttribute('data-i','tabPD');
+  var a=D.getElementById('tab-t')||D.getElementById('tab-l')||D.getElementById('tab-h');a.parentNode.insertBefore(b,a.nextSibling);
+  I18N.hi.tabPD='व्यक्तित्व विकास';I18N.en.tabPD='Personality Development';
+  function $(i){return D.getElementById(i);}
+  $('pd_wa').onclick=function(){var m="🌟 *आज की आदत*\n"+tod+"\n\n_वरहिया जैन पंचांग एवं ज्योतिष वास्तु दर्शन_\nhttps://tinyurl.com/varahiya-jyotish-darshan";window.open("https://wa.me/?text="+encodeURIComponent(m),"_blank");};
+  $('pd_r').onchange=function(){var v=this.value,o=$('pd_rr');if(v===""){o.innerHTML="";return;}var x=RS[+v];
+    o.innerHTML='<p style="margin:10px 0 4px"><b>✅ ताक़त:</b> '+esc(x[1])+'</p><p style="margin:4px 0"><b>🌱 सुधार का क्षेत्र:</b> '+esc(x[2])+'</p><p style="margin:4px 0"><b>📌 इस हफ़्ते की आदत:</b> '+esc(x[3])+'</p>';};
+  var qh='';Q.forEach(function(q,i){qh+='<div style="margin:10px 0"><div style="margin-bottom:4px">'+(i+1)+'. '+esc(q[1])+'</div><select id="pd_q'+i+'"><option value="">— चुनें —</option><option value="2">अक्सर / हमेशा</option><option value="1">कभी-कभी</option><option value="0">कम ही</option></select></div>';});
+  $('pd_q').innerHTML=qh;
+  $('pd_go').onclick=function(){var sc=[],miss=0;Q.forEach(function(q,i){var v=$('pd_q'+i).value;if(v==="")miss++;else sc.push([q[0],+v]);});
+    var o=$('pd_res');if(miss){o.innerHTML='<p class="kmeta" style="color:#b91c1c">कृपया सभी 8 प्रश्नों का उत्तर चुनें ('+miss+' बाक़ी)।</p>';return;}
+    var tot=0;sc.forEach(function(x){tot+=x[1];});
+    var s=sc.slice().sort(function(a,b){return a[1]-b[1];}),low=s.slice(0,2);
+    var lvl=tot>=13?"बहुत अच्छी स्थिति। इसी तरह आगे बढ़ते रहें।":tot>=8?"अच्छी शुरुआत। कुछ क्षेत्रों में थोड़ा अभ्यास काफ़ी होगा।":"सुधार की बहुत संभावना है। हर दिन एक छोटा क़दम काफ़ी है।";
+    var bars=sc.map(function(x){return'<div style="display:flex;align-items:center;gap:8px;margin:5px 0"><span style="width:92px">'+x[0]+'</span><span style="flex:1;background:#eadfc8;border-radius:8px;height:10px"><span style="display:block;height:10px;border-radius:8px;background:var(--maroon);width:'+(x[1]*50)+'%"></span></span></div>';}).join('');
+    var tips=low.map(function(x){var t=TP[x[0]];return'<p style="margin:8px 0"><b>'+x[0]+':</b> '+esc(t[0])+' '+esc(t[1])+'</p>';}).join('');
+    o.innerHTML='<p style="margin:12px 0 4px"><b>आपका स्कोर: '+tot+' / 16</b> — '+esc(lvl)+'</p>'+bars+'<p style="margin:10px 0 2px"><b>🌱 पहले इन पर ध्यान दें:</b></p>'+tips+'<p class="kmeta">यह केवल स्व-चिंतन का साधन है, कोई निदान नहीं।</p>';};
+  var KEY='vj_pd_h',st={t:"",d:[]};try{var rr=localStorage.getItem(KEY);if(rr)st=JSON.parse(rr)||st;}catch(e){}
+  if(!st.d||st.d.length!==21){st.d=[];for(var i=0;i<21;i++)st.d.push(0);}
+  function sv(){try{localStorage.setItem(KEY,JSON.stringify(st));}catch(e){}}
+  function dr(){var g=$('pd_g'),c=0;g.innerHTML='';st.d.forEach(function(v,i){c+=v?1:0;var bt=D.createElement('button');bt.type='button';bt.textContent=v?'✔':String(i+1);bt.setAttribute('aria-label','दिन '+(i+1));
+      bt.style.cssText='padding:10px 0;border-radius:10px;border:1px solid var(--line);font:inherit;cursor:pointer;'+(v?'background:var(--maroon);color:#fff':'background:#fbfbfd;color:var(--ink)');
+      bt.onclick=function(){st.d[i]=st.d[i]?0:1;sv();dr();};g.appendChild(bt);});
+    $('pd_gc').textContent=c===21?'🎉 बधाई! आपने 21 दिन पूरे किए।':(c+' / 21 दिन पूरे'+(c?'। बढ़िया चल रहा है।':'।'));}
+  $('pd_h').value=st.t||"";$('pd_h').oninput=function(){st.t=this.value;sv();};dr();
+  var o=setMode;
+  setMode=function(m){o(m);pn.hidden=m!=='pd';b.setAttribute('aria-selected',m==='pd');};
+  b.addEventListener('click',function(){setMode('pd');try{b.scrollIntoView({inline:'center',block:'nearest',behavior:'smooth'});}catch(e){}});
+  applyLang();
+}catch(e){console&&console.error&&console.error("v154",e);}})();
 
 </script>
 </body>
