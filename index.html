@@ -136,7 +136,7 @@ tr.cur td{background:#fdf1d2;font-weight:600}
 .about b{color:var(--maroon)}.about p{margin:4px 0}
 @media print{.brand .pbtn,.nmtools,.totop,.lang,.about{display:none!important}.brand{background:#fff;color:#000;border-bottom:2px solid #000}.brand b{color:#000}.brand span{color:#000}#nm_body{font-size:13px}}
 </style>
-<meta name="vj-ver" content="102">
+<meta name="vj-ver" content="103">
 </head>
 <body>
 <div class="brand"><b id="t-brand"></b><span id="t-slogan"></span></div>
@@ -5459,7 +5459,7 @@ function manage(){
   var a=list();
   var o=modal('<h3>💾 सहेजी कुंडलियाँ</h3><small>ये केवल इसी फ़ोन/ब्राउज़र में सहेजी हैं, कहीं भेजी नहीं जातीं।</small><div id="vj_l">'+
     (a.length?a.map(function(p){return '<div class="it"><span>'+esc(lbl(p))+'</span><button type="button" data-d="'+esc(p.id)+'">हटाएँ</button></div>';}).join(""):'<p>अभी कोई कुंडली सहेजी नहीं है। किसी भी कुंडली या मिलान-फ़ॉर्म में नाम व जन्म-विवरण भरकर 💾 सहेजें दबाएँ।</p>')+
-    '</div><button class="b" id="vj_ex" type="button">⬇ बैकअप फ़ाइल सहेजें</button><button class="b g" id="vj_im" type="button">⬆ बैकअप से वापस लाएँ</button><input id="vj_f" type="file" accept=".json,application/json" hidden><button class="b" id="vj_cl" type="button">☁ क्लाउड बैकअप (किसी भी फ़ोन पर वापस पाएँ)</button><button class="b g" id="vj_x" type="button">बंद करें</button><small>फ़ोन की सफ़ाई या ब्राउज़र-डेटा हटाने पर सहेजी कुंडलियाँ मिट सकती हैं। इसलिए कभी-कभी बैकअप सहेज लें।</small>');
+    '</div><button class="b" id="vj_ex" type="button">⬇ बैकअप फ़ाइल सहेजें</button><button class="b g" id="vj_im" type="button">⬆ बैकअप से वापस लाएँ</button><input id="vj_f" type="file" accept=".json,application/json" hidden><button class="b" id="vj_cl" type="button">☁ क्लाउड बैकअप (किसी भी फ़ोन पर वापस पाएँ)</button><button class="b g" id="vj_x" type="button">बंद करें</button><small>फ़ोन की सफ़ाई या ब्राउज़र-डेटा हटाने पर सहेजी कुंडलियाँ मिट सकती हैं। इसलिए कभी-कभी बैकअप सहेज लें।<br><b>ऐप हटाने (अनइंस्टॉल) से पहले बैकअप फ़ाइल या क्लाउड बैकअप ज़रूर कर लें, वरना सहेजी कुंडलियाँ चली जाएँगी।</b> <a href="#" onclick="vjPriv();return false" style="color:#7c2d12;text-decoration:underline">गोपनीयता नीति</a></small>');
   o.querySelector("#vj_x").onclick=function(){o.remove();};
   o.querySelector("#vj_cl").onclick=function(){o.remove();if(window.vjPrem&&!window.vjPrem()){window.vjUpsell("क्लाउड बैकअप");return;}cloud();};
   o.querySelectorAll("[data-d]").forEach(function(b){b.onclick=function(){var id=b.getAttribute("data-d");saveList(list().filter(function(x){return x.id!==id;}));refreshAll();o.remove();manage();};});
@@ -5483,7 +5483,7 @@ function cloud(){
     '<small>मोबाइल नंबर व गुप्त PIN से आपकी सहेजी कुंडलियाँ क्लाउड में रखी जाती हैं। नया फ़ोन लेने या ब्राउज़र-डेटा हटने पर इसी नंबर व PIN से वापस पाएँ। PIN याद रखें, यह दोबारा नहीं बताया जा सकेगा।</small>'+
     '<label for="vj_cm">मोबाइल नंबर</label><input id="vj_cm" type="tel" inputmode="numeric" maxlength="10" value="'+esc(c.mobile||"")+'">'+
     '<label for="vj_cp">गुप्त PIN (4 से 6 अंक)</label><input id="vj_cp" type="tel" inputmode="numeric" maxlength="6" autocomplete="off">'+
-    '<label style="display:flex;gap:6px;align-items:flex-start"><input id="vj_cok" type="checkbox"> <span>मैं सहमत हूँ कि मेरी सहेजी कुंडलियों (नाम व जन्म-विवरण) की प्रति वरहिया हेल्प डेस्क के क्लाउड में बैकअप के लिए रखी जाए।</span></label>'+
+    '<label style="display:flex;gap:6px;align-items:flex-start"><input id="vj_cok" type="checkbox"> <span>मैं सहमत हूँ कि मेरी सहेजी कुंडलियों (नाम व जन्म-विवरण) की प्रति वरहिया हेल्प डेस्क के क्लाउड में बैकअप के लिए रखी जाए। <a href="#" onclick="vjPriv();return false" style="color:#7c2d12;text-decoration:underline">गोपनीयता नीति</a></span></label>'+
     '<button class="b" id="vj_cu" type="button">☁ चालू करें व बैकअप भेजें</button><button class="b g" id="vj_cd" type="button">⬇ क्लाउड से वापस लाएँ</button><button class="b g" id="vj_cx" type="button">बंद करें</button><div id="vj_cmsg" style="margin-top:8px;font-size:14px"></div>');
   var msg=function(t){o.querySelector("#vj_cmsg").textContent=t;};
   o.querySelector("#vj_cx").onclick=function(){o.remove();};
@@ -5517,7 +5517,7 @@ function reg(force){
     '<label for="vj_n">नाम</label><input id="vj_n" type="text" value="'+esc(r.name||"")+'" autocomplete="name">'+
     '<label for="vj_m">मोबाइल नंबर</label><input id="vj_m" type="tel" inputmode="numeric" maxlength="10" value="'+esc(r.mobile||"")+'" autocomplete="tel">'+
     '<label for="vj_c">शहर / गाँव</label><input id="vj_c" type="text" list="vj_cl" autocomplete="off" placeholder="सूची से चुनें या अपना गाँव लिखें" value="'+esc(r.city||"")+'"><datalist id="vj_cl">'+CITIES.map(function(x){return '<option value="'+esc(x[0])+'">';}).join("")+'</datalist>'+
-    '<label style="display:flex;gap:6px;align-items:flex-start"><input id="vj_ok" type="checkbox"> <span>मैं सहमत हूँ कि यह जानकारी वरहिया हेल्प डेस्क को भेजी जाए।</span></label>'+
+    '<label style="display:flex;gap:6px;align-items:flex-start"><input id="vj_ok" type="checkbox"> <span>मैं सहमत हूँ कि यह जानकारी वरहिया हेल्प डेस्क को भेजी जाए। <a href="#" onclick="vjPriv();return false" style="color:#7c2d12;text-decoration:underline">गोपनीयता नीति</a></span></label>'+
     '<button class="b" id="vj_s" type="button">'+(force?'📲 WhatsApp से भेजें और आगे बढ़ें':'📲 WhatsApp से भेजें')+'</button>'+(force?'':'<button class="b g" id="vj_l" type="button">बाद में</button>'),force);
   var lb=o.querySelector("#vj_l");if(lb)lb.onclick=function(){o.remove();};
   o.querySelector("#vj_s").onclick=function(){
@@ -5561,7 +5561,7 @@ D.addEventListener("change",function(e){
 
 /* ===== v79: नए संस्करण की सूचना ===== */
 (function(){try{
-var D=document,VER=102,SITE="https://vimalshubham3-tech.github.io/varahiya-kundli/";
+var D=document,VER=103,SITE="https://vimalshubham3-tech.github.io/varahiya-kundli/";
 var st=D.createElement("style");
 st.textContent="#vj_upd{position:fixed;left:8px;right:8px;bottom:8px;z-index:9998;background:#7a3b10;color:#fff;border-radius:12px;padding:10px 12px;display:flex;gap:8px;align-items:center;font-size:14px;box-shadow:0 2px 10px rgba(0,0,0,.35)}#vj_upd span{flex:1}#vj_upd button,#vj_upd a{border:0;border-radius:8px;padding:8px 10px;background:#fff;color:#7a3b10;font:inherit;font-weight:700;text-decoration:none}#vj_upd .x{background:transparent;color:#fff;padding:8px}@media print{#vj_upd{display:none!important}}";
 D.head.appendChild(st);
@@ -5699,6 +5699,35 @@ bar.insertBefore(l,bar.firstChild);
   }
 }catch(e){console&&console.error&&console.error(e);}})();
 
+
+/* v103: गोपनीयता नीति */
+(function(){try{
+window.vjPriv=function(){
+  if(document.getElementById("vj_priv"))return;
+  var o=document.createElement("div");o.id="vj_priv";
+  o.style.cssText="position:fixed;inset:0;z-index:100000;background:rgba(0,0,0,.6);display:flex;align-items:flex-start;justify-content:center;overflow:auto;padding:12px";
+  o.innerHTML='<div style="background:#fffdf7;color:#222;max-width:560px;width:100%;border-radius:12px;padding:16px;font-size:15px;line-height:1.7">'+
+  '<h3 style="margin:0 0 6px;color:#7c2d12">🔒 गोपनीयता नीति</h3>'+
+  '<p><b>वरहिया जैन पंचांग एवं ज्योतिष दर्शन</b> — वरहिया हेल्प डेस्क, सुमावली (मुरैना)।</p>'+
+  '<h4>1. हम कौन-सी जानकारी लेते हैं</h4>'+
+  '<p>(क) <b>पंजीकरण:</b> आपका नाम, मोबाइल नंबर व शहर/गाँव। यह आपकी सहमति से WhatsApp संदेश के रूप में हेल्प डेस्क को जाता है और हमारी Google Sheet में दर्ज होता है।<br>'+
+  '(ख) <b>कुंडलियाँ:</b> आपके द्वारा सहेजी कुंडलियाँ (नाम, जन्म-तिथि, समय, स्थान) केवल आपके फ़ोन में रहती हैं। केवल आप "क्लाउड बैकअप" चालू करें तभी उनकी प्रति हमारी Google Sheet में आपके मोबाइल नंबर व PIN से बनी कुंजी के साथ रखी जाती है।<br>'+
+  '(ग) सदस्यता/ट्रायल की स्थिति आपके फ़ोन में ही रखी जाती है।</p>'+
+  '<h4>2. उपयोग</h4><p>केवल सेवा देने, सदस्यता व सहायता, और ऐप की सूचनाएँ भेजने के लिए। हम आपकी जानकारी बेचते या विज्ञापन के लिए नहीं देते। ऐप में कोई विज्ञापन नहीं है।</p>'+
+  '<h4>3. अनुमतियाँ</h4><p>ऐप कैमरा, माइक, संपर्क, लोकेशन या SMS की अनुमति नहीं माँगता। शहर आप स्वयं चुनते हैं।</p>'+
+  '<h4>4. तृतीय पक्ष</h4><p>Google Fonts (अक्षर-शैली लाने पर Google आपका IP पता दर्ज कर सकता है), Google Sheets/Apps Script (पंजीकरण व बैकअप का भंडारण), WhatsApp (संदेश भेजना)। भुगतान आप सीधे UPI से करते हैं; हम बैंक/कार्ड विवरण नहीं लेते।</p>'+
+  '<h4>5. पहुँच</h4><p>क्लाउड में रखा डेटा हेल्प डेस्क के संचालक को Sheet में दिख सकता है। हम उसे केवल ऊपर बताए उद्देश्य से देखते हैं। बैकअप का PIN गुप्त रखें।</p>'+
+  '<h4>6. डेटा हटवाना</h4><p>फ़ोन की कुंडलियाँ: ऐप में "सहेजी कुंडलियाँ" से हटाएँ, या ऐप/ब्राउज़र का डेटा साफ़ करें। पंजीकरण या क्लाउड बैकअप हटवाने के लिए WhatsApp 9977004518 पर लिखें; हम उसे हटा देंगे। ऐप हटाने से क्लाउड की प्रति अपने आप नहीं हटती।</p>'+
+  '<h4>7. बच्चे</h4><p>ऐप 13 वर्ष से छोटे बच्चों के लिए नहीं है।</p>'+
+  '<h4>8. बदलाव व संपर्क</h4><p>नीति बदलने पर ऐप में नई प्रति दिखेगी। संपर्क: वरहिया हेल्प डेस्क, WhatsApp 9977004518।</p>'+
+  '<small>ज्योतिषीय फल मार्गदर्शन हेतु हैं। महत्त्वपूर्ण निर्णय से पहले विद्वान पंडित से परामर्श करें।</small>'+
+  '<button type="button" id="vj_pc" style="display:block;width:100%;margin-top:10px;padding:12px;border:0;border-radius:10px;background:#7c2d12;color:#fff;font-size:16px">बंद करें</button></div>';
+  document.body.appendChild(o);
+  o.querySelector("#vj_pc").onclick=function(){o.remove();};
+};
+var fb=document.querySelector("#pane-l");
+if(fb&&!document.getElementById("vj_pl")){var d=document.createElement("div");d.id="vj_pl";d.style.cssText="text-align:center;margin:14px 0;font-size:14px";d.innerHTML='<a href="#" onclick="vjPriv();return false" style="color:#7c2d12;text-decoration:underline">🔒 गोपनीयता नीति</a>';fb.appendChild(d);}
+}catch(e){console&&console.error&&console.error(e);}})();
 </script>
 </body>
 </html>
