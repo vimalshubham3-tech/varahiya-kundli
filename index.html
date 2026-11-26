@@ -162,7 +162,7 @@ input[type=date],input[type=time]{min-height:48px}
 .about b{color:var(--maroon)}.about p{margin:4px 0}
 @media print{.brand .pbtn,.nmtools,.totop,.lang,.about{display:none!important}.brand{background:#fff;color:#000;border-bottom:2px solid #000}.brand b{color:#000}.brand span{color:#000}#nm_body{font-size:13px}}
 </style>
-<meta name="vj-ver" content="177">
+<meta name="vj-ver" content="178">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <script>try{if(window.top!==window.self){document.documentElement.style.display='none';window.top.location=window.self.location;}}catch(e){document.documentElement.style.display='none';}</script>
 
@@ -6353,6 +6353,10 @@ b.addEventListener('click',function(){var k=key();
   o.setAttribute('data-vjk',k);})();});
 return true}
 function go(){if(setup()||++n>20)return;setTimeout(go,200)}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',go);else go();})();
+/* v178: क्रम — दैनिक के साथ दैनिक परिणाम, मासिक के साथ मासिक, वार्षिक के साथ वार्षिक */
+(function(){var n=0;function mv(){try{var r=document.getElementById('pn_res'),go=document.getElementById('pn_go'),hb=document.getElementById('hb_go'),jc=document.getElementById('jc_go'),ha=document.getElementById('ha_go');if(!r||!go||!hb||!jc||!ha)return false;var d=go.closest('.panel');if(d&&d.parentNode===r.parentNode&&d.nextSibling!==r)d.parentNode.insertBefore(r,d.nextSibling);var hp=hb.closest('.panel'),jp=jc.closest('.panel'),ap=ha.closest('.panel');if(hp&&jp&&ap&&hp.parentNode===jp.parentNode&&jp.nextSibling!==hp&&ap.parentNode===jp.parentNode)jp.parentNode.insertBefore(hp,jp.nextSibling);var jt=document.getElementById('jt_wa'),hk=document.getElementById('hk_go'),hpp=document.getElementById('hp_go');jt=jt&&jt.closest('.panel');hk=hk&&hk.closest('.panel');hpp=hpp&&hpp.closest('.panel');if(jt&&hpp&&jt.parentNode===hpp.parentNode&&hpp.nextSibling!==jt)hpp.parentNode.insertBefore(jt,hpp.nextSibling);if(hk&&ap&&hk.parentNode===ap.parentNode&&ap.nextSibling!==hk)ap.parentNode.insertBefore(hk,ap.nextSibling);return true}catch(e){return false}}
+function go(){if(mv()||++n>20)return;setTimeout(go,150)}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',go);else go();})();
 /* v158: जैन तिथि दर्पण टैब सबसे पहले */
 (function(){try{var h=document.getElementById('tab-h'),p=document.getElementById('tab-p'),f=h&&h.parentNode.firstElementChild;if(h&&f&&f!==h){h.parentNode.insertBefore(h,f);}
