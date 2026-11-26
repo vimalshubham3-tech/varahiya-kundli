@@ -201,7 +201,7 @@ input[type=date],input[type=time]{min-height:48px}
 .about b{color:var(--maroon)}.about p{margin:4px 0}
 @media print{.brand .pbtn,.nmtools,.totop,.lang,.about{display:none!important}.brand{background:#fff;color:#000;border-bottom:2px solid #000}.brand b{color:#000}.brand span{color:#000}#nm_body{font-size:13px}}
 </style>
-<meta name="vj-ver" content="283">
+<meta name="vj-ver" content="284">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <script>try{if(window.top!==window.self){document.documentElement.style.display='none';window.top.location=window.self.location;}}catch(e){document.documentElement.style.display='none';}</script>
 
@@ -7092,7 +7092,7 @@ var PRIV='<h3 style="margin:0 0 6px;color:#7c2d12">🔒 Privacy Policy</h3>'+
 '<small>Last updated: 25/11/2026.</small><br>'+
 '<small>Astrological results are for guidance. Consult a learned pandit before important decisions.</small>'+
 '<button type="button" id="vj_pc" style="'+BT+'">Close</button>';
-function wrap(name,id,html,btn){var f=window[name];if(!f||f.__w279)return;var g=function(){var had=document.getElementById(id);f();var o=document.getElementById(id);if(o&&!had&&document.documentElement.lang==='en'){var b=o.firstChild;b.innerHTML=html;o.querySelector('#'+btn).onclick=function(){o.remove();};}};g.__w279=1;window[name]=g;}
+function wrap(name,id,html,btn){var f=window[name];if(!f||f.__w279)return;var g=function(){var had=document.getElementById(id);f();var o=document.getElementById(id);if(o&&!had){var b=o.firstChild;b.innerHTML=html;o.querySelector('#'+btn).onclick=function(){o.remove();};}};g.__w279=1;window[name]=g;}
 function go(){wrap('vjDisc','vj_disc',DISC,'vj_dc');wrap('vjPriv','vj_priv',PRIV,'vj_pc');}
 go();setTimeout(go,500);setTimeout(go,3000);
 })();
