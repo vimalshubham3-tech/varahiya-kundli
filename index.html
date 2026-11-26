@@ -201,7 +201,7 @@ input[type=date],input[type=time]{min-height:48px}
 .about b{color:var(--maroon)}.about p{margin:4px 0}
 @media print{.brand .pbtn,.nmtools,.totop,.lang,.about{display:none!important}.brand{background:#fff;color:#000;border-bottom:2px solid #000}.brand b{color:#000}.brand span{color:#000}#nm_body{font-size:13px}}
 </style>
-<meta name="vj-ver" content="213">
+<meta name="vj-ver" content="214">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <script>try{if(window.top!==window.self){document.documentElement.style.display='none';window.top.location=window.self.location;}}catch(e){document.documentElement.style.display='none';}</script>
 
@@ -1359,7 +1359,13 @@ function chBanner(d){
   if(d.ymd[0]!==t.getUTCFullYear()||d.ymd[1]!==t.getUTCMonth()+1||d.ymd[2]!==t.getUTCDate())return '';
   const c=curChog(d.ymd[3],d.ymd[4]);if(!c)return '';
   const g=CHD_GOOD[c.n],bg=g===1?'#6b8e23':g?'#b8860b':'#c62828',lb={'अमृत':'सर्वोत्तम','शुभ':'उत्तम','लाभ':'उन्नति','चर':'सामान्य','काल':'हानि','रोग':'चिंता','उद्वेग':'अशुभ'}[c.n]||'';
-  return '<div class="vjcb" data-e="'+c.b+'" style="display:flex;border-radius:10px;overflow:hidden;margin:6px 0;border:1px solid #d9c38a"><div style="flex:1;background:#fff0c2;padding:8px;text-align:center"><div style="font-size:20px;font-weight:700;color:#6b5a00">'+hmS(c.a)+' – '+hmS(c.b)+'</div><div style="font-size:18px;color:#444">⏳ <span class="vjcc">--:--:--</span> शेष</div></div><div style="flex:1;background:'+bg+';color:#fff;padding:8px;text-align:center"><div style="font-size:12px;opacity:.9">वर्तमान चौघड़िया</div><div style="font-size:20px;font-weight:700">'+c.n+' - '+lb+(g===1?' ✓':g?'':' ✗')+'</div></div></div>';
+  let sm='';try{const t2=new Date(Date.now()+5.5*3600000),hh=t2.getUTCHours()+t2.getUTCMinutes()/60,ch=choghadiya(d.ymd[0],d.ymd[1],d.ymd[2],d.ymd[3],d.ymd[4],5.5),all=ch.day.concat(ch.night),nxt=all.find(x=>x.a>hh&&CHD_GOOD[x.n]===1),rk=d.rahu,inR=hh>=rk[0]&&hh<rk[1],ab=d.wd===3?null:d.abhijit,L=[];
+   L.push('<b>अभी:</b> '+(inR?'<span style="color:#c62828">राहु काल चल रहा है — नया कार्य टालें</span>':'<span style="color:#2e7d32">राहु काल नहीं</span>'));
+   L.push('<b>राहु काल:</b> '+hmS(rk[0])+' – '+hmS(rk[1]));
+   if(ab)L.push('<b>अभिजित:</b> '+hmS(ab[0])+' – '+hmS(ab[1])+(hh>=ab[1]?' (बीत गया)':''));
+   if(nxt)L.push('<b>अगला शुभ चौघड़िया:</b> '+nxt.n+' '+hmS(nxt.a)+' – '+hmS(nxt.b));
+   sm='<div style="background:#fff7de;border:1px solid #d9c38a;border-radius:10px;padding:8px 10px;margin:6px 0;font-size:14px;line-height:1.7"><div style="font-weight:700;color:#6b1c28;margin-bottom:2px">आज का सार</div>'+L.join('<br>')+'</div>';}catch(e){}
+  return sm+'<div class="vjcb" data-e="'+c.b+'" style="display:flex;border-radius:10px;overflow:hidden;margin:6px 0;border:1px solid #d9c38a"><div style="flex:1;background:#fff0c2;padding:8px;text-align:center"><div style="font-size:20px;font-weight:700;color:#6b5a00">'+hmS(c.a)+' – '+hmS(c.b)+'</div><div style="font-size:18px;color:#444">⏳ <span class="vjcc">--:--:--</span> शेष</div></div><div style="flex:1;background:'+bg+';color:#fff;padding:8px;text-align:center"><div style="font-size:12px;opacity:.9">वर्तमान चौघड़िया</div><div style="font-size:20px;font-weight:700">'+c.n+' - '+lb+(g===1?' ✓':g?'':' ✗')+'</div></div></div>';
 }
 if(!window.__vjcbT)window.__vjcbT=setInterval(()=>{document.querySelectorAll('.vjcb').forEach(el=>{const t=new Date(Date.now()+5.5*3600000),h=t.getUTCHours()+t.getUTCMinutes()/60+t.getUTCSeconds()/3600;let r=+el.dataset.e-h;if(r<0)r+=24;if(r>12||r<=0){return;}const S=Math.round(r*3600),f=n=>String(n).padStart(2,'0');el.querySelector('.vjcc').textContent=f(Math.floor(S/3600))+':'+f(Math.floor(S%3600/60))+':'+f(S%60);});},1000);
 function panchangHTML(d,title,showPl){
