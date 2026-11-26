@@ -201,7 +201,7 @@ input[type=date],input[type=time]{min-height:48px}
 .about b{color:var(--maroon)}.about p{margin:4px 0}
 @media print{.brand .pbtn,.nmtools,.totop,.lang,.about{display:none!important}.brand{background:#fff;color:#000;border-bottom:2px solid #000}.brand b{color:#000}.brand span{color:#000}#nm_body{font-size:13px}}
 </style>
-<meta name="vj-ver" content="278">
+<meta name="vj-ver" content="279">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <script>try{if(window.top!==window.self){document.documentElement.style.display='none';window.top.location=window.self.location;}}catch(e){document.documentElement.style.display='none';}</script>
 
@@ -7062,5 +7062,40 @@ c.querySelectorAll('button').forEach(function(a){a.addEventListener('click',func
 if(!ok&&++n<30)setTimeout(init,300);}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();setTimeout(init,2000);})();
 </script>
-<style>html[lang=en] .tabs .tab{padding:5px 9px!important;font-size:11.5px!important;flex:0 0 auto!important}html[lang=en] .tabs{gap:5px!important}</style></body>
+<style>html[lang=en] .tabs .tab{padding:5px 9px!important;font-size:11.5px!important;flex:0 0 auto!important}html[lang=en] .tabs{gap:5px!important}</style><script>
+/* v279: Disclaimer + Privacy Policy in English when English mode is on */
+(function(){
+var BX='background:#fffdf7;color:#222;max-width:560px;width:100%;border-radius:12px;padding:16px;font-size:15px;line-height:1.7';
+var BT='display:block;width:100%;margin-top:10px;padding:12px;border:0;border-radius:10px;background:#7c2d12;color:#fff;font-size:16px';
+var DISC='<h3 style="margin:0 0 6px;color:#7c2d12">⚠ Disclaimer</h3>'+
+'<p>1. The kundli, panchang, muhurta, vastu, rashifal and other information in this app is <b>general guidance</b> based on traditional calculations and rules. It is not a substitute for medical, legal, financial or scientific advice.</p>'+
+'<p>2. Take important decisions such as marriage, health, money, business and lawsuits with your own judgement and after consulting a suitable qualified expert/learned pandit.</p>'+
+'<p>3. Tithi, nakshatra and times are computed mathematically. A difference of a few minutes is possible by location, and festival tithis may differ by tradition. For fasts and festivals, also check with your local panchang, temple or elders.</p>'+
+'<p>4. Rashifal and career tips are general indications for everyone, not the result of anyone\'s personal kundli. In the Jain view, happiness and sorrow arise fundamentally from one\'s own karma; planets are only instrumental.</p>'+
+'<p>5. No guarantee is given of any result, gain or loss. The user is responsible for any decision made by using the app.</p>'+
+'<p>6. If you find any error, tell us on WhatsApp 9977004518. We will correct it.</p>'+
+'<button type="button" id="vj_dc" style="'+BT+'">Close</button>';
+var PRIV='<h3 style="margin:0 0 6px;color:#7c2d12">🔒 Privacy Policy</h3>'+
+'<p><b>Varahiya Jain Panchang & Jyotish Vastu Darshan</b> — Varahiya Help Desk, Sumaoli (Morena).</p>'+
+'<h4>1. What information we collect</h4>'+
+'<p>(a) <b>Registration:</b> your name, mobile number and city/village. With your consent it goes to the Help Desk as a WhatsApp message and is recorded in our Google Sheet; the Help Desk is also notified by email.<br>'+
+'(b) <b>Kundlis:</b> kundlis you save (name, date of birth, time, place) stay only on your phone. Only if you turn on "Cloud backup" is a copy kept in our Google Sheet, with a key made from your mobile number and PIN.<br>'+
+'(c) All features of the app are free; if any old membership/trial status is stored on your phone, it stays on the phone.<br>(d) <b>Notifications:</b> if you turn on the daily notification, your phone/browser\'s notification address (a technical code, not a name or mobile number) is kept in our Google Sheet, only to send the daily notification. If you remove the permission in browser settings or remove the app, notifications stop and the stale address is deleted. To have it removed immediately, write on WhatsApp 9977004518.</p>'+
+'<h4>2. Use</h4><p>Only to provide the service, support, and to send app notifications. We do not sell your information or give it for advertising. There are no ads in the app.</p>'+
+'<h4>3. Permissions</h4><p>The app does not ask for camera, microphone, contacts, location or SMS permission. You choose the city yourself.</p>'+
+'<h4>4. Third parties</h4><p>Google Fonts (when loading typefaces Google may log your IP address), Google Sheets/Apps Script (storage of registration and backup), WhatsApp (sending messages), GitHub (automated process for sending the daily notification) and your browser\'s notification service (Google/Apple/Mozilla). You pay directly by UPI; we do not take bank/card details.</p>'+
+'<h4>5. Access</h4><p>Data kept in the cloud may be visible in the Sheet to the Help Desk operator. We look at it only for the purposes stated above. Keep the backup PIN secret.</p>'+
+'<h4>6. Deleting data</h4><p>Kundlis on the phone: remove them from "Saved kundlis" in the app, or clear the app/browser data. To have registration or cloud backup deleted, write on WhatsApp 9977004518; we will delete it. Removing the app does not automatically delete the cloud copy.</p>'+
+'<h4>7. Children</h4><p>Users under 18 should register only with the consent of a parent or guardian. We do not monitor, profile or target advertising at children.</p>'+
+'<h4>8. Changes and contact</h4><p>If the policy changes, the new copy will appear in the app. Contact: Varahiya Help Desk, WhatsApp 9977004518.</p>'+
+'<h4>9. Your rights (Digital Personal Data Protection Act 2023)</h4><p>You may ask for information about your data, request correction or deletion, and withdraw your consent at any time. For complaints or requests: <b>Grievance Officer: Advocate Vimal Kumar Jain, Varahiya Help Desk, WhatsApp 9977004518</b>. In case of a data-security breach we will inform the people concerned as required by law. If unresolved, you may complain to the Data Protection Board of India.</p>'+
+'<small>Last updated: 25/11/2026.</small><br>'+
+'<small>Astrological results are for guidance. Consult a learned pandit before important decisions.</small>'+
+'<button type="button" id="vj_pc" style="'+BT+'">Close</button>';
+function wrap(name,id,html,btn){var f=window[name];if(!f||f.__w279)return;var g=function(){var had=document.getElementById(id);f();var o=document.getElementById(id);if(o&&!had&&document.documentElement.lang==='en'){var b=o.firstChild;b.innerHTML=html;o.querySelector('#'+btn).onclick=function(){o.remove();};}};g.__w279=1;window[name]=g;}
+function go(){wrap('vjDisc','vj_disc',DISC,'vj_dc');wrap('vjPriv','vj_priv',PRIV,'vj_pc');}
+go();setTimeout(go,500);setTimeout(go,3000);
+})();
+</script>
+</body>
 </html>
