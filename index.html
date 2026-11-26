@@ -157,7 +157,7 @@ input[type=date],input[type=time]{min-height:48px}
 .about b{color:var(--maroon)}.about p{margin:4px 0}
 @media print{.brand .pbtn,.nmtools,.totop,.lang,.about{display:none!important}.brand{background:#fff;color:#000;border-bottom:2px solid #000}.brand b{color:#000}.brand span{color:#000}#nm_body{font-size:13px}}
 </style>
-<meta name="vj-ver" content="173">
+<meta name="vj-ver" content="174">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <script>try{if(window.top!==window.self){document.documentElement.style.display='none';window.top.location=window.self.location;}}catch(e){document.documentElement.style.display='none';}</script>
 
@@ -6311,6 +6311,10 @@ document.body.appendChild(f);
   });
 }catch(e){console&&console.error&&console.error('v168',e);}})();
 
+/* v174: आज का पंचांग (स्थान+तारीख) मासिक पंचांग-विचार से ऊपर */
+(function(){var n=0;function mv(){try{var go=document.getElementById('pn_go');if(!go)return false;var d=go.closest('.panel');var h=[].slice.call(document.querySelectorAll('#pane-p h3')).filter(function(x){return x.textContent.indexOf('मासिक पंचांग-विचार')>-1})[0];if(!d||!h)return false;var m=h.closest('.panel');if(m&&d&&m!==d&&m.parentNode===d.parentNode&&(m.compareDocumentPosition(d)&4)){m.parentNode.insertBefore(d,m);}return true}catch(e){return false}}
+function go(){if(mv()||++n>20)return;setTimeout(go,150)}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',go);else go();})();
 /* v158: जैन तिथि दर्पण टैब सबसे पहले */
 (function(){try{var h=document.getElementById('tab-h'),p=document.getElementById('tab-p'),f=h&&h.parentNode.firstElementChild;if(h&&f&&f!==h){h.parentNode.insertBefore(h,f);}
   /* v163: आज का पंचांग · दैनिक मुहूर्त सबसे पहले, उसके बाद जैन तिथि दर्पण */
