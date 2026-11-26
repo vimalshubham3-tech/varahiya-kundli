@@ -201,7 +201,7 @@ input[type=date],input[type=time]{min-height:48px}
 .about b{color:var(--maroon)}.about p{margin:4px 0}
 @media print{.brand .pbtn,.nmtools,.totop,.lang,.about{display:none!important}.brand{background:#fff;color:#000;border-bottom:2px solid #000}.brand b{color:#000}.brand span{color:#000}#nm_body{font-size:13px}}
 </style>
-<meta name="vj-ver" content="209">
+<meta name="vj-ver" content="210">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <script>try{if(window.top!==window.self){document.documentElement.style.display='none';window.top.location=window.self.location;}}catch(e){document.documentElement.style.display='none';}</script>
 
@@ -1314,9 +1314,24 @@ function SEGS(d,f,upto){
   for(let h=r+0.1;h<=to+30;h+=0.1){const v=f(at(h));if(v!==prev){let lo=h-0.1,hi=h;for(let i=0;i<20;i++){const q=(lo+hi)/2;if(f(at(q))===prev)lo=q;else hi=q;}const e=(lo+hi)/2;o.push({v:prev,a:st,b:e});st=e;prev=v;if(st>to)break;}}
   return o.filter(x=>x.a<to);}
 function SEGH(d,f,lab,from){const sg=SEGS(d,f);return sg.map((x,i)=>lab(x.v)+' — '+(i===0?'सूर्योदय से ':'')+(i>0?tt(x.a)+' से ':'')+tt(x.b)+' तक').join('<br>');}
+function curChog(lat,lon){
+  const t=new Date(Date.now()+5.5*3600000),y=t.getUTCFullYear(),mo=t.getUTCMonth()+1,dd=t.getUTCDate(),h=t.getUTCHours()+t.getUTCMinutes()/60+t.getUTCSeconds()/3600;
+  const find=(Y,M,D,hh)=>{const c=choghadiya(Y,M,D,lat,lon,5.5);for(const x of c.day.concat(c.night))if(hh>=x.a&&hh<x.b)return x;return null;};
+  let x=find(y,mo,dd,h),base=0;
+  if(!x){const p=new Date(Date.UTC(y,mo-1,dd-1));x=find(p.getUTCFullYear(),p.getUTCMonth()+1,p.getUTCDate(),h+24);base=-24;}
+  return x?{n:x.n,a:x.a+base,b:x.b+base,h}:null;
+}
+function chBanner(d){
+  const t=new Date(Date.now()+5.5*3600000);
+  if(d.ymd[0]!==t.getUTCFullYear()||d.ymd[1]!==t.getUTCMonth()+1||d.ymd[2]!==t.getUTCDate())return '';
+  const c=curChog(d.ymd[3],d.ymd[4]);if(!c)return '';
+  const g=CHD_GOOD[c.n],bg=g===1?'#6b8e23':g?'#b8860b':'#c62828',lb={'अमृत':'सर्वोत्तम','शुभ':'उत्तम','लाभ':'उन्नति','चर':'सामान्य','काल':'हानि','रोग':'चिंता','उद्वेग':'अशुभ'}[c.n]||'';
+  return '<div class="vjcb" data-e="'+c.b+'" style="display:flex;border-radius:10px;overflow:hidden;margin:6px 0;border:1px solid #d9c38a"><div style="flex:1;background:#fff0c2;padding:8px;text-align:center"><div style="font-size:20px;font-weight:700;color:#6b5a00">'+hmS(c.a)+' – '+hmS(c.b)+'</div><div style="font-size:18px;color:#444">⏳ <span class="vjcc">--:--:--</span> शेष</div></div><div style="flex:1;background:'+bg+';color:#fff;padding:8px;text-align:center"><div style="font-size:12px;opacity:.9">वर्तमान चौघड़िया</div><div style="font-size:20px;font-weight:700">'+c.n+' - '+lb+(g===1?' ✓':g?'':' ✗')+'</div></div></div>';
+}
+if(!window.__vjcbT)window.__vjcbT=setInterval(()=>{document.querySelectorAll('.vjcb').forEach(el=>{const t=new Date(Date.now()+5.5*3600000),h=t.getUTCHours()+t.getUTCMinutes()/60+t.getUTCSeconds()/3600;let r=+el.dataset.e-h;if(r<0)r+=24;if(r>12||r<=0){return;}const S=Math.round(r*3600),f=n=>String(n).padStart(2,'0');el.querySelector('.vjcc').textContent=f(Math.floor(S/3600))+':'+f(Math.floor(S%3600/60))+':'+f(S%60);});},1000);
 function panchangHTML(d,title,showPl){
   const pc=d.pc;
-  let h='<div class="res-card"><h2 class="kh">'+esc(title)+'</h2><div class="tw"><table><tbody>'
+  let h='<div class="res-card"><h2 class="kh">'+esc(title)+'</h2>'+(()=>{try{return chBanner(d);}catch(e){return '';}})()+'<div class="tw"><table><tbody>'
    +'<tr><td>वार</td><td><b>'+d.vara+'</b></td></tr>'
    +'<tr><td>तिथि (कब से कब तक)</td><td>'+SEGH(d,q=>q.t,v=>'<b>'+(v<=15?'शुक्ल':'कृष्ण')+' '+tithiName(v)+'</b>')+'</td></tr>'
    +'<tr><td>नक्षत्र (कब से कब तक)</td><td>'+SEGH(d,q=>q.nak,v=>'<b>'+esc(NAK_H[v])+'</b>')+'</td></tr>'
