@@ -1,0 +1,30 @@
+name: special-occasion-push
+on:
+  workflow_dispatch:
+    inputs:
+      title:
+        description: 'सूचना का शीर्षक (जैसे: 🙏 महावीर जयंती की शुभकामनाएँ)'
+        required: true
+      body:
+        description: 'संदेश'
+        required: true
+      url:
+        description: 'खुलने वाला पेज (खाली छोड़ें = मुख्य पेज; ?jt=1 जैन तिथि, ?rf=1 राशिफल, ?pd=1 व्यक्तित्व विकास)'
+        required: false
+        default: './'
+jobs:
+  send:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 20 }
+      - run: cd push && npm install --no-audit --no-fund && node send-special.js
+        env:
+          SP_TITLE: ${{ github.event.inputs.title }}
+          SP_BODY: ${{ github.event.inputs.body }}
+          SP_URL: ${{ github.event.inputs.url }}
+          CLOUD_URL: ${{ secrets.CLOUD_URL }}
+          PUSH_TOKEN: ${{ secrets.PUSH_TOKEN }}
+          VAPID_PUBLIC: ${{ secrets.VAPID_PUBLIC }}
+          VAPID_PRIVATE: ${{ secrets.VAPID_PRIVATE }}
