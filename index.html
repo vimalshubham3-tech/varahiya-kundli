@@ -156,7 +156,7 @@ input[type=date],input[type=time]{min-height:48px}
 .about b{color:var(--maroon)}.about p{margin:4px 0}
 @media print{.brand .pbtn,.nmtools,.totop,.lang,.about{display:none!important}.brand{background:#fff;color:#000;border-bottom:2px solid #000}.brand b{color:#000}.brand span{color:#000}#nm_body{font-size:13px}}
 </style>
-<meta name="vj-ver" content="162">
+<meta name="vj-ver" content="163">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <script>try{if(window.top!==window.self){document.documentElement.style.display='none';window.top.location=window.self.location;}}catch(e){document.documentElement.style.display='none';}</script>
 
@@ -6167,9 +6167,11 @@ document.body.appendChild(f);
 }catch(e){console&&console.error&&console.error('v162',e);}})();
 
 /* v158: जैन तिथि दर्पण टैब सबसे पहले */
-(function(){try{var h=document.getElementById('tab-h'),f=h&&h.parentNode.firstElementChild;if(h&&f&&f!==h){h.parentNode.insertBefore(h,f);}
+(function(){try{var h=document.getElementById('tab-h'),p=document.getElementById('tab-p'),f=h&&h.parentNode.firstElementChild;if(h&&f&&f!==h){h.parentNode.insertBefore(h,f);}
+  /* v163: आज का पंचांग · दैनिक मुहूर्त सबसे पहले, उसके बाद जैन तिथि दर्पण */
+  if(p&&h){h.parentNode.insertBefore(p,h);}
   /* v159: खुलते ही जैन तिथि पन्ना (गहरे लिंक ?rf/?jt/?pd हों तो वही) */
-  if(!/[?&](rf|jt|pd)=1/.test(location.search)&&typeof setMode==='function'){setMode('h');}}catch(e){}})();
+  if(!/[?&](rf|jt|pd)=1/.test(location.search)&&typeof setMode==='function'){setMode('p');}}catch(e){}})();
 </script>
 </body>
 </html>
