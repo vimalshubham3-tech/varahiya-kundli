@@ -201,7 +201,7 @@ input[type=date],input[type=time]{min-height:48px}
 .about b{color:var(--maroon)}.about p{margin:4px 0}
 @media print{.brand .pbtn,.nmtools,.totop,.lang,.about{display:none!important}.brand{background:#fff;color:#000;border-bottom:2px solid #000}.brand b{color:#000}.brand span{color:#000}#nm_body{font-size:13px}}
 </style>
-<meta name="vj-ver" content="217">
+<meta name="vj-ver" content="218">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <script>try{if(window.top!==window.self){document.documentElement.style.display='none';window.top.location=window.self.location;}}catch(e){document.documentElement.style.display='none';}</script>
 
@@ -6646,27 +6646,34 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 /* v217: वरहिया जैन तिथि दर्पण — मासिक बैनर के नीचे */
 (function(){var n=0,D=document;
 var T=['','प्रतिपदा','द्वितीया','तृतीया','चतुर्थी','पंचमी','षष्ठी','सप्तमी','अष्टमी','नवमी','दशमी','एकादशी','द्वादशी','त्रयोदशी','चतुर्दशी','पूर्णिमा'],PP={2:'द्वितीया',5:'पंचमी',8:'अष्टमी',11:'एकादशी',14:'चतुर्दशी'};
+var KN=['ऋषभदेव (आदिनाथ)','अजितनाथ','संभवनाथ','अभिनंदननाथ','सुमतिनाथ','पद्मप्रभ','सुपार्श्वनाथ','चंद्रप्रभ','सुविधिनाथ (पुष्पदंत)','शीतलनाथ','श्रेयांसनाथ','वासुपूज्य','विमलनाथ','अनंतनाथ','धर्मनाथ','शांतिनाथ','कुंथुनाथ','अरनाथ','मल्लिनाथ','मुनिसुव्रतनाथ','नमिनाथ','नेमिनाथ','पार्श्वनाथ','महावीर स्वामी'],
+KD=['Jeth Vad 4|Fagan Vad 8|Fagan Vad 8|Maha Vad 11|Posh Vad 13','Vaisakh Sud 13|Maha Sud 8|Maha Sud 9|Posh Sud 11|Chaitra Sud 5','Fagan Sud 8|Magsar Sud 14|Magsar Sud 15|Asho Vad 5|Chaitra Sud 5','Vaisakh Sud 4|Maha Sud 2|Maha Sud 12|Posh Sud 14|Vaisakh Sud 8','Shravan Sud 2|Vaisakh Sud 8|Vaisakh Sud 9|Chaitra Sud 11|Chaitra Sud 9','Posh Vad 6|Asho Vad 12|Asho Vad 13|Chaitra Sud 11|Chaitra Sud 9','Shravan Vad 8|Jeth Sud 12|Jeth Sud 13|Maha Vad 6|Maha Vad 7','Fagan Vad 5|Magsar Vad 12|Magsar Vad 13|Maha Vad 7|Shravan Vad 7','Maha Vad 9|Kartak Vad 5|Kartak Vad 6|Kartak Sud 3|Bhadarva Sud 9','Chaitra Vad 6|Posh Vad 12|Posh Vad 13|Magsar Vad 14|Chaitra Vad 2','Vaisakh Vad 6|Maha Vad 12|Maha Vad 13|Posh Vad Amaas|Asadh Vad 3','Jeth Sud 9|Maha Vad 14|Maha Vad Amaas|Maha Sud 2|Asadh Sud 14','Vaisakh Sud 12|Maha Sud 3|Maha Sud 4|Posh Sud 6|Jeth Vad 7','Asadh Vad 7|Chaitra Vad 13|Chaitra Vad 14|Chaitra Vad 14|Chaitra Sud 5','Vaisakh Sud 7|Maha Sud 3|Maha Sud 12|Posh Sud 15|Jeth Sud 5','Shravan Vad 7|Vaisakh Vad 13|Vaisakh Vad 14|Posh Sud 9|Vaisakh Vad 13','Asadh Vad 9|Chaitra Vad 14|Chaitra Vad 5|Chaitra Vad 5|Chaitra Vad 1','Fagan Sud 2|Magsar Sud 10|Magsar Sud 11|Kartak Sud 12|Magsar Sud 10','Fagan Sud 4|Magsar Sud 11|Magsar Sud 11|Magsar Sud 11|Fagan Sud 12','Shravan Sud 15|Vaisakh Vad 8|Fagan Sud 12|Shravan Vad 12|Vaisakh Vad 9','Asho Sud 15|Asadh Vad 8|Jeth Vad 9|Magsar Sud 11|Chaitra Vad 10','Asho Vad 12|Shravan Sud 5|Shravan Sud 6|Bhadarva Vad Amaas|Asadh Sud 8','Fagan Vad 4|Magsar Vad 10|Magsar Vad 11|Fagan Vad 4|Shravan Sud 8','Asadh Sud 6|Chaitra Sud 13|Kartak Vad 10|Vaisakh Sud 10|Asho Vad Amaas'],
+KL=['गर्भ (च्यवन)','जन्म','दीक्षा (तप)','केवलज्ञान','मोक्ष (निर्वाण)'],MI={Chaitra:0,Vaisakh:1,Jeth:2,Asadh:3,Shravan:4,Bhadarva:5,Asho:6,Kartak:7,Magsar:8,Posh:9,Maha:10,Fagan:11},KM={};
+KD.forEach(function(r,i){r.split('|').forEach(function(x,j){var p=x.split(' '),t=p[2]==='Amaas'?30:(p[1]==='Vad'?15+ +p[2]:+p[2]),k=MI[p[0]]+'|'+t;(KM[k]=KM[k]||[]).push(KN[i]+' — '+KL[j]+' कल्याणक');});});
 function tn(v){return v===30?'अमावस्या':(v<=15?'शुक्ल ':'कृष्ण ')+T[v>15?v-15:v];}
 function build(y,m,c){
- var dim=new Date(Date.UTC(y,m,0)).getUTCDate(),rows='',parv=[],seen={};
+ var dim=new Date(Date.UTC(y,m,0)).getUTCDate(),rows='',parv=[],seen={},kal=[];
  for(var d=1;d<=dim;d++){
   var dt=new Date(Date.UTC(y,m-1,d)),sr=sunTimes(y,m,d,c[2],c[3],5.5).rise,jd=toJD(y,m,d,0,Math.round((sr+2.4)*60),5.5),pc=panchangAt(jd),lm=lunarMonthOf(jd),b=pc.t%15,sh=pc.t<=15,tags=[];
   JAIN_FEST.forEach(function(f){if(lm.m===f[0]&&!lm.adhik&&((f[1]==='s'&&sh&&pc.t===f[2])||(f[1]==='a'&&pc.t===f[2])))tags.push(f[3]);});
   if(sh&&pc.t===8&&[3,7,11].includes(lm.m)&&!lm.adhik)tags.push('अष्टान्हिका पर्व आरंभ');
   if(sh&&pc.t===7&&[0,6].includes(lm.m)&&!lm.adhik)tags.push('नवपद ओली आरंभ');
+  var sj=toJD(y,m,d,0,Math.round(sr*60),5.5),ps=panchangAt(sj),lm2=lunarMonthOf(sj),pj=toJD(y,m,d-1,0,Math.round(sunTimes(new Date(Date.UTC(y,m-1,d-1)).getUTCFullYear(),new Date(Date.UTC(y,m-1,d-1)).getUTCMonth()+1,new Date(Date.UTC(y,m-1,d-1)).getUTCDate(),c[2],c[3],5.5).rise*60),5.5),pp0=panchangAt(pj),ks=[ps.t];
+  if(((ps.t-pp0.t+30)%30)===2)ks.unshift(pp0.t%30+1);
+  var kl=[];if(!lm2.adhik)ks.forEach(function(tt_){(KM[lm2.m+'|'+tt_]||[]).forEach(function(x){kl.push(x);});});
   var pp=pc.t===30?'अमावस्या':pc.t===15?'पूर्णिमा':PP[b]?(sh?'शुक्ल ':'कृष्ण ')+PP[b]:'';
   var pd=panchangDay(y,m,d,c[2],c[3],5.5),ts=SEGH(pd,function(q){return q.t;},function(v){return '<b>'+tn(v)+'</b>';});
-  var hl=tags.length?'background:#fde7e9;':pp?'background:#e8f3df;':'';
-  rows+='<tr style="'+hl+'"><td>'+String(d).padStart(2,'0')+'</td><td>'+VARA_N[dt.getUTCDay()]+'</td><td>'+ts+'</td><td>'+(pp?'🌿 '+pp+(tags.length?'<br>':''):'')+(tags.length?'<b style="color:#8e2b3a">'+esc(tags.join('; '))+'</b>':'')+'</td></tr>';
-  tags.forEach(function(t){if(!seen[t]){seen[t]=1;parv.push(String(d).padStart(2,'0')+' — '+t);}});
+  var hl=kl.length?'background:#e3eefb;':tags.length?'background:#fde7e9;':pp?'background:#e8f3df;':'';
+  rows+='<tr style="'+hl+'"><td>'+String(d).padStart(2,'0')+'</td><td>'+VARA_N[dt.getUTCDay()]+'</td><td>'+ts+'</td><td>'+(pp?'🌿 '+pp+(tags.length?'<br>':''):'')+(tags.length?'<b style="color:#8e2b3a">'+esc(tags.join('; '))+'</b>':'')+(kl.length?((pp||tags.length)?'<br>':'')+'<span style="color:#1a4f8a">🌸 '+esc(kl.join('; '))+'</span>':'')+'</td></tr>';
+  tags.forEach(function(t){if(!seen[t]){seen[t]=1;parv.push(String(d).padStart(2,'0')+' — '+t);}});kl.forEach(function(t){kal.push(String(d).padStart(2,'0')+' — '+t);});
  }
- return '<div class="res-card vjmp"><h2 class="kh">वरहिया जैन तिथि दर्पण — '+String(m).padStart(2,'0')+'/'+y+' · '+esc(c[0])+'</h2>'+
+ return '<div class="res-card vjmp"><h2 class="kh">वरहिया जैन तिथि एवं तीर्थंकर पंच कल्याणक दर्पण — '+String(m).padStart(2,'0')+'/'+y+' · '+esc(c[0])+'</h2>'+
   (parv.length?'<div style="background:#fff7de;border:1px solid #d9c38a;border-radius:10px;padding:8px 10px;margin:6px 0"><b style="color:#6b1c28">इस माह के जैन पर्व</b><br>'+parv.map(esc).join('<br>')+'</div>':'<p class="kmeta">इस माह में कोई प्रमुख जैन पर्व नहीं।</p>')+
-  '<div class="tw"><table><thead><tr><th>तारीख़</th><th>वार</th><th>तिथि (कब से कब तक)</th><th>पंच-पर्व / पर्व</th></tr></thead><tbody>'+rows+'</tbody></table></div>'+
-  '<p class="kmeta">🌿 हरी पंच-पर्व तिथि (द्वितीया, पंचमी, अष्टमी, एकादशी, चतुर्दशी, अमावस्या, पूर्णिमा) — परंपरा में हरी सब्ज़ी/तप का ध्यान। गुलाबी पंक्ति = जैन पर्व। तिथि सूर्योदय के बाद के समय पर आधारित; संप्रदाय अनुसार पर्व-तिथि में अंतर संभव है, अंतिम निर्णय हेतु अपने पंचांग/गुरुजन से मिलान करें।</p></div>';}
+  (kal.length?'<div style="background:#e3eefb;border:1px solid #9bb8dd;border-radius:10px;padding:8px 10px;margin:6px 0"><b style="color:#1a4f8a">इस माह के तीर्थंकर पंच कल्याणक</b><br>'+kal.map(esc).join('<br>')+'</div>':'<p class="kmeta">इस माह में कोई तीर्थंकर कल्याणक नहीं।</p>')+'<div class="tw"><table><thead><tr><th>तारीख़</th><th>वार</th><th>तिथि (कब से कब तक)</th><th>पंच-पर्व / पर्व / कल्याणक</th></tr></thead><tbody>'+rows+'</tbody></table></div>'+
+  '<p class="kmeta">🌿 हरी पंच-पर्व तिथि (द्वितीया, पंचमी, अष्टमी, एकादशी, चतुर्दशी, अमावस्या, पूर्णिमा) — परंपरा में हरी सब्ज़ी/तप का ध्यान। गुलाबी पंक्ति = जैन पर्व, नीली = तीर्थंकर कल्याणक। कल्याणक-तिथियाँ श्वेतांबर परंपरा (अमांत मास, उदया तिथि) के अनुसार हैं; दिगंबर परंपरा में तिथि/मास का अंतर हो सकता है। तिथि सूर्योदय के बाद के समय पर आधारित; संप्रदाय अनुसार पर्व-तिथि में अंतर संभव है, अंतिम निर्णय हेतु अपने पंचांग/गुरुजन से मिलान करें।</p></div>';}
 function mv(){var a=D.getElementById('nm_all');if(!a||D.getElementById('td_all'))return !!D.getElementById('td_all');
  var anchor=a.nextSibling&&a.nextSibling.className==='vjchg'?a.nextSibling:a;
- var b=D.createElement('button');b.type='button';b.id='td_all';b.className='vjmp-btn';b.innerHTML='🪔 वरहिया जैन तिथि दर्पण<small>इस माह की जैन तिथियाँ व पर्व — देखने/बंद करने के लिए दबाएँ</small>';
+ var b=D.createElement('button');b.type='button';b.id='td_all';b.className='vjmp-btn';b.innerHTML='🪔 वरहिया जैन तिथि एवं तीर्थंकर पंच कल्याणक दर्पण<small>इस माह की तिथियाँ, पर्व व कल्याणक — देखने/बंद करने के लिए दबाएँ</small>';
  var o=D.createElement('div');o.id='td_res';anchor.parentNode.insertBefore(b,anchor.nextSibling);b.parentNode.insertBefore(o,b.nextSibling);
  b.addEventListener('click',function(){if(o.innerHTML.trim()){o.innerHTML='';return;}
   var mi=D.getElementById('pm_m'),pc_=D.getElementById('pm_c'),t=new Date(Date.now()+19800000),vv=(mi&&mi.value&&a.__mc&&a.__mc())?mi.value.split('-').map(Number):[t.getUTCFullYear(),t.getUTCMonth()+1],c=(pc_&&CITIES[+pc_.value])||CITIES[0];
