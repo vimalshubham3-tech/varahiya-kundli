@@ -201,7 +201,7 @@ input[type=date],input[type=time]{min-height:48px}
 .about b{color:var(--maroon)}.about p{margin:4px 0}
 @media print{.brand .pbtn,.nmtools,.totop,.lang,.about{display:none!important}.brand{background:#fff;color:#000;border-bottom:2px solid #000}.brand b{color:#000}.brand span{color:#000}#nm_body{font-size:13px}}
 </style>
-<meta name="vj-ver" content="243">
+<meta name="vj-ver" content="244">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <script>try{if(window.top!==window.self){document.documentElement.style.display='none';window.top.location=window.self.location;}}catch(e){document.documentElement.style.display='none';}</script>
 
@@ -6824,7 +6824,7 @@ if(D.readyState==='loading')D.addEventListener('DOMContentLoaded',go);else go();
 (function(){try{var n=0;(function go(){var r=document.getElementById('pn_res');if(!r||!window.__vjCalWeek){if(++n<80)setTimeout(go,200);return;}
  var busy=false;function add(){if(busy)return;if(!r.innerHTML.trim()||r.querySelector('.vjwk')||r.querySelector('.warn')||r.innerHTML.indexOf('गणना हो रही')>-1)return;
   var di=document.getElementById('pn_date'),pl=document.getElementById('pn_place');if(!di||!pl||!di.value)return;var v=di.value.split('-').map(Number),c=CITIES[+pl.value];if(!c||!v[0])return;
-  busy=true;try{var h=window.__vjCalWeek(v[0],v[1],v[2],c);if(h){r.insertAdjacentHTML('beforeend','<details class="par vjwk" open><summary><b>🗓️ साप्ताहिक कैलेंडर (इस सप्ताह के सातों दिन)</b></summary>'+h+'</details>');window.__vjWeekBind(r);}}catch(e){console.error(e);}busy=false;}
+  busy=true;try{var h=window.__vjCalWeek(v[0],v[1],v[2],c);if(h){r.insertAdjacentHTML('afterbegin','<details class="par vjwk"><summary><b>🗓️ साप्ताहिक कैलेंडर (इस सप्ताह के सातों दिन)</b></summary>'+h+'</details>');window.__vjWeekBind(r);}}catch(e){console.error(e);}busy=false;}
  var t;new MutationObserver(function(){clearTimeout(t);t=setTimeout(add,250);}).observe(r,{childList:true});add();
 })();}catch(e){console.error('wk',e);}})();
 </script>
