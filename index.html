@@ -156,7 +156,7 @@ input[type=date],input[type=time]{min-height:48px}
 .about b{color:var(--maroon)}.about p{margin:4px 0}
 @media print{.brand .pbtn,.nmtools,.totop,.lang,.about{display:none!important}.brand{background:#fff;color:#000;border-bottom:2px solid #000}.brand b{color:#000}.brand span{color:#000}#nm_body{font-size:13px}}
 </style>
-<meta name="vj-ver" content="161">
+<meta name="vj-ver" content="162">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <script>try{if(window.top!==window.self){document.documentElement.style.display='none';window.top.location=window.self.location;}}catch(e){document.documentElement.style.display='none';}</script>
 
@@ -4787,7 +4787,7 @@ var RJAIN_NOTE='जैन दृष्टि: ग्रह निमित्त
       h+='</tbody></table></div>';}catch(e){}
     return h+'<p class="kmeta">सभी समय चुने गए स्थान के निर्देशांक से खगोलीय गणना द्वारा निकाले गए हैं। संवत् विक्रम (चैत्रादि) व वीर निर्वाण (कार्तिक शुक्ल प्रतिपदा से) के अनुसार हैं।</p></div>';
   }
-  window.__yw=yogaWin;window.__bd=bhadraDay;window.__bt=bhadraText;
+  window.__pa=pAt;window.__yw=yogaWin;window.__bd=bhadraDay;window.__bt=bhadraText;
   // ---- मासिक जैन पंचांग (दीवार-कैलेंडर शैली) ----
   var RS=['मेष','वृषभ','मिथुन','कर्क','सिंह','कन्या','तुला','वृश्चिक','धनु','मकर','कुंभ','मीन'];
   function firstAfter(list,h){for(var i=0;i<list.length;i++)if(list[i].h>h)return list[i].h;return null;}
@@ -6128,6 +6128,43 @@ document.body.appendChild(f);
   b.addEventListener('click',function(){setMode('pd');try{b.scrollIntoView({inline:'center',block:'nearest',behavior:'smooth'});}catch(e){}});
   applyLang();
 }catch(e){console&&console.error&&console.error("v154",e);}})();
+
+/* v162: पंचक टैब — पूरे वर्ष के पंचक (आरंभ-समाप्ति सहित) */
+(function(){try{
+  var D=document;if(typeof window.__pa!=='function')return;
+  function E(x){return String(x).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+  function p2(n){return (n<10?'0':'')+n;}
+  var VNm=['रविवार','सोमवार','मंगलवार','बुधवार','गुरुवार','शुक्रवार','शनिवार'];
+  var TYP={0:'रोग पंचक',1:'राज पंचक',2:'अग्नि पंचक',5:'चोर पंचक',6:'मृत्यु पंचक'};
+  function istNow(){var t=new Date(Date.now()+19800000);return {y:t.getUTCFullYear(),mo:t.getUTCMonth()+1,d:t.getUTCDate(),h:t.getUTCHours()+t.getUTCMinutes()/60};}
+  var n0=istNow(),yo='';for(var yy=n0.y-1;yy<=2036;yy++)yo+='<option value="'+yy+'"'+(yy===n0.y?' selected':'')+'>'+yy+'</option>';
+  var pn=D.createElement('div');pn.id='pane-pk';pn.hidden=true;
+  pn.innerHTML='<div class="panel"><h3>🌙 पंचक — पूरे वर्ष की तालिका</h3><p class="kmeta">पंचक तब माना जाता है जब चंद्रमा कुंभ व मीन राशि (धनिष्ठा उत्तरार्ध से रेवती तक) में हो। आरंभ-समाप्ति का समय भारतीय मानक समय में है।</p><label for="pk_y">वर्ष</label><select id="pk_y">'+yo+'</select><button type="button" class="go" id="pk_go">पंचक दिखाएँ</button><div id="pk_res"></div></div>';
+  var anchor=D.getElementById('pane-h');anchor.parentNode.insertBefore(pn,anchor.nextSibling);
+  var b=D.createElement('button');b.type='button';b.className='tab';b.id='tab-pk';b.setAttribute('role','tab');b.setAttribute('aria-selected','false');b.setAttribute('data-i','tabPK');
+  var a=D.getElementById('tab-h');a.parentNode.insertBefore(b,a.nextSibling);
+  I18N.hi.tabPK='पंचक';I18N.en.tabPK='Panchak';
+  function inP(Y,t){var day=Math.floor(t/24),h=t-day*24,dt=new Date(Date.UTC(Y,0,1+day)),q=window.__pa(dt.getUTCFullYear(),dt.getUTCMonth()+1,dt.getUTCDate(),h);return q.moonR===10||q.moonR===11;}
+  function bis(Y,lo,hi,vlo){for(var i=0;i<12;i++){var m=(lo+hi)/2;if(inP(Y,m)===vlo)lo=m;else hi=m;}return (lo+hi)/2;}
+  function fmt(Y,t){var tm=Math.round(t*60),d=Math.floor(tm/1440),mm=tm-d*1440,dt=new Date(Date.UTC(Y,0,1+d));return {s:p2(dt.getUTCDate())+'/'+p2(dt.getUTCMonth()+1)+'/'+dt.getUTCFullYear()+' '+p2(Math.floor(mm/60))+':'+p2(mm%60),wd:dt.getUTCDay(),k:dt.getTime()+mm*60000-Date.UTC(dt.getUTCFullYear(),dt.getUTCMonth(),dt.getUTCDate())};}
+  function calc(Y){
+    var nd=Math.round((Date.UTC(Y+1,0,1)-Date.UTC(Y,0,1))/86400000),T0=-24*8,T1=24*(nd+8),st=12,w=[],prev=inP(Y,T0),cs=prev?T0:null,t;
+    for(t=T0+st;t<=T1;t+=st){var cur=inP(Y,t);if(cur!==prev){var x=bis(Y,t-st,t,prev);if(cur)cs=x;else{if(cs!==null)w.push([cs,x]);cs=null;}prev=cur;}}
+    return w.filter(function(z){return z[1]>0&&z[0]<24*nd;});
+  }
+  function show(){var Y=+D.getElementById('pk_y').value,o=D.getElementById('pk_res');o.innerHTML='<p class="kmeta">गणना हो रही है…</p>';
+    setTimeout(function(){try{var w=calc(Y),nowAbs=Date.now(),h='',rows='',i,cur=null;
+      for(i=0;i<w.length;i++){var A=fmt(Y,w[i][0]),B=fmt(Y,w[i][1]),ta=Date.UTC(Y,0,1)+w[i][0]*3600000-19800000,tb=Date.UTC(Y,0,1)+w[i][1]*3600000-19800000;
+        if(nowAbs>=ta&&nowAbs<=tb)cur=B.s;
+        rows+='<tr><td>'+(i+1)+'</td><td>'+E(A.s)+'<br><small>'+VNm[A.wd]+'</small></td><td>'+E(B.s)+'</td><td>'+(TYP[A.wd]||'—')+'</td></tr>';}
+      if(cur)h+='<p class="warn"><b>अभी पंचक चल रहा है</b> — समाप्ति: '+E(cur)+'</p>';
+      h+='<div class="tw"><table><thead><tr><th>क्र.</th><th>आरंभ</th><th>समाप्ति</th><th>प्रकार*</th></tr></thead><tbody>'+rows+'</tbody></table></div><p class="kmeta">*परंपरा में पंचक का नाम उसके आरंभ के वार से माना जाता है (रविवार–रोग, सोमवार–राज, मंगलवार–अग्नि, शुक्रवार–चोर, शनिवार–मृत्यु); बुधवार/गुरुवार को आरंभ पर कोई विशेष नाम नहीं। पंचक में सामान्यतः नया निर्माण/छत डालना, दक्षिण दिशा की यात्रा और दाह-संस्कार जैसे कार्यों में विचार किया जाता है। यह गणना ऐप की खगोलीय गणना से है, अपने पंचांग से मिला लें।</p>';
+      o.innerHTML=h;}catch(e){o.innerHTML='<p class="warn">गणना नहीं हो सकी।</p>';}},30);}
+  D.getElementById('pk_go').onclick=show;
+  var o2=setMode;setMode=function(m){o2(m);pn.hidden=m!=='pk';b.setAttribute('aria-selected',m==='pk');if(m==='pk'&&!D.getElementById('pk_res').innerHTML)show();};
+  b.addEventListener('click',function(){setMode('pk');try{b.scrollIntoView({inline:'center',block:'nearest',behavior:'smooth'});}catch(e){}});
+  applyLang();
+}catch(e){console&&console.error&&console.error('v162',e);}})();
 
 /* v158: जैन तिथि दर्पण टैब सबसे पहले */
 (function(){try{var h=document.getElementById('tab-h'),f=h&&h.parentNode.firstElementChild;if(h&&f&&f!==h){h.parentNode.insertBefore(h,f);}
