@@ -201,7 +201,7 @@ input[type=date],input[type=time]{min-height:48px}
 .about b{color:var(--maroon)}.about p{margin:4px 0}
 @media print{.brand .pbtn,.nmtools,.totop,.lang,.about{display:none!important}.brand{background:#fff;color:#000;border-bottom:2px solid #000}.brand b{color:#000}.brand span{color:#000}#nm_body{font-size:13px}}
 </style>
-<meta name="vj-ver" content="207">
+<meta name="vj-ver" content="208">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <script>try{if(window.top!==window.self){document.documentElement.style.display='none';window.top.location=window.self.location;}}catch(e){document.documentElement.style.display='none';}</script>
 
@@ -1293,14 +1293,25 @@ function panchangDay(y,mo,dd,lat,lon,off){
   const jdR=toJD(y,mo,dd,Math.floor(rh),Math.round((rh%1)*60),off), pc=panchangAt(jdR);
   return {wd,ymd:[y,mo,dd,lat,lon],vara:VARA_N[wd],sun:st_,rahu:[rk0,rk0+part],gulika:[gl0,gl0+part],yama:[yg0,yg0+part],abhijit:[st_.rise+(st_.set-st_.rise)*7/15,st_.rise+(st_.set-st_.rise)*8/15],pc};
 }
+/* v208: तिथि/नक्षत्र/योग/करण/राशि — कब से कब तक */
+function SEGS(d,f,upto){
+  const y=d.ymd[0],mo=d.ymd[1],dd=d.ymd[2],r=d.sun.rise,to=r+(upto||24),at=h=>panchangAt(toJD(y,mo,dd,Math.floor(h),(h-Math.floor(h))*60,5.5));
+  const o=[];let prev=f(at(r)),st=r;
+  for(let h=r+0.1;h<=to+30;h+=0.1){const v=f(at(h));if(v!==prev){let lo=h-0.1,hi=h;for(let i=0;i<20;i++){const q=(lo+hi)/2;if(f(at(q))===prev)lo=q;else hi=q;}const e=(lo+hi)/2;o.push({v:prev,a:st,b:e});st=e;prev=v;if(st>to)break;}}
+  return o.filter(x=>x.a<to);}
+function SEGH(d,f,lab,from){const sg=SEGS(d,f);return sg.map((x,i)=>lab(x.v)+' — '+(i===0?'सूर्योदय से ':'')+(i>0?tt(x.a)+' से ':'')+tt(x.b)+' तक').join('<br>');}
 function panchangHTML(d,title,showPl){
   const pc=d.pc;
   let h='<div class="res-card"><h2 class="kh">'+esc(title)+'</h2><div class="tw"><table><tbody>'
    +'<tr><td>वार</td><td><b>'+d.vara+'</b></td></tr>'
-   +'<tr><td>तिथि</td><td><b>'+pc.paksha+' पक्ष '+pc.tn+'</b></td></tr>'
-   +'<tr><td>नक्षत्र</td><td><b>'+esc(NAK_H[pc.nak])+'</b> (चरण '+pc.pd+')</td></tr>'
-   +'<tr><td>योग</td><td>'+pc.yg+'</td></tr><tr><td>करण</td><td>'+pc.kn+'</td></tr>'
-   +'<tr><td>चंद्र राशि / सूर्य राशि</td><td>'+esc(RASHI_H[pc.moonR])+' / '+esc(RASHI_H[pc.sunR])+'</td></tr>'
+   +'<tr><td>तिथि (कब से कब तक)</td><td>'+SEGH(d,q=>q.t,v=>'<b>'+(v<=15?'शुक्ल':'कृष्ण')+' '+tithiName(v)+'</b>')+'</td></tr>'
+   +'<tr><td>नक्षत्र (कब से कब तक)</td><td>'+SEGH(d,q=>q.nak,v=>'<b>'+esc(NAK_H[v])+'</b>')+'</td></tr>'
+   +'<tr><td>नक्षत्र चरण (पाद)</td><td>'+SEGH(d,q=>q.nak*5+q.pd,v=>esc(NAK_H[Math.floor(v/5)])+' <b>चरण '+(v%5)+'</b>')+'</td></tr>'
+   +'<tr><td>योग (कब से कब तक)</td><td>'+SEGH(d,q=>q.yg,v=>v)+'</td></tr>'
+   +'<tr><td>करण (कब से कब तक)</td><td>'+SEGH(d,q=>q.kn,v=>v)+'</td></tr>'
+   +'<tr><td>चंद्र राशि (कब से कब तक)</td><td>'+SEGH(d,q=>q.moonR,v=>esc(RASHI_H[v]))+'</td></tr>'
+   +'<tr><td>सूर्य राशि</td><td>'+esc(RASHI_H[pc.sunR])+'</td></tr>'
+   +(()=>{try{const m=window.__moonRS&&window.__moonRS(d.ymd[0],d.ymd[1],d.ymd[2],d.ymd[3],d.ymd[4]);return m?'<tr><td>चंद्रोदय / चंद्रास्त</td><td>'+(m.rise!=null?hmS(m.rise):'—')+' / '+(m.set!=null?hmS(m.set):'—')+'</td></tr>':'';}catch(e){return '';}})()
    +'<tr><td>सूर्योदय / सूर्यास्त</td><td>'+hmS(d.sun.rise)+' / '+hmS(d.sun.set)+'</td></tr>'
    +'<tr><td>राहुकाल (अशुभ)</td><td>'+hmS(d.rahu[0])+' – '+hmS(d.rahu[1])+'</td></tr>'
    +'<tr><td>गुलिक काल</td><td>'+hmS(d.gulika[0])+' – '+hmS(d.gulika[1])+'</td></tr>'
