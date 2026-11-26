@@ -201,7 +201,7 @@ input[type=date],input[type=time]{min-height:48px}
 .about b{color:var(--maroon)}.about p{margin:4px 0}
 @media print{.brand .pbtn,.nmtools,.totop,.lang,.about{display:none!important}.brand{background:#fff;color:#000;border-bottom:2px solid #000}.brand b{color:#000}.brand span{color:#000}#nm_body{font-size:13px}}
 </style>
-<meta name="vj-ver" content="296">
+<meta name="vj-ver" content="297">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <script>try{if(window.top!==window.self){document.documentElement.style.display='none';window.top.location=window.self.location;}}catch(e){document.documentElement.style.display='none';}</script>
 
@@ -7240,6 +7240,14 @@ document.addEventListener('click',function(){setTimeout(lab,50);},true);})();
 <script>
 /* v296: भाषा/प्रिंट/सहयोग/सहेजी/पंजीकरण बटन साइड-मेनू में */
 (function(){function mv(){try{var t=document.getElementById('vj_tools'),g=document.querySelector('.vjg.vjtree');if(!t||!g||t.parentNode===g)return;g.insertBefore(t,g.firstChild);}catch(e){}}
+mv();document.addEventListener('DOMContentLoaded',mv);new MutationObserver(mv).observe(document.body,{childList:true,subtree:true});})();
+</script>
+<style id="vj297css">
+#vj_menu{position:sticky!important;top:0;z-index:900;width:100%!important;max-width:none!important;margin:0!important;border:0!important;border-bottom:2px solid #c9a15a!important;border-radius:0!important;padding:6px 14px!important;font-size:13px!important;line-height:1.3;box-sizing:border-box}
+</style>
+<script>
+/* v297: मेनू बटन सबसे ऊपर, छोटा */
+(function(){function mv(){var m=document.getElementById('vj_menu');if(m&&m.parentNode!==document.body)document.body.insertBefore(m,document.body.firstChild);}
 mv();document.addEventListener('DOMContentLoaded',mv);new MutationObserver(mv).observe(document.body,{childList:true,subtree:true});})();
 </script>
 </body>
