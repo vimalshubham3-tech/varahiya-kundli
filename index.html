@@ -201,7 +201,7 @@ input[type=date],input[type=time]{min-height:48px}
 .about b{color:var(--maroon)}.about p{margin:4px 0}
 @media print{.brand .pbtn,.nmtools,.totop,.lang,.about{display:none!important}.brand{background:#fff;color:#000;border-bottom:2px solid #000}.brand b{color:#000}.brand span{color:#000}#nm_body{font-size:13px}}
 </style>
-<meta name="vj-ver" content="302">
+<meta name="vj-ver" content="303">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <script>try{if(window.top!==window.self){document.documentElement.style.display='none';window.top.location=window.self.location;}}catch(e){document.documentElement.style.display='none';}</script>
 
@@ -7399,6 +7399,34 @@ function render(view){var h=$('vjhome');if(!h)return;var en=L();h.innerHTML='';
 function init(){var m=$('vj_menu');if(!m||$('vjhome'))return;var h=D.createElement('div');h.id='vjhome';D.body.appendChild(h);
  m.addEventListener('click',function(e){e.stopImmediatePropagation();e.preventDefault();render('main');D.body.classList.add('vjhm');},true);}
 init();D.addEventListener('DOMContentLoaded',init);new MutationObserver(init).observe(D.body,{childList:true});
+})();
+</script>
+<style id="vj303css">
+#vjtoast{position:fixed;left:50%;bottom:70px;transform:translateX(-50%);background:rgba(40,20,20,.92);color:#fff;padding:10px 16px;border-radius:22px;font-size:14px;z-index:99999;display:none;max-width:86%;text-align:center}
+</style>
+<script>
+/* v303: Back बटन — पहले खुली परत बंद; ऐप से बाहर जाने के लिए दो बार Back */
+(function(){
+var D=document,armed=0,timer=null,tt=null;
+function toast(m){var t=D.getElementById('vjtoast');if(!t){t=D.createElement('div');t.id='vjtoast';D.body.appendChild(t);}t.textContent=m;t.style.display='block';clearTimeout(tt);tt=setTimeout(function(){t.style.display='none';},2000);}
+function guard(){try{history.pushState({vjg:1},'',location.href);}catch(e){}}
+function topOverlay(){var o=[].slice.call(D.querySelectorAll('.vjov')).filter(function(e){return e.offsetParent!==null||getComputedStyle(e).display!=='none';});return o.length?o[o.length-1]:null;}
+function closeOv(o){var b=[].slice.call(o.querySelectorAll('button,a,span')).find(function(x){return /^\s*(✕|✖|×|X|बंद|Close|बंद करें)/i.test(x.textContent||'');});if(b)b.click();else o.remove();}
+function handle(){
+ var b=D.body;
+ var ov=topOverlay();if(ov){closeOv(ov);return true;}
+ if(b.classList.contains('vjhm')){var hb=D.querySelector('#vjhome .hb button');if(hb&&hb.textContent.trim()==='←')hb.click();else b.classList.remove('vjhm');return true;}
+ if(b.classList.contains('vjdr')){b.classList.remove('vjdr');return true;}
+ var sel=D.querySelector('.tabs .tab[aria-selected="true"]');
+ if(sel&&sel.id!=='tab-p'){var g=D.querySelector('.vjg > button');if(g)g.click();var tp=D.getElementById('tab-p');if(tp)tp.click();window.scrollTo(0,0);return true;}
+ return false;}
+function init(){try{history.replaceState({vjg:0},'',location.href);}catch(e){}guard();}
+window.addEventListener('popstate',function(){
+ if(handle()){guard();return;}
+ if(!armed){armed=1;guard();var en=D.documentElement.lang==='en';toast(en?'Press Back again to exit':'बाहर निकलने के लिए दोबारा Back दबाएँ');clearTimeout(timer);timer=setTimeout(function(){armed=0;},2200);return;}
+ armed=0;try{history.back();}catch(e){}
+});
+init();
 })();
 </script>
 </body>
