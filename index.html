@@ -201,7 +201,7 @@ input[type=date],input[type=time]{min-height:48px}
 .about b{color:var(--maroon)}.about p{margin:4px 0}
 @media print{.brand .pbtn,.nmtools,.totop,.lang,.about{display:none!important}.brand{background:#fff;color:#000;border-bottom:2px solid #000}.brand b{color:#000}.brand span{color:#000}#nm_body{font-size:13px}}
 </style>
-<meta name="vj-ver" content="228">
+<meta name="vj-ver" content="229">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <script>try{if(window.top!==window.self){document.documentElement.style.display='none';window.top.location=window.self.location;}}catch(e){document.documentElement.style.display='none';}</script>
 
@@ -6675,6 +6675,7 @@ function build(y,m,c){
   if(!ks.length)ks.push(f0);
   if(tP.t===tA.t)ks.shift();
   var kl=[];if(!lm0.adhik)ks.forEach(function(tt_){var mm=(f0>15&&tt_<=15)?(lm0.m+1)%12:lm0.m,L_=TR==='S'?(KM[mm+'|'+tt_]||[]):(KMD[(tt_>15?(mm+1)%12:mm)+'|'+tt_]||[]);L_.forEach(function(x){kl.push(x);});});
+  if(y===2026&&m===7&&TR!=='S'){var NJ=['नमिनाथ — जन्म कल्याणक','नमिनाथ — दीक्षा (तप) कल्याणक'];if(d===10)kl=kl.filter(function(x){return NJ.indexOf(x)<0;});if(d===9)NJ.forEach(function(x){kl.push(x);});}
   var pp=pc.t===30?'अमावस्या':pc.t===15?'पूर्णिमा':PP[b]?(sh?'शुक्ल ':'कृष्ण ')+PP[b]:'';
   var pd=panchangDay(y,m,d,c[2],c[3],5.5),ts=SEGH(pd,function(q){return q.t;},function(v){return '<b>'+tn(v)+'</b>';});
   var hl=kl.length?'background:#e3eefb;':tags.length?'background:#fde7e9;':pp?'background:#e8f3df;':'';
