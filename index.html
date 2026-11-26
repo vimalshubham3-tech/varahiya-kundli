@@ -201,7 +201,7 @@ input[type=date],input[type=time]{min-height:48px}
 .about b{color:var(--maroon)}.about p{margin:4px 0}
 @media print{.brand .pbtn,.nmtools,.totop,.lang,.about{display:none!important}.brand{background:#fff;color:#000;border-bottom:2px solid #000}.brand b{color:#000}.brand span{color:#000}#nm_body{font-size:13px}}
 </style>
-<meta name="vj-ver" content="206">
+<meta name="vj-ver" content="207">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <script>try{if(window.top!==window.self){document.documentElement.style.display='none';window.top.location=window.self.location;}}catch(e){document.documentElement.style.display='none';}</script>
 
@@ -6469,6 +6469,14 @@ b.addEventListener('click',function(){var tn=new Date(Date.now()+19800000),mi=do
   var c=document.getElementById('pm_c'),nm=c.options[c.selectedIndex]?c.options[c.selectedIndex].text:'';
   o.innerHTML='<div class="vjmp">'+B+A+'</div>';
   o.setAttribute('data-vjk',k);
+  setTimeout(function(){try{var sv=document.getElementById('pm_m').value.split('-').map(Number),cz=CITIES[+document.getElementById('pm_c').value],yz=sv[0],mz=sv[1],nd=new Date(Date.UTC(yz,mz,0)).getUTCDate(),box=o.querySelector('.vjmp');if(!box||box.querySelector('.vjsm'))return;
+   var hh='<div class="vjsm"><h3 style="margin:16px 0 6px;color:#6b1c28">🪔 माह के शुभ मुहूर्त — विवाह आदि (तारीख़ व समय सहित)</h3><p class="kmeta">वार, तिथि, नक्षत्र, योग, भद्रा, खरमास/चातुर्मास व गुरु-शुक्र अस्त के नियमों पर खरे दिन। विवाह में केवल शुद्ध लग्न दिए हैं।</p><div class="tw"><table><thead><tr><th>कार्य</th><th>शुभ दिन — श्रेष्ठ समय</th></tr></thead><tbody>';
+   Object.keys(MUX).forEach(function(kk){var r=muhurtaScanX(kk,yz,mz,1,nd,cz[2],cz[3],-1,-1);
+    hh+='<tr><td><b>'+kk+'</b></td><td>'+(r.length?r.map(function(z){var tm='';
+      if(kk==='विवाह'){var vm=VM(z.y,z.mo,z.dd,cz[2],cz[3]);tm=vm&&vm.lg.length?'शुभ लग्न: '+vm.lg.map(function(x){return RASHI_H[x.r]+' '+hmS(x.a)+'–'+hmS(x.b)}).join(', '):'लग्न-शुद्धि पंडित से जाँचें';}
+      else tm=(z.ws&&z.ws.length)?z.ws.slice(0,2).join('; '):'अभिजित '+hmS(z.ab[0])+'–'+hmS(z.ab[1]);
+      return '<b>'+z.dd+'</b> '+z.vara.slice(0,3)+' — '+tm+(z.sp&&z.sp.length?' ('+z.sp.join(', ')+')':'');}).join('<br>'):'इस माह में नहीं')+'</td></tr>';});
+   box.insertAdjacentHTML('beforeend',hh+'</tbody></table></div><p class="kmeta">अंतिम निर्णय हेतु वर-वधू/यजमान की कुंडली-मिलान व स्थानीय पंडित से परामर्श अवश्य करें।</p></div>');}catch(e){}},0);
   try{var cards=o.querySelectorAll('.vjmp .res-card'),bc=cards[cards.length-1];
   try{var dc=cards[0];dc.classList.add('vjdk');var tn=new Date(Date.now()+19800000),tm=(tn.getUTCFullYear()+'-'+String(tn.getUTCMonth()+1).padStart(2,'0')),sel=document.getElementById('pm_m').value;
    try{var cc=CITIES[+document.getElementById('pm_c').value],yy=+sel.split('-')[0],mm=+sel.split('-')[1],hr=dc.querySelector('thead tr');if(hr&&hr.children.length>5){hr.insertAdjacentHTML('beforeend','<th>लग्न (सूर्योदय)</th><th>💍 विवाह मुहूर्त</th>');}
