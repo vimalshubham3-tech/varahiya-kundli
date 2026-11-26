@@ -52,6 +52,10 @@ button.vjmp-btn{background:linear-gradient(135deg,#6b1c28,#8e2b3a 60%,#b8860b);c
 .bdg{display:inline-block;border-radius:999px;padding:2px 9px;font-size:12.5px;font-weight:700;margin:1px 2px 1px 0;color:#fff;white-space:nowrap}
 .bdg.bh{background:#c62828}.bdg.pk{background:#e67e22}.bdg.ml{background:#6a3fa0}
 .vjbh tr.r-bh{background:#ffe1de!important;box-shadow:inset 4px 0 0 #c62828}.vjbh tr.r-pk{background:#ffeed8!important;box-shadow:inset 4px 0 0 #e67e22}.vjbh tr.r-ml{background:#efe6fb!important;box-shadow:inset 4px 0 0 #6a3fa0}
+.vjmp-info{background:linear-gradient(135deg,#fff7e0,#fde9c4);border:1px solid #e0b860;border-left:6px solid #b8860b;border-radius:14px;padding:12px 12px 10px;margin:12px 0 4px;color:#4a2c12!important;font-size:14.5px;line-height:1.55}
+.vjmp-info b{display:block;color:#6b1c28;font-size:15.5px;margin-bottom:6px}
+.vjmp-info .ch{display:inline-block;border-radius:999px;padding:2px 10px;margin:2px 3px 2px 0;font-size:13px;font-weight:600;color:#fff}
+.ch.c1{background:#8e2b3a}.ch.c2{background:#b8860b}.ch.c3{background:#2e7d5b}.ch.c4{background:#2f6fa8}.ch.c5{background:#7a4fb0}.ch.c6{background:#c62828}.ch.c7{background:#e67e22}.ch.c8{background:#6a3fa0}
 input[type=month]{width:100%;box-sizing:border-box;min-height:48px;font:inherit;font-size:16px;padding:12px;border:1px solid var(--line);border-radius:10px;background:#fbfbfd;color:var(--ink)} /* v173 */
 .detect{margin-top:10px;font-size:14px;min-height:0}
 .det-line{background:#faf4e8;border:1px dashed var(--gold);border-radius:10px;padding:8px 10px}
@@ -169,7 +173,7 @@ input[type=date],input[type=time]{min-height:48px}
 .about b{color:var(--maroon)}.about p{margin:4px 0}
 @media print{.brand .pbtn,.nmtools,.totop,.lang,.about{display:none!important}.brand{background:#fff;color:#000;border-bottom:2px solid #000}.brand b{color:#000}.brand span{color:#000}#nm_body{font-size:13px}}
 </style>
-<meta name="vj-ver" content="181">
+<meta name="vj-ver" content="182">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <script>try{if(window.top!==window.self){document.documentElement.style.display='none';window.top.location=window.self.location;}}catch(e){document.documentElement.style.display='none';}</script>
 
@@ -6342,8 +6346,8 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 (function(){var n=0;
 function setup(){var go=document.getElementById('nm_go'),dk=document.getElementById('nm_dk'),o=document.getElementById('nm_res');if(!go||!dk||!o)return false;if(go.__vjall)return true;go.__vjall=1;
 var pn=go.closest('.panel'),h=pn.querySelector('h3'),pp=pn.querySelector('p.kmeta');
-h.textContent='📜 मासिक पंचांग दर्शन';
-if(pp)pp.textContent='पूरे महीने का पंचांग एक ही जगह: हर दिन की तिथि, नक्षत्र, योग, करण, चंद्र राशि, सूर्योदय-सूर्यास्त, चंद्रोदय-चंद्रास्त व राहुकाल — और साथ में भद्रा, पंचक व मूल का विचार। सब कुछ चुने स्थान के लिए, भारतीय मानक समय में।';
+h.style.display='none';
+if(pp){pp.className='vjmp-info';pp.innerHTML='<b>📜 मासिक पंचांग दर्शन — इसमें मिलेगा</b>'+[['तिथि','c1'],['नक्षत्र','c2'],['योग','c3'],['करण','c4'],['चंद्र राशि','c5'],['सूर्योदय–सूर्यास्त','c2'],['चंद्रोदय–चंद्रास्त','c4'],['राहुकाल','c1'],['भद्रा','c6'],['पंचक','c7'],['मूल','c8']].map(function(x){return '<span class="ch '+x[1]+'">'+x[0]+'</span>'}).join('')+'<div style="margin-top:6px">पूरे महीने के हर दिन के लिए, चुने स्थान के अनुसार, भारतीय मानक समय में।</div>';var rs=document.getElementById('nm_res');rs.parentNode.insertBefore(pp,rs);}
 go.style.display='none';dk.style.display='none';
 var b=document.createElement('button');b.type='button';b.id='nm_all';b.className='vjmp-btn';b.innerHTML='📜 वरहिया पंचांग दर्शन<small>पूरे महीने का पंचांग — देखने/बंद करने के लिए दबाएँ</small>';var l1=pn.querySelector('label[for=pm_m]');if(l1)l1.parentNode.insertBefore(b,l1);else go.parentNode.insertBefore(b,go);
 function key(){return 'all|'+document.getElementById('pm_m').value+'|'+document.getElementById('pm_c').value}
