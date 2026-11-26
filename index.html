@@ -201,7 +201,7 @@ input[type=date],input[type=time]{min-height:48px}
 .about b{color:var(--maroon)}.about p{margin:4px 0}
 @media print{.brand .pbtn,.nmtools,.totop,.lang,.about{display:none!important}.brand{background:#fff;color:#000;border-bottom:2px solid #000}.brand b{color:#000}.brand span{color:#000}#nm_body{font-size:13px}}
 </style>
-<meta name="vj-ver" content="288">
+<meta name="vj-ver" content="289">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <script>try{if(window.top!==window.self){document.documentElement.style.display='none';window.top.location=window.self.location;}}catch(e){document.documentElement.style.display='none';}</script>
 
@@ -7135,6 +7135,19 @@ function place(){var btns=[].slice.call(bar.querySelectorAll(':scope > button'))
 place();
 new MutationObserver(function(){var btns=[].slice.call(bar.querySelectorAll(':scope > button'));var a=btns.filter(function(b){return b.getAttribute('aria-pressed')==='true'})[0];if(a&&a.nextElementSibling!==tabs)place();if(!a&&tabs.parentNode!==bar)place();}).observe(bar,{attributes:true,subtree:true,attributeFilter:['aria-pressed']});}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();})();
+</script>
+<style id="vj289css">
+#vl_box .lg.vjcol{cursor:pointer;position:relative}
+#vl_box .lg.vjcol>*:not(.tg2):not(b){display:none}
+#vl_box .lg.vjcol.open>small{display:block}
+#vl_box .lg.vjcol.open>p{display:block}
+#vl_box .lg.vjcol>b::after{content:" \25B8";color:#8a6d1d;font-size:.9em}
+#vl_box .lg.vjcol.open>b::after{content:" \25BE"}
+</style>
+<script>
+/* v289: बारह लग्न — हर लग्न ड्रॉप-डाउन (दबाने पर खुले/बंद) */
+(function(){function fx(){try{var c=document.querySelectorAll('#vl_box .lg:not(.vjcol)');[].forEach.call(c,function(e){e.classList.add('vjcol');e.setAttribute('role','button');e.addEventListener('click',function(){e.classList.toggle('open');});});}catch(x){}}
+fx();new MutationObserver(fx).observe(document.body,{childList:true,subtree:true});})();
 </script>
 </body>
 </html>
