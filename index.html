@@ -201,7 +201,7 @@ input[type=date],input[type=time]{min-height:48px}
 .about b{color:var(--maroon)}.about p{margin:4px 0}
 @media print{.brand .pbtn,.nmtools,.totop,.lang,.about{display:none!important}.brand{background:#fff;color:#000;border-bottom:2px solid #000}.brand b{color:#000}.brand span{color:#000}#nm_body{font-size:13px}}
 </style>
-<meta name="vj-ver" content="244">
+<meta name="vj-ver" content="245">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <script>try{if(window.top!==window.self){document.documentElement.style.display='none';window.top.location=window.self.location;}}catch(e){document.documentElement.style.display='none';}</script>
 
@@ -6820,12 +6820,26 @@ if(D.readyState==='loading')D.addEventListener('DOMContentLoaded',go);else go();
   tb.remove();pk.remove();
 }());}catch(e){console.error('pk',e);}})();
 
-/* v243: दैनिक पंचांग के नीचे साप्ताहिक कैलेंडर */
-(function(){try{var n=0;(function go(){var r=document.getElementById('pn_res');if(!r||!window.__vjCalWeek){if(++n<80)setTimeout(go,200);return;}
- var busy=false;function add(){if(busy)return;if(!r.innerHTML.trim()||r.querySelector('.vjwk')||r.querySelector('.warn')||r.innerHTML.indexOf('गणना हो रही')>-1)return;
-  var di=document.getElementById('pn_date'),pl=document.getElementById('pn_place');if(!di||!pl||!di.value)return;var v=di.value.split('-').map(Number),c=CITIES[+pl.value];if(!c||!v[0])return;
-  busy=true;try{var h=window.__vjCalWeek(v[0],v[1],v[2],c);if(h){r.insertAdjacentHTML('afterbegin','<details class="par vjwk"><summary><b>🗓️ साप्ताहिक कैलेंडर (इस सप्ताह के सातों दिन)</b></summary>'+h+'</details>');window.__vjWeekBind(r);}}catch(e){console.error(e);}busy=false;}
- var t;new MutationObserver(function(){clearTimeout(t);t=setTimeout(add,250);}).observe(r,{childList:true});add();
+
+/* v245: साप्ताहिक पंचांग दर्शन — मासिक की तरह बैनर (बंद रहता है) + एक समय में एक ही दर्शन खुला */
+(function(){try{var n=0;(function go(){
+ var D=document,pa=D.getElementById('pn_all'),nm=D.getElementById('nm_all'),td=D.getElementById('td_all');
+ if(!pa||!nm||!td||!window.__vjCalWeek||!D.getElementById('pn_res')){if(++n<100)setTimeout(go,200);return;}
+ if(D.getElementById('wk_all'))return;
+ var wb=D.createElement('button');wb.type='button';wb.id='wk_all';wb.className='vjmp-btn';wb.innerHTML='🗓️ वरहिया जैन साप्ताहिक पंचांग दर्शन<small>इस सप्ताह के सातों दिन — देखने/बंद करने के लिए दबाएँ</small>';
+ var wr=D.createElement('div');wr.id='wk_res';pa.parentNode.insertBefore(wb,pa);wb.parentNode.insertBefore(wr,pa);
+ var cur=null;
+ function city(){var pl=D.getElementById('pn_place');return CITIES[pl?+pl.value:0]||CITIES[0];}
+ function ist(){var t=new Date(Date.now()+19800000);return Date.UTC(t.getUTCFullYear(),t.getUTCMonth(),t.getUTCDate());}
+ function render(){var q=new Date(cur),h=window.__vjCalWeek(q.getUTCFullYear(),q.getUTCMonth()+1,q.getUTCDate(),city());
+  wr.innerHTML='<div class="vjwk res-card"><div style="display:flex;gap:6px;align-items:center;margin:4px 0"><button type="button" data-w="-7" style="padding:7px 12px;border-radius:8px;border:1px solid #b8860b;background:#fffdf7;color:#6b1c28">◀ पिछला सप्ताह</button><span style="flex:1;text-align:center;font-weight:700;color:#6b1c28">'+q.getUTCDate()+'/'+(q.getUTCMonth()+1)+'/'+q.getUTCFullYear()+'</span><button type="button" data-w="7" style="padding:7px 12px;border-radius:8px;border:1px solid #b8860b;background:#fffdf7;color:#6b1c28">अगला सप्ताह ▶</button></div>'+(h||'<p class="warn">गणना नहीं हो सकी।</p>')+'</div>';
+  wr.querySelectorAll('button[data-w]').forEach(function(b){b.onclick=function(e){e.stopPropagation();cur+=(+b.getAttribute('data-w'))*86400000;render();};});
+  window.__vjWeekBind(wr);}
+ wb.addEventListener('click',function(){if(wr.innerHTML.trim()){wr.innerHTML='';return;}wr.innerHTML='<p class="kmeta">गणना हो रही है…</p>';cur=ist();setTimeout(render,30);});
+ // एक समय में एक ही दर्शन खुला
+ var busy=false,L=[[wb,wr],[pa,D.getElementById('pn_res')],[nm,D.getElementById('nm_res')],[td,D.getElementById('td_res')]];
+ L.forEach(function(x){x[0].addEventListener('click',function(){if(busy||!x[0].isTrusted&&false)return;
+   setTimeout(function(){if(!x[1].innerHTML.trim())return;busy=true;L.forEach(function(y){if(y!==x&&y[1].innerHTML.trim()){try{y[0].click();}catch(e){}}});busy=false;},60);});});
 })();}catch(e){console.error('wk',e);}})();
 </script>
 </body>
