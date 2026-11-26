@@ -156,7 +156,7 @@ input[type=date],input[type=time]{min-height:48px}
 .about b{color:var(--maroon)}.about p{margin:4px 0}
 @media print{.brand .pbtn,.nmtools,.totop,.lang,.about{display:none!important}.brand{background:#fff;color:#000;border-bottom:2px solid #000}.brand b{color:#000}.brand span{color:#000}#nm_body{font-size:13px}}
 </style>
-<meta name="vj-ver" content="159">
+<meta name="vj-ver" content="160">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <script>try{if(window.top!==window.self){document.documentElement.style.display='none';window.top.location=window.self.location;}}catch(e){document.documentElement.style.display='none';}</script>
 
@@ -4864,7 +4864,6 @@ var RJAIN_NOTE='जैन दृष्टि: ग्रह निमित्त
   pn.innerHTML=
    '<div class="panel"><h3>जैन तिथि दर्पण · पंचकल्याणक</h3><p class="kmeta">उदय-तिथि के अनुसार जैन तिथि-दर्पण, चौबीस तीर्थंकरों के पंचकल्याणक (दिगंबर परंपरा, हिंदी पूर्णिमांत मास) और पूरे दिन का पंचांग।</p></div>'+
    '<div class="panel"><h3>📤 आज की जैन तिथि भेजें</h3><p class="kmeta">आज की तिथि, कल्याणक और पर्व एक संदेश में WhatsApp पर भेजें।</p><button class="go" id="jt_wa" type="button">📤 WhatsApp पर भेजें</button></div>'+
-   '<div class="panel"><h3>🖼️ कार्ड बनाकर भेजें</h3><p class="kmeta">किसी भी तारीख़ का सुंदर कार्ड (तिथि + आज की आदत + QR) बनाएँ और WhatsApp पर भेजें।</p><label for="jt_cd">तारीख़</label><input id="jt_cd" type="date" value="'+n.y+'-'+p2(n.mo)+'-'+p2(n.dd)+'"><button class="go" id="jt_card" type="button">🖼️ कार्ड बनाएँ</button><div id="jt_cardo"></div></div>'+
    '<div class="panel"><h3>जैन पंचांग — मासिक कैलेंडर</h3><p class="kmeta">दीवार-कैलेंडर की तरह पूरा महीना: तिथि, नक्षत्र (समाप्ति-समय सहित), योग, भद्रा, पंचक, पर्व, कल्याणक, चंद्र-संचार, सूर्योदय-सूर्यास्त और शुभ मुहूर्त।</p><label for="jc_m">महीना</label><input id="jc_m" type="month" value="'+n.y+'-'+p2(n.mo)+'"><label for="jc_c">स्थान</label><select id="jc_c">'+cO+'</select><button class="go" id="jc_go" type="button">मासिक जैन पंचांग बनाएँ</button><div id="jc_res"></div></div>'+
    '<div class="panel"><h3>पूर्ण दैनिक पंचांग</h3><label for="hp_d">तारीख़</label><input id="hp_d" type="date" value="'+n.y+'-'+p2(n.mo)+'-'+p2(n.dd)+'"><label for="hp_c">स्थान</label><select id="hp_c">'+cO+'</select><button class="go" id="hp_go" type="button">पंचांग देखें</button><div id="hp_res"></div></div>'+
    '<div class="panel"><h3>जैन तिथि दर्पण (मासिक)</h3><label for="hd_m">महीना</label><input id="hd_m" type="month" value="'+n.y+'-'+p2(n.mo)+'"><label for="hd_c">स्थान</label><select id="hd_c">'+cO+'</select><button class="go" id="hd_go" type="button">तिथि-दर्पण देखें</button><div id="hd_res"></div></div>'+
@@ -4884,59 +4883,6 @@ var RJAIN_NOTE='जैन दृष्टि: ग्रह निमित्त
       L.push('','_वरहिया जैन पंचांग एवं ज्योतिष वास्तु दर्शन_','https://tinyurl.com/varahiya-jyotish-darshan');
       window.open('https://wa.me/?text='+encodeURIComponent(L.join('\n')),'_blank');
     }catch(e){alert('संदेश नहीं बन सका।');}
-  });
-  D.getElementById('jt_card').addEventListener('click',function(){
-    var o=D.getElementById('jt_cardo');
-    try{
-      var v=D.getElementById('jt_cd').value.split('-').map(Number);if(v.length<3||!v[0]){o.innerHTML='<p class="warn">तारीख़ चुनें।</p>';return;}
-      var c=city('hp_c'),r=scan(Date.UTC(v[0],v[1]-1,v[2]),1,c[2],c[3])[0],b=r.t>15?r.t-15:r.t;
-      var HB2=["सुबह उठकर 5 मिनट शांत बैठें।","आज किसी से मुस्कुराकर बात करें।","आज किसी की सच्ची प्रशंसा करें।","आज फ़ोन का उपयोग एक घंटा कम करें।","आज कोई एक अच्छा काम चुपचाप करें, बताएँ नहीं।","आज 15 मिनट स्वाध्याय पढ़ें।","आज जो कहना है, पहले मन में एक बार दोहराएँ।","आज भोजन ध्यान से, बिना स्क्रीन देखे करें।","आज किसी बुज़ुर्ग से हालचाल पूछें।","आज एक काम जो टल रहा है, उसे पूरा करें।","आज किसी से क्षमा माँगें या क्षमा करें।","आज थोड़ा पैदल चलें या हल्का व्यायाम करें।","आज किसी ज़रूरतमंद की छोटी मदद करें।","आज रात को सोने से पहले 3 आभार लिखें।","आज ग़ुस्सा आए तो 10 तक गिनें।","आज एक नया शब्द या नई बात सीखें।","आज कमरे या मेज़ की सफ़ाई करें।","आज अपना बजट या ख़र्च देखें।","आज बिना बीच में बोले किसी की पूरी बात सुनें।","आज सुबह की धूप में 5 मिनट बिताएँ।","आज किसी पुराने मित्र को संदेश भेजें।","आज एक काम में 25 मिनट पूरा ध्यान दें।","आज अपने माता-पिता या बड़ों के पैर छुएँ या नमन करें।","आज किसी की निंदा न करें।","आज अपने लक्ष्य की तरफ़ एक छोटा क़दम उठाएँ।","आज देर रात तक जागने से बचें।","आज पानी पर्याप्त पिएँ।","आज किसी को बिना माँगे सलाह न दें।","आज अपनी एक अच्छी बात पहचानें।","आज मौन का 10 मिनट अभ्यास करें।"],JV2=[
-   ["अहिंसा","वाणी, विचार और व्यवहार से किसी को दुख न पहुँचाएँ। आज एक कठोर शब्द कम बोलें।"],
-   ["सत्य","छोटी बात में भी सच बोलें। बढ़ा-चढ़ाकर कहने की आदत पहचानें।"],
-   ["अचौर्य","किसी का समय, विचार या सामान बिना पूछे न लें।"],
-   ["संयम","खान-पान, बोलचाल और मोबाइल पर मर्यादा रखें।"],
-   ["अपरिग्रह","ज़रूरत से ज़्यादा जोड़ने की आदत घटाएँ। बेकार सामान किसी ज़रूरतमंद को दें।"],
-   ["अनेकांत","हर बात को दूसरे के दृष्टिकोण से भी देखें। 'मैं ही सही' की जगह 'शायद यह भी सही' सोचें।"],
-   ["क्षमा","रात को सोने से पहले मन से किसी को क्षमा कर दें और स्वयं भी क्षमा माँग लें।"],
-   ["स्वाध्याय","रोज़ कुछ समय आत्मा और जीवन पर अच्छा पढ़ें या सुनें।"],
-   ["सामायिक/ध्यान","रोज़ कुछ समय शांत बैठकर मन को स्थिर करने का अभ्यास करें।"],
-   ["दान","अपनी क्षमता के अनुसार नियमित रूप से सेवा या दान करें।"]
-  ];
-      var doy=Math.floor((Date.UTC(v[0],v[1]-1,v[2])-Date.UTC(v[0],0,0))/86400000),hab=HB2[doy%HB2.length],jv=JV2[doy%JV2.length];
-      var ex=[];if([2,5,8,11,14].indexOf(b)>=0&&r.t!==15&&r.t!==30)ex.push('🕉️ पर्व-तिथि');
-      kalOn(r).forEach(function(x){ex.push('🕊️ '+x);});parvaOn(r).forEach(function(x){ex.push('🪷 '+x);});
-      var W=1080,H=1350,cv=D.createElement('canvas');cv.width=W;cv.height=H;var g=cv.getContext('2d'),F='"Noto Sans Devanagari","Nirmala UI",Mangal,sans-serif';
-      function wrap(t,x,y,mw,lh,font,col){g.font=font;g.fillStyle=col;g.textAlign='left';var w=t.split(' '),l='';for(var i=0;i<w.length;i++){var tt=l?l+' '+w[i]:w[i];if(g.measureText(tt).width>mw&&l){g.fillText(l,x,y);y+=lh;l=w[i];}else l=tt;}g.fillText(l,x,y);return y+lh;}
-      g.fillStyle='#fff7e6';g.fillRect(0,0,W,H);
-      var gr=g.createLinearGradient(0,0,W,250);gr.addColorStop(0,'#7a1f1f');gr.addColorStop(1,'#b3451b');g.fillStyle=gr;g.fillRect(0,0,W,250);
-      g.textAlign='center';g.fillStyle='#fff';g.font='44px '+F;g.fillText('🙏 जय जिनेन्द्र 🙏',W/2,100);g.font='bold 62px '+F;g.fillText('आज की जैन तिथि',W/2,185);
-      g.fillStyle='#7a1f1f';g.font='bold 44px '+F;g.fillText(p2(v[2])+'/'+p2(v[1])+'/'+v[0]+' · '+VN[r.wd],W/2,330);
-      g.fillStyle='#b3451b';g.font='bold 86px '+F;g.fillText(tName(r.t),W/2,430);
-      g.fillStyle='#4a1d1d';g.font='40px '+F;g.fillText(MN[r.pm]+(r.adhik?' अधिक':'')+' मास',W/2,500);
-      var y=565;ex.slice(0,3).forEach(function(t){g.font='34px '+F;g.fillStyle='#4a1d1d';g.fillText(t,W/2,y);y+=50;});
-      y=Math.max(y+30,690);
-      g.fillStyle='#fff';g.strokeStyle='#e8c98a';g.lineWidth=3;g.fillRect(60,y-50,960,170);g.strokeRect(60,y-50,960,170);
-      wrap('💡 आज की आदत: '+hab,90,y+10,900,56,'42px '+F,'#4a1d1d');y+=210;
-      g.fillStyle='#fff';g.fillRect(60,y-50,960,230);g.strokeRect(60,y-50,960,230);
-      wrap('🪷 '+jv[0]+': '+jv[1],90,y+10,900,56,'42px '+F,'#4a1d1d');
-      g.fillStyle='#7a1f1f';g.fillRect(0,H-290,W,290);
-      var im=new Image();im.onload=function(){
-        g.fillStyle='#fff';g.fillRect(60,H-250,210,210);g.drawImage(im,68,H-242,194,194);
-        g.fillStyle='#fff';g.textAlign='left';g.font='bold 46px '+F;g.fillText('वरहिया जैन पंचांग',306,H-165);
-        wrap('रोज़ सुबह फ़ोन पर पाने के लिए स्कैन करें और "सूचना चालू करें" दबाएँ। निःशुल्क।',306,H-110,700,52,'38px '+F,'#fff');
-        cv.toBlob(function(bl){
-          var u=URL.createObjectURL(bl),nm='jain-tithi-'+v[0]+'-'+p2(v[1])+'-'+p2(v[2])+'.png';
-          o.innerHTML='<img src="'+u+'" alt="कार्ड" style="width:100%;border-radius:10px;margin-top:10px"><button class="go" id="jt_sh" type="button">📤 WhatsApp पर भेजें</button> <a class="go" href="'+u+'" download="'+nm+'" style="display:inline-block;text-decoration:none;padding:10px 14px">⬇️ सेव करें</a>';
-          D.getElementById('jt_sh').addEventListener('click',function(){
-            try{var f=new File([bl],nm,{type:'image/png'});
-              if(navigator.canShare&&navigator.canShare({files:[f]})){navigator.share({files:[f],text:'🙏 जय जिनेन्द्र — आज की तिथि और आदत।\nरोज़ फ़ोन पर पाने के लिए: https://tinyurl.com/varahiya-jyotish-darshan'});}
-              else alert('"सेव करें" दबाकर तस्वीर सहेजें, फिर WhatsApp में जोड़ें।');
-            }catch(e){}
-          });
-        },'image/png');
-      };
-      im.src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAApAAAAKQAQAAAAAAznf9AAAEMklEQVR4Xu2d0W7bMAwAm2H//8sdPJYhpTh5KE4Pgu6ADWmaGvbZIUhLoh/fXzR/6A1+uUkQTw+HLjl0yaFLDl1y6JJDlxy65NAlhy45dMmhSw5dcuiSYw+Xf/OAH8OR513NePf6qX7//f/1+F5+6mKPA3cvOXTJoUuOBS6f8TIiYJCx8fETFfPn+kS+ev0b4yXJgjPuJjl0ybGHyxYvM05GDMxYef0UGWX9vo+pVwaa7HHg7iWHLjl0ybHA5RAvX7kiZf2LmBnVeMTTOxbspZvk0CWHLjn2cPkhXmZEzIgZOeenSBnsceDuJYcuOXTJscDlEC/njDEzycgre51evGaZC/bSTXLokkOXHHu4bPFyHCHPmrvq8aJq8flvzC9Z9riI3EsOXXIscPl4dxeyzx+q7DIzzfd3L63HSRaccTfJoUuOPVy2+Zc5Cn6R9ymvqDnPLqrPjTE12ePA3UsOXXLokmOBy2e87HlmvK7/I5vMGepRoSc11yi3sGAv3SSHLjl0ybGHy2c9XvMtc/VOn49Zc4jqt0FGz4q3exy4e8mhSw5dcixw2eJlZYxJH+vJ0fFgXhPZs9MFe+kmOXTJoUuOPVy2erxq7PlVX9+Ts9czu8zoaX65yRnf47p0Lzl0yTHU43MlXplkvLqo+rtX5v21p4dDlxy65DjW5TT/sroOjXnk+H715qixH/PLcy+iY789HjjHHi5v1/fU3clxXU/OLurRM+9nFnscuHvJoUsOXXIscDmN98ydLmOMvFfivYNb3teMv3I+EXemEzfJoUuOY13ejvfMczGz6u7jQBlZr5g5roo81qUHzqFLDl1yTOshe9fLIN+5yDyydyzqc4sCTw+HLjl0yXGsyxYv6ykT8/qdGvvJbm49iibW49z1aD2uSwxdcrzcv8x+6XOmeR8h69M1Zu7p4dAlhy45jnV50y+4qu5ej49jOlGRjx2FzYm461GXusTQJcfLfPU7cn5RfzbF+3FzTw+HLjl0yXGsy6nfRp8XVE+FHHtsjJW6zzszGTz22+OBc+zhcqrH6zmQ2cHtIucMZYe3/rTI6vPmeA938ViP6xJDlxwf+quPq3h618t+L3N+fqTziUi81Dl0yXGsy9ZfvXP1V6/eGnfdgS/6c3xcP37uRXTst8cD59jDZavH+0rHcZ561OQ5M72eUDH2xLSG5C4eXeoSQ5ccw/3LceymZgvVCvJ8auQVM989Ec3Tw6FLDl1yHOvyZv5lMnbTyByzPwFtnJNpTsRdj7rUJYYuOT7Ey1olPuaXRV9B6f1Lr0sQv+McuuS47X8ZuWSPhr0PZmaa1X9jxNPDoUsOXXIc6/LmeWcVLWuEp3cmqvGeipw1Um6aRXLsdemBc+iS4+38y9/j6eHQJYcuOXTJoUsOXXLokkOXHLrk0CWHLjl0yaFLDl1y6JLjWJf/AJdn+DENkM5TAAAAAElFTkSuQmCC';
-    }catch(e){o.innerHTML='<p class="warn">कार्ड नहीं बन सका।</p>';}
   });
   D.getElementById('hp_go').addEventListener('click',function(){
     var v=D.getElementById('hp_d').value.split('-').map(Number),o=D.getElementById('hp_res');

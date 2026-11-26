@@ -1,0 +1,51 @@
+<!doctype html><html lang="hi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>मास्टर — कार्ड निर्माता</title>
+<style>body{margin:0;font-family:"Noto Sans Devanagari","Nirmala UI",Mangal,sans-serif;background:#fff7e6;color:#4a1d1d}header{background:#7a1f1f;color:#fff;padding:14px 16px;font-size:18px;font-weight:700}main{padding:14px;max-width:560px;margin:auto}label{display:block;margin:10px 0 4px;font-weight:700}input{width:100%;box-sizing:border-box;padding:10px;font-size:16px;border:1px solid #c9a15a;border-radius:8px}.r{display:flex;gap:8px;margin-top:10px}button,a.b{flex:1;padding:12px;font-size:16px;border:0;border-radius:8px;background:#b3451b;color:#fff;text-align:center;text-decoration:none;font-family:inherit}button.s,a.s{background:#7a1f1f}img{width:100%;border-radius:10px;margin-top:12px}.m{font-size:14px;margin-top:10px}textarea{width:100%;box-sizing:border-box;height:90px;margin-top:8px;font-family:inherit;font-size:15px}</style></head><body>
+<header>🛠️ मास्टर — रोज़ का कार्ड (वरहिया जैन पंचांग)</header><main>
+<label for="d">तारीख़</label><input id="d" type="date">
+<div class="r"><button class="s" id="pv">◀ पिछला दिन</button><button class="s" id="nx">अगला दिन ▶</button></div>
+<div class="r"><button id="mk">🖼️ कार्ड बनाएँ</button></div>
+<div id="o"></div><div class="m" id="msg"></div>
+<script>
+var HB=["सुबह उठकर 5 मिनट शांत बैठें।","आज किसी से मुस्कुराकर बात करें।","आज किसी की सच्ची प्रशंसा करें।","आज फ़ोन का उपयोग एक घंटा कम करें।","आज कोई एक अच्छा काम चुपचाप करें, बताएँ नहीं।","आज 15 मिनट स्वाध्याय पढ़ें।","आज जो कहना है, पहले मन में एक बार दोहराएँ।","आज भोजन ध्यान से, बिना स्क्रीन देखे करें।","आज किसी बुज़ुर्ग से हालचाल पूछें।","आज एक काम जो टल रहा है, उसे पूरा करें।","आज किसी से क्षमा माँगें या क्षमा करें।","आज थोड़ा पैदल चलें या हल्का व्यायाम करें।","आज किसी ज़रूरतमंद की छोटी मदद करें।","आज रात को सोने से पहले 3 आभार लिखें।","आज ग़ुस्सा आए तो 10 तक गिनें।","आज एक नया शब्द या नई बात सीखें।","आज कमरे या मेज़ की सफ़ाई करें।","आज अपना बजट या ख़र्च देखें।","आज बिना बीच में बोले किसी की पूरी बात सुनें।","आज सुबह की धूप में 5 मिनट बिताएँ।","आज किसी पुराने मित्र को संदेश भेजें।","आज एक काम में 25 मिनट पूरा ध्यान दें।","आज अपने माता-पिता या बड़ों के पैर छुएँ या नमन करें।","आज किसी की निंदा न करें।","आज अपने लक्ष्य की तरफ़ एक छोटा क़दम उठाएँ।","आज देर रात तक जागने से बचें।","आज पानी पर्याप्त पिएँ।","आज किसी को बिना माँगे सलाह न दें।","आज अपनी एक अच्छी बात पहचानें।","आज मौन का 10 मिनट अभ्यास करें।"],JV=[
+   ["अहिंसा","वाणी, विचार और व्यवहार से किसी को दुख न पहुँचाएँ। आज एक कठोर शब्द कम बोलें।"],
+   ["सत्य","छोटी बात में भी सच बोलें। बढ़ा-चढ़ाकर कहने की आदत पहचानें।"],
+   ["अचौर्य","किसी का समय, विचार या सामान बिना पूछे न लें।"],
+   ["संयम","खान-पान, बोलचाल और मोबाइल पर मर्यादा रखें।"],
+   ["अपरिग्रह","ज़रूरत से ज़्यादा जोड़ने की आदत घटाएँ। बेकार सामान किसी ज़रूरतमंद को दें।"],
+   ["अनेकांत","हर बात को दूसरे के दृष्टिकोण से भी देखें। 'मैं ही सही' की जगह 'शायद यह भी सही' सोचें।"],
+   ["क्षमा","रात को सोने से पहले मन से किसी को क्षमा कर दें और स्वयं भी क्षमा माँग लें।"],
+   ["स्वाध्याय","रोज़ कुछ समय आत्मा और जीवन पर अच्छा पढ़ें या सुनें।"],
+   ["सामायिक/ध्यान","रोज़ कुछ समय शांत बैठकर मन को स्थिर करने का अभ्यास करें।"],
+   ["दान","अपनी क्षमता के अनुसार नियमित रूप से सेवा या दान करें।"]
+  ];
+var VN=['रविवार','सोमवार','मंगलवार','बुधवार','गुरुवार','शुक्रवार','शनिवार'],LINK='https://tinyurl.com/varahiya-jyotish-darshan',DATA=null;
+function p2(n){return (n<10?'0':'')+n}
+function ist(){var t=new Date(Date.now()+19800000);return t.getUTCFullYear()+'-'+p2(t.getUTCMonth()+1)+'-'+p2(t.getUTCDate());}
+var di=document.getElementById('d');di.value=ist();
+function load(){return DATA?Promise.resolve(DATA):fetch('../push/daily.json').then(function(r){return r.json();}).then(function(j){DATA=j;return j;});}
+function step(k){var a=di.value.split('-').map(Number),t=new Date(Date.UTC(a[0],a[1]-1,a[2]+k));di.value=t.getUTCFullYear()+'-'+p2(t.getUTCMonth()+1)+'-'+p2(t.getUTCDate());make();}
+document.getElementById('pv').onclick=function(){step(-1)};document.getElementById('nx').onclick=function(){step(1)};document.getElementById('mk').onclick=make;
+function make(){var o=document.getElementById('o'),m=document.getElementById('msg');m.textContent='';
+ load().then(function(D){var k=di.value,v=k.split('-').map(Number),t=D[k];if(!t){o.innerHTML='';m.textContent='इस तारीख़ का डेटा नहीं मिला।';return;}
+  var wd=new Date(Date.UTC(v[0],v[1]-1,v[2])).getUTCDay(),doy=Math.floor((Date.UTC(v[0],v[1]-1,v[2])-Date.UTC(v[0],0,0))/86400000),hab=HB[doy%HB.length],jv=JV[doy%JV.length];
+  var ex=[];if(t.vrat)ex.push('🕉️ पर्व-तिथि');(t.kal||[]).forEach(function(x){ex.push('🕊️ कल्याणक: '+x)});(t.parv||[]).forEach(function(x){ex.push('🪷 '+x)});
+  var W=1080,H=1350,cv=document.createElement('canvas');cv.width=W;cv.height=H;var g=cv.getContext('2d'),F='"Noto Sans Devanagari","Nirmala UI",Mangal,sans-serif';
+  function wrap(tx,x,y,mw,lh,font,col){g.font=font;g.fillStyle=col;g.textAlign='left';var w=tx.split(' '),l='';for(var i=0;i<w.length;i++){var tt=l?l+' '+w[i]:w[i];if(g.measureText(tt).width>mw&&l){g.fillText(l,x,y);y+=lh;l=w[i];}else l=tt;}g.fillText(l,x,y);return y+lh;}
+  g.fillStyle='#fff7e6';g.fillRect(0,0,W,H);var gr=g.createLinearGradient(0,0,W,250);gr.addColorStop(0,'#7a1f1f');gr.addColorStop(1,'#b3451b');g.fillStyle=gr;g.fillRect(0,0,W,250);
+  g.textAlign='center';g.fillStyle='#fff';g.font='44px '+F;g.fillText('🙏 जय जिनेन्द्र 🙏',W/2,100);g.font='bold 62px '+F;g.fillText('आज की जैन तिथि',W/2,185);
+  g.fillStyle='#7a1f1f';g.font='bold 44px '+F;g.fillText(p2(v[2])+'/'+p2(v[1])+'/'+v[0]+' · '+VN[wd],W/2,330);
+  g.fillStyle='#b3451b';g.font='bold 86px '+F;g.fillText(t.tithi,W/2,430);g.fillStyle='#4a1d1d';g.font='40px '+F;g.fillText(t.mas+' मास',W/2,500);
+  var y=565;ex.slice(0,3).forEach(function(tx){g.font='34px '+F;g.fillStyle='#4a1d1d';g.textAlign='center';g.fillText(tx,W/2,y);y+=50;});y=Math.max(y+30,690);
+  g.fillStyle='#fff';g.strokeStyle='#e8c98a';g.lineWidth=3;g.fillRect(60,y-50,960,170);g.strokeRect(60,y-50,960,170);wrap('💡 आज की आदत: '+hab,90,y+10,900,56,'42px '+F,'#4a1d1d');y+=210;
+  g.fillStyle='#fff';g.fillRect(60,y-50,960,230);g.strokeRect(60,y-50,960,230);wrap('🪷 '+jv[0]+': '+jv[1],90,y+10,900,56,'42px '+F,'#4a1d1d');
+  g.fillStyle='#7a1f1f';g.fillRect(0,H-290,W,290);
+  var im=new Image();im.onload=function(){g.fillStyle='#fff';g.fillRect(60,H-250,210,210);g.drawImage(im,68,H-242,194,194);g.textAlign='left';g.fillStyle='#fff';g.font='bold 46px '+F;g.fillText('वरहिया जैन पंचांग',306,H-165);
+   wrap('रोज़ सुबह फ़ोन पर पाने के लिए स्कैन करें और "सूचना चालू करें" दबाएँ। निःशुल्क।',306,H-110,700,52,'38px '+F,'#fff');
+   cv.toBlob(function(bl){var u=URL.createObjectURL(bl),nm='jain-tithi-'+v[0]+'-'+p2(v[1])+'-'+p2(v[2])+'.png',cap='🙏 जय जिनेन्द्र — आज की तिथि और आदत।\nरोज़ फ़ोन पर पाने के लिए: '+LINK;
+    o.innerHTML='<img src="'+u+'" alt="कार्ड"><div class="r"><button id="sh">📤 WhatsApp पर भेजें</button><a class="b s" href="'+u+'" download="'+nm+'">⬇️ सेव करें</a></div><textarea id="cp" readonly>'+cap+'</textarea>';
+    document.getElementById('sh').onclick=function(){try{var f=new File([bl],nm,{type:'image/png'});if(navigator.canShare&&navigator.canShare({files:[f]}))navigator.share({files:[f],text:cap});else m.textContent='"सेव करें" दबाकर तस्वीर सहेजें, फिर WhatsApp में जोड़ें।';}catch(e){}};
+   },'image/png');};
+  im.src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAApAAAAKQAQAAAAAAznf9AAAEMklEQVR4Xu2d0W7bMAwAm2H//8sdPJYhpTh5KE4Pgu6ADWmaGvbZIUhLoh/fXzR/6A1+uUkQTw+HLjl0yaFLDl1y6JJDlxy65NAlhy45dMmhSw5dcuiSYw+Xf/OAH8OR513NePf6qX7//f/1+F5+6mKPA3cvOXTJoUuOBS6f8TIiYJCx8fETFfPn+kS+ev0b4yXJgjPuJjl0ybGHyxYvM05GDMxYef0UGWX9vo+pVwaa7HHg7iWHLjl0ybHA5RAvX7kiZf2LmBnVeMTTOxbspZvk0CWHLjn2cPkhXmZEzIgZOeenSBnsceDuJYcuOXTJscDlEC/njDEzycgre51evGaZC/bSTXLokkOXHHu4bPFyHCHPmrvq8aJq8flvzC9Z9riI3EsOXXIscPl4dxeyzx+q7DIzzfd3L63HSRaccTfJoUuOPVy2+Zc5Cn6R9ymvqDnPLqrPjTE12ePA3UsOXXLokmOBy2e87HlmvK7/I5vMGepRoSc11yi3sGAv3SSHLjl0ybGHy2c9XvMtc/VOn49Zc4jqt0FGz4q3exy4e8mhSw5dcixw2eJlZYxJH+vJ0fFgXhPZs9MFe+kmOXTJoUuOPVy2erxq7PlVX9+Ts9czu8zoaX65yRnf47p0Lzl0yTHU43MlXplkvLqo+rtX5v21p4dDlxy65DjW5TT/sroOjXnk+H715qixH/PLcy+iY789HjjHHi5v1/fU3clxXU/OLurRM+9nFnscuHvJoUsOXXIscDmN98ydLmOMvFfivYNb3teMv3I+EXemEzfJoUuOY13ejvfMczGz6u7jQBlZr5g5roo81qUHzqFLDl1yTOshe9fLIN+5yDyydyzqc4sCTw+HLjl0yXGsyxYv6ykT8/qdGvvJbm49iibW49z1aD2uSwxdcrzcv8x+6XOmeR8h69M1Zu7p4dAlhy45jnV50y+4qu5ej49jOlGRjx2FzYm461GXusTQJcfLfPU7cn5RfzbF+3FzTw+HLjl0yXGsy6nfRp8XVE+FHHtsjJW6zzszGTz22+OBc+zhcqrH6zmQ2cHtIucMZYe3/rTI6vPmeA938ViP6xJDlxwf+quPq3h618t+L3N+fqTziUi81Dl0yXGsy9ZfvXP1V6/eGnfdgS/6c3xcP37uRXTst8cD59jDZavH+0rHcZ561OQ5M72eUDH2xLSG5C4eXeoSQ5ccw/3LceymZgvVCvJ8auQVM989Ec3Tw6FLDl1yHOvyZv5lMnbTyByzPwFtnJNpTsRdj7rUJYYuOT7Ey1olPuaXRV9B6f1Lr0sQv+McuuS47X8ZuWSPhr0PZmaa1X9jxNPDoUsOXXIc6/LmeWcVLWuEp3cmqvGeipw1Um6aRXLsdemBc+iS4+38y9/j6eHQJYcuOXTJoUsOXXLokkOXHLrk0CWHLjl0yaFLDl1y6JLjWJf/AJdn+DENkM5TAAAAAElFTkSuQmCC';
+ }).catch(function(){m.textContent='डेटा लोड नहीं हुआ। इंटरनेट जाँचें।';});}
+make();
+</script></main></body></html>
