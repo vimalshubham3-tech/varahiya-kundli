@@ -201,7 +201,7 @@ input[type=date],input[type=time]{min-height:48px}
 .about b{color:var(--maroon)}.about p{margin:4px 0}
 @media print{.brand .pbtn,.nmtools,.totop,.lang,.about{display:none!important}.brand{background:#fff;color:#000;border-bottom:2px solid #000}.brand b{color:#000}.brand span{color:#000}#nm_body{font-size:13px}}
 </style>
-<meta name="vj-ver" content="306">
+<meta name="vj-ver" content="307">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <script>try{if(window.top!==window.self){document.documentElement.style.display='none';window.top.location=window.self.location;}}catch(e){document.documentElement.style.display='none';}</script>
 
@@ -7539,6 +7539,14 @@ fx();new MutationObserver(fx).observe(document.body,{childList:true,subtree:true
 <script>
 (function(){function fx(){try{[].forEach.call(document.querySelectorAll('.vjcal-det p:not([data-k])'),function(p,i){p.setAttribute('data-k',1);if(p.parentNode.firstElementChild===p||p.previousElementSibling===p.parentNode.firstElementChild)return;var b=p.querySelector('b'),t=b?b.textContent:'';p.classList.add(/शुभ|अमृत|सर्वार्थ/.test(t)?'k-g':/सावधानी|भद्रा|वर्ज्य|राहु|पंचक|अशुभ/.test(t)?'k-r':/पर्व|कल्याणक|व्रत/.test(t)?'k-o':'k-n');});}catch(x){}}
 fx();new MutationObserver(fx).observe(document.body,{childList:true,subtree:true});})();
+</script>
+<style id="vj307css">#nm_res table.jc td.vjsel{outline:3px solid #6b1c28;outline-offset:-3px;background:#ffe8a3!important}</style>
+<script>
+/* v307: कैलेंडर की तारीख़ दोबारा दबाने पर विवरण बंद */
+(function(){var PH='<p>किसी तारीख़ पर टैप करें — पूरा विवरण यहाँ दिखेगा।</p>';
+document.addEventListener('click',function(e){try{var td=e.target.closest&&e.target.closest('#nm_res table.jc td[data-d]');if(!td)return;var t=td.closest('table.jc');
+if(td.classList.contains('vjsel')){e.stopImmediatePropagation();e.preventDefault();td.classList.remove('vjsel');var dd=t.closest('.tw').parentNode.querySelector('.vjcal-det');if(dd){dd.innerHTML=PH;}return;}
+[].forEach.call(t.querySelectorAll('td.vjsel'),function(x){x.classList.remove('vjsel');});td.classList.add('vjsel');}catch(x){}},true);})();
 </script>
 </body>
 </html>
