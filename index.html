@@ -201,7 +201,7 @@ input[type=date],input[type=time]{min-height:48px}
 .about b{color:var(--maroon)}.about p{margin:4px 0}
 @media print{.brand .pbtn,.nmtools,.totop,.lang,.about{display:none!important}.brand{background:#fff;color:#000;border-bottom:2px solid #000}.brand b{color:#000}.brand span{color:#000}#nm_body{font-size:13px}}
 </style>
-<meta name="vj-ver" content="285">
+<meta name="vj-ver" content="286">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <script>try{if(window.top!==window.self){document.documentElement.style.display='none';window.top.location=window.self.location;}}catch(e){document.documentElement.style.display='none';}</script>
 
@@ -7106,5 +7106,16 @@ document.addEventListener('click',fix,true);document.addEventListener('focusin',
 var t;new MutationObserver(function(){clearTimeout(t);t=setTimeout(fix,0);}).observe(document.body,{childList:true,subtree:true});
 setTimeout(fix,500);setTimeout(fix,2500);})();
 </script>
-<style>#vj_tools{display:grid!important;grid-template-columns:repeat(6,1fr);gap:8px;max-width:420px;margin:10px auto!important;padding:0 10px}#vj_tools>*{width:100%;justify-content:center;text-align:center;box-sizing:border-box;margin:0!important;white-space:nowrap;font-size:13px!important}#vj_tools>*:nth-child(-n+3){grid-column:span 2}#vj_tools>*:nth-child(n+4){grid-column:span 3}html[lang=en] #vj_tools>*{font-size:12.5px!important;padding-left:6px!important;padding-right:6px!important}</style><style>.vjg{display:grid!important;grid-template-columns:repeat(6,1fr);gap:8px;max-width:440px;margin:10px auto!important}.vjg>*{width:100%;box-sizing:border-box;margin:0!important;justify-content:center;text-align:center}.vjg>*:nth-child(-n+2){grid-column:span 3}.vjg>*:nth-child(n+3){grid-column:span 2}.tabs{display:grid!important;grid-template-columns:repeat(2,1fr);gap:7px!important}.tabs .tab{width:100%;box-sizing:border-box;text-align:center;white-space:normal!important;flex:none!important}.tabs .tab[hidden],.tabs .tab[style*="display: none"]{display:none!important}html[lang=en] .vjg>*{font-size:12.5px!important;padding-left:4px!important;padding-right:4px!important}</style></body>
+<style>#vj_tools{display:grid!important;grid-template-columns:repeat(6,1fr);gap:8px;max-width:420px;margin:10px auto!important;padding:0 10px}#vj_tools>*{width:100%;justify-content:center;text-align:center;box-sizing:border-box;margin:0!important;white-space:nowrap;font-size:13px!important}#vj_tools>*:nth-child(-n+3){grid-column:span 2}#vj_tools>*:nth-child(n+4){grid-column:span 3}html[lang=en] #vj_tools>*{font-size:12.5px!important;padding-left:6px!important;padding-right:6px!important}</style><style>.vjg{display:grid!important;grid-template-columns:repeat(6,1fr);gap:8px;max-width:440px;margin:10px auto!important}.vjg>*{width:100%;box-sizing:border-box;margin:0!important;justify-content:center;text-align:center}.vjg>*:nth-child(-n+2){grid-column:span 3}.vjg>*:nth-child(n+3){grid-column:span 2}.tabs{display:grid!important;grid-template-columns:repeat(2,1fr);gap:7px!important}.tabs .tab{width:100%;box-sizing:border-box;text-align:center;white-space:normal!important;flex:none!important}.tabs .tab[hidden],.tabs .tab[style*="display: none"]{display:none!important}html[lang=en] .vjg>*{font-size:12.5px!important;padding-left:4px!important;padding-right:4px!important}</style><style>.vjacc>h3{cursor:pointer;position:relative;padding-right:34px!important;user-select:none}.vjacc>h3::after{content:'▸';position:absolute;right:14px;top:50%;transform:translateY(-50%);font-size:18px;color:#6b1c28}.vjacc.open>h3::after{content:'▾'}.vjacc>.vjacc-b{display:none}.vjacc.open>.vjacc-b{display:block}</style>
+<script>
+/* v286: प्रश्न कुंडली / राशिफल / शुभ मुहूर्त खोजक / चौघड़िया — शीर्षक दबाने पर नीचे फ़ॉर्म खुले */
+(function(){var n=0;function init(){var pane=document.getElementById('pane-p');if(!pane){if(++n<20)setTimeout(init,300);return}
+[].forEach.call(pane.children,function(p){if(!p.classList||!p.classList.contains('panel')||p.__acc)return;var h=p.querySelector(':scope > h3');if(!h)return;
+var t=(h.getAttribute('data-vjt')||h.textContent);if(!/प्रश्न कुंडली|दैनिक राशिफल|शुभ मुहूर्त खोजक|चौघड़िया|Prashna|Daily rashifal|Auspicious Muhurta|Choghadiya|Muhurta Finder|Muhurta Search/i.test(t)&&!/^(rf|mu|pq|ch)/.test(h.id||''))return;
+p.__acc=1;var b=document.createElement('div');b.className='vjacc-b';while(h.nextSibling)b.appendChild(h.nextSibling);p.appendChild(b);p.classList.add('vjacc');
+h.addEventListener('click',function(){p.classList.toggle('open');});});
+if(++n<6)setTimeout(init,1500);}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();})();
+</script>
+</body>
 </html>
