@@ -201,7 +201,7 @@ input[type=date],input[type=time]{min-height:48px}
 .about b{color:var(--maroon)}.about p{margin:4px 0}
 @media print{.brand .pbtn,.nmtools,.totop,.lang,.about{display:none!important}.brand{background:#fff;color:#000;border-bottom:2px solid #000}.brand b{color:#000}.brand span{color:#000}#nm_body{font-size:13px}}
 </style>
-<meta name="vj-ver" content="308">
+<meta name="vj-ver" content="309">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <script>try{if(window.top!==window.self){document.documentElement.style.display='none';window.top.location=window.self.location;}}catch(e){document.documentElement.style.display='none';}</script>
 
@@ -7584,6 +7584,25 @@ function fin(){if(cur){var n=document.createElement('i');n.textContent=cnt;cur.f
 kids.forEach(function(k){if(k.classList.contains('vjmh')){fin();cur=document.createElement('div');cur.className='vjg2';cnt=0;cur.appendChild(k);body=document.createElement('div');body.className='vjbody';cur.appendChild(body);g.appendChild(cur);(function(c,h){h.addEventListener('click',function(){c.classList.toggle('vjo');});})(cur,k);}
 else if(cur){var t=(k.querySelector('.c')||{}).textContent||'';k.classList.add(/कल्याणक/.test(t)?'kal':'vrt');body.appendChild(k);cnt++;}});fin();});}catch(x){}}
 fx();new MutationObserver(fx).observe(document.body,{childList:true,subtree:true});})();
+</script>
+<style id="vj309css">
+#pn_res .tw>table.vjonly>tbody>tr:not(.vjkeep){display:none!important}
+button.vjall{display:block;width:100%;margin:0 0 8px;padding:11px;border:2px solid #c9a227;border-radius:12px;background:linear-gradient(135deg,#6b1c28,#9b2c3d);color:#fff;font-weight:800;font-size:15px}
+#nm_res table.vjacc3 tr.open{display:block!important}
+#nm_res table.vjacc3 tr.open>td{display:block!important;width:auto!important;padding-left:12px}
+#nm_res table.vjacc3 tr.open>td:nth-child(1){font-size:17px;font-weight:800;color:#6b1c28}
+</style>
+<script>
+/* v309: "चौघड़िया, होरा व गोचर" बटन — केवल चौघड़िया/होरा खुले, पूरा दैनिक नहीं */
+(function(){var ON=0;
+window.addEventListener('click',function(e){try{var bt=e.target.closest&&e.target.closest('.vjgo3 button');if(bt){ON=1;apply();}}catch(x){}},true);
+function apply(){var n=0,iv=setInterval(function(){n++;try{var t=document.querySelector('#pn_res .tw>table.vjacc2');
+if(t&&t.tBodies[0]&&t.tBodies[0].rows.length>=30&&ON){var rows=[].slice.call(t.tBodies[0].rows),first=null;
+if(!t.classList.contains('vjonly')){t.classList.add('vjonly');rows.forEach(function(r){var l=(r.cells[0].textContent||'').trim();if(/चौघड़िया|होरा/.test(l)){r.classList.add('vjkeep','open');if(!first)first=r;}});
+var w=t.closest('.tw');if(w&&!w.previousElementSibling.classList.contains('vjall')){var b=document.createElement('button');b.className='vjall';b.textContent='▼ पूरा दैनिक दर्शन देखें';b.onclick=function(){ON=0;t.classList.remove('vjonly');b.remove();};w.parentNode.insertBefore(b,w);}
+setTimeout(function(){try{(first||t).scrollIntoView({behavior:'smooth',block:'start'});}catch(x){}},150);}
+}}catch(x){}if(n>30||!ON){clearInterval(iv);ON=0;}},250);}
+})();
 </script>
 </body>
 </html>
