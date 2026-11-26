@@ -201,7 +201,7 @@ input[type=date],input[type=time]{min-height:48px}
 .about b{color:var(--maroon)}.about p{margin:4px 0}
 @media print{.brand .pbtn,.nmtools,.totop,.lang,.about{display:none!important}.brand{background:#fff;color:#000;border-bottom:2px solid #000}.brand b{color:#000}.brand span{color:#000}#nm_body{font-size:13px}}
 </style>
-<meta name="vj-ver" content="195">
+<meta name="vj-ver" content="196">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <script>try{if(window.top!==window.self){document.documentElement.style.display='none';window.top.location=window.self.location;}}catch(e){document.documentElement.style.display='none';}</script>
 
@@ -1224,6 +1224,20 @@ function sunTimes(y,mo,dd,lat,lon,off){ // स्थानीय घड़ी �
   return est;
 }
 const hmS=h=>{h=((h%24)+24)%24;let H=Math.floor(h),M=Math.round((h-H)*60);if(M===60){H=(H+1)%24;M=0;}return String(H).padStart(2,'0')+':'+String(M).padStart(2,'0');};
+/* v196: Drik-शैली अतिरिक्त मुहूर्त */
+const dmH=h=>{const m=Math.round(h*60);return Math.floor(m/60)+' घं '+(m%60)+' मि'};
+const CHV=['पूर्व','दक्षिण','पश्चिम','उत्तर'];
+function XR(d){
+  const r=d.sun.rise,s=d.sun.set,dm=s-r,nr=24-dm,m=dm/15,mid=s+nr/2,rw=(a,b,c)=>'<tr><td>'+a+'</td><td>'+hmS(b)+' – '+hmS(c)+'</td></tr>';
+  const cv=[0,1,2,3,0,1,2,3,0,1,2,3][d.pc.moonR];
+  return rw('ब्रह्म मुहूर्त (शुभ)',r-1.6,r-0.8)+rw('प्रातः संध्या',r-1.2,r)
+   +rw('विजय मुहूर्त (शुभ)',r+m*10,r+m*11)
+   +rw('गोधूलि मुहूर्त (शुभ)',s,s+0.4)+rw('सायाह्न संध्या',s,s+1.2)
+   +rw('निशीथ मुहूर्त',mid-0.4,mid+0.4)
+   +'<tr><td>दिनमान / रात्रिमान</td><td>'+dmH(dm)+' / '+dmH(nr)+'</td></tr>'
+   +'<tr><td>मध्याह्न (सूर्य शिखर)</td><td>'+hmS((r+s)/2)+'</td></tr>'
+   +'<tr><td>चंद्र वास</td><td>'+CHV[cv]+'</td></tr>';
+}
 function panchangDay(y,mo,dd,lat,lon,off){
   const wd=new Date(Date.UTC(y,mo-1,dd)).getUTCDay(), st_=sunTimes(y,mo,dd,lat,lon,off);
   const rh=st_.rise, dayLen=st_.set-st_.rise, part=dayLen/8, RKP=[8,2,7,5,6,4,3][wd]; // रविवार=8वाँ भाग...
@@ -1244,7 +1258,7 @@ function panchangHTML(d,title,showPl){
    +'<tr><td>राहुकाल (अशुभ)</td><td>'+hmS(d.rahu[0])+' – '+hmS(d.rahu[1])+'</td></tr>'
    +'<tr><td>गुलिक काल</td><td>'+hmS(d.gulika[0])+' – '+hmS(d.gulika[1])+'</td></tr>'
    +'<tr><td>यमगंड</td><td>'+hmS(d.yama[0])+' – '+hmS(d.yama[1])+'</td></tr>'
-   +'<tr><td>अभिजित मुहूर्त (शुभ)</td><td>'+hmS(d.abhijit[0])+' – '+hmS(d.abhijit[1])+'</td></tr>'
+   +'<tr><td>अभिजित मुहूर्त (शुभ)</td><td>'+hmS(d.abhijit[0])+' – '+hmS(d.abhijit[1])+'</td></tr>'+XR(d)
    +'</tbody></table></div>';
   if(showPl) h+='<h3>आज के ग्रह (गोचर)</h3><p class="kmeta">'+pc.P.map((p,i)=>PL_H[i]+' '+RASHI_H[rashiOf(p.lon)]+(p.retro&&i<7?' (व)':'')).join(' · ')+'</p>';
   return h+'<p class="kmeta">सूर्योदय-सूर्यास्त व अन्य समय चुने गए स्थान के निर्देशांक से खगोलीय गणना द्वारा निकाले गए हैं।</p></div>';
@@ -4900,7 +4914,7 @@ var RJAIN_NOTE='जैन दृष्टि: ग्रह निमित्त
     +'<tr><td>राहुकाल</td><td>'+hmS(pd.rahu[0])+' – '+hmS(pd.rahu[1])+'</td></tr>'
     +'<tr><td>गुलिक काल</td><td>'+hmS(pd.gulika[0])+' – '+hmS(pd.gulika[1])+'</td></tr>'
     +'<tr><td>यमगंड</td><td>'+hmS(pd.yama[0])+' – '+hmS(pd.yama[1])+'</td></tr>'
-    +'<tr><td>अभिजित मुहूर्त</td><td>'+hmS(pd.abhijit[0])+' – '+hmS(pd.abhijit[1])+'</td></tr>'
+    +'<tr><td>अभिजित मुहूर्त</td><td>'+hmS(pd.abhijit[0])+' – '+hmS(pd.abhijit[1])+'</td></tr>'+XR(pd)
     +'</tbody></table></div>';
     var r={y:y,mo:mo,d:dd,wd:pd.wd,t:pv.t,pm:pv.t>15?(lm.m+1)%12:lm.m,adhik:lm.adhik,skip:0,nk:pv.nak,dup:false,dupNext:false},kk=kalOn(r);
     var pvx=parvaOn(r).concat(kk.length?[]:[]),yw=yogaWin(y,mo,dd,c,pd.wd);
