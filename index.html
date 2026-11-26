@@ -201,7 +201,7 @@ input[type=date],input[type=time]{min-height:48px}
 .about b{color:var(--maroon)}.about p{margin:4px 0}
 @media print{.brand .pbtn,.nmtools,.totop,.lang,.about{display:none!important}.brand{background:#fff;color:#000;border-bottom:2px solid #000}.brand b{color:#000}.brand span{color:#000}#nm_body{font-size:13px}}
 </style>
-<meta name="vj-ver" content="297">
+<meta name="vj-ver" content="298">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <script>try{if(window.top!==window.self){document.documentElement.style.display='none';window.top.location=window.self.location;}}catch(e){document.documentElement.style.display='none';}</script>
 
@@ -7243,12 +7243,24 @@ document.addEventListener('click',function(){setTimeout(lab,50);},true);})();
 mv();document.addEventListener('DOMContentLoaded',mv);new MutationObserver(mv).observe(document.body,{childList:true,subtree:true});})();
 </script>
 <style id="vj297css">
-#vj_menu{position:sticky!important;top:0;z-index:900;width:100%!important;max-width:none!important;margin:0!important;border:0!important;border-bottom:2px solid #c9a15a!important;border-radius:0!important;padding:6px 14px!important;font-size:13px!important;line-height:1.3;box-sizing:border-box}
+#vj_menu{position:static!important;width:calc(100% - 16px)!important;max-width:440px!important;margin:8px auto!important;border:1px solid #c9a15a!important;border-radius:10px!important;padding:6px 14px!important;font-size:13px!important;line-height:1.3;box-sizing:border-box}
 </style>
 <script>
 /* v297: मेनू बटन सबसे ऊपर, छोटा */
-(function(){function mv(){var m=document.getElementById('vj_menu');if(m&&m.parentNode!==document.body)document.body.insertBefore(m,document.body.firstChild);}
+(function(){function mv(){var m=document.getElementById('vj_menu');var w=document.querySelector('.wrap');if(m&&w&&m.parentNode!==w)w.insertBefore(m,w.firstChild);}
 mv();document.addEventListener('DOMContentLoaded',mv);new MutationObserver(mv).observe(document.body,{childList:true,subtree:true});})();
+</script>
+<style id="vj298css">
+.res-card.vjmp>div[style*="border-radius:10px"].vjcol4>b:first-child{display:block;cursor:pointer}
+.res-card.vjmp>div.vjcol4>b:first-child::after{content:" \25B8";color:#8a6d1d}
+.res-card.vjmp>div.vjcol4.open>b:first-child::after{content:" \25BE"}
+.res-card.vjmp>div.vjcol4>.vjib2{display:none;margin-top:6px}
+.res-card.vjmp>div.vjcol4.open>.vjib2{display:block}
+</style>
+<script>
+/* v298: जैन तिथि दर्पण के डिब्बे ड्रॉप-डाउन */
+(function(){function fx(){try{[].forEach.call(document.querySelectorAll('.res-card.vjmp>div[style*="border-radius:10px"]:not(.vjcol4)'),function(e){var t=e.firstElementChild;if(!t||t.tagName!=='B')return;e.classList.add('vjcol4');var w=document.createElement('div');w.className='vjib2';if(t.nextSibling&&t.nextSibling.tagName==='BR')e.removeChild(t.nextSibling);while(t.nextSibling)w.appendChild(t.nextSibling);e.appendChild(w);t.addEventListener('click',function(){e.classList.toggle('open');});});}catch(x){}}
+fx();new MutationObserver(fx).observe(document.body,{childList:true,subtree:true});})();
 </script>
 </body>
 </html>
