@@ -156,7 +156,7 @@ input[type=date],input[type=time]{min-height:48px}
 .about b{color:var(--maroon)}.about p{margin:4px 0}
 @media print{.brand .pbtn,.nmtools,.totop,.lang,.about{display:none!important}.brand{background:#fff;color:#000;border-bottom:2px solid #000}.brand b{color:#000}.brand span{color:#000}#nm_body{font-size:13px}}
 </style>
-<meta name="vj-ver" content="169">
+<meta name="vj-ver" content="170">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <script>try{if(window.top!==window.self){document.documentElement.style.display='none';window.top.location=window.self.location;}}catch(e){document.documentElement.style.display='none';}</script>
 
@@ -4524,17 +4524,37 @@ var RJAIN_NOTE='जैन दृष्टि: ग्रह निमित्त
     }
     o.innerHTML=h+'</tbody></table></div><p class="kmeta">तिथि व नक्षत्र के साथ उनकी समाप्ति का समय (सूर्योदय के बाद) दिया है। भद्रा = विष्टि करण का आरंभ-समाप्ति समय (मिनट तक की गणना)। पंचक = चंद्र कुंभ/मीन में (उस दिन किसी भी समय)। मूल = अश्विनी, आश्लेषा, मघा, ज्येष्ठा, मूल, रेवती नक्षत्र (गंडमूल) उस दिन किसी भी समय। रंगीन पंक्ति = विशेष विचार वाला दिन। शुभ कार्य के लिए मुहूर्त टैब से पूरी जाँच करें।</p></div>';
   });
+  /* v170: चंद्रोदय–चंद्रास्त (चंद्र का सायन देशांतर व अक्षांश-श्रेणी से; ऊँचाई +0.125° पर) */
+  function moonLat(jd){
+    var T=(jd-2451545)/36525,nr=function(x){return ((x%360)+360)%360;},R=Math.PI/180;
+    var D=nr(297.8501921+445267.1114034*T),M=nr(357.5291092+35999.0502909*T),Mp=nr(134.9633964+477198.8675055*T),F=nr(93.2720950+483202.0175233*T),Ee=1-0.002516*T;
+    var s=5128122*Math.sin(F*R)+280602*Math.sin((Mp+F)*R)+277693*Math.sin((Mp-F)*R)+173237*Math.sin((2*D-F)*R)+55413*Math.sin((2*D-Mp+F)*R)+46271*Math.sin((2*D-Mp-F)*R)+32573*Math.sin((2*D+F)*R)+17198*Math.sin((2*Mp+F)*R)+9266*Math.sin((2*D+Mp-F)*R)+8822*Math.sin((2*Mp-F)*R)+8216*Ee*Math.sin((2*D-M-F)*R)+4324*Math.sin((2*D-2*Mp-F)*R)+4200*Math.sin((2*D+Mp+F)*R)-3359*Ee*Math.sin((2*D+M-F)*R);
+    return s/1e6;}
+  function moonAlt(y,mo,dd,h,lat,lon){
+    var H=Math.floor(h),jd=toJD(y,mo,dd,H,(h-H)*60,5.5),T=(jd-2451545)/36525,R=Math.PI/180;
+    var lam=moonTropical(jd)*R,bet=moonLat(jd)*R,eps=(23.4392911-0.0130042*T)*R;
+    var ra=Math.atan2(Math.sin(lam)*Math.cos(eps)-Math.tan(bet)*Math.sin(eps),Math.cos(lam)),dec=Math.asin(Math.sin(bet)*Math.cos(eps)+Math.cos(bet)*Math.sin(eps)*Math.sin(lam));
+    var gm=((280.46061837+360.98564736629*(jd-2451545)+0.000387933*T*T)%360+360)%360,ha=(gm+lon)*R-ra,ph=lat*R;
+    return Math.asin(Math.sin(ph)*Math.sin(dec)+Math.cos(ph)*Math.cos(dec)*Math.cos(ha))/R-0.125;}
+  function moonRS(y,mo,dd,lat,lon){
+    var rise=null,set=null,t,a0=moonAlt(y,mo,dd,0,lat,lon),a1,lo,hi,q,m;
+    for(t=0.25;t<=24;t+=0.25){a1=moonAlt(y,mo,dd,t,lat,lon);
+      if((a0<0)!==(a1<0)){lo=t-0.25;hi=t;for(q=0;q<12;q++){m=(lo+hi)/2;if((moonAlt(y,mo,dd,m,lat,lon)<0)===(a0<0))lo=m;else hi=m;}
+        if(a0<0&&rise===null)rise=hi;else if(a0>=0&&set===null)set=hi;}
+      a0=a1;}
+    return {rise:rise,set:set};}
+  window.__moonRS=moonRS;
   D.getElementById('nm_dk').addEventListener('click',function(){
     var o=D.getElementById('nm_res');o.innerHTML='<p class="kmeta">गणना हो रही है…</p>';
     setTimeout(function(){try{
       var v=(D.getElementById('nm_m').value||new Date(Date.now()+19800000).toISOString().slice(0,7)).split('-').map(Number),c=CITIES[+D.getElementById('nm_c').value];
-      var y=v[0],mo=v[1],days=new Date(Date.UTC(y,mo,0)).getUTCDate(),h='<div class="res-card"><h3>'+E(c[0])+' — '+mo+'/'+y+' (ड्रिक शैली)</h3><div class="tw"><table><thead><tr><th>दिन</th><th>सूर्योदय–अस्त</th><th>तिथि</th><th>नक्षत्र</th><th>योग</th><th>करण</th><th>चंद्र राशि</th><th>राहुकाल</th></tr></thead><tbody>';
+      var y=v[0],mo=v[1],days=new Date(Date.UTC(y,mo,0)).getUTCDate(),h='<div class="res-card"><h3>'+E(c[0])+' — '+mo+'/'+y+' (ड्रिक शैली)</h3><div class="tw"><table><thead><tr><th>दिन</th><th>सूर्योदय–अस्त</th><th>तिथि</th><th>नक्षत्र</th><th>योग</th><th>करण</th><th>चंद्र राशि</th><th>चंद्रोदय–अस्त</th><th>राहुकाल</th></tr></thead><tbody>';
       for(var dd=1;dd<=days;dd++){
         var pd=panchangDay(y,mo,dd,c[2],c[3],5.5),pc=pd.pc,sr=pd.sun.rise;
         var eT=endOf(y,mo,dd,sr,function(q){return q.t;}),eN=endOf(y,mo,dd,sr,function(q){return q.nak;}),eY=endOf(y,mo,dd,sr,function(q){return q.yg;}),eK=endOf(y,mo,dd,sr,function(q){return q.kn;});
-        h+='<tr><td>'+dd+' '+pd.vara.slice(0,3)+'</td><td>'+hmS(pd.sun.rise)+'–'+hmS(pd.sun.set)+'</td><td>'+E(pc.paksha.charAt(0)==='श'?'शु. ':'कृ. ')+E(pc.tn)+' <small>('+eT+' तक)</small></td><td>'+E(NAK_H[pc.nak])+' <small>('+eN+' तक)</small></td><td>'+E(pc.yg)+' <small>('+eY+' तक)</small></td><td>'+E(pc.kn)+' <small>('+eK+' तक)</small></td><td>'+E(RASHI_H[pc.moonR])+'</td><td>'+hmS(pd.rahu[0])+'–'+hmS(pd.rahu[1])+'</td></tr>';
+        h+='<tr><td>'+dd+' '+pd.vara.slice(0,3)+'</td><td>'+hmS(pd.sun.rise)+'–'+hmS(pd.sun.set)+'</td><td>'+E(pc.paksha.charAt(0)==='श'?'शु. ':'कृ. ')+E(pc.tn)+' <small>('+eT+' तक)</small></td><td>'+E(NAK_H[pc.nak])+' <small>('+eN+' तक)</small></td><td>'+E(pc.yg)+' <small>('+eY+' तक)</small></td><td>'+E(pc.kn)+' <small>('+eK+' तक)</small></td><td>'+E(RASHI_H[pc.moonR])+'</td><td>'+(function(){var r=moonRS(y,mo,dd,c[2],c[3]);return (r.rise===null?'—':hmS(r.rise))+'–'+(r.set===null?'—':hmS(r.set));})()+'</td><td>'+hmS(pd.rahu[0])+'–'+hmS(pd.rahu[1])+'</td></tr>';
       }
-      o.innerHTML=h+'</tbody></table></div><p class="kmeta">ड्रिक (दृक्) शैली में तिथि, नक्षत्र, योग व करण का आरंभ-अंत सूर्य-चंद्र की वास्तविक खगोलीय स्थिति से निकाला जाता है, और चुने स्थान के सूर्योदय के अनुसार दिन माना जाता है। यहाँ सभी समय ऐप की अपनी गणना से, भारतीय मानक समय में हैं। छपे पंचांग या drikpanchang.com से कुछ मिनट का अंतर संभव है, इसलिए अपने पंचांग से मिला लें। समय के आगे "तक" का अर्थ उस दिन के सूर्योदय के बाद उसकी समाप्ति है।</p></div>';
+      o.innerHTML=h+'</tbody></table></div><p class="kmeta">ड्रिक (दृक्) शैली में तिथि, नक्षत्र, योग व करण का आरंभ-अंत सूर्य-चंद्र की वास्तविक खगोलीय स्थिति से निकाला जाता है, और चुने स्थान के सूर्योदय के अनुसार दिन माना जाता है। यहाँ सभी समय ऐप की अपनी गणना से, भारतीय मानक समय में हैं। चंद्रोदय-चंद्रास्त चंद्र की गणित-स्थिति से अनुमानित हैं (उस दिन न उगे या न डूबे तो "—")। छपे पंचांग या drikpanchang.com से कुछ मिनट का अंतर संभव है, इसलिए अपने पंचांग से मिला लें। समय के आगे "तक" का अर्थ उस दिन के सूर्योदय के बाद उसकी समाप्ति है।</p></div>';
     }catch(e){o.innerHTML='<p class="warn">गणना नहीं हो सकी।</p>';}},30);
   });
 }catch(e){console&&console.error&&console.error(e);}})();
