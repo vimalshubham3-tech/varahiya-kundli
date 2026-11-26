@@ -156,7 +156,7 @@ input[type=date],input[type=time]{min-height:48px}
 .about b{color:var(--maroon)}.about p{margin:4px 0}
 @media print{.brand .pbtn,.nmtools,.totop,.lang,.about{display:none!important}.brand{background:#fff;color:#000;border-bottom:2px solid #000}.brand b{color:#000}.brand span{color:#000}#nm_body{font-size:13px}}
 </style>
-<meta name="vj-ver" content="167">
+<meta name="vj-ver" content="168">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <script>try{if(window.top!==window.self){document.documentElement.style.display='none';window.top.location=window.self.location;}}catch(e){document.documentElement.style.display='none';}</script>
 
@@ -6226,6 +6226,43 @@ document.body.appendChild(f);
   h+='<p class="kmeta">इनका कोई वैज्ञानिक प्रमाण नहीं है। हवा, रोशनी और सफ़ाई जैसे सुझावों से रहना सुविधाजनक ज़रूर होता है। बड़े निर्णय (निर्माण, मकान बदलना) केवल वास्तु के आधार पर न लें और इंजीनियर की सलाह लें।</p></div>';
   var w=D.createElement('div');w.innerHTML=h;pu.insertBefore(w.firstChild,pu.firstChild);
 }catch(e){console&&console.error&&console.error('v167',e);}})();
+
+/* v168: देवनागरी कीबोर्ड न हो तो — Roman (Hinglish) से देवनागरी व अक्षर-पट्टी (प्रश्न वाले ख़ानों में) */
+(function(){try{
+  var D=document;
+  var C=[['chh','छ'],['ksh','क्ष'],['shr','श्र'],['Th','ठ'],['Dh','ढ'],['Sh','ष'],['sh','श'],['kh','ख'],['gh','घ'],['ch','च'],['jh','झ'],['th','थ'],['dh','ध'],['ph','फ'],['bh','भ'],['gy','ज्ञ'],['tr','त्र'],['T','ट'],['D','ड'],['N','ण'],['k','क'],['g','ग'],['j','ज'],['t','त'],['d','द'],['n','न'],['p','प'],['b','ब'],['m','म'],['y','य'],['r','र'],['l','ल'],['v','व'],['w','व'],['s','स'],['h','ह'],['q','क़'],['z','ज़'],['f','फ़'],['x','क्ष'],['c','क']];
+  var V=[['aa','आ','ा'],['ai','ऐ','ै'],['au','औ','ौ'],['ee','ई','ी'],['ii','ई','ी'],['oo','ऊ','ू'],['uu','ऊ','ू'],['a','अ',''],['i','इ','ि'],['u','उ','ु'],['e','ए','े'],['o','ओ','ो'],['A','आ','ा'],['I','ई','ी'],['U','ऊ','ू']];
+  var DICT={nahi:'नहीं',nahin:'नहीं',hai:'है',hain:'हैं',me:'में',mein:'में',ki:'की',ko:'को',se:'से',ye:'ये',yeh:'यह',wo:'वो',vo:'वो',woh:'वह',voh:'वह',kya:'क्या',kyon:'क्यों',kyun:'क्यों',kab:'कब',kaun:'कौन',kahan:'कहाँ',kaise:'कैसे',kitna:'कितना',mera:'मेरा',meri:'मेरी',mere:'मेरे',mujhe:'मुझे',hum:'हम',aap:'आप',tum:'तुम',hoga:'होगा',hogi:'होगी',honge:'होंगे',aur:'और',ya:'या',is:'इस',us:'उस',bhi:'भी',par:'पर',tak:'तक',liye:'लिए',kaam:'काम',kary:'कार्य',karya:'कार्य',siddh:'सिद्ध',safal:'सफल',vivah:'विवाह',shaadi:'शादी',shadi:'शादी',naukri:'नौकरी',dhan:'धन',labh:'लाभ',rog:'रोग',mukadma:'मुकदमा',santan:'संतान',videsh:'विदेश',yatra:'यात्रा',milega:'मिलेगा',milegi:'मिलेगी',rahega:'रहेगा',rahegi:'रहेगी',ghar:'घर',swasthya:'स्वास्थ्य',sehat:'सेहत',paisa:'पैसा',vyapar:'व्यापार',byapar:'व्यापार',parivar:'परिवार',beta:'बेटा',beti:'बेटी',theek:'ठीक',thik:'ठीक',shanti:'शांति',jayega:'जाएगा',jayegi:'जाएगी',ayega:'आएगा',ayegi:'आएगी',pariksha:'परीक्षा',parikshaa:'परीक्षा',safalta:'सफलता',vidya:'विद्या',padhai:'पढ़ाई',bimari:'बीमारी',sampatti:'संपत्ति',makan:'मकान',zameen:'ज़मीन',jamin:'जमीन',gaadi:'गाड़ी',kab:'कब'};
+  function pre(w,i,list){var j,t;for(j=0;j<list.length;j++){t=list[j][0];if(w.substr(i,t.length)===t)return list[j];}
+    var lw=w.toLowerCase();for(j=0;j<list.length;j++){t=list[j][0];if(t===t.toLowerCase()&&lw.substr(i,t.length)===t)return list[j];}return null;}
+  function word(w){
+    var lw=w.toLowerCase();if(DICT[lw])return DICT[lw];
+    var out='',i=0,pend=false,L=w.length,m,ch;
+    while(i<L){ch=w.charAt(i);
+      if(ch==='M'){out+='ं';pend=false;i++;continue;} if(ch==='H'){out+='ः';pend=false;i++;continue;}
+      if((m=pre(w,i,V))&&!(m[0]==='a'&&false)){
+        var last=(i+m[0].length>=L);
+        if(pend){ if(m[0]==='a'){ if(last)out+='ा'; } else out+=m[2]; }
+        else out+=m[1];
+        pend=false;i+=m[0].length;continue;}
+      if((m=pre(w,i,C))){ if(pend)out+='्'; out+=m[1];pend=true;i+=m[0].length;continue;}
+      out+=ch;pend=false;i++;}
+    return out;}
+  function toDev(t){return t.replace(/[A-Za-z]+/g,word);}
+  window.vjToDev=toDev;
+  var KB=[['अ','आ','इ','ई','उ','ऊ','ए','ऐ','ओ','औ','अं','अः'],['ा','ि','ी','ु','ू','े','ै','ो','ौ','ं','ः','्'],['क','ख','ग','घ','ङ','च','छ','ज','झ','ञ','ट','ठ','ड','ढ','ण','त','थ','द','ध','न','प','फ','ब','भ','म','य','र','ल','व','श','ष','स','ह','क्ष','त्र','ज्ञ']];
+  ['kc_q','kc2_q','kc4_q'].forEach(function(id){
+    var ta=D.getElementById(id);if(!ta)return;
+    var box=D.createElement('details');box.style.margin='6px 0';
+    var bt='';KB.forEach(function(r){r.forEach(function(k){bt+='<button type="button" class="vjk" data-k="'+k+'" style="padding:8px 10px;margin:2px;border:1px solid #c9a15a;border-radius:8px;background:#fff;font:inherit;font-size:17px">'+k+'</button>';});bt+='<br>';});
+    bt+='<button type="button" class="vjk" data-k=" " style="padding:8px 18px;margin:2px;border:1px solid #c9a15a;border-radius:8px;background:#fff;font:inherit">खाली स्थान</button><button type="button" class="vjk" data-k="⌫" style="padding:8px 14px;margin:2px;border:1px solid #c9a15a;border-radius:8px;background:#fff;font:inherit">⌫ मिटाएँ</button>';
+    box.innerHTML='<summary><b>✍️ देवनागरी कीबोर्ड नहीं है? यहाँ से लिखें</b></summary><label>अंग्रेज़ी अक्षरों (Hinglish) में लिखें</label><input type="text" autocomplete="off" autocapitalize="off" placeholder="जैसे: mera kaary siddh hoga ya nahi" style="width:100%;box-sizing:border-box;padding:8px;border-radius:8px;border:1px solid #ccc;font:inherit"><p class="kmeta">ऊपर के ख़ाने में देवनागरी अपने-आप बनेगी। संकेत: t=त, T=ट, d=द, D=ड, n=न, N=ण, sh=श, Sh=ष, aa=आ, ee=ई, oo=ऊ, ai=ऐ, au=औ, ksh=क्ष, gy=ज्ञ, M=ं। बनी हुई देवनागरी को नीचे की अक्षर-पट्टी से सुधार सकते हैं।</p><div class="vjkb" style="line-height:1.1">'+bt+'</div>';
+    ta.parentNode.insertBefore(box,ta.nextSibling);
+    var inp=box.querySelector('input');
+    inp.addEventListener('input',function(){ta.value=toDev(inp.value);ta.dispatchEvent(new Event('input',{bubbles:true}));});
+    box.querySelectorAll('.vjk').forEach(function(b){b.addEventListener('click',function(){var k=b.getAttribute('data-k');if(k==='⌫'){ta.value=Array.from(ta.value).slice(0,-1).join('');}else ta.value+=k;inp.value='';ta.dispatchEvent(new Event('input',{bubbles:true}));});});
+  });
+}catch(e){console&&console.error&&console.error('v168',e);}})();
 
 /* v158: जैन तिथि दर्पण टैब सबसे पहले */
 (function(){try{var h=document.getElementById('tab-h'),p=document.getElementById('tab-p'),f=h&&h.parentNode.firstElementChild;if(h&&f&&f!==h){h.parentNode.insertBefore(h,f);}
