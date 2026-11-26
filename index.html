@@ -169,7 +169,7 @@ input[type=date],input[type=time]{min-height:48px}
 .about b{color:var(--maroon)}.about p{margin:4px 0}
 @media print{.brand .pbtn,.nmtools,.totop,.lang,.about{display:none!important}.brand{background:#fff;color:#000;border-bottom:2px solid #000}.brand b{color:#000}.brand span{color:#000}#nm_body{font-size:13px}}
 </style>
-<meta name="vj-ver" content="180">
+<meta name="vj-ver" content="181">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <script>try{if(window.top!==window.self){document.documentElement.style.display='none';window.top.location=window.self.location;}}catch(e){document.documentElement.style.display='none';}</script>
 
@@ -6345,7 +6345,7 @@ var pn=go.closest('.panel'),h=pn.querySelector('h3'),pp=pn.querySelector('p.kmet
 h.textContent='📜 मासिक पंचांग दर्शन';
 if(pp)pp.textContent='पूरे महीने का पंचांग एक ही जगह: हर दिन की तिथि, नक्षत्र, योग, करण, चंद्र राशि, सूर्योदय-सूर्यास्त, चंद्रोदय-चंद्रास्त व राहुकाल — और साथ में भद्रा, पंचक व मूल का विचार। सब कुछ चुने स्थान के लिए, भारतीय मानक समय में।';
 go.style.display='none';dk.style.display='none';
-var b=document.createElement('button');b.type='button';b.id='nm_all';b.className='vjmp-btn';b.innerHTML='📜 वरहिया पंचांग दर्शन<small>पूरे महीने का पंचांग — देखने/बंद करने के लिए दबाएँ</small>';go.parentNode.insertBefore(b,go);
+var b=document.createElement('button');b.type='button';b.id='nm_all';b.className='vjmp-btn';b.innerHTML='📜 वरहिया पंचांग दर्शन<small>पूरे महीने का पंचांग — देखने/बंद करने के लिए दबाएँ</small>';var l1=pn.querySelector('label[for=pm_m]');if(l1)l1.parentNode.insertBefore(b,l1);else go.parentNode.insertBefore(b,go);
 function key(){return 'all|'+document.getElementById('pm_m').value+'|'+document.getElementById('pm_c').value}
 b.addEventListener('click',function(){var k=key();
  if(o.innerHTML.trim()&&o.getAttribute('data-vjk')===k){o.innerHTML='';o.removeAttribute('data-vjk');return;}
