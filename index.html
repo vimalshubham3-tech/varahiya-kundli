@@ -156,7 +156,7 @@ input[type=date],input[type=time]{min-height:48px}
 .about b{color:var(--maroon)}.about p{margin:4px 0}
 @media print{.brand .pbtn,.nmtools,.totop,.lang,.about{display:none!important}.brand{background:#fff;color:#000;border-bottom:2px solid #000}.brand b{color:#000}.brand span{color:#000}#nm_body{font-size:13px}}
 </style>
-<meta name="vj-ver" content="165">
+<meta name="vj-ver" content="166">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <script>try{if(window.top!==window.self){document.documentElement.style.display='none';window.top.location=window.self.location;}}catch(e){document.documentElement.style.display='none';}</script>
 
@@ -3687,16 +3687,17 @@ applyLang();
   var pn=D.createElement('div');pn.className='panel';pn.id='v_colour';
   var rOpt='<option value="-1">— जन्म राशि (यदि पता हो) —</option>'+RN.map(function(r,i){return '<option value="'+i+'">'+r+'</option>';}).join('');
   var bOpt='<option value="-1">— व्यवसाय चुनें —</option>'+BIZ.map(function(b,i){return '<option value="'+i+'">'+b[0]+'</option>';}).join('');
-  pn.innerHTML='<h3>4. रंग-सलाह — राशि, नाम, विद्यार्थी व व्यवसाय</h3><p class="kmeta">परंपरागत वास्तु व ज्योतिष की मान्यताओं पर आधारित सुझाव। अपनी पसंद, आँखों के आराम और स्थान की रोशनी को भी महत्त्व दें।</p>'+
+  pn.innerHTML='<h3>4. रंग-सलाह — राशि, नाम, विद्यार्थी, नौकरीपेशा व व्यवसाय</h3><p class="kmeta">परंपरागत वास्तु व ज्योतिष की मान्यताओं पर आधारित सुझाव। अपनी पसंद, आँखों के आराम और स्थान की रोशनी को भी महत्त्व दें।</p>'+
    '<label for="vc_n">नाम (वैकल्पिक — पहले अक्षर से राशि निकलेगी)</label><input id="vc_n" type="text" autocomplete="off">'+
    '<label for="vc_r">जन्म राशि</label><select id="vc_r">'+rOpt+'</select>'+
-   '<label for="vc_u">किसके लिए रंग चाहिए</label><select id="vc_u"><option value="s">विद्यार्थी / पढ़ने वाले</option><option value="b">व्यवसाय / दुकान / ऑफ़िस</option><option value="h">घर के कमरे व दिशाएँ</option><option value="p">केवल राशि व नाम के रंग (पहनावा आदि)</option></select>'+
+   '<label for="vc_u">किसके लिए रंग चाहिए</label><select id="vc_u"><option value="s">विद्यार्थी / पढ़ने वाले</option><option value="j">नौकरीपेशा / प्रोफ़ेशनल (ऑफ़िस, वर्क-फ्रॉम-होम)</option><option value="b">व्यवसाय / दुकान / ऑफ़िस</option><option value="h">घर के कमरे व दिशाएँ</option><option value="p">केवल राशि व नाम के रंग (पहनावा आदि)</option></select>'+
    '<div id="vc_bw" hidden><label for="vc_b">व्यवसाय का प्रकार</label><select id="vc_b">'+bOpt+'</select></div>'+
+   '<div id="vc_jw" hidden><label for="vc_j">काम का प्रकार</label><select id="vc_j"><option value="0">ऑफ़िस / कॉर्पोरेट (डेस्क जॉब)</option><option value="1">सरकारी / प्रशासनिक</option><option value="2">आईटी / वर्क-फ्रॉम-होम</option><option value="3">डॉक्टर / नर्स / स्वास्थ्य</option><option value="4">वकील / CA / बैंक / वित्त</option><option value="5">शिक्षक / प्रोफ़ेसर / लेखक</option><option value="6">इंजीनियर / तकनीकी</option><option value="7">बिक्री / मार्केटिंग / जनसंपर्क</option></select></div>'+
    '<div id="vc_sw"><label for="vc_l">विद्यार्थी का स्तर</label><select id="vc_l"><option value="school">स्कूल</option><option value="col">कॉलेज / उच्च शिक्षा</option><option value="comp">प्रतियोगी परीक्षा की तैयारी</option></select></div>'+
    '<button class="go" id="vc_go" type="button">रंग-सलाह देखें</button><div id="vc_res" aria-live="polite"></div>';
   ref.parentNode.insertBefore(pn,ref);
   var u=D.getElementById('vc_u');
-  u.addEventListener('change',function(){D.getElementById('vc_bw').hidden=u.value!=='b';D.getElementById('vc_sw').hidden=u.value!=='s';});
+  u.addEventListener('change',function(){D.getElementById('vc_bw').hidden=u.value!=='b';D.getElementById('vc_sw').hidden=u.value!=='s';D.getElementById('vc_jw').hidden=u.value!=='j';});
   D.getElementById('vc_bw').hidden=true;
   function esc2(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
   function go(){
@@ -3728,6 +3729,25 @@ applyLang();
         '<div class="pl"><b>दिशा</b><p>पूर्व या उत्तर (ईशान श्रेष्ठ) की ओर मुँह करके पढ़ें।</p></div>'+
         '<div class="pl"><b>किसलिए</b><p>हरा (बुध) — बुद्धि व स्मरण; पीला (गुरु) — विद्या व एकाग्रता; सफेद — शांति।'+
         (D.getElementById('vc_l').value==='comp'?' प्रतियोगी तैयारी में दीवार पर कम रंग व सादा वातावरण रखें, ताकि ध्यान न बँटे।':D.getElementById('vc_l').value==='col'?' उच्च शिक्षा में पढ़ने की मेज़ के पास हरा पौधा रखना अच्छा माना जाता है।':' छोटे बच्चों के कमरे में हल्के, खुशनुमा रंग (हल्का पीला, आसमानी) रखें।')+'</p></div>';
+    } else if(mode==='j'){
+      var PROF=[
+       ['ऑफ़िस / कॉर्पोरेट (डेस्क जॉब)',['सफेद','हल्का नीला','हल्का हरा','क्रीम'],['गहरा लाल','काला'],'शांत रंग एकाग्रता और संतुलन के लिए अच्छे माने जाते हैं।'],
+       ['सरकारी / प्रशासनिक',['क्रीम','सफेद','हल्का पीला','हल्का नीला'],['गहरा लाल'],'संयत और गरिमामय रंग।'],
+       ['आईटी / वर्क-फ्रॉम-होम',['हल्का नीला','हल्का हरा','सफेद','स्लेटी'],['गहरा लाल'],'स्क्रीन के सामने आँखों को आराम देने वाले रंग।'],
+       ['डॉक्टर / नर्स / स्वास्थ्य',['सफेद','हल्का हरा','आसमानी'],['काला'],'स्वच्छता और शांति के भाव।'],
+       ['वकील / CA / बैंक / वित्त',['सफेद','क्रीम','गहरा नीला','स्लेटी'],['लाल','केसरिया'],'गंभीरता और भरोसा दर्शाने वाले संयत रंग।'],
+       ['शिक्षक / प्रोफ़ेसर / लेखक',['हल्का पीला','सफेद','हरा'],['काला'],'विद्या और एकाग्रता के रंग।'],
+       ['इंजीनियर / तकनीकी',['नीला','स्लेटी','सफेद'],['गहरा लाल'],'स्थिर और व्यवस्थित कार्य-भाव।'],
+       ['बिक्री / मार्केटिंग / जनसंपर्क',['हल्का नारंगी','पीला','सफेद'],['काला'],'ऊर्जा और मेल-जोल के भाव; नारंगी हल्का रखें।']
+      ];
+      var pf=PROF[+D.getElementById('vc_j').value]||PROF[0];
+      h+='<h3>नौकरीपेशा — '+esc2(pf[0])+'</h3>'+
+        '<div class="pl"><b>ऑफ़िस / कार्य-कक्ष की दीवार</b><p>'+sws(pf[1])+'</p></div>'+
+        (pf[2].length?'<div class="pl"><b>कम प्रयोग करें</b><p>'+sws(pf[2])+'</p></div>':'')+
+        '<div class="pl"><b>आधार</b><p>'+esc2(pf[3])+'</p></div>'+
+        '<div class="pl"><b>पहनावा (ऑफ़िस / मीटिंग / इंटरव्यू)</b><p>'+sws(['सफेद','हल्का नीला','क्रीम','स्लेटी'])+' — संयत रंग भरोसा देते हैं।</p></div>'+
+        '<div class="pl"><b>बैठने की व्यवस्था</b><p>• काम करते समय मुँह पूर्व या उत्तर की ओर रखें।<br>• पीठ के पीछे ठोस दीवार हो, खिड़की या दरवाज़ा नहीं।<br>• मेज़ साफ़ रखें; सामने की दीवार हल्के रंग की हो।<br>• मेज़ के उत्तर-पूर्व कोने में पानी की बोतल या छोटा हरा पौधा रखा जा सकता है।</p></div>'+
+        '<div class="pl"><b>घर से काम (वर्क-फ्रॉम-होम)</b><p>• काम का कोना ईशान, पूर्व या उत्तर की ओर हो तो अच्छा माना जाता है।<br>• सोने की जगह से काम की जगह अलग रखें।<br>• स्क्रीन के पीछे तेज़ चमकीले रंग की दीवार न हो, इससे आँखें थकती हैं।</p></div>';
     } else if(mode==='b'){
       var bi=+D.getElementById('vc_b').value;
       if(bi<0) h+='<p class="err">ऊपर से व्यवसाय का प्रकार चुनें।</p>';
