@@ -45,6 +45,13 @@ input:focus{outline:2px solid var(--gold);outline-offset:1px}
 .vjmp-h small{display:block;font-weight:400;font-size:12.5px;opacity:.92;margin-top:3px}
 .vjmp .res-card{border:1px solid #e3d3a4;background:#fffdf7;margin-bottom:12px}
 button.vjmp-btn{background:linear-gradient(135deg,#d4a017,#b8860b 55%,#8a6508);color:#fff;border:0;border-radius:16px;padding:16px;font-size:18px;font-weight:700;width:100%;margin-top:10px;box-shadow:0 4px 12px rgba(138,101,8,.45);letter-spacing:.3px}
+.vjbh{border:2px solid #e0a46a!important;background:linear-gradient(180deg,#fffaf3,#fff2e2)!important}
+.vjbh-h{background:linear-gradient(135deg,#b3261e,#d9534f 45%,#e8912d);color:#fff;border-radius:14px;padding:11px 14px;margin:0 0 10px;font-weight:700;font-size:16px;text-align:center}
+.vjbh-h small{display:block;font-weight:400;font-size:12.5px;opacity:.95;margin-top:2px}
+.vjbh-lg{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 10px;font-size:12.5px}
+.bdg{display:inline-block;border-radius:999px;padding:2px 9px;font-size:12.5px;font-weight:700;margin:1px 2px 1px 0;color:#fff;white-space:nowrap}
+.bdg.bh{background:#c62828}.bdg.pk{background:#e67e22}.bdg.ml{background:#6a3fa0}
+.vjbh tr.r-bh{background:#ffe1de!important;box-shadow:inset 4px 0 0 #c62828}.vjbh tr.r-pk{background:#ffeed8!important;box-shadow:inset 4px 0 0 #e67e22}.vjbh tr.r-ml{background:#efe6fb!important;box-shadow:inset 4px 0 0 #6a3fa0}
 input[type=month]{width:100%;box-sizing:border-box;min-height:48px;font:inherit;font-size:16px;padding:12px;border:1px solid var(--line);border-radius:10px;background:#fbfbfd;color:var(--ink)} /* v173 */
 .detect{margin-top:10px;font-size:14px;min-height:0}
 .det-line{background:#faf4e8;border:1px dashed var(--gold);border-radius:10px;padding:8px 10px}
@@ -162,7 +169,7 @@ input[type=date],input[type=time]{min-height:48px}
 .about b{color:var(--maroon)}.about p{margin:4px 0}
 @media print{.brand .pbtn,.nmtools,.totop,.lang,.about{display:none!important}.brand{background:#fff;color:#000;border-bottom:2px solid #000}.brand b{color:#000}.brand span{color:#000}#nm_body{font-size:13px}}
 </style>
-<meta name="vj-ver" content="178">
+<meta name="vj-ver" content="179">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <script>try{if(window.top!==window.self){document.documentElement.style.display='none';window.top.location=window.self.location;}}catch(e){document.documentElement.style.display='none';}</script>
 
@@ -6350,7 +6357,14 @@ b.addEventListener('click',function(){var k=key();
   A=A.replace(/<h3>/,'<h3>भद्रा · पंचक · मूल विचार — ');
   var c=document.getElementById('pm_c'),nm=c.options[c.selectedIndex]?c.options[c.selectedIndex].text:'';
   o.innerHTML='<div class="vjmp"><div class="vjmp-h">वरहिया पंचांग दर्शन<small>'+nm+' · पूरे महीने का पंचांग</small></div>'+B+A+'</div>';
-  o.setAttribute('data-vjk',k);})();});
+  o.setAttribute('data-vjk',k);
+  try{var cards=o.querySelectorAll('.vjmp .res-card'),bc=cards[cards.length-1];if(bc){bc.classList.add('vjbh');var h3=bc.querySelector('h3'),sub=h3.textContent.replace('भद्रा · पंचक · मूल विचार — ','');
+   var hd=document.createElement('div');hd.className='vjbh-h';hd.innerHTML='भद्रा · पंचक · मूल विचार<small>'+sub+'</small>';h3.parentNode.replaceChild(hd,h3);
+   var lg=document.createElement('div');lg.className='vjbh-lg';lg.innerHTML='<span class="bdg bh">भद्रा</span><span class="bdg pk">पंचक</span><span class="bdg ml">मूल</span><span>= विशेष विचार वाले दिन</span>';hd.parentNode.insertBefore(lg,hd.nextSibling);
+   [].forEach.call(bc.querySelectorAll('tbody tr'),function(tr){var td=tr.lastElementChild,tx=td.textContent.trim();if(!tx||tx==='—'){tr.removeAttribute('style');return;}
+    var parts=tx.split(' · '),cls=tx.indexOf('भद्रा')>-1?'r-bh':tx.indexOf('पंचक')>-1?'r-pk':'r-ml';tr.removeAttribute('style');tr.className=cls;
+    td.innerHTML=parts.map(function(p){var c=p.indexOf('भद्रा')===0?'bh':p==='पंचक'?'pk':'ml';return '<span class="bdg '+c+'">'+p+'</span>'}).join(' ');});}}catch(e){}
+  })();});
 return true}
 function go(){if(setup()||++n>20)return;setTimeout(go,200)}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',go);else go();})();
