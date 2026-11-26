@@ -201,7 +201,7 @@ input[type=date],input[type=time]{min-height:48px}
 .about b{color:var(--maroon)}.about p{margin:4px 0}
 @media print{.brand .pbtn,.nmtools,.totop,.lang,.about{display:none!important}.brand{background:#fff;color:#000;border-bottom:2px solid #000}.brand b{color:#000}.brand span{color:#000}#nm_body{font-size:13px}}
 </style>
-<meta name="vj-ver" content="242">
+<meta name="vj-ver" content="243">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <script>try{if(window.top!==window.self){document.documentElement.style.display='none';window.top.location=window.self.location;}}catch(e){document.documentElement.style.display='none';}</script>
 
@@ -5199,6 +5199,27 @@ var RJAIN_NOTE='जैन दृष्टि: ग्रह निमित्त
     o.innerHTML=h+'</tbody></table></div><p class="kmeta">तिथि जैन नियम (सूर्योदय के बाद 6 घड़ी) से ली गई है। पर्वों का निर्धारण दिगंबर परंपरा के हिंदी (पूर्णिमांत) मास से है।</p></div>';});
   var st=D.createElement('style');st.textContent='table.jc{table-layout:fixed;min-width:600px;width:100%}table.jc td{overflow:hidden;overflow-wrap:anywhere;word-break:break-word}table.jc td,table.jc th{border:1px solid #d9c9a8;padding:3px;vertical-align:top;font-size:11px;line-height:1.25}table.jc td{height:100px;cursor:pointer}table.jc td.ev{background:#fff3dc}.jc-d{font-size:20px;font-weight:700;color:#7a2a0e}.jc-t{font-weight:600}.jc-n{color:#444}.jc-c{color:#0a6a3a;font-size:10px;font-weight:600}.jc-e{color:#a02020;font-size:10px}table.jc small{color:#666;font-weight:400}';D.head.appendChild(st);
   var jcCur=null;
+
+  function dayDet(r,y,mo,x){var t=[];
+    t.push('<b>'+x.d+'/'+mo+'/'+y+' ('+VN[x.wd]+')</b> — '+E(MN[x.pm]+' '+tName(x.t))+' · नक्षत्र '+E(NAK_H[x.nak]));
+    t.push('सूर्योदय '+hmS(x.rise)+' · सूर्यास्त '+hmS(x.set)+(x.tEnd!==null?' · तिथि समाप्ति '+hmAbs(x.tEnd):'')+(x.nEnd!==null?' · नक्षत्र समाप्ति '+hmAbs(x.nEnd):''));
+    var ev=kalOn(x.r).concat(parvaOn(x.r));if(ev.length)t.push('<b>पर्व/कल्याणक:</b> '+E(ev.join('; ')));
+    if(x.yw.good.length)t.push('<b>शुभ योग:</b> '+E(x.yw.good.join('; ')));
+    if(x.yw.bad.length)t.push('<b>सावधानी:</b> '+E(x.yw.bad.join('; ')));
+    x.bh.forEach(function(sp){t.push('<b>भद्रा:</b> '+E(bhadraText(y,mo,x.d,sp)));});
+    return '<p>'+t.join('</p><p>')+'</p>';}
+  window.__vjCalWeek=function(y,mo,d,c){try{
+    var cache={};function mon(yy,mm){var k=yy+'-'+mm;if(!cache[k]){var r=calHTML(yy,mm,c),t=D.createElement('div');t.innerHTML=r.html;cache[k]={r:r,rows:[].slice.call(t.querySelectorAll('table.jc tbody tr')),y:yy,m:mm};}return cache[k];}
+    var A=mon(y,mo),ri=-1,i;A.rows.forEach(function(tr,k){if(tr.querySelector('td[data-d="'+d+'"]'))ri=k;});if(ri<0)return '';
+    var cells=[].map.call(A.rows[ri].children,function(td){return {td:td,M:A};});
+    if(cells.some(function(z){return !z.td.getAttribute('data-d');})){
+      var N=null;if(ri===0){var pm=mo===1?12:mo-1,py=mo===1?y-1:y;N=mon(py,pm);var lr=N.rows[N.rows.length-1];}else{var nm=mo===12?1:mo+1,ny=mo===12?y+1:y;N=mon(ny,nm);var lr=N.rows[0];}
+      cells=cells.map(function(z,k){if(z.td.getAttribute('data-d'))return z;var o=lr.children[k];return (o&&o.getAttribute('data-d'))?{td:o,M:N}:z;});}
+    window.__vjWk=cells;
+    var th='<thead><tr>'+VN.map(function(v){return '<th>'+v.slice(0,3)+'</th>';}).join('')+'</tr></thead>';
+    var tr='<tr>'+cells.map(function(z,k){var td=z.td.cloneNode(true);if(td.getAttribute('data-d')){td.setAttribute('data-k',k);if(z.M===A&&+td.getAttribute('data-d')===d)td.style.outline='3px solid #8e2b3a';td.style.height='auto';}return td.outerHTML;}).join('')+'</tr>';
+    return '<div class="tw"><table class="jc">'+th+'<tbody>'+tr+'</tbody></table></div><div class="mg vjwk-det"><p>किसी तारीख़ पर टैप करें — पूरा विवरण यहाँ दिखेगा।</p></div>';}catch(e){console.error(e);return '';}};
+  window.__vjWeekBind=function(root){try{root.querySelectorAll('.vjwk table.jc td[data-k]').forEach(function(td){td.addEventListener('click',function(){var z=window.__vjWk[+td.getAttribute('data-k')],x=z.M.r.days[+td.getAttribute('data-d')-1],dd=root.querySelector('.vjwk-det');if(dd)dd.innerHTML=dayDet(z.M.r,z.M.y,z.M.m,x);});});}catch(e){console.error(e);}};
   window.__vjCalGrid=function(y,mo,c){try{var r=calHTML(y,mo,c),t=D.createElement('div');t.innerHTML=r.html;var tw=t.querySelector('.tw');window.__vjCalLast=r;return tw?tw.outerHTML+'<div class="mg vjcal-det"><p>किसी तारीख़ पर टैप करें — पूरा विवरण यहाँ दिखेगा।</p></div>':'';}catch(e){return '';}};
   window.__vjCalBind=function(root,y,mo){try{var r=window.__vjCalLast;if(!r)return;root.querySelectorAll('.vjcal table.jc td[data-d]').forEach(function(td){td.addEventListener('click',function(){
         var x=r.days[+td.getAttribute('data-d')-1],t=[];
@@ -6798,6 +6819,14 @@ if(D.readyState==='loading')D.addEventListener('DOMContentLoaded',go);else go();
   det.addEventListener('toggle',function(){if(det.open&&!D.getElementById('pk_res').innerHTML.trim())gb.click();});
   tb.remove();pk.remove();
 }());}catch(e){console.error('pk',e);}})();
+
+/* v243: दैनिक पंचांग के नीचे साप्ताहिक कैलेंडर */
+(function(){try{var n=0;(function go(){var r=document.getElementById('pn_res');if(!r||!window.__vjCalWeek){if(++n<80)setTimeout(go,200);return;}
+ var busy=false;function add(){if(busy)return;if(!r.innerHTML.trim()||r.querySelector('.vjwk')||r.querySelector('.warn')||r.innerHTML.indexOf('गणना हो रही')>-1)return;
+  var di=document.getElementById('pn_date'),pl=document.getElementById('pn_place');if(!di||!pl||!di.value)return;var v=di.value.split('-').map(Number),c=CITIES[+pl.value];if(!c||!v[0])return;
+  busy=true;try{var h=window.__vjCalWeek(v[0],v[1],v[2],c);if(h){r.insertAdjacentHTML('beforeend','<details class="par vjwk" open><summary><b>🗓️ साप्ताहिक कैलेंडर (इस सप्ताह के सातों दिन)</b></summary>'+h+'</details>');window.__vjWeekBind(r);}}catch(e){console.error(e);}busy=false;}
+ var t;new MutationObserver(function(){clearTimeout(t);t=setTimeout(add,250);}).observe(r,{childList:true});add();
+})();}catch(e){console.error('wk',e);}})();
 </script>
 </body>
 </html>
