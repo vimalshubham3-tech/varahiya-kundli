@@ -201,7 +201,7 @@ input[type=date],input[type=time]{min-height:48px}
 .about b{color:var(--maroon)}.about p{margin:4px 0}
 @media print{.brand .pbtn,.nmtools,.totop,.lang,.about{display:none!important}.brand{background:#fff;color:#000;border-bottom:2px solid #000}.brand b{color:#000}.brand span{color:#000}#nm_body{font-size:13px}}
 </style>
-<meta name="vj-ver" content="311">
+<meta name="vj-ver" content="312">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <script>try{if(window.top!==window.self){document.documentElement.style.display='none';window.top.location=window.self.location;}}catch(e){document.documentElement.style.display='none';}</script>
 
@@ -7620,7 +7620,7 @@ function en(){return D.documentElement.lang==='en';}
 function sync(){D.body.classList.toggle('vjen',en());var b=D.querySelector('.vjsetbtn');if(b){var st=D.body.classList.contains('vjst');b.textContent=st?(en()?'\u2190 All tabs list':'\u2190 सभी टैब की सूची'):(en()?'\u2699\uFE0F Settings':'\u2699\uFE0F सेटिंग');}}
 function openSet(){D.body.classList.add('vjst','vjdr');sync();}
 function mk(){try{var g=D.querySelector('.vjg.vjtree'),t=D.getElementById('vj_tools');if(g&&t&&!g.querySelector('.vjsetbtn')){var b=D.createElement('button');b.type='button';b.className='vjsetbtn';b.addEventListener('click',function(e){e.stopPropagation();D.body.classList.toggle('vjst');sync();});g.insertBefore(b,t);sync();}
-var h=D.getElementById('vjhome');if(h){var hg=h.querySelector('.hg'),f=h.querySelector('.hb button');if(hg&&f&&f.textContent.trim()==='\u2715'&&!hg.querySelector('.vjsetc')){var c=D.createElement('button');c.type='button';c.className='hc vjsetc';c.innerHTML='<div class="t"><i>\u2699\uFE0F</i><span>'+(en()?'Settings':'सेटिंग')+'</span></div><div class="d">'+(en()?'Language, print, sharing, saved & registration':'भाषा, प्रिंट, सहयोग, सहेजी सूची व पंजीकरण')+'</div>';c.addEventListener('click',function(){D.body.classList.remove('vjhm');openSet();});hg.appendChild(c);}}}catch(x){}}
+var h=D.getElementById('vjhome');if(h){var hg=h.querySelector('.hg'),f=h.querySelector('.hb button');if(hg&&f&&f.textContent.trim()==='\u2715'&&!hg.querySelector('.vjsetc')){var c=D.createElement('button');c.type='button';c.className='hc vjsetc';c.innerHTML='<div class="t"><i>\u2699\uFE0F</i><span>'+(en()?'Settings':'सेटिंग')+'</span></div><div class="d">'+(en()?'Language, print, sharing, saved & registration':'भाषा, प्रिंट, सहेजी सूची व पंजीकरण')+'</div>';c.addEventListener('click',function(){D.body.classList.remove('vjhm');openSet();});hg.appendChild(c);}}}catch(x){}}
 new MutationObserver(function(){mk();if(!D.body.classList.contains('vjdr')&&D.body.classList.contains('vjst')){D.body.classList.remove('vjst');sync();}}).observe(D.body,{childList:true,subtree:true,attributes:true,attributeFilter:['class']});
 var L=D.getElementById('lang');if(L)L.addEventListener('click',function(){setTimeout(function(){sync();var c=D.querySelector('#vjhome .vjsetc');if(c)c.remove();mk();},120);});
 mk();
@@ -7638,6 +7638,26 @@ body.vjst .vjg.vjtree>#vj_tools::before{order:-2}
 /* v311: "सहयोग" बटन को उभारा */
 (function(){var D=document;function fx(){try{[].forEach.call(D.querySelectorAll('#vj_tools>*:not(.vjsup)'),function(b){if(/सहयोग|Support|Contribut|Donat/i.test(b.textContent||''))b.classList.add('vjsup');});}catch(x){}}
 fx();new MutationObserver(fx).observe(D.body,{childList:true,subtree:true,characterData:true});})();
+</script>
+<style id="vj312css">
+#vj_tools>.vjsup{display:none!important}
+.vjg.vjtree>.vjsupbtn{display:block!important;width:100%;margin:12px 0 0!important;padding:14px 10px!important;font-size:18px!important;font-weight:900!important;color:#fff!important;background:linear-gradient(135deg,#b8860b,#e6a817 50%,#b8860b)!important;border:3px solid #6b1c28!important;border-radius:14px!important;text-shadow:0 1px 2px rgba(0,0,0,.45);animation:vjpulse 1.8s infinite;text-align:center}
+#vjhome .hc.vjsupc{grid-column:1/-1;background:linear-gradient(135deg,#b8860b,#e6a817 50%,#b8860b);border:3px solid #6b1c28;border-radius:14px;animation:vjpulse 1.8s infinite}
+#vjhome .hc.vjsupc .t{color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.45);font-size:21px}
+#vjhome .hc.vjsupc .d{color:#3b1f10;font-weight:700}
+</style>
+<script>
+/* v312: "सहयोग" सेटिंग से बाहर — अलग उभरा हुआ टैब (मेनू-ग्रिड व साइड-सूची) */
+(function(){var D=document;function en(){return D.documentElement.lang==='en';}
+function go(){try{var o=D.querySelector('#vj_tools .vjsup');D.body.classList.remove('vjhm','vjdr','vjst');if(o)o.click();}catch(x){}}
+function mk(){try{var g=D.querySelector('.vjg.vjtree'),sb=g&&g.querySelector('.vjsetbtn');
+if(g&&sb&&!g.querySelector('.vjsupbtn')){var b=D.createElement('button');b.type='button';b.className='vjsupbtn';b.textContent=en()?'\uD83D\uDE4F Support / Contribute':'\uD83D\uDE4F सहयोग';b.addEventListener('click',function(e){e.stopPropagation();go();});g.insertBefore(b,sb);}
+var h=D.getElementById('vjhome'),hg=h&&h.querySelector('.hg');
+if(hg&&!hg.querySelector('.vjsupc')&&h.querySelector('.hb button')&&h.querySelector('.hb button').textContent.trim()==='\u2715'){var c=D.createElement('button');c.type='button';c.className='hc vjsupc';c.innerHTML='<div class="t"><i>\uD83D\uDE4F</i><span>'+(en()?'Support / Contribute':'सहयोग')+'</span></div><div class="d">'+(en()?'Help keep this app free for everyone':'इस निःशुल्क ऐप को चलाए रखने में सहयोग करें')+'</div>';c.addEventListener('click',go);var st=hg.querySelector('.vjsetc');if(st)hg.insertBefore(c,st);else hg.appendChild(c);}
+var sb2=g&&g.querySelector('.vjsupbtn'),tx=en()?'\uD83D\uDE4F Support / Contribute':'\uD83D\uDE4F सहयोग';if(sb2&&sb2.textContent!==tx)sb2.textContent=tx;}catch(x){}}
+new MutationObserver(mk).observe(D.body,{childList:true,subtree:true});
+var L=D.getElementById('lang');if(L)L.addEventListener('click',function(){setTimeout(function(){var c=D.querySelector('#vjhome .vjsupc');if(c)c.remove();mk();},200);});
+mk();})();
 </script>
 </body>
 </html>
