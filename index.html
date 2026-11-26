@@ -156,7 +156,7 @@ input[type=date],input[type=time]{min-height:48px}
 .about b{color:var(--maroon)}.about p{margin:4px 0}
 @media print{.brand .pbtn,.nmtools,.totop,.lang,.about{display:none!important}.brand{background:#fff;color:#000;border-bottom:2px solid #000}.brand b{color:#000}.brand span{color:#000}#nm_body{font-size:13px}}
 </style>
-<meta name="vj-ver" content="164">
+<meta name="vj-ver" content="165">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <script>try{if(window.top!==window.self){document.documentElement.style.display='none';window.top.location=window.self.location;}}catch(e){document.documentElement.style.display='none';}</script>
 
@@ -5703,6 +5703,25 @@ bar.insertBefore(l,bar.firstChild);
   h+='<p class="kmeta">ये परंपरागत जैन प्रश्न-नियम हैं; गंभीर विषयों (रोग, गर्भ, मुकदमा) में चिकित्सक/वकील की सलाह अवश्य लें।</p></div>';
   var w=D.createElement('div');w.innerHTML=h;pj.appendChild(w.firstChild);
 }catch(e){console&&console.error&&console.error(e);}})();
+
+/* v165: जैन ज्योतिष — सरल परिचय (ऐप के अपने शब्दों में; ग्रंथ का पाठ नहीं) */
+(function(){try{
+  var D=document,pj=D.getElementById('pane-j');if(!pj)return;
+  var SEC=[
+   ['जैन ज्योतिष क्या है',['जैन परंपरा में ग्रह-नक्षत्रों की चाल, समय की गणना, पंचांग और शुभ-अशुभ समय के विचार का जो ज्ञान मिलता है, उसे जैन ज्योतिष कहा जाता है।','आरंभ में इसकी नींव खगोल और गणित पर थी। जैन आगमों में गणित वाले विषयों का अलग स्थान माना गया है, जिसे गणितानुयोग कहते हैं।','बाद के ग्रंथों में इसके साथ फलित का विचार भी जुड़ता गया।']],
+   ['प्रमुख प्राचीन ग्रंथ',['सूर्यप्रज्ञप्ति और चंद्रप्रज्ञप्ति: सूर्य, चंद्र और नक्षत्रों की गति तथा काल-गणना पर आधारित प्राचीन जैन ग्रंथ। आधुनिक अध्ययनों में इन्हें जैन खगोल के मुख्य स्रोतों में गिना जाता है।','ज्योतिष्करण्डक: इसकी रचना सूर्यप्रज्ञप्ति में बताई खगोलीय सामग्री के आधार पर मानी जाती है।','भद्रबाहु संहिता: आचार्य भद्रबाहु के नाम से प्रसिद्ध। विद्वानों के अनुसार इसमें ग्रहों की चाल आदि पर काफ़ी सामग्री मिलती है।','गर्ग व वृद्धगर्ग की संहिता-परंपरा भी जैन ज्योतिष के साथ गिनी जाती है।','इन ग्रंथों के रचना-काल और रचनाकारों को लेकर विद्वानों में अलग-अलग मत हैं। मोटे तौर पर इन्हें ईसा-पूर्व की कुछ शताब्दियों से लेकर बाद की सदियों तक का बताया जाता है।']],
+   ['ज्योतिष के तीन अंग',['सिद्धांत (गणित): ग्रहों-नक्षत्रों की स्थिति और पंचांग निकालने की गणना।','संहिता: ग्रहों की चाल, ऋतु, निमित्त और समाज पर होने वाले सामान्य फल का विचार।','होरा (फलित): जन्मपत्री, मुहूर्त और व्यक्ति पर फल का विचार।','गर्ग परंपरा के ग्रंथकारों के बारे में कहा गया है कि उन्होंने इन तीनों अंगों पर लिखा।']],
+   ['प्रश्नशास्त्र क्या है',['जब कोई व्यक्ति अपना प्रश्न लेकर आता है, तब उस समय की स्थिति या उसके बोले अक्षरों को देखकर उत्तर का विचार करने की पद्धति को प्रश्नशास्त्र कहते हैं।','जैन परंपरा में प्रश्नाक्षरों पर आधारित ग्रंथ मिलते हैं। केवलज्ञान प्रश्न चूड़ामणि भी ऐसा ही ग्रंथ है।','इसका हिंदी अनुवाद और विस्तृत विवेचन डॉ. नेमिचन्द्र शास्त्री ने किया है और यह भारतीय ज्ञानपीठ की मूर्तिदेवी जैन ग्रन्थमाला से छपा है।']],
+   ['नीचे की सूची कैसे पढ़ें',['प्रस्तावना: जैन ज्योतिष का परिचय, उसके भेद, गणित का आधार और प्रश्नशास्त्र का विकास।','ग्रन्थ (मूल पाठ की टीका): प्रश्न के अक्षरों का विभाजन, इष्टकाल और लग्न बनाने के नियम, अक्षरों के योग और उनके फल, चोरी, लाभ-हानि, रोग जैसे प्रश्नों का विचार।','परिशिष्ट: मुहूर्त का प्रकरण और जन्मपत्री बनाने की विधि।','सूची में दी पृष्ठ-संख्या मुद्रित पुस्तक की है, इस ऐप की नहीं।']],
+   ['ध्यान रखें',['यह परिचय ऐप का अपने शब्दों में लिखा सार है। यह ग्रंथ का पाठ नहीं है, इसलिए किसी नियम को प्रमाण मानने से पहले मूल पुस्तक देखें।','प्रश्न-नियम परंपरा पर आधारित हैं। इनके फल का कोई वैज्ञानिक प्रमाण नहीं है, इसलिए रोग, मुकदमे और धन जैसे गंभीर निर्णय इन्हीं पर न छोड़ें।','आधार: Encyclopedia of Jainism में श्रेणिक बंडी और अनुपम जैन का जैन खगोल पर लेख, जैन ग्रंथों पर प्रकाशित शोध-सामग्री, और भारतीय ज्ञानपीठ का प्रकाशित संस्करण।']]
+  ];
+  var h='<div class="panel" id="jy_intro"><h3>🪔 जैन ज्योतिष — सरल परिचय</h3><p class="kmeta">नीचे की विषय-सूची समझने के लिए पहले यह छोटा परिचय देखें।</p>';
+  SEC.forEach(function(x,i){h+='<details'+(i===0?' open':'')+' style="margin:6px 0"><summary><b>'+x[0]+'</b></summary>'+x[1].map(function(t){return '<p style="margin:6px 0">'+t+'</p>';}).join('')+'</details>';});
+  h+='</div>';
+  var w=D.createElement('div');w.innerHTML=h;var el=w.firstChild,ps=pj.querySelectorAll('.panel'),first=null;
+  for(var i=0;i<ps.length;i++){var t=ps[i].querySelector('h3');if(t&&t.textContent.indexOf('केवलज्ञान प्रश्न चूड़ामणि')>=0){first=ps[i];break;}}
+  if(first)pj.insertBefore(el,first);else pj.appendChild(el);
+}catch(e){console&&console.error&&console.error('v165',e);}})();
 
 /* v102: "ऐप फ़ोन में रखें" — एक दबाव में इंस्टॉल (Android), iPhone के लिए निर्देश */
 (function(){try{
