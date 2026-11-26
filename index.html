@@ -201,7 +201,7 @@ input[type=date],input[type=time]{min-height:48px}
 .about b{color:var(--maroon)}.about p{margin:4px 0}
 @media print{.brand .pbtn,.nmtools,.totop,.lang,.about{display:none!important}.brand{background:#fff;color:#000;border-bottom:2px solid #000}.brand b{color:#000}.brand span{color:#000}#nm_body{font-size:13px}}
 </style>
-<meta name="vj-ver" content="214">
+<meta name="vj-ver" content="215">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <script>try{if(window.top!==window.self){document.documentElement.style.display='none';window.top.location=window.self.location;}}catch(e){document.documentElement.style.display='none';}</script>
 
@@ -6641,30 +6641,6 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
   if(p&&h){h.parentNode.insertBefore(p,h);}
   /* v159: खुलते ही जैन तिथि पन्ना (गहरे लिंक ?rf/?jt/?pd हों तो वही) */
   if(!/[?&](rf|jt|pd)=1/.test(location.search)&&typeof setMode==='function'){setMode('p');}}catch(e){}})();
-</script>
-<script>
-/* v213: कस्टम स्थान + iCal */
-(function(){
-var D=document,b=D.createElement('div');b.style.cssText='position:fixed;left:8px;bottom:8px;z-index:9998;display:flex;gap:6px';
-function mk(t,f){var x=D.createElement('button');x.type='button';x.textContent=t;x.style.cssText='background:#8e2b3a;color:#fff;border:0;border-radius:18px;padding:7px 12px;font-size:13px;box-shadow:0 2px 6px #0005';x.onclick=f;b.appendChild(x);}
-function saveC(n,la,lo){var a=[];try{a=JSON.parse(localStorage.getItem('vj_cc')||'[]');}catch(e){}a.push([n,la,lo]);localStorage.setItem('vj_cc',JSON.stringify(a));alert('स्थान जुड़ गया: '+n+'। अब सूची में "मेरे स्थान" में दिखेगा।');location.reload();}
-mk('📍 स्थान जोड़ें',function(){
- if(navigator.geolocation&&confirm('अभी के GPS स्थान को जोड़ें?\n(रद्द करने पर नाम और अक्षांश/देशांतर खुद भरें)')){
-  var n=prompt('इस स्थान का नाम:','मेरा स्थान');if(!n)return;
-  navigator.geolocation.getCurrentPosition(function(p){saveC(n,+p.coords.latitude.toFixed(4),+p.coords.longitude.toFixed(4));},function(){alert('GPS नहीं मिला। खुद भरें।');});return;}
- var n=prompt('स्थान का नाम:');if(!n)return;var la=parseFloat(prompt('अक्षांश (उत्तर, जैसे 26.2183):')),lo=parseFloat(prompt('देशांतर (पूर्व, जैसे 78.1828):'));
- if(!(la>=-60&&la<=70&&lo>=-180&&lo<=180)){alert('अक्षांश/देशांतर ठीक नहीं।');return;}saveC(n,la,lo);});
-mk('📅 iCal',function(){
- var n=new Date(Date.now()+5.5*3600000),y=parseInt(prompt('वर्ष:',n.getUTCFullYear()),10),m=parseInt(prompt('महीना (1-12), इस महीने के पंचांग की iCal फ़ाइल बनेगी:',n.getUTCMonth()+1),10);
- if(!(y>=1900&&y<=2050&&m>=1&&m<=12))return;
- var pl=D.getElementById('pn_place'),c=(pl&&pl.value!==''&&pl.value!==window.__vjDef&&CITIES[+pl.value])||CITIES.filter(function(c){return c[1]==='Morena';})[0]||CITIES[0];
- var dim=new Date(Date.UTC(y,m,0)).getUTCDate(),L=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Varahiya Jyotish Darshan//HI','CALSCALE:GREGORIAN','X-WR-CALNAME:पंचांग – '+c[0]],p2=function(x){return String(x).padStart(2,'0');};
- for(var d=1;d<=dim;d++){var pd=panchangDay(y,m,d,c[2],c[3],5.5),pc=pd.pc,ds=''+y+p2(m)+p2(d),nx=new Date(Date.UTC(y,m-1,d+1)),de=''+nx.getUTCFullYear()+p2(nx.getUTCMonth()+1)+p2(nx.getUTCDate());
-  L.push('BEGIN:VEVENT','UID:vj'+ds+'-'+Math.round(c[2]*100)+'@varahiya','DTSTAMP:'+ds+'T000000Z','DTSTART;VALUE=DATE:'+ds,'DTEND;VALUE=DATE:'+de,
-   'SUMMARY:'+pc.paksha+' '+pc.tn+' • '+NAK_H[pc.nak]+' • '+pc.yg,
-   'DESCRIPTION:'+pd.vara+'\\nसूर्योदय '+hmS(pd.sun.rise)+' सूर्यास्त '+hmS(pd.sun.set)+'\\nराहु काल '+hmS(pd.rahu[0])+'–'+hmS(pd.rahu[1])+'\\nस्थान: '+c[0],'TRANSP:TRANSPARENT','END:VEVENT');}
- L.push('END:VCALENDAR');var a=D.createElement('a');a.href=URL.createObjectURL(new Blob([L.join('\r\n')],{type:'text/calendar;charset=utf-8'}));a.download='panchang-'+y+'-'+p2(m)+'.ics';D.body.appendChild(a);a.click();setTimeout(function(){a.remove();},500);});
-D.body.appendChild(b);setTimeout(function(){var q=D.getElementById('pn_place');window.__vjDef=q?q.value:'';},3000);})();
 </script>
 </body>
 </html>
