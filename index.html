@@ -156,7 +156,7 @@ input[type=date],input[type=time]{min-height:48px}
 .about b{color:var(--maroon)}.about p{margin:4px 0}
 @media print{.brand .pbtn,.nmtools,.totop,.lang,.about{display:none!important}.brand{background:#fff;color:#000;border-bottom:2px solid #000}.brand b{color:#000}.brand span{color:#000}#nm_body{font-size:13px}}
 </style>
-<meta name="vj-ver" content="170">
+<meta name="vj-ver" content="172">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <script>try{if(window.top!==window.self){document.documentElement.style.display='none';window.top.location=window.self.location;}}catch(e){document.documentElement.style.display='none';}</script>
 
@@ -561,7 +561,7 @@ function moonTropical(jd){
   }
   const A1=nrm(119.75+131.849*T),A2=nrm(53.09+479264.290*T);
   s+=3958*Math.sin(A1*D2R)+1962*Math.sin((Lp-F)*D2R)+318*Math.sin(A2*D2R);
-  return nrm(Lp+s/1e6);
+  return nrm(Lp+s/1e6+0.0120); /* v172: चंद्र का नियमित सुधार +43″ (Swiss/ephem से मिलान) */
 }
 const EL={ // JPL अनुमानित कक्षा-तत्व (1800-2050): a,e,I,L,peri,node और प्रति शताब्दी दर
  mars:[1.52371034,0.09339410,1.84969142,-4.55343205,-23.94362959,49.55953891,0.00001847,0.00007882,-0.00813131,19140.30268499,0.44441088,-0.29257343],
@@ -618,7 +618,7 @@ function geoLon(name,jd){
 }
 function sunLon(jd){
   const T=(jd-2451545)/36525,e=helio(EL.earth,T);
-  return nrm(Math.atan2(-e[1],-e[0])/D2R-23.85306);
+  return nrm(Math.atan2(-e[1],-e[0])/D2R-23.85306-0.0057); /* v172: प्रकाश-विपथन −20.5″ */
 }
 function rahuLon(jd){
   const T=(jd-2451545)/36525;
@@ -1145,7 +1145,20 @@ function sunTimes(y,mo,dd,lat,lon,off){ // स्थानीय घड़ी �
   const noon=12-(lon-off*15)/15-eot/60;
   const c=(Math.sin(-0.833*Math.PI/180)-Math.sin(la)*Math.sin(dec))/(Math.cos(la)*Math.cos(dec));
   const H=Math.acos(Math.max(-1,Math.min(1,c)))*180/Math.PI/15;
-  return {rise:noon-H,set:noon+H,noon};
+  const est={rise:noon-H,set:noon+H,noon};
+  /* v171: सूर्य की वास्तविक स्थिति से सुधार — ऊँचाई −0.833° (वायुमंडलीय अपवर्तन व सूर्य-बिंब सहित) */
+  try{
+    const R=Math.PI/180;
+    const alt=h=>{const Hh=Math.floor(h),jd=toJD(y,mo,dd,Hh,(h-Hh)*60,off),T=(jd-2451545)/36525;
+      const lam=nrm(sunLon(jd)+ayanamsa(jd))*R,ep=(23.4392911-0.0130042*T)*R;
+      const ra=Math.atan2(Math.sin(lam)*Math.cos(ep),Math.cos(lam)),de=Math.asin(Math.sin(ep)*Math.sin(lam));
+      const gm=nrm(280.46061837+360.98564736629*(jd-2451545)+0.000387933*T*T),ha=(gm+lon)*R-ra,ph=lat*R;
+      return Math.asin(Math.sin(ph)*Math.sin(de)+Math.cos(ph)*Math.cos(de)*Math.cos(ha))/R+0.8333;};
+    const solve=(c)=>{let lo=c-1.2,hi=c+1.2,a=alt(lo),b=alt(hi);if(!(a*b<0))return null;for(let i=0;i<32;i++){const m=(lo+hi)/2,v=alt(m);if((v<0)===(a<0)){lo=m;a=v;}else hi=m;}return (lo+hi)/2;};
+    const r1=solve(est.rise),s1=solve(est.set);
+    if(r1!==null&&s1!==null&&Math.abs(r1-est.rise)<1&&Math.abs(s1-est.set)<1)return {rise:r1,set:s1,noon:(r1+s1)/2};
+  }catch(e){}
+  return est;
 }
 const hmS=h=>{h=((h%24)+24)%24;let H=Math.floor(h),M=Math.round((h-H)*60);if(M===60){H=(H+1)%24;M=0;}return String(H).padStart(2,'0')+':'+String(M).padStart(2,'0');};
 function panchangDay(y,mo,dd,lat,lon,off){
