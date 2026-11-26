@@ -201,7 +201,7 @@ input[type=date],input[type=time]{min-height:48px}
 .about b{color:var(--maroon)}.about p{margin:4px 0}
 @media print{.brand .pbtn,.nmtools,.totop,.lang,.about{display:none!important}.brand{background:#fff;color:#000;border-bottom:2px solid #000}.brand b{color:#000}.brand span{color:#000}#nm_body{font-size:13px}}
 </style>
-<meta name="vj-ver" content="211">
+<meta name="vj-ver" content="212">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <script>try{if(window.top!==window.self){document.documentElement.style.display='none';window.top.location=window.self.location;}}catch(e){document.documentElement.style.display='none';}</script>
 
@@ -1271,6 +1271,23 @@ function BALH(d){
   t+='</tbody></table></details>';
   return '<tr><td>चंद्र बल</td><td>'+c+'</td></tr><tr><td>तारा बल</td><td>'+t+'</td></tr>';
 }
+const HD=['बलवान','नम्र','आक्रामक','तीव्र','फलदायक','लाभदायी','मन्द'];
+function PNR(d){
+  const y=d.ymd[0],mo=d.ymd[1],dd=d.ymd[2],r=d.sun.rise,nx=new Date(Date.UTC(y,mo-1,dd+1)),R2=24+sunTimes(nx.getUTCFullYear(),nx.getUTCMonth()+1,nx.getUTCDate(),d.ymd[3],d.ymd[4],5.5).rise;
+  const at=h=>panchangAt(toJD(y,mo,dd,Math.floor(h),(h-Math.floor(h))*60,5.5));
+  const lg=LGD(y,mo,dd,d.ymd[3],d.ymd[4],r,R2),cut=new Set([r,R2]);lg.forEach(x=>{cut.add(x.a);cut.add(x.b);});
+  [q=>q.t,q=>q.nak].forEach(f=>{let pv=f(at(r)),lo0=r;for(let h=r+0.1;h<=R2;h+=0.1){const v=f(at(h));if(v!==pv){let lo=h-0.1,hi=h;for(let i=0;i<20;i++){const q=(lo+hi)/2;if(f(at(q))===pv)lo=q;else hi=q;}cut.add((lo+hi)/2);pv=v;}}});
+  const c=[...cut].filter(x=>x>=r&&x<=R2).sort((a,b)=>a-b),out=[];
+  for(let i=0;i<c.length-1;i++){if(c[i+1]-c[i]<0.004)continue;const m=(c[i]+c[i+1])/2,p=at(m),L=lg.find(x=>m>=x.a&&m<=x.b);if(!L)continue;
+   const k=(p.t+d.wd+1+p.nak+1+L.r+1)%9,nm=k===1?'मृत्यु पंचक':k===2?'अग्नि पंचक':k===4?'राज पंचक':k===6?'चोर पंचक':k===8?'रोग पंचक':'शुभ मुहूर्त';
+   if(out.length&&out[out.length-1].n===nm)out[out.length-1].b=c[i+1];else out.push({n:nm,a:c[i],b:c[i+1]});}
+  return out;
+}
+function JNH(d){
+  const r=d.sun.rise,s=d.sun.set,dm=s-r,p=dm/4,m=dm/15,R=(a,b)=>tt(a)+' – '+tt(b),o=(l,t)=>'<tr><td>'+l+'</td><td>'+t+'</td></tr>';
+  return o('प्रथम प्रहर',R(r,r+p))+o('<b>नवकारशी</b>',tt(r+m))+o('द्वितीय प्रहर',R(r+p,r+2*p))+o('<b>पोरिसि</b>',tt(r+p))+o('<b>साड्ढ पोरिसि</b>',tt(r+1.5*p))
+   +o('तृतीय प्रहर',R(r+2*p,r+3*p))+o('<b>पुरिमड्ढ</b>',tt(r+2*p))+o('चतुर्थ प्रहर',R(r+3*p,s));
+}
 function XR(d){
   const y=d.ymd[0],mo=d.ymd[1],dd=d.ymd[2],r=d.sun.rise,s=d.sun.set,dm=s-r,m=dm/15,wd=d.wd;
   const nx=new Date(Date.UTC(y,mo-1,dd+1)),ns=sunTimes(nx.getUTCFullYear(),nx.getUTCMonth()+1,nx.getUTCDate(),d.ymd[3],d.ymd[4],5.5),R2=24+ns.rise,nr=R2-s,mid=s+nr/2,nm=nr/15;
@@ -1306,6 +1323,8 @@ function XR(d){
    const ss=SEGS(d,q=>SARV[wd].includes(q.nak)?1:0).filter(x=>x.v),as=SEGS(d,q=>AMRT[wd]===q.nak?1:0).filter(x=>x.v),fm=l=>l.map(x=>(x.a<=r+0.01&&x.b>=R2-0.02)?'अहोरात्र':tt(x.a)+' – '+tt(x.b)).join('<br>');
    if(ss.length)nv+='<tr><td>सर्वार्थ सिद्धि योग (शुभ)</td><td>'+fm(ss)+'</td></tr>';if(as.length)nv+='<tr><td>अमृत सिद्धि योग (शुभ)</td><td>'+fm(as)+'</td></tr>';}catch(e){}
   try{nv+=BALH(d);}catch(e){}
+  try{const pn=PNR(d);nv+='<tr><td>पंचक रहित मुहूर्त</td><td>'+pn.map(x=>'<span style="color:'+(x.n==='शुभ मुहूर्त'?'#2e7d32':'#c62828')+'"><b>'+x.n+'</b></span> '+tt(x.a)+' – '+tt(x.b)).join('<br>')+'</td></tr>';}catch(e){}
+  try{nv+='<tr><td>जैन पच्चक्खाण</td><td><details><summary>नवकारशी, पोरिसि, पुरिमड्ढ आदि</summary><table class="vjbal"><tbody>'+JNH(d)+'</tbody></table></details></td></tr>';}catch(e){}
   const lg=LGD(y,mo,dd,d.ymd[3],d.ymd[4],r,R2);
   nv+='<tr><td>लग्न (सूर्योदय से अगले सूर्योदय तक)</td><td>'+lg.map(x=>'<b>'+RASHI_H[x.r]+'</b> '+tt(x.a)+' – '+tt(x.b)).join('<br>')+'</td></tr>';
   const jd0=Date.UTC(y,mo-1,dd)/86400000+2440587.5;
@@ -1800,7 +1819,7 @@ function choghadiyaHTML(y,mo,dd,lat,lon,off){
   const row=x=>'<tr><td>'+hmS(x.a)+' – '+hmS(x.b)+'</td><td>'+(CHD_GOOD[x.n]===1?'<b>'+x.n+' ✓</b>':CHD_GOOD[x.n]?x.n+' (यात्रा हेतु)':x.n+' ✗')+'</td></tr>';
   let h='<div class="res-card"><h2 class="kh">चौघड़िया व होरा</h2><div class="charts"><div><h3>दिन</h3><div class="tw"><table><tbody>'+c.day.map(row).join('')+'</tbody></table></div></div><div><h3>रात</h3><div class="tw"><table><tbody>'+c.night.map(row).join('')+'</tbody></table></div></div></div>';
   h+='<h3>ग्रह-होरा</h3><div class="tw"><table><tbody>';
-  hr.forEach((x,i)=>{h+=(i%4===0?'<tr>':'')+'<td>'+hmS(x.a)+'–'+hmS(x.b)+'<br><b>'+HN[x.pl]+'</b></td>'+(i%4===3?'</tr>':'');});
+  hr.forEach((x,i)=>{h+=(i%4===0?'<tr>':'')+'<td>'+hmS(x.a)+'–'+hmS(x.b)+'<br><b>'+HN[x.pl]+'</b> - '+HD[x.pl]+'</td>'+(i%4===3?'</tr>':'');});
   return h+'</tbody></table></div><p class="kmeta">शुभ चौघड़िया: अमृत, शुभ, लाभ (चर यात्रा के लिए)। राहुकाल में नया कार्य टालें। होरा-फल: सूर्य—सरकारी/सम्मान, चंद्र—यात्रा/जनसंपर्क, मंगल—साहस/भूमि, बुध—व्यापार/पढ़ाई, गुरु—शिक्षा/धर्म/विवाह, शुक्र—कला/ख़रीद/सजावट, शनि—श्रम/लोहा/सेवा।</p></div>';
 }
 /* ---- राशिफल (गोचर आधारित) ---- */
