@@ -201,7 +201,7 @@ input[type=date],input[type=time]{min-height:48px}
 .about b{color:var(--maroon)}.about p{margin:4px 0}
 @media print{.brand .pbtn,.nmtools,.totop,.lang,.about{display:none!important}.brand{background:#fff;color:#000;border-bottom:2px solid #000}.brand b{color:#000}.brand span{color:#000}#nm_body{font-size:13px}}
 </style>
-<meta name="vj-ver" content="205">
+<meta name="vj-ver" content="206">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <script>try{if(window.top!==window.self){document.documentElement.style.display='none';window.top.location=window.self.location;}}catch(e){document.documentElement.style.display='none';}</script>
 
@@ -1248,7 +1248,11 @@ function VM(y,mo,dd,lat,lon){
     const mid=(w.a+w.b)/2,P=allPlanets(toJD(y,mo,dd,Math.floor(mid%24),(mid%1)*60,5.5)+(mid>=24?1:0));
     if(P.slice(0,9).some(p=>rashiOf(p.lon)===(w.r+7)%12))return false;
     const mh=((rashiOf(P[1].lon)-w.r+12)%12)+1;return ![6,8,12].includes(mh);});
-  return {sp:L[0].sp,ws:L[0].ws,lg:ok};
+  const DF={0:'d',1:'d',4:'d',7:'d',10:'d',2:'n',3:'n',5:'n',9:'n',11:'n'},rs=pd.sun.rise,ss_=pd.sun.set,out=[];
+  ok.forEach(w=>{const k=DF[w.r];if(!k){out.push(w);return;}
+   const cuts=[w.a,w.b];[ss_,rs+24].forEach(c=>{if(c>w.a&&c<w.b)cuts.push(c);});cuts.sort((x,y)=>x-y);
+   for(let i=0;i<cuts.length-1;i++){const m=(cuts[i]+cuts[i+1])/2,isD=m>=rs&&m<ss_;if((isD?'d':'n')!==k)out.push({r:w.r,a:cuts[i],b:cuts[i+1]});}});
+  return {sp:L[0].sp,ws:L[0].ws,lg:out};
 }
 function XR(d){
   const y=d.ymd[0],mo=d.ymd[1],dd=d.ymd[2],r=d.sun.rise,s=d.sun.set,dm=s-r,m=dm/15,wd=d.wd;
@@ -6537,10 +6541,10 @@ function run(){var o=document.getElementById('vl_res'),v=document.getElementById
 var c=CITIES[+document.getElementById('pn_place').value]||CITIES[0];
 try{var S=lagnaSlots(v[0],v[1],v[2],c[2],c[3],MUX['विवाह']);
 var h='<p class="kmeta">'+c[0]+' — '+v[2]+'/'+v[1]+'/'+v[0]+' (प्रातः 06:00 से रात 21:10 तक)</p><table><thead><tr><th>समय</th><th>लग्न</th><th>दिन/रात</th><th>स्थिति</th></tr></thead><tbody>';var sr=null,ss=null;try{var pdv=panchangDay(v[0],v[1],v[2],c[2],c[3],5.5);sr=pdv.sun.rise*60;ss=pdv.sun.set*60;}catch(e){}
-S.forEach(function(w){var cl,tx;if(w.ok){cl='sg';tx='✅ विवाह योग्य';}else if(w.typeOk){cl='sm';var rs=[];if(w.occ8)rs.push('अष्टम में ग्रह');if([6,8,12].indexOf(w.mh)>-1)rs.push('चंद्र '+w.mh+'वें भाव में');tx='⚠️ '+rs.join(', ');}else{cl='sr';tx='✖ लग्न-प्रकार वर्ज्य/सामान्य नहीं';}
+var cnt=0;S.forEach(function(w){var cl,tx;var mid0=(w.a+w.b)/2,isD0=(sr!==null)?(mid0>=sr&&mid0<ss):(mid0>=360&&mid0<1080);if(!w.ok||dn(w.r,isD0?'d':'n'))return;cnt++;if(w.ok){cl='sg';tx='✅ विवाह योग्य';}else if(w.typeOk){cl='sm';var rs=[];if(w.occ8)rs.push('अष्टम में ग्रह');if([6,8,12].indexOf(w.mh)>-1)rs.push('चंद्र '+w.mh+'वें भाव में');tx='⚠️ '+rs.join(', ');}else{cl='sr';tx='✖ लग्न-प्रकार वर्ज्य/सामान्य नहीं';}
 var mid=(w.a+w.b)/2,isD=(sr!==null)?(mid>=sr&&mid<ss):(mid>=360&&mid<1080),df=dn(w.r,isD?'d':'n'),ex=df?' <span style="color:#c62828;font-weight:700">· '+(isD?'दिन':'रात्रि')+' में '+df+' लग्न (मतांतर)</span>':'';
 h+='<tr class="'+cl+'"><td>'+hm(w.a)+'–'+hm(w.b)+'</td><td>'+RASHI_H[w.r]+'</td><td>'+(isD?'🌞 दिन':'🌙 रात')+'</td><td>'+tx+ex+'</td></tr>';});
-o.innerHTML=h+'</tbody></table><p class="kmeta">सारणी लगभग 10 मिनट की सूक्ष्मता की है। रात्रि के लग्न (21:10 के बाद) के लिए स्थानीय पंचांग/पंडित से मिलान करें।</p>';}catch(e){o.innerHTML='<p class="warn">गणना नहीं हो सकी।</p>';}}
+o.innerHTML=(cnt?h+'</tbody></table>':h.replace(/<table>.*$/,'')+'<p class="warn">इस दिन 06:00–21:10 के बीच कोई शुद्ध विवाह लग्न नहीं मिला। दूसरी तारीख़ चुनें।</p>')+'<p class="kmeta">केवल शुभ लग्न दिखाए गए हैं (अष्टम भाव रिक्त, चंद्र 6/8/12 में नहीं, और दिन/रात का दोष वाला लग्न नहीं)। सारणी लगभग 10 मिनट की सूक्ष्मता की है। रात्रि के लग्न (21:10 के बाद) के लिए स्थानीय पंचांग/पंडित से मिलान करें।</p>';}catch(e){o.innerHTML='<p class="warn">गणना नहीं हो सकी।</p>';}}
 document.getElementById('vl_go').addEventListener('click',run);document.getElementById('vl_d').addEventListener('change',run);return true}
 function go(){if(setup()||++n>20)return;setTimeout(go,200)}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',go);else go();})();
