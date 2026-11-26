@@ -201,7 +201,7 @@ input[type=date],input[type=time]{min-height:48px}
 .about b{color:var(--maroon)}.about p{margin:4px 0}
 @media print{.brand .pbtn,.nmtools,.totop,.lang,.about{display:none!important}.brand{background:#fff;color:#000;border-bottom:2px solid #000}.brand b{color:#000}.brand span{color:#000}#nm_body{font-size:13px}}
 </style>
-<meta name="vj-ver" content="199">
+<meta name="vj-ver" content="200">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <script>try{if(window.top!==window.self){document.documentElement.style.display='none';window.top.location=window.self.location;}}catch(e){document.documentElement.style.display='none';}</script>
 
@@ -6494,7 +6494,10 @@ d.innerHTML='<button type="button" id="vl_btn" class="vjmp-btn" style="margin-to
 '<h3 style="margin:14px 0 4px;color:#6b1c28">किसी दिन के लग्न देखें</h3><label for="vl_d">तारीख़</label><input id="vl_d" type="date" value="'+today()+'"><button type="button" class="go" id="vl_go" style="margin-top:8px">इस दिन के विवाह लग्न देखें</button><div id="vl_res"></div>'+
 '<p class="kmeta">ये शास्त्रीय परंपरा के सामान्य नियम हैं; परंपरा-भेद संभव है। अंतिम निर्णय वर-वधू की कुंडली-मिलान और अपने पंडित से कराएँ।</p></div>';
 var vb=d.querySelector('#vl_btn');vb.addEventListener('click',function(){var bd=d.querySelector('#vl_body');bd.style.display=bd.style.display==='none'?'block':'none';});
-var chr=document.getElementById('ch_res');if(chr&&chr.parentNode){chr.parentNode.insertBefore(d,chr.nextSibling);var pqr=document.getElementById('pq_res'),pp_=pqr&&pqr.previousElementSibling;if(pp_&&!document.getElementById('vl_grp')){var g=document.createElement('div');g.id='vl_grp';g.style.cssText='margin:16px 4px 8px;padding:8px 12px;border-radius:12px;background:linear-gradient(90deg,#6b1c28,#a0522d);color:#fff;font-weight:700;font-size:15px';g.textContent='⏱️ प्रश्न कुंडली · चौघड़िया · विवाह लग्न';pp_.parentNode.insertBefore(g,pp_);}}else mu.parentNode.insertBefore(d,mu.nextSibling);
+var rfr=document.getElementById('rf_res'),pqr=document.getElementById('pq_res'),pp_=pqr&&pqr.previousElementSibling;
+if(rfr&&pp_&&!document.getElementById('vl_grp')){function H(id,t,c){var g=document.createElement('div');g.id=id;g.style.cssText='margin:16px 4px 8px;padding:8px 12px;border-radius:12px;background:linear-gradient(90deg,'+c+');color:#fff;font-weight:700;font-size:15px';g.textContent=t;return g;}
+var g1=H('vl_grp0','📅 दिन विशेष — प्रश्न कुंडली · चौघड़िया · राशिफल','#2e7d5b,#1b5e8a'),g2=H('vl_grp','💍 लग्न — विवाह लग्न दर्शन','#6b1c28,#a0522d');
+pp_.parentNode.insertBefore(g1,pp_);rfr.parentNode.insertBefore(g2,rfr.nextSibling);g2.parentNode.insertBefore(d,g2.nextSibling);}else mu.parentNode.insertBefore(d,mu.nextSibling);
 function run(){var o=document.getElementById('vl_res'),v=document.getElementById('vl_d').value.split('-').map(Number);if(v.length<3||!v[0]){o.innerHTML='<p class="warn">तारीख़ चुनें।</p>';return;}
 var c=CITIES[+document.getElementById('pn_place').value]||CITIES[0];
 try{var S=lagnaSlots(v[0],v[1],v[2],c[2],c[3],MUX['विवाह']);
