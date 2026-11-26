@@ -201,7 +201,7 @@ input[type=date],input[type=time]{min-height:48px}
 .about b{color:var(--maroon)}.about p{margin:4px 0}
 @media print{.brand .pbtn,.nmtools,.totop,.lang,.about{display:none!important}.brand{background:#fff;color:#000;border-bottom:2px solid #000}.brand b{color:#000}.brand span{color:#000}#nm_body{font-size:13px}}
 </style>
-<meta name="vj-ver" content="194">
+<meta name="vj-ver" content="195">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <script>try{if(window.top!==window.self){document.documentElement.style.display='none';window.top.location=window.self.location;}}catch(e){document.documentElement.style.display='none';}</script>
 
@@ -1230,7 +1230,7 @@ function panchangDay(y,mo,dd,lat,lon,off){
   const rk0=rh+part*(RKP-1);
   const gl0=rh+part*([7,6,5,4,3,2,1][wd]-1), yg0=rh+part*([5,4,3,2,1,7,6][wd]-1);
   const jdR=toJD(y,mo,dd,Math.floor(rh),Math.round((rh%1)*60),off), pc=panchangAt(jdR);
-  return {wd,vara:VARA_N[wd],sun:st_,rahu:[rk0,rk0+part],gulika:[gl0,gl0+part],yama:[yg0,yg0+part],abhijit:[st_.noon-0.4,st_.noon+0.4],pc};
+  return {wd,vara:VARA_N[wd],sun:st_,rahu:[rk0,rk0+part],gulika:[gl0,gl0+part],yama:[yg0,yg0+part],abhijit:[st_.rise+(st_.set-st_.rise)*7/15,st_.rise+(st_.set-st_.rise)*8/15],pc};
 }
 function panchangHTML(d,title,showPl){
   const pc=d.pc;
@@ -4335,7 +4335,7 @@ var RJAIN_NOTE='जैन दृष्टि: ग्रह निमित्त
    '<label for="mc_d">तारीख़</label><input id="mc_d" type="date"><label for="mc_c">स्थान</label><select id="mc_c">'+cityOptsH+'</select>'+
    '<button class="go" id="mc_go" type="button">इस तारीख़ की जाँच करें</button><div id="mc_res"></div>'+
    '<h3>कार्य-वार सार</h3>'+mcTable()+
-   '<h3>सामान्य नियम</h3><p>• <b>रिक्ता तिथि</b> (4, 9, 14) व अमावस्या में शुभ आरंभ नहीं।<br>• <b>भद्रा</b> (विष्टि करण) में मांगलिक कार्य नहीं।<br>• <b>पंचक</b> (धनिष्ठा उत्तरार्ध से रेवती) में निर्माण/दक्षिण-यात्रा/शवदाह-संबंधी नियम; शुभ कार्य टालते हैं।<br>• <b>गुरु-शुक्र अस्त</b> में विवाह, गृह-प्रवेश, उपनयन आदि नहीं।<br>• <b>खरमास</b> (सूर्य धनु/मीन में) व <b>चातुर्मास</b> में विवाह आदि नहीं।<br>• <b>अभिजित मुहूर्त</b> (मध्याह्न के आसपास ~48 मिनट) अधिकांश दोषों को घटाता है।</p>';
+   '<h3>सामान्य नियम</h3><p>• <b>रिक्ता तिथि</b> (4, 9, 14) व अमावस्या में शुभ आरंभ नहीं।<br>• <b>भद्रा</b> (विष्टि करण) में मांगलिक कार्य नहीं।<br>• <b>पंचक</b> (धनिष्ठा उत्तरार्ध से रेवती) में निर्माण/दक्षिण-यात्रा/शवदाह-संबंधी नियम; शुभ कार्य टालते हैं।<br>• <b>गुरु-शुक्र अस्त</b> में विवाह, गृह-प्रवेश, उपनयन आदि नहीं।<br>• <b>खरमास</b> (सूर्य धनु/मीन में) व <b>चातुर्मास</b> में विवाह आदि नहीं।<br>• <b>अभिजित मुहूर्त</b> (दिनमान का 1/15 भाग, मध्याह्न के आसपास ~43–48 मिनट) अधिकांश दोषों को घटाता है।</p>';
   H+=det('2) मुहूर्त चिंतामणि — शुभ-मुहूर्त जाँच',B2);
   // 3 होरा
   var B3='<p class="kmeta">होरा = दिन/रात का 24वाँ भाग (सूर्योदय से सूर्योदय तक 24 होरा; दिन के 12 व रात के 12, घड़ी में बराबर नहीं)। क्रम: सूर्य → शुक्र → बुध → चंद्र → शनि → गुरु → मंगल। दिन का पहला होरा उसी वार के ग्रह का होता है (रविवार को सूर्य, सोमवार को चंद्र…)।</p>'+
@@ -4611,7 +4611,7 @@ var RJAIN_NOTE='जैन दृष्टि: ग्रह निमित्त
     var lam=moonTropical(jd)*R,bet=moonLat(jd)*R,eps=(23.4392911-0.0130042*T)*R;
     var ra=Math.atan2(Math.sin(lam)*Math.cos(eps)-Math.tan(bet)*Math.sin(eps),Math.cos(lam)),dec=Math.asin(Math.sin(bet)*Math.cos(eps)+Math.cos(bet)*Math.sin(eps)*Math.sin(lam));
     var gm=((280.46061837+360.98564736629*(jd-2451545)+0.000387933*T*T)%360+360)%360,ha=(gm+lon)*R-ra,ph=lat*R;
-    return Math.asin(Math.sin(ph)*Math.sin(dec)+Math.cos(ph)*Math.cos(dec)*Math.cos(ha))/R-0.125;}
+    return Math.asin(Math.sin(ph)*Math.sin(dec)+Math.cos(ph)*Math.cos(dec)*Math.cos(ha))/R-1.07;}
   function moonRS(y,mo,dd,lat,lon){
     var rise=null,set=null,t,a0=moonAlt(y,mo,dd,0,lat,lon),a1,lo,hi,q,m;
     for(t=0.25;t<=24;t+=0.25){a1=moonAlt(y,mo,dd,t,lat,lon);
