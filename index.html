@@ -201,7 +201,7 @@ input[type=date],input[type=time]{min-height:48px}
 .about b{color:var(--maroon)}.about p{margin:4px 0}
 @media print{.brand .pbtn,.nmtools,.totop,.lang,.about{display:none!important}.brand{background:#fff;color:#000;border-bottom:2px solid #000}.brand b{color:#000}.brand span{color:#000}#nm_body{font-size:13px}}
 </style>
-<meta name="vj-ver" content="260">
+<meta name="vj-ver" content="261">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <script>try{if(window.top!==window.self){document.documentElement.style.display='none';window.top.location=window.self.location;}}catch(e){document.documentElement.style.display='none';}</script>
 
@@ -6953,10 +6953,11 @@ var keys=Object.keys(TK).sort(function(a,b){return b.length-a.length;});
 function esc(s){return s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');}
 var RX=new RegExp('(?<![\u0900-\u097F])('+keys.map(esc).join('|')+')(?![\u0900-\u097F])','g');
 function en(){return typeof lang!=='undefined'&&lang==='en';}
+var FW=/(?<![\u0900-\u097F])(है|हैं|में|का|की|के|को|और|पर|यह|इस|लिए|तो|कर|करें|ही|भी|न|जाता|जाती|होता|होती|हो|या|जो|वह|एक|सभी|सब|हेतु|द्वारा|सहित|तथा|जैसे)(?![\u0900-\u097F])/;
 var PRE=[[/\((रवि|सोम|मंग|बुध|गुर|शुक|शनि)\)/g,function(m,d){return '('+({'रवि':'Sun','सोम':'Mon','मंग':'Tue','बुध':'Wed','गुर':'Thu','शुक':'Fri','शनि':'Sat'})[d]+')';}],
- [/(\d{2}:\d{2}(?: \(\+1\))?)\s*से\s*(?=\d)/g,'$1 to '],[/(\d{2}:\d{2}(?: \(\+1\))?)\s*तक/g,'$1'],[/\(\s*(\d{2}:\d{2})\s*तक\)/g,'(until $1)'],[/(\d+)\s*मिनट/g,'$1 min'],[/(\d+)\s*दिन/g,'$1 days']];
+ [/(\d{2}:\d{2}(?: \(\+1\))?)\s*से\s*(?=\d)/g,'$1 to '],[/(\d{2}:\d{2}(?: \(\+1\))?)\s*तक/g,'$1'],[/\(\s*(\d{2}:\d{2})\s*तक\)/g,'(until $1)']];
 function tn(n){var t=n.nodeValue;if(!t||t.length>400)return;
- if(en()){if(!/[\u0900-\u097F]/.test(t))return;var r=t;PRE.forEach(function(p){r=r.replace(p[0],p[1]);});r=r.replace(RX,function(m){return TK[m];});if(r!==t){if(n.__vjh2==null)n.__vjh2=(n.__vjhi!=null?n.__vjhi:t);n.nodeValue=r;}}
+ if(en()){if(!/[\u0900-\u097F]/.test(t))return;var r=t;PRE.forEach(function(p){r=r.replace(p[0],p[1]);});var kk=r.trim();if(TK[kk]!==undefined){r=r.replace(kk,TK[kk]);}else if(r.length<=60&&!FW.test(r))r=r.replace(RX,function(m){return TK[m];});if(r!==t){if(n.__vjh2==null)n.__vjh2=(n.__vjhi!=null?n.__vjhi:t);n.nodeValue=r;}}
  else if(n.__vjh2!=null){n.nodeValue=n.__vjh2;n.__vjh2=null;n.__vjhi=null;}}
 function run(){if(busy)return;busy=true;try{var w=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT,null),n,L=[];while(n=w.nextNode()){var p=n.parentNode;if(p&&(p.tagName==='SCRIPT'||p.tagName==='STYLE'))continue;L.push(n);}L.forEach(tn);}finally{busy=false;}}
 var tm=null;new MutationObserver(function(){if(busy)return;clearTimeout(tm);tm=setTimeout(run,160);}).observe(document.body,{childList:true,subtree:true,characterData:true});
