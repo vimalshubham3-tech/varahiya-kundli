@@ -201,7 +201,7 @@ input[type=date],input[type=time]{min-height:48px}
 .about b{color:var(--maroon)}.about p{margin:4px 0}
 @media print{.brand .pbtn,.nmtools,.totop,.lang,.about{display:none!important}.brand{background:#fff;color:#000;border-bottom:2px solid #000}.brand b{color:#000}.brand span{color:#000}#nm_body{font-size:13px}}
 </style>
-<meta name="vj-ver" content="309">
+<meta name="vj-ver" content="310">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <script>try{if(window.top!==window.self){document.documentElement.style.display='none';window.top.location=window.self.location;}}catch(e){document.documentElement.style.display='none';}</script>
 
@@ -7602,6 +7602,30 @@ if(!t.classList.contains('vjonly')){t.classList.add('vjonly');rows.forEach(funct
 var w=t.closest('.tw');if(w&&!w.previousElementSibling.classList.contains('vjall')){var b=document.createElement('button');b.className='vjall';b.textContent='▼ पूरा दैनिक दर्शन देखें';b.onclick=function(){ON=0;t.classList.remove('vjonly');b.remove();};w.parentNode.insertBefore(b,w);}
 setTimeout(function(){try{(first||t).scrollIntoView({behavior:'smooth',block:'start'});}catch(x){}},150);}
 }}catch(x){}if(n>30||!ON){clearInterval(iv);ON=0;}},250);}
+})();
+</script>
+<style id="vj310css">
+.vjg.vjtree>#vj_tools{display:none!important}
+body.vjst .vjg.vjtree>#vj_tools{display:grid!important}
+body.vjst .vjg.vjtree>*:not(#vj_tools):not(.vjsetbtn){display:none!important}
+.vjg.vjtree>.vjsetbtn{display:block!important;width:100%;margin:12px 0 0!important;padding:12px 10px!important;border:0!important;border-radius:10px!important;background:linear-gradient(135deg,#6b1c28,#9b2c3d)!important;color:#fff!important;font-weight:800!important;font-size:16px!important;text-align:left}
+body.vjst .vjg.vjtree>#vj_tools::before{content:"\2699\FE0F  सेटिंग";grid-column:1/-1;font-weight:800;font-size:18px;color:#6b1c28;padding:4px 2px 8px}
+body.vjst.vjen .vjg.vjtree>#vj_tools::before{content:"\2699\FE0F  Settings"}
+#vjhome .hc.vjsetc .t{color:#6b1c28}
+</style>
+<script>
+/* v310: ऐप खुलते ही मेनू-ग्रिड; "सेटिंग" अलग बिंदु (भाषा, प्रिंट आदि उपकरण) */
+(function(){var D=document;
+function en(){return D.documentElement.lang==='en';}
+function sync(){D.body.classList.toggle('vjen',en());var b=D.querySelector('.vjsetbtn');if(b){var st=D.body.classList.contains('vjst');b.textContent=st?(en()?'\u2190 All tabs list':'\u2190 सभी टैब की सूची'):(en()?'\u2699\uFE0F Settings':'\u2699\uFE0F सेटिंग');}}
+function openSet(){D.body.classList.add('vjst','vjdr');sync();}
+function mk(){try{var g=D.querySelector('.vjg.vjtree'),t=D.getElementById('vj_tools');if(g&&t&&!g.querySelector('.vjsetbtn')){var b=D.createElement('button');b.type='button';b.className='vjsetbtn';b.addEventListener('click',function(e){e.stopPropagation();D.body.classList.toggle('vjst');sync();});g.insertBefore(b,t);sync();}
+var h=D.getElementById('vjhome');if(h){var hg=h.querySelector('.hg'),f=h.querySelector('.hb button');if(hg&&f&&f.textContent.trim()==='\u2715'&&!hg.querySelector('.vjsetc')){var c=D.createElement('button');c.type='button';c.className='hc vjsetc';c.innerHTML='<div class="t"><i>\u2699\uFE0F</i><span>'+(en()?'Settings':'सेटिंग')+'</span></div><div class="d">'+(en()?'Language, print, sharing, saved & registration':'भाषा, प्रिंट, सहयोग, सहेजी सूची व पंजीकरण')+'</div>';c.addEventListener('click',function(){D.body.classList.remove('vjhm');openSet();});hg.appendChild(c);}}}catch(x){}}
+new MutationObserver(function(){mk();if(!D.body.classList.contains('vjdr')&&D.body.classList.contains('vjst')){D.body.classList.remove('vjst');sync();}}).observe(D.body,{childList:true,subtree:true,attributes:true,attributeFilter:['class']});
+var L=D.getElementById('lang');if(L)L.addEventListener('click',function(){setTimeout(function(){sync();var c=D.querySelector('#vjhome .vjsetc');if(c)c.remove();mk();},120);});
+mk();
+var opened=0;function auto(){if(opened)return;var m=D.getElementById('vj_menu');if(!m)return setTimeout(auto,200);opened=1;m.click();}
+if(D.readyState==='complete')setTimeout(auto,300);else window.addEventListener('load',function(){setTimeout(auto,300);});
 })();
 </script>
 </body>
