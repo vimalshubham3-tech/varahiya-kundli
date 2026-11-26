@@ -64,6 +64,16 @@ button.vjmp-btn{background:linear-gradient(135deg,#6b1c28,#8e2b3a 60%,#b8860b);c
 .vjdk tr.tdy td:nth-child(1){background:#1b5e20;color:#fff}
 .tg{display:inline-block;border-radius:999px;padding:1px 9px;color:#fff;font-weight:700}
 .tg.pu{background:#b8860b}.tg.am{background:#34495e}.tg.ek{background:#2e7d5b}.tg.as{background:#e67e22}.tg.ca{background:#7a4fb0}
+.vjpn-h{background:linear-gradient(135deg,#6b1c28,#8e2b3a 60%,#b8860b);color:#fff;border-radius:16px;padding:12px 14px;margin:2px 0 10px;text-align:center;font-weight:700;font-size:19px;border:2px solid #c9a227;box-shadow:0 3px 10px rgba(107,28,40,.3)}
+.vjpn-h small{display:block;font-weight:400;font-size:12.5px;opacity:.93;margin-top:2px}
+#pn_res .res-card{border:2px solid #e0c06a;background:linear-gradient(180deg,#fffdf6,#fff6e2)}
+#pn_res h2.kh{background:linear-gradient(135deg,#8e2b3a,#b8860b);color:#fff!important;border-radius:12px;padding:10px 12px;margin:0 0 10px;font-size:18px;text-align:center}
+#pn_res table td{padding:9px 10px}#pn_res table td:first-child{font-weight:700;border-left:6px solid #999;background:#f6f1e6;color:#4a2c12}
+#pn_res tr:nth-child(1) td:first-child{border-color:#6b1c28;background:#f9e6e9;color:#6b1c28}#pn_res tr:nth-child(2) td:first-child{border-color:#b8860b;background:#fdf1cf;color:#7a5a00}#pn_res tr:nth-child(3) td:first-child{border-color:#e67e22;background:#ffead2;color:#a24f00}#pn_res tr:nth-child(4) td:first-child{border-color:#2e7d5b;background:#e3f4ea;color:#1d5a40}#pn_res tr:nth-child(5) td:first-child{border-color:#2f6fa8;background:#e3eefa;color:#1f4f7c}#pn_res tr:nth-child(6) td:first-child{border-color:#7a4fb0;background:#efe6f9;color:#55337f}#pn_res tr:nth-child(7) td:first-child{border-color:#e08a00;background:#fff0cc;color:#8a5a00}
+#pn_res tr:nth-child(8) td,#pn_res tr:nth-child(9) td,#pn_res tr:nth-child(10) td{background:#fdecea}#pn_res tr:nth-child(8) td:first-child,#pn_res tr:nth-child(9) td:first-child,#pn_res tr:nth-child(10) td:first-child{border-color:#c62828;background:#fbd9d5;color:#9b1c14}#pn_res tr:nth-child(8) td:last-child,#pn_res tr:nth-child(9) td:last-child,#pn_res tr:nth-child(10) td:last-child{color:#9b1c14;font-weight:700}
+#pn_res tr:nth-child(11) td{background:#e8f6ec}#pn_res tr:nth-child(11) td:first-child{border-color:#1b7a3d;background:#d3eedb;color:#145c2e}#pn_res tr:nth-child(11) td:last-child{color:#145c2e;font-weight:700}
+#pn_res .res-card>h3{background:#efe6f9;color:#55337f;border-left:6px solid #7a4fb0;border-radius:10px;padding:8px 10px}
+#pn_res .res-card>p.kmeta:nth-of-type(1){background:#f1ebfa;border-radius:10px;padding:8px 10px;color:#3d2766!important;font-weight:600}
 input[type=month]{width:100%;box-sizing:border-box;min-height:48px;font:inherit;font-size:16px;padding:12px;border:1px solid var(--line);border-radius:10px;background:#fbfbfd;color:var(--ink)} /* v173 */
 .detect{margin-top:10px;font-size:14px;min-height:0}
 .det-line{background:#faf4e8;border:1px dashed var(--gold);border-radius:10px;padding:8px 10px}
@@ -181,7 +191,7 @@ input[type=date],input[type=time]{min-height:48px}
 .about b{color:var(--maroon)}.about p{margin:4px 0}
 @media print{.brand .pbtn,.nmtools,.totop,.lang,.about{display:none!important}.brand{background:#fff;color:#000;border-bottom:2px solid #000}.brand b{color:#000}.brand span{color:#000}#nm_body{font-size:13px}}
 </style>
-<meta name="vj-ver" content="184">
+<meta name="vj-ver" content="185">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <script>try{if(window.top!==window.self){document.documentElement.style.display='none';window.top.location=window.self.location;}}catch(e){document.documentElement.style.display='none';}</script>
 
@@ -6386,6 +6396,10 @@ function go(){if(setup()||++n>20)return;setTimeout(go,200)}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',go);else go();})();
 /* v178: क्रम — दैनिक के साथ दैनिक परिणाम, मासिक के साथ मासिक, वार्षिक के साथ वार्षिक */
 (function(){var n=0;function mv(){try{var r=document.getElementById('pn_res'),go=document.getElementById('pn_go'),hb=document.getElementById('hb_go'),jc=document.getElementById('jc_go'),ha=document.getElementById('ha_go');if(!r||!go||!hb||!jc||!ha)return false;var d=go.closest('.panel');if(d&&d.parentNode===r.parentNode&&d.nextSibling!==r)d.parentNode.insertBefore(r,d.nextSibling);var hp=hb.closest('.panel'),jp=jc.closest('.panel'),ap=ha.closest('.panel');if(hp&&jp&&ap&&hp.parentNode===jp.parentNode&&jp.nextSibling!==hp&&ap.parentNode===jp.parentNode)jp.parentNode.insertBefore(hp,jp.nextSibling);var jt=document.getElementById('jt_wa'),hk=document.getElementById('hk_go'),hpp=document.getElementById('hp_go');jt=jt&&jt.closest('.panel');hk=hk&&hk.closest('.panel');hpp=hpp&&hpp.closest('.panel');if(jt&&hpp&&jt.parentNode===hpp.parentNode&&hpp.nextSibling!==jt)hpp.parentNode.insertBefore(jt,hpp.nextSibling);if(hk&&ap&&hk.parentNode===ap.parentNode&&ap.nextSibling!==hk)ap.parentNode.insertBefore(hk,ap.nextSibling);return true}catch(e){return false}}
+function go(){if(mv()||++n>20)return;setTimeout(go,150)}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',go);else go();})();
+/* v185: आज का पंचांग — ऊपर शीर्षक बैनर */
+(function(){var n=0;function mv(){try{var pl=document.getElementById('pn_place');if(!pl)return false;if(pl.__vjh)return true;pl.__vjh=1;var l=document.querySelector('label[for=pn_place]');var h=document.createElement('div');h.className='vjpn-h';h.innerHTML='📅 आज का पंचांग<small>चुनी तारीख़ व स्थान का पूरा पंचांग</small>';l.parentNode.insertBefore(h,l);return true}catch(e){return false}}
 function go(){if(mv()||++n>20)return;setTimeout(go,150)}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',go);else go();})();
 /* v158: जैन तिथि दर्पण टैब सबसे पहले */
