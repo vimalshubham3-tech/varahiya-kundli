@@ -1,0 +1,18 @@
+name: daily-personality-push
+on:
+  schedule:
+    - cron: '30 23 * * *'   # रोज़ 05:00 IST (अगले दिन)
+  workflow_dispatch:
+jobs:
+  send:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 20 }
+      - run: cd push && npm install --no-audit --no-fund && node send-pd.js
+        env:
+          CLOUD_URL: ${{ secrets.CLOUD_URL }}
+          PUSH_TOKEN: ${{ secrets.PUSH_TOKEN }}
+          VAPID_PUBLIC: ${{ secrets.VAPID_PUBLIC }}
+          VAPID_PRIVATE: ${{ secrets.VAPID_PRIVATE }}

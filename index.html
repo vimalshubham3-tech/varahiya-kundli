@@ -156,7 +156,7 @@ input[type=date],input[type=time]{min-height:48px}
 .about b{color:var(--maroon)}.about p{margin:4px 0}
 @media print{.brand .pbtn,.nmtools,.totop,.lang,.about{display:none!important}.brand{background:#fff;color:#000;border-bottom:2px solid #000}.brand b{color:#000}.brand span{color:#000}#nm_body{font-size:13px}}
 </style>
-<meta name="vj-ver" content="154">
+<meta name="vj-ver" content="155">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <script>try{if(window.top!==window.self){document.documentElement.style.display='none';window.top.location=window.self.location;}}catch(e){document.documentElement.style.display='none';}</script>
 
@@ -5874,12 +5874,13 @@ if(fb&&!document.getElementById("vj_pl")){var d=document.createElement("div");d.
         if(r!=='granted'){st();return;}
         return navigator.serviceWorker.ready.then(function(reg){return reg.pushManager.getSubscription().then(function(s){return s||reg.pushManager.subscribe({userVisibleOnly:true,applicationServerKey:u8(VAPID)});}).catch(function(e){return reg.pushManager.getSubscription().then(function(o){return (o?o.unsubscribe():Promise.resolve()).then(function(){return reg.pushManager.subscribe({userVisibleOnly:true,applicationServerKey:u8(VAPID)});});});});}).then(function(s){
           fetch('https://script.google.com/macros/s/AKfycbwRBH_bPXcOMLTnPd3aTdWggZhrDUnb0Mh6BlJG9oAU0GxX90ssmFi3yb2cl6eNB-sQ1w/exec',{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain'},body:JSON.stringify({type:'push',vjk:'8i4WgUDgCvJkiTlgu8VBmHom',sub:s.toJSON()})});
-          pb.textContent='🔔 सूचना चालू है';pm.textContent='हर सुबह लगभग 6 बजे आज के राशिफल की सूचना आएगी (फ़ोन ऑनलाइन होने पर)।';
+          pb.textContent='🔔 सूचना चालू है';pm.textContent='हर सुबह लगभग 5 बजे "आज का व्यक्तित्व विकास" और 6 बजे राशिफल व जैन तिथि की सूचना आएगी (फ़ोन ऑनलाइन होने पर)।';
         });
       }).catch(function(e){pm.textContent='सूचना चालू नहीं हो सकी। कारण: '+(e&&e.name?e.name+' — ':'')+(e&&e.message?e.message:String(e));});
     };
     if(/[?&]rf=1/.test(location.search)){setTimeout(function(){setMode('t');},300);}
     if(/[?&]jt=1/.test(location.search)){setTimeout(function(){setMode('h');},300);}
+    if(/[?&]pd=1/.test(location.search)){setTimeout(function(){setMode('pd');},500);}
     // पहली स्क्रीन पर सूचना चालू करने की पट्टी — "बाद में" का विकल्प नहीं; अनुमति मिलने तक हर बार आती है
     try{
       if(localStorage.getItem('vj_reg_v1')){
