@@ -201,7 +201,7 @@ input[type=date],input[type=time]{min-height:48px}
 .about b{color:var(--maroon)}.about p{margin:4px 0}
 @media print{.brand .pbtn,.nmtools,.totop,.lang,.about{display:none!important}.brand{background:#fff;color:#000;border-bottom:2px solid #000}.brand b{color:#000}.brand span{color:#000}#nm_body{font-size:13px}}
 </style>
-<meta name="vj-ver" content="290">
+<meta name="vj-ver" content="291">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <script>try{if(window.top!==window.self){document.documentElement.style.display='none';window.top.location=window.self.location;}}catch(e){document.documentElement.style.display='none';}</script>
 
@@ -7166,6 +7166,22 @@ fx();new MutationObserver(fx).observe(document.body,{childList:true,subtree:true
 [].forEach.call(document.querySelectorAll('#vl_body .vjmp-info:not(.vjcol2)'),function(e){var t=e.firstElementChild;if(!t||t.tagName!=='B')return;e.classList.add('vjcol2');var w=document.createElement('div');w.className='vjib';while(t.nextSibling)w.appendChild(t.nextSibling);e.appendChild(w);t.addEventListener('click',function(){e.classList.toggle('open');});});
 [].forEach.call(document.querySelectorAll('#vl_body h3:not(.vjcol3)'),function(h){var u=h.nextElementSibling;if(!u||u.tagName!=='UL')return;h.classList.add('vjcol3');h.addEventListener('click',function(){h.classList.toggle('open');u.classList.toggle('open');});});
 }catch(x){}}
+fx();new MutationObserver(fx).observe(document.body,{childList:true,subtree:true});})();
+</script>
+<style id="vj291css">
+#pn_res .tw{overflow:visible!important}
+#pn_res .tw>table.vjacc2,#pn_res .tw>table.vjacc2>tbody{display:block;width:100%!important;min-width:0!important}
+#pn_res .tw>table.vjacc2 tr{display:block;margin:0 0 6px;border-radius:10px;overflow:hidden}
+#pn_res .tw>table.vjacc2 td{display:block;width:auto!important;box-sizing:border-box}
+#pn_res .tw>table.vjacc2 td:first-child{cursor:pointer;position:relative;padding-right:30px}
+#pn_res .tw>table.vjacc2 td:first-child::after{content:"\25B8";position:absolute;right:12px;top:50%;transform:translateY(-50%);color:#8a6d1d}
+#pn_res .tw>table.vjacc2 tr.open>td:first-child::after{content:"\25BE"}
+#pn_res .tw>table.vjacc2 td:nth-child(2){display:none;white-space:normal}
+#pn_res .tw>table.vjacc2 tr.open>td:nth-child(2){display:block}
+</style>
+<script>
+/* v291: दैनिक पंचांग सारणी — हर पंक्ति ड्रॉप-डाउन */
+(function(){function fx(){try{[].forEach.call(document.querySelectorAll('#pn_res .tw>table:not(.vjacc2)'),function(t){if(t.rows.length<5)return;t.classList.add('vjacc2');t.addEventListener('click',function(e){var td=e.target.closest('td');if(!td||td.cellIndex!==0)return;td.parentNode.classList.toggle('open');});});}catch(x){}}
 fx();new MutationObserver(fx).observe(document.body,{childList:true,subtree:true});})();
 </script>
 </body>
