@@ -201,7 +201,7 @@ input[type=date],input[type=time]{min-height:48px}
 .about b{color:var(--maroon)}.about p{margin:4px 0}
 @media print{.brand .pbtn,.nmtools,.totop,.lang,.about{display:none!important}.brand{background:#fff;color:#000;border-bottom:2px solid #000}.brand b{color:#000}.brand span{color:#000}#nm_body{font-size:13px}}
 </style>
-<meta name="vj-ver" content="292">
+<meta name="vj-ver" content="293">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <script>try{if(window.top!==window.self){document.documentElement.style.display='none';window.top.location=window.self.location;}}catch(e){document.documentElement.style.display='none';}</script>
 
@@ -7199,6 +7199,30 @@ h.parentNode.insertBefore(w,h.nextSibling);infos.forEach(function(e){w.appendChi
 var n=w.nextSibling,mv=[];while(n&&!(n.nodeType===1&&n.tagName==='H3')){mv.push(n);n=n.nextSibling;}mv.forEach(function(e){w.appendChild(e);});
 h.classList.add('vjgh');h.addEventListener('click',function(){h.classList.toggle('open');w.classList.toggle('open');});}catch(x){}}
 fx();new MutationObserver(fx).observe(document.body,{childList:true,subtree:true});})();
+</script>
+<style id="vj293css">
+.vjg.vjtree{justify-content:flex-start!important;position:fixed!important;top:0!important;left:0!important;bottom:0!important;width:84%!important;max-width:320px!important;margin:0!important;padding:54px 10px 24px!important;background:#fbf3e2!important;z-index:9998!important;overflow-y:auto!important;transform:translateX(-108%);transition:transform .25s;box-shadow:4px 0 18px rgba(0,0,0,.35);box-sizing:border-box!important}
+body.vjdr .vjg.vjtree{transform:none}
+#vjbk{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:9997}
+body.vjdr #vjbk{display:block}
+#vjdx{position:fixed;top:10px;left:10px;width:calc(84% - 20px);max-width:300px;z-index:9999;display:none;background:#6b1c28;color:#fff;border:0;border-radius:10px;padding:9px;font:700 14px inherit;font-family:inherit}
+body.vjdr #vjdx{display:block}
+#vj_menu{display:block;width:calc(100% - 16px);max-width:440px;margin:10px auto;padding:11px 14px;background:linear-gradient(135deg,#6b1c28,#a8741a);color:#fff;border:2px solid #c9a15a;border-radius:12px;font-family:inherit;font-size:15px;font-weight:700;text-align:left;cursor:pointer}
+</style>
+<script>
+/* v293: ऊपर का ट्री-मेनू साइड-ड्रॉअर में; पंचांग-बैनर ऊपर */
+(function(){function lab(){var m=document.getElementById('vj_menu');if(!m)return;var t=document.querySelector('.vjg .tabs .tab[aria-selected="true"]');var en=document.documentElement.lang==='en';var s=(en?'\u2630 Menu':'\u2630 \u092e\u0947\u0928\u0942')+(t?' \u2014 '+t.textContent.trim():'');if(m.textContent!==s)m.textContent=s;}
+function op(v){document.body.classList.toggle('vjdr',v);}
+function init(){var g=document.querySelector('.vjg');if(!g||document.getElementById('vj_menu'))return;
+var m=document.createElement('button');m.type='button';m.id='vj_menu';g.parentNode.insertBefore(m,g);m.addEventListener('click',function(){op(true);});
+var bk=document.createElement('div');bk.id='vjbk';bk.addEventListener('click',function(){op(false);});document.body.appendChild(bk);
+var x=document.createElement('button');x.type='button';x.id='vjdx';x.textContent='\u2715 \u092c\u0902\u0926 / Close';x.addEventListener('click',function(){op(false);});document.body.appendChild(x);
+g.addEventListener('click',function(e){var t=e.isTrusted&&e.target.closest('.tabs .tab');if(t)setTimeout(function(){op(false);window.scrollTo(0,0);},60);});
+lab();}
+function go(){init();lab();}
+document.addEventListener('DOMContentLoaded',go);go();
+new MutationObserver(function(){go();}).observe(document.body,{attributes:true,attributeFilter:['aria-selected','lang'],subtree:true});
+document.addEventListener('click',function(){setTimeout(lab,50);},true);})();
 </script>
 </body>
 </html>
