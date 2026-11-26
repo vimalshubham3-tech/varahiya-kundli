@@ -201,7 +201,7 @@ input[type=date],input[type=time]{min-height:48px}
 .about b{color:var(--maroon)}.about p{margin:4px 0}
 @media print{.brand .pbtn,.nmtools,.totop,.lang,.about{display:none!important}.brand{background:#fff;color:#000;border-bottom:2px solid #000}.brand b{color:#000}.brand span{color:#000}#nm_body{font-size:13px}}
 </style>
-<meta name="vj-ver" content="230">
+<meta name="vj-ver" content="231">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <script>try{if(window.top!==window.self){document.documentElement.style.display='none';window.top.location=window.self.location;}}catch(e){document.documentElement.style.display='none';}</script>
 
@@ -6503,7 +6503,7 @@ document.body.appendChild(f);
   ['kc_q','kc2_q','kc4_q'].forEach(function(id){
     var ta=D.getElementById(id);if(!ta)return;
     var box=D.createElement('details');box.style.margin='6px 0';
-    var bt='';KB.forEach(function(r){r.forEach(function(k){bt+='<button type="button" class="vjk" data-k="'+k+'" style="padding:8px 10px;margin:2px;border:1px solid #c9a15a;border-radius:8px;background:#fff;font:inherit;font-size:17px">'+k+'</button>';});bt+='<br>';});
+    var bt='';KB.forEach(function(r,ri){r.forEach(function(k){bt+='<button type="button" class="vjk" data-k="'+k+'" style="padding:8px 10px;margin:2px;border:1px solid #c9a15a;border-radius:8px;background:#fff;font:inherit;font-size:17px">'+(ri===1?'क'+k:k)+'</button>';});bt+='<br>';});
     bt+='<button type="button" class="vjk" data-k=" " style="padding:8px 18px;margin:2px;border:1px solid #c9a15a;border-radius:8px;background:#fff;font:inherit">खाली स्थान</button><button type="button" class="vjk" data-k="⌫" style="padding:8px 14px;margin:2px;border:1px solid #c9a15a;border-radius:8px;background:#fff;font:inherit">⌫ मिटाएँ</button>';
     box.innerHTML='<summary><b>✍️ देवनागरी कीबोर्ड नहीं है? यहाँ से लिखें</b></summary><label>अंग्रेज़ी अक्षरों (Hinglish) में लिखें</label><input type="text" autocomplete="off" autocapitalize="off" placeholder="जैसे: mera kaary siddh hoga ya nahi" style="width:100%;box-sizing:border-box;padding:8px;border-radius:8px;border:1px solid #ccc;font:inherit"><p class="kmeta">ऊपर के ख़ाने में देवनागरी अपने-आप बनेगी। संकेत: t=त, T=ट, d=द, D=ड, n=न, N=ण, sh=श, Sh=ष, aa=आ, ee=ई, oo=ऊ, ai=ऐ, au=औ, ksh=क्ष, gy=ज्ञ, M=ं। बनी हुई देवनागरी को नीचे की अक्षर-पट्टी से सुधार सकते हैं।</p><div class="vjkb" style="line-height:1.1">'+bt+'</div>';
     ta.parentNode.insertBefore(box,ta.nextSibling);
