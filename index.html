@@ -201,7 +201,7 @@ input[type=date],input[type=time]{min-height:48px}
 .about b{color:var(--maroon)}.about p{margin:4px 0}
 @media print{.brand .pbtn,.nmtools,.totop,.lang,.about{display:none!important}.brand{background:#fff;color:#000;border-bottom:2px solid #000}.brand b{color:#000}.brand span{color:#000}#nm_body{font-size:13px}}
 </style>
-<meta name="vj-ver" content="245">
+<meta name="vj-ver" content="246">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <script>try{if(window.top!==window.self){document.documentElement.style.display='none';window.top.location=window.self.location;}}catch(e){document.documentElement.style.display='none';}</script>
 
@@ -6827,7 +6827,7 @@ if(D.readyState==='loading')D.addEventListener('DOMContentLoaded',go);else go();
  if(!pa||!nm||!td||!window.__vjCalWeek||!D.getElementById('pn_res')){if(++n<100)setTimeout(go,200);return;}
  if(D.getElementById('wk_all'))return;
  var wb=D.createElement('button');wb.type='button';wb.id='wk_all';wb.className='vjmp-btn';wb.innerHTML='🗓️ वरहिया जैन साप्ताहिक पंचांग दर्शन<small>इस सप्ताह के सातों दिन — देखने/बंद करने के लिए दबाएँ</small>';
- var wr=D.createElement('div');wr.id='wk_res';pa.parentNode.insertBefore(wb,pa);wb.parentNode.insertBefore(wr,pa);
+ var wr=D.createElement('div');wr.id='wk_res';var an=(pa.nextElementSibling&&pa.nextElementSibling.classList.contains('vjchg'))?pa.nextElementSibling:pa;an.parentNode.insertBefore(wb,an.nextSibling);wb.parentNode.insertBefore(wr,wb.nextSibling);
  var cur=null;
  function city(){var pl=D.getElementById('pn_place');return CITIES[pl?+pl.value:0]||CITIES[0];}
  function ist(){var t=new Date(Date.now()+19800000);return Date.UTC(t.getUTCFullYear(),t.getUTCMonth(),t.getUTCDate());}
@@ -6837,7 +6837,16 @@ if(D.readyState==='loading')D.addEventListener('DOMContentLoaded',go);else go();
   window.__vjWeekBind(wr);}
  wb.addEventListener('click',function(){if(wr.innerHTML.trim()){wr.innerHTML='';return;}wr.innerHTML='<p class="kmeta">गणना हो रही है…</p>';cur=ist();setTimeout(render,30);});
  // एक समय में एक ही दर्शन खुला
- var busy=false,L=[[wb,wr],[pa,D.getElementById('pn_res')],[nm,D.getElementById('nm_res')],[td,D.getElementById('td_res')]];
+ // वार्षिक पंचांग दर्शन — मासिक के नीचे
+ var yb=D.createElement('button');yb.type='button';yb.id='yr_all';yb.className='vjmp-btn';yb.innerHTML='📆 वरहिया जैन वार्षिक पंचांग दर्शन<small>पूरे वर्ष के व्रत, पर्व व कल्याणक — देखने/बंद करने के लिए दबाएँ</small>';
+ var yr=D.createElement('div');yr.id='yr_res';var an2=(nm.nextElementSibling&&nm.nextElementSibling.classList.contains('vjchg'))?nm.nextElementSibling:nm;an2.parentNode.insertBefore(yb,an2.nextSibling);yb.parentNode.insertBefore(yr,yb.nextSibling);
+ var yy=0;
+ function yrender(){var ha=D.getElementById('ha_y'),hc=D.getElementById('ha_c'),pc=D.getElementById('pm_c'),go2=D.getElementById('ha_go'),res=D.getElementById('ha_res');if(!ha||!go2||!res){yr.innerHTML='<p class="warn">गणना नहीं हो सकी।</p>';return;}
+  ha.value=yy;if(hc&&pc)hc.value=pc.value;go2.click();var h=res.innerHTML;res.innerHTML='';
+  yr.innerHTML='<div class="vjyr"><div style="display:flex;gap:6px;align-items:center;margin:4px 0"><button type="button" data-y="-1" style="padding:7px 12px;border-radius:8px;border:1px solid #b8860b;background:#fffdf7;color:#6b1c28">◀ पिछला वर्ष</button><span style="flex:1;text-align:center;font-weight:700;color:#6b1c28">'+yy+'</span><button type="button" data-y="1" style="padding:7px 12px;border-radius:8px;border:1px solid #b8860b;background:#fffdf7;color:#6b1c28">अगला वर्ष ▶</button></div>'+h+'</div>';
+  yr.querySelectorAll('button[data-y]').forEach(function(b){b.onclick=function(e){e.stopPropagation();var v=yy+(+b.getAttribute('data-y'));if(v<1950||v>2050)return;yy=v;yrender();};});}
+ yb.addEventListener('click',function(){if(yr.innerHTML.trim()){yr.innerHTML='';return;}yr.innerHTML='<p class="kmeta">गणना हो रही है…</p>';yy=new Date(Date.now()+19800000).getUTCFullYear();setTimeout(yrender,30);});
+ var busy=false,L=[[wb,wr],[yb,yr],[pa,D.getElementById('pn_res')],[nm,D.getElementById('nm_res')],[td,D.getElementById('td_res')]];
  L.forEach(function(x){x[0].addEventListener('click',function(){if(busy||!x[0].isTrusted&&false)return;
    setTimeout(function(){if(!x[1].innerHTML.trim())return;busy=true;L.forEach(function(y){if(y!==x&&y[1].innerHTML.trim()){try{y[0].click();}catch(e){}}});busy=false;},60);});});
 })();}catch(e){console.error('wk',e);}})();
