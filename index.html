@@ -156,7 +156,7 @@ input[type=date],input[type=time]{min-height:48px}
 .about b{color:var(--maroon)}.about p{margin:4px 0}
 @media print{.brand .pbtn,.nmtools,.totop,.lang,.about{display:none!important}.brand{background:#fff;color:#000;border-bottom:2px solid #000}.brand b{color:#000}.brand span{color:#000}#nm_body{font-size:13px}}
 </style>
-<meta name="vj-ver" content="168">
+<meta name="vj-ver" content="169">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <script>try{if(window.top!==window.self){document.documentElement.style.display='none';window.top.location=window.self.location;}}catch(e){document.documentElement.style.display='none';}</script>
 
@@ -4482,10 +4482,10 @@ var RJAIN_NOTE='जैन दृष्टि: ग्रह निमित्त
   });
   var d=D.createElement('div');d.className='panel';
   var n=istNow(),p2=function(x){return String(x).padStart(2,'0');};
-  d.innerHTML='<h3>मासिक पंचांग-विचार — निर्णय सागर शैली (नीमच)</h3><p class="kmeta">निर्णय सागर पंचांग नीमच (म.प्र.) से छपने वाला लोकप्रिय हिंदी पंचांग है, जिसमें तिथि-नक्षत्र के साथ भद्रा, पंचक, मूल-विचार आदि दिए जाते हैं। यहाँ वही विचार चुने महीने के हर दिन के लिए गणना से बनता है। भद्रा, पंचक व मूल का समय चुने स्थान के लिए खगोलीय गणना से निकाला गया है।</p>'+
+  d.innerHTML='<h3>मासिक पंचांग-विचार — निर्णय सागर शैली (नीमच) · ड्रिक शैली</h3><p class="kmeta">निर्णय सागर पंचांग नीमच (म.प्र.) से छपने वाला लोकप्रिय हिंदी पंचांग है, जिसमें तिथि-नक्षत्र के साथ भद्रा, पंचक, मूल-विचार आदि दिए जाते हैं। यहाँ वही विचार चुने महीने के हर दिन के लिए गणना से बनता है। भद्रा, पंचक व मूल का समय चुने स्थान के लिए खगोलीय गणना से निकाला गया है।</p>'+
    '<label for="nm_m">महीना</label><input id="nm_m" type="month" value="'+n.y+'-'+p2(n.mo)+'">'+
    '<label for="nm_c">स्थान</label><select id="nm_c">'+cityOpts()+'</select>'+
-   '<button class="go" id="nm_go" type="button">महीने का पंचांग-विचार देखें</button><div id="nm_res"></div>';
+   '<button class="go" id="nm_go" type="button">निर्णय सागर शैली — महीने का पंचांग-विचार</button><button class="go" id="nm_dk" type="button" style="margin-top:8px">ड्रिक पंचांग शैली — महीने की तालिका</button><div id="nm_res"></div>';
   pp.insertBefore(d,pp.firstChild);
   D.getElementById('nm_c').value=String(ni);
   var MOOL=[0,8,9,17,18,26];
@@ -4523,6 +4523,19 @@ var RJAIN_NOTE='जैन दृष्टि: ग्रह निमित्त
       h+='<tr'+(sp.length?' style="background:#fff6e6"':'')+'><td>'+dd+' '+pd.vara.slice(0,3)+'</td><td>'+E(pc.paksha.charAt(0)==='श'?'शु. ':'कृ. ')+E(pc.tn)+' <small>('+etT+' तक)</small></td><td>'+E(NAK_H[pc.nak])+' <small>('+etN+' तक)</small></td><td>'+hmS(pd.sun.rise)+'–'+hmS(pd.sun.set)+'</td><td>'+E(sp.join(' · ')||'—')+'</td></tr>';
     }
     o.innerHTML=h+'</tbody></table></div><p class="kmeta">तिथि व नक्षत्र के साथ उनकी समाप्ति का समय (सूर्योदय के बाद) दिया है। भद्रा = विष्टि करण का आरंभ-समाप्ति समय (मिनट तक की गणना)। पंचक = चंद्र कुंभ/मीन में (उस दिन किसी भी समय)। मूल = अश्विनी, आश्लेषा, मघा, ज्येष्ठा, मूल, रेवती नक्षत्र (गंडमूल) उस दिन किसी भी समय। रंगीन पंक्ति = विशेष विचार वाला दिन। शुभ कार्य के लिए मुहूर्त टैब से पूरी जाँच करें।</p></div>';
+  });
+  D.getElementById('nm_dk').addEventListener('click',function(){
+    var o=D.getElementById('nm_res');o.innerHTML='<p class="kmeta">गणना हो रही है…</p>';
+    setTimeout(function(){try{
+      var v=(D.getElementById('nm_m').value||new Date(Date.now()+19800000).toISOString().slice(0,7)).split('-').map(Number),c=CITIES[+D.getElementById('nm_c').value];
+      var y=v[0],mo=v[1],days=new Date(Date.UTC(y,mo,0)).getUTCDate(),h='<div class="res-card"><h3>'+E(c[0])+' — '+mo+'/'+y+' (ड्रिक शैली)</h3><div class="tw"><table><thead><tr><th>दिन</th><th>सूर्योदय–अस्त</th><th>तिथि</th><th>नक्षत्र</th><th>योग</th><th>करण</th><th>चंद्र राशि</th><th>राहुकाल</th></tr></thead><tbody>';
+      for(var dd=1;dd<=days;dd++){
+        var pd=panchangDay(y,mo,dd,c[2],c[3],5.5),pc=pd.pc,sr=pd.sun.rise;
+        var eT=endOf(y,mo,dd,sr,function(q){return q.t;}),eN=endOf(y,mo,dd,sr,function(q){return q.nak;}),eY=endOf(y,mo,dd,sr,function(q){return q.yg;}),eK=endOf(y,mo,dd,sr,function(q){return q.kn;});
+        h+='<tr><td>'+dd+' '+pd.vara.slice(0,3)+'</td><td>'+hmS(pd.sun.rise)+'–'+hmS(pd.sun.set)+'</td><td>'+E(pc.paksha.charAt(0)==='श'?'शु. ':'कृ. ')+E(pc.tn)+' <small>('+eT+' तक)</small></td><td>'+E(NAK_H[pc.nak])+' <small>('+eN+' तक)</small></td><td>'+E(pc.yg)+' <small>('+eY+' तक)</small></td><td>'+E(pc.kn)+' <small>('+eK+' तक)</small></td><td>'+E(RASHI_H[pc.moonR])+'</td><td>'+hmS(pd.rahu[0])+'–'+hmS(pd.rahu[1])+'</td></tr>';
+      }
+      o.innerHTML=h+'</tbody></table></div><p class="kmeta">ड्रिक (दृक्) शैली में तिथि, नक्षत्र, योग व करण का आरंभ-अंत सूर्य-चंद्र की वास्तविक खगोलीय स्थिति से निकाला जाता है, और चुने स्थान के सूर्योदय के अनुसार दिन माना जाता है। यहाँ सभी समय ऐप की अपनी गणना से, भारतीय मानक समय में हैं। छपे पंचांग या drikpanchang.com से कुछ मिनट का अंतर संभव है, इसलिए अपने पंचांग से मिला लें। समय के आगे "तक" का अर्थ उस दिन के सूर्योदय के बाद उसकी समाप्ति है।</p></div>';
+    }catch(e){o.innerHTML='<p class="warn">गणना नहीं हो सकी।</p>';}},30);
   });
 }catch(e){console&&console.error&&console.error(e);}})();
 
