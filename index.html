@@ -181,7 +181,7 @@ input[type=date],input[type=time]{min-height:48px}
 .about b{color:var(--maroon)}.about p{margin:4px 0}
 @media print{.brand .pbtn,.nmtools,.totop,.lang,.about{display:none!important}.brand{background:#fff;color:#000;border-bottom:2px solid #000}.brand b{color:#000}.brand span{color:#000}#nm_body{font-size:13px}}
 </style>
-<meta name="vj-ver" content="183">
+<meta name="vj-ver" content="184">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <script>try{if(window.top!==window.self){document.documentElement.style.display='none';window.top.location=window.self.location;}}catch(e){document.documentElement.style.display='none';}</script>
 
@@ -6374,7 +6374,7 @@ b.addEventListener('click',function(){var k=key();
   try{var dc=cards[0];dc.classList.add('vjdk');var tn=new Date(Date.now()+19800000),tm=(tn.getUTCFullYear()+'-'+String(tn.getUTCMonth()+1).padStart(2,'0')),sel=document.getElementById('pm_m').value;
    [].forEach.call(dc.querySelectorAll('tbody tr'),function(tr){var tds=tr.children,d0=tds[0].textContent.trim();if(d0.indexOf('रवि')>-1)tr.classList.add('sun');if(sel===tm&&parseInt(d0,10)===tn.getUTCDate())tr.classList.add('tdy');
     var t=tds[2];if(t){var tx=t.textContent,c='';if(tx.indexOf('पूर्णिमा')>-1)c='pu';else if(tx.indexOf('अमावस्या')>-1)c='am';else if(tx.indexOf('एकादशी')>-1)c='ek';else if(tx.indexOf('अष्टमी')>-1)c='as';else if(tx.indexOf('चतुर्दशी')>-1)c='ca';
-     if(c){var m=tx.match(/^(\S+\s+\S+)(.*)$/);if(m)t.innerHTML='<span class="tg '+c+'">'+m[1]+'</span>'+m[2];}}});}catch(e){}if(bc){bc.classList.add('vjbh');var h3=bc.querySelector('h3'),sub=h3.textContent.replace('भद्रा · पंचक · मूल विचार — ','');
+     if(c){var m=tx.match(/^(\S+\s+\S+)(.*)$/);if(m)t.innerHTML='<span class="tg '+c+'">'+m[1]+'</span> <small>'+m[2].trim()+'</small>';}}});}catch(e){}if(bc){bc.classList.add('vjbh');var h3=bc.querySelector('h3'),sub=h3.textContent.replace('भद्रा · पंचक · मूल विचार — ','');
    var hd=document.createElement('div');hd.className='vjbh-h';hd.innerHTML='भद्रा · पंचक · मूल विचार<small>'+sub+'</small>';h3.parentNode.replaceChild(hd,h3);
    var lg=document.createElement('div');lg.className='vjbh-lg';lg.innerHTML='<span class="bdg bh">भद्रा</span><span class="bdg pk">पंचक</span><span class="bdg ml">मूल</span><span>= विशेष विचार वाले दिन</span>';hd.parentNode.insertBefore(lg,hd.nextSibling);
    [].forEach.call(bc.querySelectorAll('tbody tr'),function(tr){var td=tr.lastElementChild,tx=td.textContent.trim();if(!tx||tx==='—'){tr.removeAttribute('style');return;}
