@@ -201,7 +201,7 @@ input[type=date],input[type=time]{min-height:48px}
 .about b{color:var(--maroon)}.about p{margin:4px 0}
 @media print{.brand .pbtn,.nmtools,.totop,.lang,.about{display:none!important}.brand{background:#fff;color:#000;border-bottom:2px solid #000}.brand b{color:#000}.brand span{color:#000}#nm_body{font-size:13px}}
 </style>
-<meta name="vj-ver" content="251">
+<meta name="vj-ver" content="252">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <script>try{if(window.top!==window.self){document.documentElement.style.display='none';window.top.location=window.self.location;}}catch(e){document.documentElement.style.display='none';}</script>
 
@@ -6827,7 +6827,7 @@ if(D.readyState==='loading')D.addEventListener('DOMContentLoaded',go);else go();
  if(!pa||!nm||!td||!window.__vjCalWeek||!D.getElementById('pn_res')){if(++n<100)setTimeout(go,200);return;}
  if(D.getElementById('wk_all'))return;
  var wb=D.createElement('button');wb.type='button';wb.id='wk_all';wb.className='vjmp-btn';wb.innerHTML='🗓️ वरहिया जैन साप्ताहिक पंचांग दर्शन<small>इस सप्ताह के सातों दिन — देखने/बंद करने के लिए दबाएँ</small>';
- var wr=D.createElement('div');wr.id='wk_res';var an=(pa.nextElementSibling&&pa.nextElementSibling.classList.contains('vjchg'))?pa.nextElementSibling:pa;an.parentNode.insertBefore(wb,an.nextSibling);wb.parentNode.insertBefore(wr,wb.nextSibling);
+ var wr=D.createElement('div');wr.id='wk_res';var an=(pa.nextElementSibling&&pa.nextElementSibling.classList.contains('vjchg'))?pa.nextElementSibling:pa;/* साप्ताहिक बैनर हटाया (v252) */
  var cur=null;
  function city(){var pl=D.getElementById('pn_place');return CITIES[pl?+pl.value:0]||CITIES[0];}
  function ist(){var t=new Date(Date.now()+19800000);return Date.UTC(t.getUTCFullYear(),t.getUTCMonth(),t.getUTCDate());}
