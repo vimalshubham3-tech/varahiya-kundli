@@ -201,7 +201,7 @@ input[type=date],input[type=time]{min-height:48px}
 .about b{color:var(--maroon)}.about p{margin:4px 0}
 @media print{.brand .pbtn,.nmtools,.totop,.lang,.about{display:none!important}.brand{background:#fff;color:#000;border-bottom:2px solid #000}.brand b{color:#000}.brand span{color:#000}#nm_body{font-size:13px}}
 </style>
-<meta name="vj-ver" content="248">
+<meta name="vj-ver" content="249">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <script>try{if(window.top!==window.self){document.documentElement.style.display='none';window.top.location=window.self.location;}}catch(e){document.documentElement.style.display='none';}</script>
 
@@ -6864,6 +6864,22 @@ if(D.readyState==='loading')D.addEventListener('DOMContentLoaded',go);else go();
   nm.addEventListener('click',function(){if(bz)return;var open=!was;setTimeout(function(){
     if(open){if(mbt.textContent.indexOf('⚙️')===0){bz=true;mbt.click();nm.click();bz=false;}}
     else{if(mbt.textContent.indexOf('✖')===0){bz=true;mbt.click();bz=false;}}},400);});
+ })();
+
+ // पिछला/अगला बटन (महीना व दिन के लिए) — वार्षिक जैसे
+ (function(){var MNm=['जनवरी','फ़रवरी','मार्च','अप्रैल','मई','जून','जुलाई','अगस्त','सितंबर','अक्टूबर','नवंबर','दिसंबर'],WD=['रविवार','सोमवार','मंगलवार','बुधवार','गुरुवार','शुक्रवार','शनिवार'];
+  var st2=D.createElement('style');st2.textContent='.vjnh{display:none!important}.vjnav{display:flex;gap:6px;align-items:center;margin:6px 0}.vjnav button{padding:8px 12px;border-radius:8px;border:1px solid #b8860b;background:#fffdf7;color:#6b1c28;font:inherit;cursor:pointer}.vjnav span{flex:1;text-align:center;font-weight:700;color:#6b1c28}';D.head.appendChild(st2);
+  function mk(id,prev,next,lab,step){var w=D.getElementById(id);if(!w)return null;var d=D.createElement('div');d.className='vjnav';d.innerHTML='<button type="button" data-s="-1">◀ '+prev+'</button><span></span><button type="button" data-s="1">'+next+' ▶</button>';w.insertBefore(d,w.firstChild);
+   d.querySelectorAll('button').forEach(function(b){b.addEventListener('click',function(e){e.stopPropagation();step(+b.getAttribute('data-s'));upd();});});
+   function upd(){d.querySelector('span').textContent=lab();}d.__u=upd;upd();return d;}
+  // महीना
+  var pm=D.getElementById('pm_m');if(pm){[pm,D.querySelector('label[for=pm_m]')].forEach(function(e){if(e)e.classList.add('vjnh');});
+   var n1=mk('nm_ctl','पिछला महीना','अगला महीना',function(){var v=(pm.value||'').split('-').map(Number);return v[0]?MNm[v[1]-1]+' '+v[0]:'';},function(k){var v=pm.value.split('-').map(Number),q=new Date(Date.UTC(v[0],v[1]-1+k,1));if(q.getUTCFullYear()<1900||q.getUTCFullYear()>2050)return;pm.value=q.getUTCFullYear()+'-'+String(q.getUTCMonth()+1).padStart(2,'0');pm.dispatchEvent(new Event('change',{bubbles:true}));});
+   nm.addEventListener('click',function(){setTimeout(function(){if(n1)n1.__u();},500);});}
+  // दिन
+  var pd=D.getElementById('pn_date');if(pd){var bx=pd.previousElementSibling&&pd.previousElementSibling.classList.contains('vjdf')?pd.previousElementSibling:null;[pd,bx,D.querySelector('label[for=pn_date]')].forEach(function(e){if(e)e.classList.add('vjnh');});
+   var n2=mk('pn_ctl','पिछला दिन','अगला दिन',function(){var v=(pd.value||'').split('-').map(Number);if(!v[0])return '';var q=new Date(Date.UTC(v[0],v[1]-1,v[2]));return v[2]+' '+MNm[v[1]-1]+' '+v[0]+' ('+WD[q.getUTCDay()]+')';},function(k){var v=pd.value.split('-').map(Number),q=new Date(Date.UTC(v[0],v[1]-1,v[2]+k));if(q.getUTCFullYear()<1900||q.getUTCFullYear()>2050)return;pd.value=q.getUTCFullYear()+'-'+String(q.getUTCMonth()+1).padStart(2,'0')+'-'+String(q.getUTCDate()).padStart(2,'0');pd.dispatchEvent(new Event('change',{bubbles:true}));});
+   pa.addEventListener('click',function(){setTimeout(function(){if(n2)n2.__u();},500);});}
  })();
  var busy=false,L=[[wb,wr],[yb,yr],[pa,D.getElementById('pn_res')],[nm,D.getElementById('nm_res')],[td,D.getElementById('td_res')]];
  L.forEach(function(x){x[0].addEventListener('click',function(){if(busy||!x[0].isTrusted&&false)return;
