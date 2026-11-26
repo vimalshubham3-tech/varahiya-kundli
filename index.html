@@ -201,7 +201,7 @@ input[type=date],input[type=time]{min-height:48px}
 .about b{color:var(--maroon)}.about p{margin:4px 0}
 @media print{.brand .pbtn,.nmtools,.totop,.lang,.about{display:none!important}.brand{background:#fff;color:#000;border-bottom:2px solid #000}.brand b{color:#000}.brand span{color:#000}#nm_body{font-size:13px}}
 </style>
-<meta name="vj-ver" content="314">
+<meta name="vj-ver" content="315">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <script>try{if(window.top!==window.self){document.documentElement.style.display='none';window.top.location=window.self.location;}}catch(e){document.documentElement.style.display='none';}</script>
 
@@ -7410,7 +7410,7 @@ init();D.addEventListener('DOMContentLoaded',init);new MutationObserver(init).ob
 var D=document,armed=0,timer=null,tt=null;
 function toast(m){var t=D.getElementById('vjtoast');if(!t){t=D.createElement('div');t.id='vjtoast';D.body.appendChild(t);}t.textContent=m;t.style.display='block';clearTimeout(tt);tt=setTimeout(function(){t.style.display='none';},2000);}
 function guard(){try{history.pushState({vjg:1},'',location.href);}catch(e){}}
-function topOverlay(){var o=[].slice.call(D.querySelectorAll('.vjov')).filter(function(e){return e.offsetParent!==null||getComputedStyle(e).display!=='none';});return o.length?o[o.length-1]:null;}
+function topOverlay(){var o=[].slice.call(D.querySelectorAll('.vjov')).filter(function(e){if(e.querySelector('#vj_regm')&&!e.querySelector('#vj_l'))return false;return e.offsetParent!==null||getComputedStyle(e).display!=='none';});return o.length?o[o.length-1]:null;}
 function closeOv(o){var b=[].slice.call(o.querySelectorAll('button,a,span')).find(function(x){return /^\s*(✕|✖|×|X|बंद|Close|बंद करें)/i.test(x.textContent||'');});if(b)b.click();else o.remove();}
 function handle(){
  var b=D.body;
@@ -7662,5 +7662,17 @@ mk();})();
 </script>
 <style id="vj314css">/* v314: सहयोग अभी हटाया (वापस लाने के लिए इस नियम को हटाएँ) */
 .vjsupc,.vjsupbtn,#vj_tools>.vjsup{display:none!important}</style>
+<style id="vj315css">
+body.vjreg #vj_tools>.vjregb{display:none!important}
+</style>
+<script>
+/* v315: पंजीकरण अनिवार्य (बिना पंजीकरण ऐप नहीं चलेगा); पंजीकरण के बाद सेटिंग से बटन गायब */
+(function(){var D=document;
+function done(){try{var r=JSON.parse(localStorage.getItem('vj_reg_v1')||'{}');return !!(r&&r.done&&r.name&&r.mobile);}catch(e){return false;}}
+function tick(){try{var ok=done();D.body.classList.toggle('vjreg',ok);
+[].forEach.call(D.querySelectorAll('#vj_tools>.pbtn,#vj_tools>button'),function(b){if(/पंजीकरण|Regist/i.test(b.textContent||''))b.classList.add('vjregb');});
+if(!ok&&!D.getElementById('vj_regm')){var b=D.querySelector('#vj_tools>.vjregb');if(b)b.click();}}catch(x){}}
+setInterval(tick,700);setTimeout(tick,900);})();
+</script>
 </body>
 </html>
