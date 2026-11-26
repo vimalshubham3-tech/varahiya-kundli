@@ -201,7 +201,7 @@ input[type=date],input[type=time]{min-height:48px}
 .about b{color:var(--maroon)}.about p{margin:4px 0}
 @media print{.brand .pbtn,.nmtools,.totop,.lang,.about{display:none!important}.brand{background:#fff;color:#000;border-bottom:2px solid #000}.brand b{color:#000}.brand span{color:#000}#nm_body{font-size:13px}}
 </style>
-<meta name="vj-ver" content="305">
+<meta name="vj-ver" content="306">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <script>try{if(window.top!==window.self){document.documentElement.style.display='none';window.top.location=window.self.location;}}catch(e){document.documentElement.style.display='none';}</script>
 
@@ -7523,6 +7523,21 @@ fx();new MutationObserver(fx).observe(document.body,{childList:true,subtree:true
 function fx(){try{[].forEach.call(document.querySelectorAll('#pn_res .tw>table.vjacc2>tbody>tr:not([data-vjk])'),function(tr,i){var all=tr.parentNode.children,ix=[].indexOf.call(all,tr),t=(tr.cells[0].textContent||'').trim(),k;
 if(ix<7)k=String(ix+1);else if(ix<10)k=ix===7?'7':ix===8?'8':'3';else if(BAD.test(t)&&!/^भद्रा वास/.test(t))k='r';else if(GOOD.test(t)&&!/अशुभ/.test(t))k='g';else k='n';
 tr.setAttribute('data-vjk',k);tr.classList.add('vjk-'+k);});}catch(x){}}
+fx();new MutationObserver(fx).observe(document.body,{childList:true,subtree:true});})();
+</script>
+<style id="vj306css">
+.vjcal-det{background:#fff!important;border:2.5px solid #6b1c28!important;border-radius:14px!important;padding:0!important;overflow:hidden;box-shadow:0 3px 10px rgba(107,28,40,.25)}
+.vjcal-det p{margin:0!important;padding:10px 12px!important;color:#2d1a0c!important;font-weight:600;line-height:1.55;border-top:1px solid #eadfc0}
+.vjcal-det p:first-child{background:linear-gradient(135deg,#6b1c28,#9b2c3d);color:#fff!important;font-weight:700;border:0}
+.vjcal-det p:first-child b{color:#ffd76a!important}
+.vjcal-det p:nth-child(2){background:#e6f0fb;color:#12365f!important}
+.vjcal-det p.k-g{background:#e3f5e8;border-left:6px solid #1b7a3d}.vjcal-det p.k-g b{color:#0f6a2f!important}
+.vjcal-det p.k-r{background:#fde7e4;border-left:6px solid #c62828}.vjcal-det p.k-r b{color:#b3140c!important}
+.vjcal-det p.k-o{background:#fff0d6;border-left:6px solid #d9650f}.vjcal-det p.k-o b{color:#a8430a!important}
+.vjcal-det p.k-n{background:#f1e9fb;border-left:6px solid #6d3fa0}.vjcal-det p.k-n b{color:#55307f!important}
+</style>
+<script>
+(function(){function fx(){try{[].forEach.call(document.querySelectorAll('.vjcal-det p:not([data-k])'),function(p,i){p.setAttribute('data-k',1);if(p.parentNode.firstElementChild===p||p.previousElementSibling===p.parentNode.firstElementChild)return;var b=p.querySelector('b'),t=b?b.textContent:'';p.classList.add(/शुभ|अमृत|सर्वार्थ/.test(t)?'k-g':/सावधानी|भद्रा|वर्ज्य|राहु|पंचक|अशुभ/.test(t)?'k-r':/पर्व|कल्याणक|व्रत/.test(t)?'k-o':'k-n');});}catch(x){}}
 fx();new MutationObserver(fx).observe(document.body,{childList:true,subtree:true});})();
 </script>
 </body>
