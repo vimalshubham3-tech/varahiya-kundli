@@ -201,7 +201,7 @@ input[type=date],input[type=time]{min-height:48px}
 .about b{color:var(--maroon)}.about p{margin:4px 0}
 @media print{.brand .pbtn,.nmtools,.totop,.lang,.about{display:none!important}.brand{background:#fff;color:#000;border-bottom:2px solid #000}.brand b{color:#000}.brand span{color:#000}#nm_body{font-size:13px}}
 </style>
-<meta name="vj-ver" content="284">
+<meta name="vj-ver" content="285">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <script>try{if(window.top!==window.self){document.documentElement.style.display='none';window.top.location=window.self.location;}}catch(e){document.documentElement.style.display='none';}</script>
 
@@ -5832,7 +5832,7 @@ function manage(){
   var a=list();
   var o=modal('<h3>💾 सहेजी कुंडलियाँ</h3><small>ये केवल इसी फ़ोन/ब्राउज़र में सहेजी हैं, कहीं भेजी नहीं जातीं।</small><div id="vj_l">'+
     (a.length?a.map(function(p){return '<div class="it"><span>'+esc(lbl(p))+'</span><button type="button" data-d="'+esc(p.id)+'">हटाएँ</button></div>';}).join(""):'<p>अभी कोई कुंडली सहेजी नहीं है। किसी भी कुंडली या मिलान-फ़ॉर्म में नाम व जन्म-विवरण भरकर 💾 सहेजें दबाएँ।</p>')+
-    '</div><button class="b" id="vj_ex" type="button">⬇ बैकअप फ़ाइल सहेजें</button><button class="b g" id="vj_im" type="button">⬆ बैकअप से वापस लाएँ</button><input id="vj_f" type="file" accept=".json,application/json" hidden><button class="b" id="vj_cl" type="button">☁ क्लाउड बैकअप (किसी भी फ़ोन पर वापस पाएँ)</button><button class="b g" id="vj_x" type="button">बंद करें</button><small>फ़ोन की सफ़ाई या ब्राउज़र-डेटा हटाने पर सहेजी कुंडलियाँ मिट सकती हैं। इसलिए कभी-कभी बैकअप सहेज लें।<br><b>ऐप हटाने (अनइंस्टॉल) से पहले बैकअप फ़ाइल या क्लाउड बैकअप ज़रूर कर लें, वरना सहेजी कुंडलियाँ चली जाएँगी।</b> <a href="#" onclick="vjPriv();return false" style="color:#7c2d12;text-decoration:underline">गोपनीयता नीति</a></small>');
+    '</div><button class="b" id="vj_ex" type="button">⬇ बैकअप फ़ाइल सहेजें</button><button class="b g" id="vj_im" type="button">⬆ बैकअप से वापस लाएँ</button><input id="vj_f" type="file" accept=".json,application/json" hidden><button class="b" id="vj_cl" type="button">☁ क्लाउड बैकअप (किसी भी फ़ोन पर वापस पाएँ)</button><button class="b g" id="vj_x" type="button">बंद करें</button><small>फ़ोन की सफ़ाई या ब्राउज़र-डेटा हटाने पर सहेजी कुंडलियाँ मिट सकती हैं। इसलिए कभी-कभी बैकअप सहेज लें।<br><b>ऐप हटाने (अनइंस्टॉल) से पहले बैकअप फ़ाइल या क्लाउड बैकअप ज़रूर कर लें, वरना सहेजी कुंडलियाँ चली जाएँगी।</b> <a href="#" onclick="vjPriv();return false" style="color:#7c2d12;text-decoration:underline">Privacy policy</a></small>');
   o.querySelector("#vj_x").onclick=function(){o.remove();};
   o.querySelector("#vj_cl").onclick=function(){o.remove();if(window.vjPrem&&!window.vjPrem()){window.vjUpsell("क्लाउड बैकअप");return;}cloud();};
   o.querySelectorAll("[data-d]").forEach(function(b){b.onclick=function(){var id=b.getAttribute("data-d");saveList(list().filter(function(x){return x.id!==id;}));refreshAll();o.remove();manage();};});
@@ -5856,7 +5856,7 @@ function cloud(){
     '<small>मोबाइल नंबर व गुप्त PIN से आपकी सहेजी कुंडलियाँ क्लाउड में रखी जाती हैं। नया फ़ोन लेने या ब्राउज़र-डेटा हटने पर इसी नंबर व PIN से वापस पाएँ। PIN याद रखें, यह दोबारा नहीं बताया जा सकेगा।</small>'+
     '<label for="vj_cm">मोबाइल नंबर</label><input id="vj_cm" type="tel" inputmode="numeric" maxlength="10" value="'+esc(c.mobile||"")+'">'+
     '<label for="vj_cp">गुप्त PIN (4 से 6 अंक)</label><input id="vj_cp" type="tel" inputmode="numeric" maxlength="6" autocomplete="off">'+
-    '<label style="display:flex;gap:6px;align-items:flex-start"><input id="vj_cok" type="checkbox"> <span>मैं सहमत हूँ कि मेरी सहेजी कुंडलियों (नाम व जन्म-विवरण) की प्रति वरहिया हेल्प डेस्क के क्लाउड में बैकअप के लिए रखी जाए। <a href="#" onclick="vjPriv();return false" style="color:#7c2d12;text-decoration:underline">गोपनीयता नीति</a></span></label>'+
+    '<label style="display:flex;gap:6px;align-items:flex-start"><input id="vj_cok" type="checkbox"> <span>मैं सहमत हूँ कि मेरी सहेजी कुंडलियों (नाम व जन्म-विवरण) की प्रति वरहिया हेल्प डेस्क के क्लाउड में बैकअप के लिए रखी जाए। <a href="#" onclick="vjPriv();return false" style="color:#7c2d12;text-decoration:underline">Privacy policy</a></span></label>'+
     '<button class="b" id="vj_cu" type="button">☁ चालू करें व बैकअप भेजें</button><button class="b g" id="vj_cd" type="button">⬇ क्लाउड से वापस लाएँ</button><button class="b g" id="vj_cx" type="button">बंद करें</button><div id="vj_cmsg" style="margin-top:8px;font-size:14px"></div>');
   var msg=function(t){o.querySelector("#vj_cmsg").textContent=t;};
   o.querySelector("#vj_cx").onclick=function(){o.remove();};
@@ -5890,7 +5890,7 @@ function reg(force){
     '<label for="vj_n">नाम</label><input id="vj_n" type="text" value="'+esc(r.name||"")+'" autocomplete="name">'+
     '<label for="vj_m">मोबाइल नंबर</label><input id="vj_m" type="tel" inputmode="numeric" maxlength="10" value="'+esc(r.mobile||"")+'" autocomplete="tel">'+
     '<label for="vj_c">शहर / गाँव</label><input id="vj_c" type="text" list="vj_cl" autocomplete="off" placeholder="सूची से चुनें या अपना गाँव लिखें" value="'+esc(r.city||"")+'"><datalist id="vj_cl">'+CITIES.map(function(x){return '<option value="'+esc(x[0])+'">';}).join("")+'</datalist>'+
-    '<label style="display:flex;gap:6px;align-items:flex-start"><input id="vj_ok" type="checkbox"> <span>मैं सहमत हूँ कि यह जानकारी वरहिया हेल्प डेस्क को भेजी जाए। <a href="#" onclick="vjPriv();return false" style="color:#7c2d12;text-decoration:underline">गोपनीयता नीति</a></span></label>'+
+    '<label style="display:flex;gap:6px;align-items:flex-start"><input id="vj_ok" type="checkbox"> <span>मैं सहमत हूँ कि यह जानकारी वरहिया हेल्प डेस्क को भेजी जाए। <a href="#" onclick="vjPriv();return false" style="color:#7c2d12;text-decoration:underline">Privacy policy</a></span></label>'+
     '<button class="b" id="vj_s" type="button">'+(force?'📲 WhatsApp से भेजें और आगे बढ़ें':'📲 WhatsApp से भेजें')+'</button>'+(force?'':'<button class="b g" id="vj_l" type="button">बाद में</button>'),force);
   var lb=o.querySelector("#vj_l");if(lb)lb.onclick=function(){o.remove();};
   o.querySelector("#vj_s").onclick=function(){
@@ -6120,7 +6120,7 @@ window.vjPriv=function(){
   o.querySelector("#vj_pc").onclick=function(){o.remove();};
 };
 var fb=document.querySelector("#pane-l");
-if(fb&&!document.getElementById("vj_pl")){var d=document.createElement("div");d.id="vj_pl";d.style.cssText="text-align:center;margin:14px 0;font-size:14px";d.innerHTML='<a href="#" onclick="vjPriv();return false" style="color:#7c2d12;text-decoration:underline">🔒 गोपनीयता नीति</a>';fb.appendChild(d);}
+if(fb&&!document.getElementById("vj_pl")){var d=document.createElement("div");d.id="vj_pl";d.style.cssText="text-align:center;margin:14px 0;font-size:14px";d.innerHTML='<a href="#" onclick="vjPriv();return false" style="color:#7c2d12;text-decoration:underline">🔒 Privacy policy</a>';fb.appendChild(d);}
 }catch(e){console&&console.error&&console.error(e);}})();
 
 /* v104: नक्षत्र विवरण + महीने के शुभ-अशुभ समय */
@@ -6331,7 +6331,7 @@ if(fb&&!document.getElementById("vj_pl")){var d=document.createElement("div");d.
     '<button type="button" id="vj_dc" style="display:block;width:100%;margin-top:10px;padding:12px;border:0;border-radius:10px;background:#7c2d12;color:#fff;font-size:16px">बंद करें</button></div>';
     document.body.appendChild(o);o.querySelector("#vj_dc").onclick=function(){o.remove();};
   };
-  var L='<a href="#" onclick="vjPriv();return false" style="color:#7c2d12;text-decoration:underline">🔒 गोपनीयता नीति</a> &nbsp;·&nbsp; <a href="#" onclick="vjDisc();return false" style="color:#7c2d12;text-decoration:underline">⚠ अस्वीकरण (डिस्क्लेमर)</a>';
+  var L='<a href="#" onclick="vjPriv();return false" style="color:#7c2d12;text-decoration:underline">🔒 Privacy policy</a> &nbsp;·&nbsp; <a href="#" onclick="vjDisc();return false" style="color:#7c2d12;text-decoration:underline">⚠ Disclaimer</a>';
   var tg=document.getElementById('t-tag'),ft=document.getElementById('t-foot');
   if(false&&tg){var a=document.createElement('div');a.id='vj_lk1';a.style.cssText='font-size:13px;margin:2px 0 10px';a.innerHTML=L;tg.parentNode.insertBefore(a,tg.nextSibling);}
   if(ft&&!document.getElementById('vj_lk2')){var b=document.createElement('div');b.id='vj_lk2';b.style.cssText='text-align:center;font-size:13.5px;margin:6px 0 18px';b.innerHTML=L;ft.parentNode.insertBefore(b,ft);}
