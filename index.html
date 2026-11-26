@@ -201,7 +201,7 @@ input[type=date],input[type=time]{min-height:48px}
 .about b{color:var(--maroon)}.about p{margin:4px 0}
 @media print{.brand .pbtn,.nmtools,.totop,.lang,.about{display:none!important}.brand{background:#fff;color:#000;border-bottom:2px solid #000}.brand b{color:#000}.brand span{color:#000}#nm_body{font-size:13px}}
 </style>
-<meta name="vj-ver" content="216">
+<meta name="vj-ver" content="217">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <script>try{if(window.top!==window.self){document.documentElement.style.display='none';window.top.location=window.self.location;}}catch(e){document.documentElement.style.display='none';}</script>
 
@@ -6641,6 +6641,39 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
   if(p&&h){h.parentNode.insertBefore(p,h);}
   /* v159: खुलते ही जैन तिथि पन्ना (गहरे लिंक ?rf/?jt/?pd हों तो वही) */
   if(!/[?&](rf|jt|pd)=1/.test(location.search)&&typeof setMode==='function'){setMode('p');}}catch(e){}})();
+</script>
+<script>
+/* v217: वरहिया जैन तिथि दर्पण — मासिक बैनर के नीचे */
+(function(){var n=0,D=document;
+var T=['','प्रतिपदा','द्वितीया','तृतीया','चतुर्थी','पंचमी','षष्ठी','सप्तमी','अष्टमी','नवमी','दशमी','एकादशी','द्वादशी','त्रयोदशी','चतुर्दशी','पूर्णिमा'],PP={2:'द्वितीया',5:'पंचमी',8:'अष्टमी',11:'एकादशी',14:'चतुर्दशी'};
+function tn(v){return v===30?'अमावस्या':(v<=15?'शुक्ल ':'कृष्ण ')+T[v>15?v-15:v];}
+function build(y,m,c){
+ var dim=new Date(Date.UTC(y,m,0)).getUTCDate(),rows='',parv=[],seen={};
+ for(var d=1;d<=dim;d++){
+  var dt=new Date(Date.UTC(y,m-1,d)),sr=sunTimes(y,m,d,c[2],c[3],5.5).rise,jd=toJD(y,m,d,0,Math.round((sr+2.4)*60),5.5),pc=panchangAt(jd),lm=lunarMonthOf(jd),b=pc.t%15,sh=pc.t<=15,tags=[];
+  JAIN_FEST.forEach(function(f){if(lm.m===f[0]&&!lm.adhik&&((f[1]==='s'&&sh&&pc.t===f[2])||(f[1]==='a'&&pc.t===f[2])))tags.push(f[3]);});
+  if(sh&&pc.t===8&&[3,7,11].includes(lm.m)&&!lm.adhik)tags.push('अष्टान्हिका पर्व आरंभ');
+  if(sh&&pc.t===7&&[0,6].includes(lm.m)&&!lm.adhik)tags.push('नवपद ओली आरंभ');
+  var pp=pc.t===30?'अमावस्या':pc.t===15?'पूर्णिमा':PP[b]?(sh?'शुक्ल ':'कृष्ण ')+PP[b]:'';
+  var pd=panchangDay(y,m,d,c[2],c[3],5.5),ts=SEGH(pd,function(q){return q.t;},function(v){return '<b>'+tn(v)+'</b>';});
+  var hl=tags.length?'background:#fde7e9;':pp?'background:#e8f3df;':'';
+  rows+='<tr style="'+hl+'"><td>'+String(d).padStart(2,'0')+'</td><td>'+VARA_N[dt.getUTCDay()]+'</td><td>'+ts+'</td><td>'+(pp?'🌿 '+pp+(tags.length?'<br>':''):'')+(tags.length?'<b style="color:#8e2b3a">'+esc(tags.join('; '))+'</b>':'')+'</td></tr>';
+  tags.forEach(function(t){if(!seen[t]){seen[t]=1;parv.push(String(d).padStart(2,'0')+' — '+t);}});
+ }
+ return '<div class="res-card vjmp"><h2 class="kh">वरहिया जैन तिथि दर्पण — '+String(m).padStart(2,'0')+'/'+y+' · '+esc(c[0])+'</h2>'+
+  (parv.length?'<div style="background:#fff7de;border:1px solid #d9c38a;border-radius:10px;padding:8px 10px;margin:6px 0"><b style="color:#6b1c28">इस माह के जैन पर्व</b><br>'+parv.map(esc).join('<br>')+'</div>':'<p class="kmeta">इस माह में कोई प्रमुख जैन पर्व नहीं।</p>')+
+  '<div class="tw"><table><thead><tr><th>तारीख़</th><th>वार</th><th>तिथि (कब से कब तक)</th><th>पंच-पर्व / पर्व</th></tr></thead><tbody>'+rows+'</tbody></table></div>'+
+  '<p class="kmeta">🌿 हरी पंच-पर्व तिथि (द्वितीया, पंचमी, अष्टमी, एकादशी, चतुर्दशी, अमावस्या, पूर्णिमा) — परंपरा में हरी सब्ज़ी/तप का ध्यान। गुलाबी पंक्ति = जैन पर्व। तिथि सूर्योदय के बाद के समय पर आधारित; संप्रदाय अनुसार पर्व-तिथि में अंतर संभव है, अंतिम निर्णय हेतु अपने पंचांग/गुरुजन से मिलान करें।</p></div>';}
+function mv(){var a=D.getElementById('nm_all');if(!a||D.getElementById('td_all'))return !!D.getElementById('td_all');
+ var anchor=a.nextSibling&&a.nextSibling.className==='vjchg'?a.nextSibling:a;
+ var b=D.createElement('button');b.type='button';b.id='td_all';b.className='vjmp-btn';b.innerHTML='🪔 वरहिया जैन तिथि दर्पण<small>इस माह की जैन तिथियाँ व पर्व — देखने/बंद करने के लिए दबाएँ</small>';
+ var o=D.createElement('div');o.id='td_res';anchor.parentNode.insertBefore(b,anchor.nextSibling);b.parentNode.insertBefore(o,b.nextSibling);
+ b.addEventListener('click',function(){if(o.innerHTML.trim()){o.innerHTML='';return;}
+  var mi=D.getElementById('pm_m'),pc_=D.getElementById('pm_c'),t=new Date(Date.now()+19800000),vv=(mi&&mi.value&&a.__mc&&a.__mc())?mi.value.split('-').map(Number):[t.getUTCFullYear(),t.getUTCMonth()+1],c=(pc_&&CITIES[+pc_.value])||CITIES[0];
+  o.innerHTML='<p class="kmeta">गणना हो रही है…</p>';setTimeout(function(){try{o.innerHTML=build(vv[0],vv[1],c);}catch(e){o.innerHTML='<p class="warn">गणना में त्रुटि।</p>';}},30);});
+ return true;}
+function go(){if(mv()||++n>40)return;setTimeout(go,200);}
+if(D.readyState==='loading')D.addEventListener('DOMContentLoaded',go);else go();})();
 </script>
 </body>
 </html>
