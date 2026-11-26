@@ -201,7 +201,7 @@ input[type=date],input[type=time]{min-height:48px}
 .about b{color:var(--maroon)}.about p{margin:4px 0}
 @media print{.brand .pbtn,.nmtools,.totop,.lang,.about{display:none!important}.brand{background:#fff;color:#000;border-bottom:2px solid #000}.brand b{color:#000}.brand span{color:#000}#nm_body{font-size:13px}}
 </style>
-<meta name="vj-ver" content="300">
+<meta name="vj-ver" content="301">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <script>try{if(window.top!==window.self){document.documentElement.style.display='none';window.top.location=window.self.location;}}catch(e){document.documentElement.style.display='none';}</script>
 
@@ -7009,10 +7009,13 @@ s=s.replace(/(\d+\w\w) भाव के स्वामी (\w+) (\d+\w\w) भ�
 .replace(/ है।(?=$|\s)/g,'.')
 .replace(/(\d+\w\w) भाव में है\./g,'$1 house.');
 s=POST(s);if(/[A-Za-z]{3}/.test(s))s=s.replace(/।/g,'.');return s!==k?s:undefined;}
+var WD={"राहुकाल": "Rahu Kaal", "यमगंड": "Yamaganda", "अभिजित": "Abhijit", "सूर्योदय": "Sunrise", "सूर्यास्त": "Sunset", "चंद्रोदय": "Moonrise", "चंद्रास्त": "Moonset", "चौघड़िया": "Choghadiya", "होरा": "Hora", "अगला": "Next", "शेष": "left", "दुर्मुहूर्त": "Durmuhurta", "भद्रा": "Bhadra", "पंचक": "Panchak", "दिल्ली": "Delhi", "सुमावली": "Sumaoli", "मुरैना": "Morena", "ग्वालियर": "Gwalior", "जौरा": "Jaura", "भोपाल": "Bhopal", "इंदौर": "Indore", "जयपुर": "Jaipur", "आगरा": "Agra", "मथुरा": "Mathura", "उज्जैन": "Ujjain", "लखनऊ": "Lucknow", "मुंबई": "Mumbai", "कोलकाता": "Kolkata", "चेन्नई": "Chennai", "पटना": "Patna", "भिंड": "Bhind", "शिवपुरी": "Shivpuri", "दतिया": "Datia", "झाँसी": "Jhansi", "कानपुर": "Kanpur", "अमृत": "Amrit", "लाभ": "Labh", "उद्वेग": "Udveg", "रोग": "Rog", "वार": "Day", "जनवरी": "January", "फ़रवरी": "February", "फरवरी": "February", "मार्च": "March", "अप्रैल": "April", "मई": "May", "जून": "June", "जुलाई": "July", "अगस्त": "August", "सितंबर": "September", "सितम्बर": "September", "अक्टूबर": "October", "नवंबर": "November", "नवम्बर": "November", "दिसंबर": "December", "दिसम्बर": "December", "रविवार": "Sunday", "सोमवार": "Monday", "मंगलवार": "Tuesday", "बुधवार": "Wednesday", "गुरुवार": "Thursday", "शुक्रवार": "Friday", "शनिवार": "Saturday", "प्रतिपदा": "Pratipada", "द्वितीया": "Dwitiya", "तृतीया": "Tritiya", "चतुर्थी": "Chaturthi", "पंचमी": "Panchami", "षष्ठी": "Shashthi", "सप्तमी": "Saptami", "अष्टमी": "Ashtami", "नवमी": "Navami", "दशमी": "Dashami", "एकादशी": "Ekadashi", "द्वादशी": "Dwadashi", "त्रयोदशी": "Trayodashi", "चतुर्दशी": "Chaturdashi", "पूर्णिमा": "Purnima", "अमावस्या": "Amavasya", "शुक्ल": "Shukla", "कृष्ण": "Krishna", "अश्विनी": "Ashwini", "भरणी": "Bharani", "कृत्तिका": "Krittika", "रोहिणी": "Rohini", "मृगशिरा": "Mrigashira", "आर्द्रा": "Ardra", "पुनर्वसु": "Punarvasu", "पुष्य": "Pushya", "आश्लेषा": "Ashlesha", "मघा": "Magha", "हस्त": "Hasta", "चित्रा": "Chitra", "स्वाती": "Swati", "विशाखा": "Vishakha", "अनुराधा": "Anuradha", "ज्येष्ठा": "Jyeshtha", "पूर्वाषाढ़ा": "Purvashadha", "उत्तराषाढ़ा": "Uttarashadha", "श्रवण": "Shravana", "धनिष्ठा": "Dhanishta", "शतभिषा": "Shatabhisha", "रेवती": "Revati", "मूल": "Mool", "मेष": "Aries", "वृषभ": "Taurus", "मिथुन": "Gemini", "कर्क": "Cancer", "सिंह": "Leo", "कन्या": "Virgo", "तुला": "Libra", "वृश्चिक": "Scorpio", "धनु": "Sagittarius", "मकर": "Capricorn", "कुंभ": "Aquarius", "मीन": "Pisces", "सूर्य": "Sun", "चंद्र": "Moon", "मंगल": "Mars", "बुध": "Mercury", "गुरु": "Jupiter", "शुक्र": "Venus", "शनि": "Saturn", "राहु": "Rahu", "केतु": "Ketu", "विष्कुंभ": "Vishkambha", "प्रीति": "Priti", "आयुष्मान": "Ayushman", "सौभाग्य": "Saubhagya", "शोभन": "Shobhana", "अतिगंड": "Atiganda", "सुकर्मा": "Sukarma", "धृति": "Dhriti", "शूल": "Shula", "गंड": "Ganda", "वृद्धि": "Vriddhi", "ध्रुव": "Dhruva", "व्याघात": "Vyaghata", "हर्षण": "Harshana", "वज्र": "Vajra", "सिद्धि": "Siddhi", "व्यतीपात": "Vyatipata", "वरीयान": "Variyan", "परिघ": "Parigha", "शिव": "Shiva", "सिद्ध": "Siddha", "साध्य": "Sadhya", "शुभ": "Shubha", "ब्रह्म": "Brahma", "इंद्र": "Indra", "वैधृति": "Vaidhriti", "बालव": "Balava", "कौलव": "Kaulava", "तैतिल": "Taitila", "गर": "Gara", "वणिज": "Vanija", "बव": "Bava", "शकुनि": "Shakuni", "चतुष्पद": "Chatushpada", "नाग": "Naga", "किंस्तुघ्न": "Kimstughna", "विष्टि": "Vishti"},WK={'रवि':'Sun','सोम':'Mon','मंग':'Tue','बुध':'Wed','गुर':'Thu','शुक':'Fri','शनि':'Sat'};
+function MT2(t){var o=t.replace(/^(\s*\d+ )(रवि|सोम|मंग|बुध|गुर|शुक|शनि)(\s*)$/,function(m,a,w,b){return a+WK[w]+b;});if(o!==t)return o;
+o=t.replace(/\(अगले दिन\)/g,'(next day)').replace(/कृ\./g,'Kr.').replace(/शु\./g,'Sh.').replace(/चंद्र राशि/g,'Moon sign').replace(/ तक/g,' till').replace(/[\u0900-\u097F]+/g,function(w){return WD[w]!==undefined?WD[w]:(M[w]!==undefined?M[w]:w);});return o===t?undefined:o;}
 function walk(root,en){var w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT,null),n,L=[];while(n=w.nextNode())L.push(n);
 L.forEach(function(n){var p=n.parentNode;if(!p||/^(SCRIPT|STYLE)$/.test(p.nodeName))return;
 if(en){var t0=n.nodeValue;if(!/[\u0900-\u097F]/.test(t0)){return}var t=(n.__vjL!==undefined?n.__vjL:(n.__vjh2!==undefined?n.__vjh2:(n.__vjhi!==undefined?n.__vjhi:t0))),k=t.trim();if(!k||!/[\u0900-\u097F]/.test(k)){return}
-var r=M[k],full=0;if(r===undefined&&p.closest&&p.closest('#result3')){r=KT(t,p);full=1;}if(r!==undefined&&r!==k&&r!==t){if(n.__vjL===undefined)n.__vjL=t;n.nodeValue=full?r:t.replace(k,r);}}
+var r=M[k],full=0;if(r===undefined&&p.closest&&p.closest('#result3')){r=KT(t,p);full=1;}else if(r===undefined&&p.closest&&p.closest('#nm_res table.vjacc3')){r=MT2(t);full=1;}if(r!==undefined&&r!==k&&r!==t){if(n.__vjL===undefined)n.__vjL=t;n.nodeValue=full?r:t.replace(k,r);}}
 else if(n.__vjL!==undefined){n.nodeValue=n.__vjL;delete n.__vjL;}});}
 var busy=0;function run(){if(busy)return;busy=1;try{walk(document.body,lang0()==='en');}catch(e){}busy=0;}
 var tm;new MutationObserver(function(){clearTimeout(tm);tm=setTimeout(run,100);}).observe(document.body,{childList:true,subtree:true,characterData:true});
@@ -7296,6 +7299,22 @@ document.addEventListener('click',function(e){try{var tr=e.target.closest&&e.tar
 if(bt&&tr.contains(bt)){if(bt.parentNode.className==='vjgo3'){e.stopPropagation();e.stopImmediatePropagation();var sel=(document.getElementById('pm_m')||{}).value||'';var y=+sel.split('-')[0],m=+sel.split('-')[1],d=parseInt(tr.cells[0].textContent,10);if(y&&m&&d)openDaily(y,m,d);}return;}
 e.stopPropagation();e.stopImmediatePropagation();tr.classList.toggle('open');}catch(x){}},true);
 fx();new MutationObserver(fx).observe(document.body,{childList:true,subtree:true});})();
+</script>
+<style id="vj301css">
+#pn_res .vjgrid{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+#pn_res .vjchip{border:1px solid #e3d2a6;border-radius:8px;background:#fffdf7;padding:6px 8px;font-size:14px;line-height:1.35;text-align:center}
+#pn_res .vjchip.g{background:#e6f4ea;border-color:#9fd0b0}
+#pn_res .vjchip.r{background:#fdeaea;border-color:#e5a9a9}
+</style>
+<script>
+/* v301: दैनिक पंचांग — चौघड़िया/होरा/लग्न सूचियाँ ग्रिड में */
+(function(){function fx(){try{[].forEach.call(document.querySelectorAll('#pn_res .tw>table.vjacc2 td:nth-child(2):not(.vjg2)'),function(td){var brs=td.querySelectorAll(':scope > br');if(brs.length<5)return;if(!/\d\d:\d\d/.test(td.textContent))return;td.classList.add('vjg2');
+var g=document.createElement('div');g.className='vjgrid';var chip=document.createElement('div');chip.className='vjchip';
+var kids=[].slice.call(td.childNodes);kids.forEach(function(n){if(n.nodeType===1&&n.tagName==='BR'){if(chip.childNodes.length)g.appendChild(chip);chip=document.createElement('div');chip.className='vjchip';}else{chip.appendChild(n);}});if(chip.childNodes.length)g.appendChild(chip);
+[].forEach.call(g.children,function(c){var sp=c.querySelector('span[style]');if(sp){var st=sp.getAttribute('style')||'';if(/2e7d5b/i.test(st))c.classList.add('g');else if(/b23/i.test(st))c.classList.add('r');}});
+td.innerHTML='';td.appendChild(g);});}catch(x){}}
+fx();new MutationObserver(fx).observe(document.body,{childList:true,subtree:true});})();
+document.addEventListener('click',function(e){var l=e.target.closest&&e.target.closest('#lang');if(!l)return;setTimeout(function(){try{if(document.documentElement.lang!=='hi')return;var r=document.getElementById('nm_res'),b=document.getElementById('nm_all');if(r&&b&&r.innerHTML.trim()){b.click();setTimeout(function(){b.click();},80);}}catch(x){}},700);},true);
 </script>
 </body>
 </html>
