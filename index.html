@@ -201,7 +201,7 @@ input[type=date],input[type=time]{min-height:48px}
 .about b{color:var(--maroon)}.about p{margin:4px 0}
 @media print{.brand .pbtn,.nmtools,.totop,.lang,.about{display:none!important}.brand{background:#fff;color:#000;border-bottom:2px solid #000}.brand b{color:#000}.brand span{color:#000}#nm_body{font-size:13px}}
 </style>
-<meta name="vj-ver" content="250">
+<meta name="vj-ver" content="251">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <script>try{if(window.top!==window.self){document.documentElement.style.display='none';window.top.location=window.self.location;}}catch(e){document.documentElement.style.display='none';}</script>
 
@@ -6881,6 +6881,11 @@ if(D.readyState==='loading')D.addEventListener('DOMContentLoaded',go);else go();
    var n2=mk('pn_ctl','पिछला दिन','अगला दिन',function(){var v=(pd.value||'').split('-').map(Number);if(!v[0])return '';var q=new Date(Date.UTC(v[0],v[1]-1,v[2]));return v[2]+' '+MNm[v[1]-1]+' '+v[0]+' ('+WD[q.getUTCDay()]+')';},function(k){var v=pd.value.split('-').map(Number),q=new Date(Date.UTC(v[0],v[1]-1,v[2]+k));if(q.getUTCFullYear()<1900||q.getUTCFullYear()>2050)return;pd.value=q.getUTCFullYear()+'-'+String(q.getUTCMonth()+1).padStart(2,'0')+'-'+String(q.getUTCDate()).padStart(2,'0');pd.dispatchEvent(new Event('change',{bubbles:true}));});
    pa.addEventListener('click',function(){setTimeout(function(){if(n2)n2.__u();},500);});}
  })();
+
+ // परिणाम अपने बैनर के ठीक नीचे (साप्ताहिक/वार्षिक बैनर के नीचे नहीं)
+ function place(){var a=D.getElementById('pn_ctl'),r=D.getElementById('pn_res');if(a&&r&&a.nextSibling!==r)a.parentNode.insertBefore(r,a.nextSibling);
+  var b2=D.getElementById('nm_ctl'),r2=D.getElementById('nm_res');if(b2&&r2&&b2.nextSibling!==r2)b2.parentNode.insertBefore(r2,b2.nextSibling);}
+ place();setTimeout(place,1500);setTimeout(place,4000);
  var busy=false,L=[[wb,wr],[yb,yr],[pa,D.getElementById('pn_res')],[nm,D.getElementById('nm_res')],[td,D.getElementById('td_res')]];
  L.forEach(function(x){x[0].addEventListener('click',function(){if(busy||!x[0].isTrusted&&false)return;
    setTimeout(function(){if(!x[1].innerHTML.trim())return;busy=true;L.forEach(function(y){if(y!==x&&y[1].innerHTML.trim()){try{y[0].click();}catch(e){}}});busy=false;},60);});});
