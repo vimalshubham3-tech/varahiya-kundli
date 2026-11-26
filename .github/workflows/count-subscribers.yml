@@ -1,0 +1,16 @@
+name: count-subscribers
+on:
+  schedule:
+    - cron: '30 15 * * *'   # रोज़ 21:00 IST
+  workflow_dispatch:
+jobs:
+  count:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 20 }
+      - run: node push/count.js
+        env:
+          CLOUD_URL: ${{ secrets.CLOUD_URL }}
+          PUSH_TOKEN: ${{ secrets.PUSH_TOKEN }}
