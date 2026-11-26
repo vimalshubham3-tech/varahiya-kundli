@@ -201,7 +201,7 @@ input[type=date],input[type=time]{min-height:48px}
 .about b{color:var(--maroon)}.about p{margin:4px 0}
 @media print{.brand .pbtn,.nmtools,.totop,.lang,.about{display:none!important}.brand{background:#fff;color:#000;border-bottom:2px solid #000}.brand b{color:#000}.brand span{color:#000}#nm_body{font-size:13px}}
 </style>
-<meta name="vj-ver" content="316">
+<meta name="vj-ver" content="317">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <script>try{if(window.top!==window.self){document.documentElement.style.display='none';window.top.location=window.self.location;}}catch(e){document.documentElement.style.display='none';}</script>
 
@@ -1337,9 +1337,9 @@ function XR(d){
    const am=win(AMV),vj=win(VJV);
    if(am)nv+='<tr><td>अमृत काल (शुभ)</td><td>'+am+'</td></tr>';if(vj)nv+='<tr><td>वर्ज्य (अशुभ)</td><td>'+vj+'</td></tr>';}catch(e){}
   try{const sg=SEGS(d,q=>q.nak*0+ANS[wd]*0+((n28(q)-ANS[wd]+28)%28));
-   nv+='<tr><td>आनन्दादि योग (कब से कब तक)</td><td>'+sg.map((x,i)=>'<b>'+ANY[x.v]+'</b>'+([16,17].includes(x.v)?' ✗':[19,20].includes(x.v)?' ✓':'')+' — '+(i===0?'सूर्योदय से ':tt(x.a)+' से ')+tt(x.b)+' तक').join('<br>')+'</td></tr>';
+   nv+='<tr><td>आनन्दादि योग (कब से कब तक)</td><td>'+sg.map((x,i)=>'<b>'+ANY[x.v]+'</b>'+([16,17].includes(x.v)?' ✗':[19,20].includes(x.v)?' ✓':'')+' — '+(i===0?'सूर्योदय से ':tt(x.a)+' से ')+tt(Math.min(x.b,R2))+' तक').join('<br>')+'</td></tr>';
    nv+='<tr><td>दिशा शूल</td><td>'+DSH[wd]+'</td></tr>';
-   const ss=SEGS(d,q=>SARV[wd].includes(q.nak)?1:0).filter(x=>x.v),as=SEGS(d,q=>AMRT[wd]===q.nak?1:0).filter(x=>x.v),fm=l=>l.map(x=>(x.a<=r+0.01&&x.b>=R2-0.02)?'अहोरात्र':tt(x.a)+' – '+tt(x.b)).join('<br>');
+   const ss=SEGS(d,q=>SARV[wd].includes(q.nak)?1:0).filter(x=>x.v),as=SEGS(d,q=>AMRT[wd]===q.nak?1:0).filter(x=>x.v),fm=l=>l.map(x=>(x.a<=r+0.01&&x.b>=R2-0.02)?'अहोरात्र':tt(x.a)+' – '+tt(Math.min(x.b,R2))).join('<br>');
    if(ss.length)nv+='<tr><td>सर्वार्थ सिद्धि योग (शुभ)</td><td>'+fm(ss)+'</td></tr>';if(as.length)nv+='<tr><td>अमृत सिद्धि योग (शुभ)</td><td>'+fm(as)+'</td></tr>';}catch(e){}
   try{nv+=BALH(d);}catch(e){}
   try{const pn=PNR(d);nv+='<tr><td>पंचक रहित मुहूर्त</td><td>'+pn.map(x=>'<span style="color:'+(x.n==='शुभ मुहूर्त'?'#2e7d32':'#c62828')+'"><b>'+x.n+'</b></span> '+tt(x.a)+' – '+tt(x.b)).join('<br>')+'</td></tr>';}catch(e){}
