@@ -201,7 +201,7 @@ input[type=date],input[type=time]{min-height:48px}
 .about b{color:var(--maroon)}.about p{margin:4px 0}
 @media print{.brand .pbtn,.nmtools,.totop,.lang,.about{display:none!important}.brand{background:#fff;color:#000;border-bottom:2px solid #000}.brand b{color:#000}.brand span{color:#000}#nm_body{font-size:13px}}
 </style>
-<meta name="vj-ver" content="295">
+<meta name="vj-ver" content="296">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <script>try{if(window.top!==window.self){document.documentElement.style.display='none';window.top.location=window.self.location;}}catch(e){document.documentElement.style.display='none';}</script>
 
@@ -7231,5 +7231,16 @@ document.addEventListener('click',function(){setTimeout(lab,50);},true);})();
 #pn_res .res-card{font-size:17px}
 </style>
 <style id="vj295css">body{zoom:1.12}</style>
+<style id="vj296css">
+.vjg.vjtree>#vj_tools{display:grid!important;position:static!important;width:100%!important;margin:0 0 10px!important;padding:0 0 10px!important;border-bottom:2px solid #c9a15a;background:transparent!important;box-shadow:none!important;box-sizing:border-box}
+.vjg.vjtree>#vj_tools{grid-template-columns:1fr 1fr!important;gap:6px!important}
+.vjg.vjtree>#vj_tools>*{width:100%!important;min-width:0;margin:0!important;grid-column:auto!important;box-sizing:border-box}
+.vjg.vjtree>#vj_tools>*:last-child:nth-child(odd){grid-column:1/-1!important}
+</style>
+<script>
+/* v296: भाषा/प्रिंट/सहयोग/सहेजी/पंजीकरण बटन साइड-मेनू में */
+(function(){function mv(){try{var t=document.getElementById('vj_tools'),g=document.querySelector('.vjg.vjtree');if(!t||!g||t.parentNode===g)return;g.insertBefore(t,g.firstChild);}catch(e){}}
+mv();document.addEventListener('DOMContentLoaded',mv);new MutationObserver(mv).observe(document.body,{childList:true,subtree:true});})();
+</script>
 </body>
 </html>
