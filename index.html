@@ -201,7 +201,7 @@ input[type=date],input[type=time]{min-height:48px}
 .about b{color:var(--maroon)}.about p{margin:4px 0}
 @media print{.brand .pbtn,.nmtools,.totop,.lang,.about{display:none!important}.brand{background:#fff;color:#000;border-bottom:2px solid #000}.brand b{color:#000}.brand span{color:#000}#nm_body{font-size:13px}}
 </style>
-<meta name="vj-ver" content="307">
+<meta name="vj-ver" content="308">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <script>try{if(window.top!==window.self){document.documentElement.style.display='none';window.top.location=window.self.location;}}catch(e){document.documentElement.style.display='none';}</script>
 
@@ -7547,6 +7547,43 @@ fx();new MutationObserver(fx).observe(document.body,{childList:true,subtree:true
 document.addEventListener('click',function(e){try{var td=e.target.closest&&e.target.closest('#nm_res table.jc td[data-d]');if(!td)return;var t=td.closest('table.jc');
 if(td.classList.contains('vjsel')){e.stopImmediatePropagation();e.preventDefault();td.classList.remove('vjsel');var dd=t.closest('.tw').parentNode.querySelector('.vjcal-det');if(dd){dd.innerHTML=PH;}return;}
 [].forEach.call(t.querySelectorAll('td.vjsel'),function(x){x.classList.remove('vjsel');});td.classList.add('vjsel');}catch(x){}},true);})();
+</script>
+<style id="vj308css">
+#yr_res .vjg2:nth-child(1){--mc:#1d5fa8}
+#yr_res .vjg2:nth-child(2){--mc:#6d3fa0}
+#yr_res .vjg2:nth-child(3){--mc:#c2410c}
+#yr_res .vjg2:nth-child(4){--mc:#167a52}
+#yr_res .vjg2:nth-child(5){--mc:#a11a12}
+#yr_res .vjg2:nth-child(6){--mc:#0b6b73}
+#yr_res .vjg2:nth-child(7){--mc:#8a5a00}
+#yr_res .vjg2:nth-child(8){--mc:#6b1c28}
+#yr_res .vjg2:nth-child(9){--mc:#2b7a3d}
+#yr_res .vjg2:nth-child(10){--mc:#b3400a}
+#yr_res .vjg2:nth-child(11){--mc:#254e9a}
+#yr_res .vjg2:nth-child(12){--mc:#7b3fa0}
+#yr_res .vjyg{display:block!important}
+#yr_res .vjg2>.vjmh span{margin-right:7px}
+#yr_res .vjg2{--mc:#6b1c28;margin-bottom:8px;border-radius:12px;overflow:hidden;box-shadow:0 2px 6px rgba(60,20,20,.25)}
+#yr_res .vjg2>.vjmh{background:var(--mc)!important;color:#fff!important;font-size:17px;font-weight:800;padding:12px 14px!important;margin:0!important;border-radius:0!important;cursor:pointer;display:flex;align-items:center}
+#yr_res .vjg2>.vjmh::after{content:"\25B8";font-size:16px}
+#yr_res .vjg2.vjo>.vjmh::after{content:"\25BE"}
+#yr_res .vjg2>.vjmh i{font-style:normal;font-size:12.5px;background:rgba(255,255,255,.25);border-radius:99px;padding:2px 9px;margin-left:auto;margin-right:10px;font-weight:700}
+#yr_res .vjg2>.vjbody{display:none;grid-template-columns:1fr 1fr;gap:6px;padding:8px;background:#fff;border:2px solid var(--mc);border-top:0;border-radius:0 0 12px 12px}
+#yr_res .vjg2.vjo>.vjbody{display:grid}
+#yr_res .vjg2 .vjyc{background:#fff;border:1.5px solid var(--mc);border-left:6px solid var(--mc);border-radius:8px}
+#yr_res .vjg2 .vjyc .a{color:var(--mc)!important;font-weight:800}
+#yr_res .vjg2 .vjyc .b{color:#17365f!important;font-weight:700;opacity:1!important}
+#yr_res .vjg2 .vjyc .c{color:#2d1a0c;font-weight:600}
+#yr_res .vjg2 .vjyc.kal .c{color:#a11a12;font-weight:700}
+#yr_res .vjg2 .vjyc.vrt .c{color:#0f6a2f;font-weight:700}
+</style>
+<script>
+/* v308: वार्षिक — माह-वार ड्रॉप-डाउन, रंगीन */
+(function(){function fx(){try{[].forEach.call(document.querySelectorAll('#yr_res .vjyg:not([data-o])'),function(g){if(!g.querySelector('.vjmh'))return;g.setAttribute('data-o',1);var kids=[].slice.call(g.children),cur=null,body=null,cnt=0;
+function fin(){if(cur){var n=document.createElement('i');n.textContent=cnt;cur.firstChild.insertBefore(n,null);}}
+kids.forEach(function(k){if(k.classList.contains('vjmh')){fin();cur=document.createElement('div');cur.className='vjg2';cnt=0;cur.appendChild(k);body=document.createElement('div');body.className='vjbody';cur.appendChild(body);g.appendChild(cur);(function(c,h){h.addEventListener('click',function(){c.classList.toggle('vjo');});})(cur,k);}
+else if(cur){var t=(k.querySelector('.c')||{}).textContent||'';k.classList.add(/कल्याणक/.test(t)?'kal':'vrt');body.appendChild(k);cnt++;}});fin();});}catch(x){}}
+fx();new MutationObserver(fx).observe(document.body,{childList:true,subtree:true});})();
 </script>
 </body>
 </html>
