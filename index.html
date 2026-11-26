@@ -201,7 +201,7 @@ input[type=date],input[type=time]{min-height:48px}
 .about b{color:var(--maroon)}.about p{margin:4px 0}
 @media print{.brand .pbtn,.nmtools,.totop,.lang,.about{display:none!important}.brand{background:#fff;color:#000;border-bottom:2px solid #000}.brand b{color:#000}.brand span{color:#000}#nm_body{font-size:13px}}
 </style>
-<meta name="vj-ver" content="279">
+<meta name="vj-ver" content="280">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <script>try{if(window.top!==window.self){document.documentElement.style.display='none';window.top.location=window.self.location;}}catch(e){document.documentElement.style.display='none';}</script>
 
@@ -7096,6 +7096,15 @@ function wrap(name,id,html,btn){var f=window[name];if(!f||f.__w279)return;var g=
 function go(){wrap('vjDisc','vj_disc',DISC,'vj_dc');wrap('vjPriv','vj_priv',PRIV,'vj_pc');}
 go();setTimeout(go,500);setTimeout(go,3000);
 })();
+</script>
+<script>
+/* v280: dropdown option values stay in Hindi (original) so tools work in English mode */
+(function(){function fix(){try{document.querySelectorAll('option:not([data-vjv])').forEach(function(o){if(!o.hasAttribute('value')){var t=o.textContent;if(!document.documentElement.lang||document.documentElement.lang!=='en'||/[ऀ-ॿ]/.test(t))o.setAttribute('value',t);}o.setAttribute('data-vjv','1');});}catch(e){}}
+fix();
+var lb=document.getElementById('lang');if(lb)lb.addEventListener('click',fix,true);
+document.addEventListener('click',fix,true);document.addEventListener('focusin',fix,true);document.addEventListener('touchstart',fix,true);
+var t;new MutationObserver(function(){clearTimeout(t);t=setTimeout(fix,0);}).observe(document.body,{childList:true,subtree:true});
+setTimeout(fix,500);setTimeout(fix,2500);})();
 </script>
 </body>
 </html>
