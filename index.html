@@ -201,7 +201,7 @@ input[type=date],input[type=time]{min-height:48px}
 .about b{color:var(--maroon)}.about p{margin:4px 0}
 @media print{.brand .pbtn,.nmtools,.totop,.lang,.about{display:none!important}.brand{background:#fff;color:#000;border-bottom:2px solid #000}.brand b{color:#000}.brand span{color:#000}#nm_body{font-size:13px}}
 </style>
-<meta name="vj-ver" content="240">
+<meta name="vj-ver" content="241">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <script>try{if(window.top!==window.self){document.documentElement.style.display='none';window.top.location=window.self.location;}}catch(e){document.documentElement.style.display='none';}</script>
 
@@ -5199,6 +5199,16 @@ var RJAIN_NOTE='जैन दृष्टि: ग्रह निमित्त
     o.innerHTML=h+'</tbody></table></div><p class="kmeta">तिथि जैन नियम (सूर्योदय के बाद 6 घड़ी) से ली गई है। पर्वों का निर्धारण दिगंबर परंपरा के हिंदी (पूर्णिमांत) मास से है।</p></div>';});
   var st=D.createElement('style');st.textContent='table.jc{table-layout:fixed;min-width:600px;width:100%}table.jc td{overflow:hidden;overflow-wrap:anywhere;word-break:break-word}table.jc td,table.jc th{border:1px solid #d9c9a8;padding:3px;vertical-align:top;font-size:11px;line-height:1.25}table.jc td{height:100px;cursor:pointer}table.jc td.ev{background:#fff3dc}.jc-d{font-size:20px;font-weight:700;color:#7a2a0e}.jc-t{font-weight:600}.jc-n{color:#444}.jc-c{color:#0a6a3a;font-size:10px;font-weight:600}.jc-e{color:#a02020;font-size:10px}table.jc small{color:#666;font-weight:400}';D.head.appendChild(st);
   var jcCur=null;
+  window.__vjCalGrid=function(y,mo,c){try{var r=calHTML(y,mo,c),t=D.createElement('div');t.innerHTML=r.html;var tw=t.querySelector('.tw');window.__vjCalLast=r;return tw?tw.outerHTML+'<div class="mg vjcal-det"><p>किसी तारीख़ पर टैप करें — पूरा विवरण यहाँ दिखेगा।</p></div>':'';}catch(e){return '';}};
+  window.__vjCalBind=function(root,y,mo){try{var r=window.__vjCalLast;if(!r)return;root.querySelectorAll('.vjcal table.jc td[data-d]').forEach(function(td){td.addEventListener('click',function(){
+        var x=r.days[+td.getAttribute('data-d')-1],t=[];
+        t.push('<b>'+x.d+'/'+mo+'/'+y+' ('+VN[x.wd]+')</b> — '+E(MN[x.pm]+' '+tName(x.t))+' · नक्षत्र '+E(NAK_H[x.nak]));
+        t.push('सूर्योदय '+hmS(x.rise)+' · सूर्यास्त '+hmS(x.set)+(x.tEnd!==null?' · तिथि समाप्ति '+hmAbs(x.tEnd):'')+(x.nEnd!==null?' · नक्षत्र समाप्ति '+hmAbs(x.nEnd):''));
+        var ev=kalOn(x.r).concat(parvaOn(x.r));if(ev.length)t.push('<b>पर्व/कल्याणक:</b> '+E(ev.join('; ')));
+        if(x.yw.good.length)t.push('<b>शुभ योग:</b> '+E(x.yw.good.join('; ')));
+        if(x.yw.bad.length)t.push('<b>सावधानी:</b> '+E(x.yw.bad.join('; ')));
+        x.bh.forEach(function(sp){t.push('<b>भद्रा:</b> '+E(bhadraText(y,mo,x.d,sp)));});
+        var dd=root.querySelector('.vjcal-det');if(dd)dd.innerHTML='<p>'+t.join('</p><p>')+'</p>';});});}catch(e){console.error(e);}};
   D.getElementById('jc_go').addEventListener('click',function(){
     var v=(D.getElementById('jc_m').value||new Date(Date.now()+19800000).toISOString().slice(0,7)).split('-').map(Number),o=D.getElementById('jc_res'),c=city('jc_c');
     if(v.length<2||!v[0]){o.innerHTML='<p class="warn">महीना चुनें।</p>';return;}
@@ -6697,7 +6707,7 @@ function build(y,m,c){
  }
  return '<div class="res-card vjmp"><div style="display:flex;gap:6px;margin-bottom:6px"><button type="button" data-tr="D" style="flex:1;padding:7px;border-radius:8px;border:1px solid #b8860b;background:'+(TR==='D'?'#8e2b3a;color:#fff':'#fffdf7;color:#6b1c28')+'">दिगंबर परंपरा</button><button type="button" data-tr="S" style="flex:1;padding:7px;border-radius:8px;border:1px solid #b8860b;background:'+(TR==='S'?'#8e2b3a;color:#fff':'#fffdf7;color:#6b1c28')+'">श्वेतांबर परंपरा</button></div><h2 class="kh">वरहिया जैन तिथि एवं तीर्थंकर पंच कल्याणक दर्पण — '+String(m).padStart(2,'0')+'/'+y+' · '+esc(c[0])+'</h2>'+SAMV(y,m,c)+
   (parv.length?'<div style="background:#fff7de;border:1px solid #d9c38a;border-radius:10px;padding:8px 10px;margin:6px 0"><b style="color:#6b1c28">इस माह के जैन पर्व</b><br>'+parv.map(esc).join('<br>')+'</div>':'<p class="kmeta">इस माह में कोई प्रमुख जैन पर्व नहीं।</p>')+
-  (kal.length?'<div style="background:#e3eefb;border:1px solid #9bb8dd;border-radius:10px;padding:8px 10px;margin:6px 0"><b style="color:#1a4f8a">इस माह के तीर्थंकर पंच कल्याणक</b><br>'+kal.map(esc).join('<br>')+'</div>':'<p class="kmeta">इस माह में कोई तीर्थंकर कल्याणक नहीं।</p>')+extra(y,m)+'<div class="tw"><table><thead><tr><th>तारीख़</th><th>वार</th><th>तिथि (कब से कब तक)</th><th>पंच-पर्व / पर्व / कल्याणक</th></tr></thead><tbody>'+rows+'</tbody></table></div>'+
+  (kal.length?'<div style="background:#e3eefb;border:1px solid #9bb8dd;border-radius:10px;padding:8px 10px;margin:6px 0"><b style="color:#1a4f8a">इस माह के तीर्थंकर पंच कल्याणक</b><br>'+kal.map(esc).join('<br>')+'</div>':'<p class="kmeta">इस माह में कोई तीर्थंकर कल्याणक नहीं।</p>')+extra(y,m)+'<details class="par vjcal" open><summary><b>📅 इस माह का जैन पंचांग (कैलेंडर रूप)</b></summary>'+(window.__vjCalGrid?window.__vjCalGrid(y,m,c):'')+'</details><div class="tw"><table><thead><tr><th>तारीख़</th><th>वार</th><th>तिथि (कब से कब तक)</th><th>पंच-पर्व / पर्व / कल्याणक</th></tr></thead><tbody>'+rows+'</tbody></table></div>'+
   '<p class="kmeta">🌿 हरी पंच-पर्व तिथि (द्वितीया, पंचमी, अष्टमी, एकादशी, चतुर्दशी, अमावस्या, पूर्णिमा) — परंपरा में हरी सब्ज़ी/तप का ध्यान। गुलाबी पंक्ति = जैन पर्व, नीली = तीर्थंकर कल्याणक। '+(TR==='S'?'कल्याणक-तिथियाँ श्वेतांबर परंपरा (गुजराती/अमांत मास, उदया तिथि) के अनुसार हैं।':'कल्याणक-तिथियाँ दिगंबर परंपरा (पूर्णिमांत मास, उदया तिथि) के अनुसार हैं।')+' दोनों परंपराओं में कुछ तिथियाँ भिन्न हैं। दिन की तिथि छपे जैन कैलेंडर (तीर्थंकर वर्धमान) की रीति से — सूर्योदय के लगभग 96 मिनट (4 घड़ी) बाद की तिथि (वृद्धि तिथि पहले दिन की तरह दोनों दिन); जो तिथि दिन में बदलती या क्षय होती है उसका कल्याणक उसी दिन ("14-15" की तरह) और वृद्धि तिथि का पहले दिन; संप्रदाय अनुसार पर्व-तिथि में अंतर संभव है, अंतिम निर्णय हेतु अपने पंचांग/गुरुजन से मिलान करें।</p></div>';}
 function mv(){var a=D.getElementById('nm_all');if(!a||D.getElementById('td_all'))return !!D.getElementById('td_all');
  var anchor=a.nextSibling&&a.nextSibling.className==='vjchg'?a.nextSibling:a;
@@ -6708,6 +6718,7 @@ function mv(){var a=D.getElementById('nm_all');if(!a||D.getElementById('td_all')
   o.innerHTML='<p class="kmeta">गणना हो रही है…</p>';
   function show(){try{var p2=function(x){return String(x).padStart(2,'0');};
    o.innerHTML='<div style="display:flex;gap:6px;align-items:center;margin:6px 0"><button type="button" data-mv="-1" style="padding:7px 12px;border-radius:8px;border:1px solid #b8860b;background:#fffdf7;color:#6b1c28">◀</button><input type="month" data-mi="1" value="'+vv[0]+'-'+p2(vv[1])+'" style="flex:1;min-width:0;padding:7px;border-radius:8px;border:1px solid #cdb98a;background:#fffdf7;font:inherit"><button type="button" data-mv="1" style="padding:7px 12px;border-radius:8px;border:1px solid #b8860b;background:#fffdf7;color:#6b1c28">▶</button></div>'+build(vv[0],vv[1],c)+'<p style="text-align:center;margin:8px 0"><a href="https://vidyasagar.net" target="_blank" rel="noopener" style="display:inline-block;background:#8e2b3a;color:#fff;text-decoration:none;padding:9px 16px;border-radius:20px">🔗 vidyasagar.net खोलें</a></p>';
+   try{if(window.__vjCalBind)window.__vjCalBind(o,vv[0],vv[1]);}catch(e){}
    o.querySelectorAll('button[data-tr]').forEach(function(bt){bt.onclick=function(ev){ev.stopPropagation();try{localStorage.setItem('vj_trad',bt.getAttribute('data-tr'));}catch(e){}show();};});
    o.querySelectorAll('button[data-mv]').forEach(function(bt){bt.onclick=function(ev){ev.stopPropagation();var d=new Date(Date.UTC(vv[0],vv[1]-1+ +bt.getAttribute('data-mv'),1));if(d.getUTCFullYear()<1900||d.getUTCFullYear()>2050)return;vv=[d.getUTCFullYear(),d.getUTCMonth()+1];show();};});
    var mi2=o.querySelector('input[data-mi]');mi2.onchange=function(){var q=mi2.value.split('-').map(Number);if(q[0]>=1900&&q[0]<=2050&&q[1]>=1&&q[1]<=12){vv=[q[0],q[1]];show();}};
