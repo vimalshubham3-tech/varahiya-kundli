@@ -201,7 +201,7 @@ input[type=date],input[type=time]{min-height:48px}
 .about b{color:var(--maroon)}.about p{margin:4px 0}
 @media print{.brand .pbtn,.nmtools,.totop,.lang,.about{display:none!important}.brand{background:#fff;color:#000;border-bottom:2px solid #000}.brand b{color:#000}.brand span{color:#000}#nm_body{font-size:13px}}
 </style>
-<meta name="vj-ver" content="254">
+<meta name="vj-ver" content="255">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <script>try{if(window.top!==window.self){document.documentElement.style.display='none';window.top.location=window.self.location;}}catch(e){document.documentElement.style.display='none';}</script>
 
@@ -1192,7 +1192,7 @@ function drawKundli(){
   h+=panchangBirthHTML(K,txt)+namkaranHTML(K,txt)+marriageHTML(K,cur,sub,txt)+santanHTML(K,cur,sub,txt)+careerHTML(K,txt)+lifeHTML(K,txt);
   h+='<h3>'+esc(t('kTrans'))+'</h3><div class="mg"><p>'+esc(t('kSat'))+': <b>'+esc(rashiN(K.satR))+'</b></p><p>'+esc(t(sadeSatiKey(K)))+'</p></div>';
   txt.push(t(sadeSatiKey(K)));
-  h+=transitHTML(K,txt)+gocharCalHTML(K,txt)+ashtakHTML(K,txt)+shadbalaHTML(K,txt)+ishtaHTML(K,txt)+yuddhaHTML(K,txt)+chalitHTML(K,txt)+upagrahaHTML(K,txt)+jaiminiHTML(K,txt)+avasthaHTML(K,txt)+kpHTML(K,txt)+areasHTML(K,cur,sub,txt)+doshaHTML(K,txt)+sadeSatiLifeHTML(K,txt)+dashaPlusHTML(K,cur,sub,txt)+ashtottariHTML(K,txt)+charaDashaHTML(K,txt)+varshaHTML(K,txt)+muddaSahamHTML(K,txt)+numerologyHTML(K,txt)+lalKitabHTML(K,txt)+lalSleepHTML(K,txt)+remedyHTML(K,cur,sub,txt)+ratnaJainHTML(K,cur,sub,txt);
+  h+=transitHTML(K,txt)+(()=>{try{return sadeSatiHTML(K,txt);}catch(e){return '';}})()+gocharCalHTML(K,txt)+ashtakHTML(K,txt)+shadbalaHTML(K,txt)+ishtaHTML(K,txt)+yuddhaHTML(K,txt)+chalitHTML(K,txt)+upagrahaHTML(K,txt)+jaiminiHTML(K,txt)+avasthaHTML(K,txt)+kpHTML(K,txt)+areasHTML(K,cur,sub,txt)+doshaHTML(K,txt)+sadeSatiLifeHTML(K,txt)+dashaPlusHTML(K,cur,sub,txt)+ashtottariHTML(K,txt)+charaDashaHTML(K,txt)+varshaHTML(K,txt)+muddaSahamHTML(K,txt)+numerologyHTML(K,txt)+lalKitabHTML(K,txt)+lalSleepHTML(K,txt)+remedyHTML(K,cur,sub,txt)+ratnaJainHTML(K,cur,sub,txt);
   h+='<p class="disc">'+esc(t('kDis'))+'</p><button class="copy" type="button">'+esc(t('kCopy'))+'</button> <button class="copy" type="button" id="prn">प्रिंट / PDF सहेजें</button></div>';
   box.innerHTML=h; try{addTOC(box);}catch(e){}
   const pb=$('prn'); if(pb) pb.onclick=()=>window.print();
@@ -3739,6 +3739,23 @@ function lifeHTML(K,txt){
     h+='<div class="pl'+(nowIn?' nowp':'')+'"><b>'+esc(PL_H[m.lord])+' महादशा · '+yr(m.start)+'–'+yr(m.end)+' (आयु '+a0+'–'+a1+')'+(nowIn?' · चल रही':'')+'</b><p>'+esc(s)+'</p></div>';
     txt.push(PL_H[m.lord]+' महादशा '+yr(m.start)+'–'+yr(m.end)+': '+s);
   });
+  return h;
+}
+function sadeSatiHTML(K,txt){
+  const m=K.P[1].r, b=K.I.birthMs/86400000+2440587.5, nowJD=K.nowMs/86400000+2440587.5;
+  const lab=d=>{const o=(d+12)%12; return o===11?['साढ़ेसाती — पहला चरण (12वें)',1]:o===0?['साढ़ेसाती — दूसरा चरण (चंद्र राशि पर)',1]:o===1?['साढ़ेसाती — तीसरा चरण (2रे)',1]:o===3?['ढैय्या (चंद्र से 4थे)',2]:o===7?['ढैय्या (चंद्र से 8वें)',2]:null;};
+  const seg=[]; let cur=null;
+  for(let d=0;d<=365.25*95;d+=5){const jd=b+d, r=rashiOf(geoLon('saturn',jd)), L=lab(r-m);
+    if(L&&cur&&cur.t===L[0]&&jd-cur.e<=12){cur.e=jd;}
+    else{ if(cur)seg.push(cur); cur=L?{t:L[0],k:L[1],s:jd,e:jd}:null; }
+  }
+  if(cur)seg.push(cur);
+  const fm=jd=>{const x=new Date((jd-2440587.5)*86400000);return String(x.getUTCDate()).padStart(2,'0')+'/'+String(x.getUTCMonth()+1).padStart(2,'0')+'/'+x.getUTCFullYear();};
+  const age=jd=>Math.max(0,Math.round((jd-b)/365.25));
+  let h='<h3>शनि साढ़ेसाती व ढैय्या (जीवन-काल)</h3><p class="kmeta">चंद्र राशि '+esc(RASHI_H[m])+' से शनि का गोचर: 12-1-2 भाव में साढ़ेसाती, 4थे/8वें में ढैय्या। शनि वक्री होने पर तिथियाँ कुछ दिन आगे-पीछे हो सकती हैं।</p><div class="tw"><table><thead><tr><th>चरण</th><th>से</th><th>तक</th><th>आयु</th></tr></thead><tbody>';
+  seg.forEach(g=>{const now=nowJD>=g.s&&nowJD<=g.e+5; h+='<tr'+(now?' style="background:#fff0c2;font-weight:700"':'')+'><td>'+g.t+(now?' · अभी चल रहा':'')+'</td><td>'+fm(g.s)+'</td><td>'+fm(g.e+5)+'</td><td>'+age(g.s)+'–'+age(g.e+5)+'</td></tr>';});
+  h+='</tbody></table></div>';
+  txt.push('साढ़ेसाती/ढैय्या: '+seg.slice(0,8).map(g=>g.t.split(' (')[0]+' '+fm(g.s)+'–'+fm(g.e+5)).join('; '));
   return h;
 }
 function transitHTML(K,txt){
