@@ -201,7 +201,7 @@ input[type=date],input[type=time]{min-height:48px}
 .about b{color:var(--maroon)}.about p{margin:4px 0}
 @media print{.brand .pbtn,.nmtools,.totop,.lang,.about{display:none!important}.brand{background:#fff;color:#000;border-bottom:2px solid #000}.brand b{color:#000}.brand span{color:#000}#nm_body{font-size:13px}}
 </style>
-<meta name="vj-ver" content="289">
+<meta name="vj-ver" content="290">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <script>try{if(window.top!==window.self){document.documentElement.style.display='none';window.top.location=window.self.location;}}catch(e){document.documentElement.style.display='none';}</script>
 
@@ -7147,6 +7147,25 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 <script>
 /* v289: बारह लग्न — हर लग्न ड्रॉप-डाउन (दबाने पर खुले/बंद) */
 (function(){function fx(){try{var c=document.querySelectorAll('#vl_box .lg:not(.vjcol)');[].forEach.call(c,function(e){e.classList.add('vjcol');e.setAttribute('role','button');e.addEventListener('click',function(){e.classList.toggle('open');});});}catch(x){}}
+fx();new MutationObserver(fx).observe(document.body,{childList:true,subtree:true});})();
+</script>
+<style id="vj290css">
+#vl_body .vjmp-info.vjcol2>b:first-child{display:block;cursor:pointer}
+#vl_body .vjmp-info.vjcol2>b:first-child::after{content:" \25B8";color:#8a6d1d}
+#vl_body .vjmp-info.vjcol2.open>b:first-child::after{content:" \25BE"}
+#vl_body .vjmp-info.vjcol2>.vjib{display:none}
+#vl_body .vjmp-info.vjcol2.open>.vjib{display:block}
+#vl_body h3.vjcol3{cursor:pointer}
+#vl_body h3.vjcol3::after{content:" \25B8";color:#8a6d1d}
+#vl_body h3.vjcol3.open::after{content:" \25BE"}
+#vl_body h3.vjcol3+ul:not(.open){display:none}
+</style>
+<script>
+/* v290: पहले यह जानें / दिन-रात प्रभाव / लग्न-शुद्धि — ड्रॉप-डाउन */
+(function(){function fx(){try{
+[].forEach.call(document.querySelectorAll('#vl_body .vjmp-info:not(.vjcol2)'),function(e){var t=e.firstElementChild;if(!t||t.tagName!=='B')return;e.classList.add('vjcol2');var w=document.createElement('div');w.className='vjib';while(t.nextSibling)w.appendChild(t.nextSibling);e.appendChild(w);t.addEventListener('click',function(){e.classList.toggle('open');});});
+[].forEach.call(document.querySelectorAll('#vl_body h3:not(.vjcol3)'),function(h){var u=h.nextElementSibling;if(!u||u.tagName!=='UL')return;h.classList.add('vjcol3');h.addEventListener('click',function(){h.classList.toggle('open');u.classList.toggle('open');});});
+}catch(x){}}
 fx();new MutationObserver(fx).observe(document.body,{childList:true,subtree:true});})();
 </script>
 </body>
