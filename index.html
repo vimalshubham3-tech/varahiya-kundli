@@ -201,7 +201,7 @@ input[type=date],input[type=time]{min-height:48px}
 .about b{color:var(--maroon)}.about p{margin:4px 0}
 @media print{.brand .pbtn,.nmtools,.totop,.lang,.about{display:none!important}.brand{background:#fff;color:#000;border-bottom:2px solid #000}.brand b{color:#000}.brand span{color:#000}#nm_body{font-size:13px}}
 </style>
-<meta name="vj-ver" content="202">
+<meta name="vj-ver" content="203">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <script>try{if(window.top!==window.self){document.documentElement.style.display='none';window.top.location=window.self.location;}}catch(e){document.documentElement.style.display='none';}</script>
 
@@ -1238,6 +1238,18 @@ function LGD(y,mo,dd,lat,lon,from,to){
   const o=[];let prev=f(from),st=from;
   for(let h=from+0.04;h<=to;h+=0.04){const v=f(h);if(v!==prev){let lo=h-0.04,hi=h;for(let i=0;i<18;i++){const q=(lo+hi)/2;if(f(q)===prev)lo=q;else hi=q;}const e=(lo+hi)/2;o.push({r:prev,a:st,b:e});st=e;prev=v;}}
   o.push({r:prev,a:st,b:to});return o;}
+/* v203: विवाह मुहूर्त (दिन की शुद्धि + शुभ लग्न) */
+function VM(y,mo,dd,lat,lon){
+  const L=muhurtaScanX('विवाह',y,mo,dd,1,lat,lon,-1,-1);
+  if(!L.length)return null;
+  const pd=panchangDay(y,mo,dd,lat,lon,5.5),nx=new Date(Date.UTC(y,mo-1,dd+1)),R2=24+sunTimes(nx.getUTCFullYear(),nx.getUTCMonth()+1,nx.getUTCDate(),lat,lon,5.5).rise;
+  const ok=LGD(y,mo,dd,lat,lon,pd.sun.rise,R2).filter(w=>{
+    if(!MUX['विवाह'].lg.includes(w.r))return false;
+    const mid=(w.a+w.b)/2,P=allPlanets(toJD(y,mo,dd,Math.floor(mid%24),(mid%1)*60,5.5)+(mid>=24?1:0));
+    if(P.slice(0,9).some(p=>rashiOf(p.lon)===(w.r+7)%12))return false;
+    const mh=((rashiOf(P[1].lon)-w.r+12)%12)+1;return ![6,8,12].includes(mh);});
+  return {sp:L[0].sp,ws:L[0].ws,lg:ok};
+}
 function XR(d){
   const y=d.ymd[0],mo=d.ymd[1],dd=d.ymd[2],r=d.sun.rise,s=d.sun.set,dm=s-r,m=dm/15,wd=d.wd;
   const nx=new Date(Date.UTC(y,mo-1,dd+1)),ns=sunTimes(nx.getUTCFullYear(),nx.getUTCMonth()+1,nx.getUTCDate(),d.ymd[3],d.ymd[4],5.5),R2=24+ns.rise,nr=R2-s,mid=s+nr/2,nm=nr/15;
@@ -1261,6 +1273,8 @@ function XR(d){
   try{const ch=choghadiya(y,mo,dd,d.ymd[3],d.ymd[4],5.5),hr=horaTable(y,mo,dd,d.ymd[3],d.ymd[4],5.5),cf=x=>'<span style="'+(CHD_GOOD[x.n]===1?'color:#2e7d5b;font-weight:700':CHD_GOOD[x.n]?'':'color:#b23')+'">'+hmS(x.a)+'–'+hmS(x.b)+' '+x.n+(CHD_GOOD[x.n]===1?' ✓':'')+'</span>';
    nv+='<tr><td>चौघड़िया — दिन</td><td>'+ch.day.map(cf).join('<br>')+'</td></tr><tr><td>चौघड़िया — रात</td><td>'+ch.night.map(cf).join('<br>')+'</td></tr>'
    +'<tr><td>ग्रह-होरा</td><td>'+hr.map(x=>hmS(x.a)+'–'+hmS(x.b)+' <b>'+HN[x.pl]+'</b>').join('<br>')+'</td></tr>';}catch(e){}
+  try{const v=VM(y,mo,dd,d.ymd[3],d.ymd[4]);
+   nv+='<tr><td>विवाह मुहूर्त</td><td>'+(v?'<b style="color:#2e7d5b">✅ दिन विवाह योग्य</b>'+(v.sp.length?' ('+v.sp.join(', ')+')':'')+'<br>शुभ लग्न: '+(v.lg.length?v.lg.map(x=>'<b>'+RASHI_H[x.r]+'</b> '+tt(x.a)+'–'+tt(x.b)).join('; '):'<span style="color:#b23">कोई शुद्ध लग्न नहीं मिला</span>'):'<span style="color:#b23">✗ इस दिन विवाह योग्य नहीं (वार/तिथि/नक्षत्र/योग/भद्रा आदि नियमों के कारण)</span>')+'</td></tr>';}catch(e){}
   const lg=LGD(y,mo,dd,d.ymd[3],d.ymd[4],r,R2);
   nv+='<tr><td>लग्न (सूर्योदय से अगले सूर्योदय तक)</td><td>'+lg.map(x=>'<b>'+RASHI_H[x.r]+'</b> '+tt(x.a)+' – '+tt(x.b)).join('<br>')+'</td></tr>';
   const jd0=Date.UTC(y,mo-1,dd)/86400000+2440587.5;
@@ -6453,8 +6467,8 @@ b.addEventListener('click',function(){var tn=new Date(Date.now()+19800000),mi=do
   o.setAttribute('data-vjk',k);
   try{var cards=o.querySelectorAll('.vjmp .res-card'),bc=cards[cards.length-1];
   try{var dc=cards[0];dc.classList.add('vjdk');var tn=new Date(Date.now()+19800000),tm=(tn.getUTCFullYear()+'-'+String(tn.getUTCMonth()+1).padStart(2,'0')),sel=document.getElementById('pm_m').value;
-   try{var cc=CITIES[+document.getElementById('pm_c').value],yy=+sel.split('-')[0],mm=+sel.split('-')[1],hr=dc.querySelector('thead tr');if(hr&&hr.children.length>5){hr.insertAdjacentHTML('beforeend','<th>लग्न (सूर्योदय)</th>');}
-   [].forEach.call(dc.querySelectorAll('tbody tr'),function(tr){var dn_=parseInt(tr.children[0].textContent,10);if(!dn_||!hr||hr.children.length<7)return;var pd_=panchangDay(yy,mm,dn_,cc[2],cc[3],5.5),sl=LGD(yy,mm,dn_,cc[2],cc[3],pd_.sun.rise,pd_.sun.rise+4)[0];tr.insertAdjacentHTML('beforeend','<td>'+RASHI_H[sl.r]+' <small>('+hmS(sl.b)+' तक)</small></td>');});}catch(e){}
+   try{var cc=CITIES[+document.getElementById('pm_c').value],yy=+sel.split('-')[0],mm=+sel.split('-')[1],hr=dc.querySelector('thead tr');if(hr&&hr.children.length>5){hr.insertAdjacentHTML('beforeend','<th>लग्न (सूर्योदय)</th><th>💍 विवाह मुहूर्त</th>');}
+   [].forEach.call(dc.querySelectorAll('tbody tr'),function(tr){var dn_=parseInt(tr.children[0].textContent,10);if(!dn_||!hr||hr.children.length<8)return;var pd_=panchangDay(yy,mm,dn_,cc[2],cc[3],5.5),sl=LGD(yy,mm,dn_,cc[2],cc[3],pd_.sun.rise,pd_.sun.rise+4)[0];var vm=VM(yy,mm,dn_,cc[2],cc[3]);tr.insertAdjacentHTML('beforeend','<td>'+RASHI_H[sl.r]+' <small>('+hmS(sl.b)+' तक)</small></td><td>'+(vm?'<b style="color:#2e7d5b">✅ शुभ</b>'+(vm.lg.length?'<br><small>'+vm.lg.map(function(x){return RASHI_H[x.r]+' '+hmS(x.a)+'–'+hmS(x.b)}).join(', ')+'</small>':'<br><small>लग्न-शुद्धि जाँचें</small>'):'<span style="color:#999">—</span>')+'</td>');});}catch(e){}
    try{var ccx=CITIES[+document.getElementById('pm_c').value],yx=+sel.split('-')[0],mx=+sel.split('-')[1],ncol=dc.querySelector('thead tr').children.length;
     var note=document.createElement('p');note.className='kmeta';note.textContent='👆 किसी भी दिन की पंक्ति पर दबाएँ — उस दिन का चौघड़िया, ग्रह-होरा व ग्रह गोचर खुलेगा/बंद होगा।';dc.querySelector('.tw').parentNode.insertBefore(note,dc.querySelector('.tw'));
     [].forEach.call(dc.querySelectorAll('tbody tr'),function(tr){var dn2=parseInt(tr.children[0].textContent,10);if(!dn2)return;tr.style.cursor='pointer';tr.addEventListener('click',function(){var nx=tr.nextElementSibling;if(nx&&nx.className==='vjx'){nx.remove();return;}
