@@ -201,7 +201,7 @@ input[type=date],input[type=time]{min-height:48px}
 .about b{color:var(--maroon)}.about p{margin:4px 0}
 @media print{.brand .pbtn,.nmtools,.totop,.lang,.about{display:none!important}.brand{background:#fff;color:#000;border-bottom:2px solid #000}.brand b{color:#000}.brand span{color:#000}#nm_body{font-size:13px}}
 </style>
-<meta name="vj-ver" content="312">
+<meta name="vj-ver" content="313">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <script>try{if(window.top!==window.self){document.documentElement.style.display='none';window.top.location=window.self.location;}}catch(e){document.documentElement.style.display='none';}</script>
 
@@ -7651,9 +7651,10 @@ fx();new MutationObserver(fx).observe(D.body,{childList:true,subtree:true,charac
 (function(){var D=document;function en(){return D.documentElement.lang==='en';}
 function go(){try{var o=D.querySelector('#vj_tools .vjsup');D.body.classList.remove('vjhm','vjdr','vjst');if(o)o.click();}catch(x){}}
 function mk(){try{var g=D.querySelector('.vjg.vjtree'),sb=g&&g.querySelector('.vjsetbtn');
-if(g&&sb&&!g.querySelector('.vjsupbtn')){var b=D.createElement('button');b.type='button';b.className='vjsupbtn';b.textContent=en()?'\uD83D\uDE4F Support / Contribute':'\uD83D\uDE4F सहयोग';b.addEventListener('click',function(e){e.stopPropagation();go();});g.insertBefore(b,sb);}
+if(g&&sb&&!g.querySelector('.vjsupbtn')){var b=D.createElement('button');b.type='button';b.className='vjsupbtn';b.textContent=en()?'\uD83D\uDE4F Support / Contribute':'\uD83D\uDE4F सहयोग';b.addEventListener('click',function(e){e.stopPropagation();go();});g.insertBefore(b,sb.nextSibling);}
 var h=D.getElementById('vjhome'),hg=h&&h.querySelector('.hg');
-if(hg&&!hg.querySelector('.vjsupc')&&h.querySelector('.hb button')&&h.querySelector('.hb button').textContent.trim()==='\u2715'){var c=D.createElement('button');c.type='button';c.className='hc vjsupc';c.innerHTML='<div class="t"><i>\uD83D\uDE4F</i><span>'+(en()?'Support / Contribute':'सहयोग')+'</span></div><div class="d">'+(en()?'Help keep this app free for everyone':'इस निःशुल्क ऐप को चलाए रखने में सहयोग करें')+'</div>';c.addEventListener('click',go);var st=hg.querySelector('.vjsetc');if(st)hg.insertBefore(c,st);else hg.appendChild(c);}
+if(hg&&!hg.querySelector('.vjsupc')&&h.querySelector('.hb button')&&h.querySelector('.hb button').textContent.trim()==='\u2715'){var c=D.createElement('button');c.type='button';c.className='hc vjsupc';c.innerHTML='<div class="t"><i>\uD83D\uDE4F</i><span>'+(en()?'Support / Contribute':'सहयोग')+'</span></div><div class="d">'+(en()?'Help keep this app free for everyone':'इस निःशुल्क ऐप को चलाए रखने में सहयोग करें')+'</div>';c.addEventListener('click',go);hg.appendChild(c);}
+var sc=hg&&hg.querySelector('.vjsupc');if(sc&&hg.lastElementChild!==sc)hg.appendChild(sc);
 var sb2=g&&g.querySelector('.vjsupbtn'),tx=en()?'\uD83D\uDE4F Support / Contribute':'\uD83D\uDE4F सहयोग';if(sb2&&sb2.textContent!==tx)sb2.textContent=tx;}catch(x){}}
 new MutationObserver(mk).observe(D.body,{childList:true,subtree:true});
 var L=D.getElementById('lang');if(L)L.addEventListener('click',function(){setTimeout(function(){var c=D.querySelector('#vjhome .vjsupc');if(c)c.remove();mk();},200);});
