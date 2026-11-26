@@ -201,7 +201,7 @@ input[type=date],input[type=time]{min-height:48px}
 .about b{color:var(--maroon)}.about p{margin:4px 0}
 @media print{.brand .pbtn,.nmtools,.totop,.lang,.about{display:none!important}.brand{background:#fff;color:#000;border-bottom:2px solid #000}.brand b{color:#000}.brand span{color:#000}#nm_body{font-size:13px}}
 </style>
-<meta name="vj-ver" content="237">
+<meta name="vj-ver" content="239">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <script>try{if(window.top!==window.self){document.documentElement.style.display='none';window.top.location=window.self.location;}}catch(e){document.documentElement.style.display='none';}</script>
 
@@ -6751,30 +6751,42 @@ if(D.readyState==='loading')D.addEventListener('DOMContentLoaded',go);else go();
 }catch(e){console.error('dd',e);}})();
 /* v236: टैब छोटे समूहों में */
 (function(){try{
-  var G=[['🗓️ पंचांग व मुहूर्त',['tab-p','tab-h','tab-t','tab-m','tab-pk']],
+  var G=[['🗓️ पंचांग व मुहूर्त',['tab-p','tab-h','tab-t','tab-m']],
          ['🔮 कुंडली व ज्योतिष',['tab-k','tab-f','tab-a','tab-q','tab-r','tab-g','tab-d','tab-o','tab-pd']],
-         ['💍 विवाह व मिलान',['tab-vl','tab-n','tab-b','tab-x']],
+         ['💍 विवाह व मिलान',['tab-n','tab-b','tab-vl','tab-x']],
          ['🏠 वास्तु',['tab-v','tab-u']],
          ['🙏 जैन धर्म',['tab-j','tab-y','tab-w','tab-z','tab-l']]];
-  var of={};G.forEach(function(g,i){g[1].forEach(function(id){of[id]=i;});});
+  var of={},ord={};G.forEach(function(g,i){g[1].forEach(function(id,k){of[id]=i;ord[id]=k;});});
   var st=document.createElement('style');
   st.textContent='.vjg{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin:0 0 8px}.vjg button{font:inherit;font-size:14px;font-weight:700;color:#6b1d2a;background:#fff;border:1.5px solid #c9a15a;border-radius:12px;padding:9px 12px;cursor:pointer}.vjg button[aria-pressed=true]{background:#6b1d2a;color:#fff;border-color:#6b1d2a}@media print{.vjg{display:none!important}}';
   document.head.appendChild(st);
   var cur=-1,bar=null,tabs=null;
   function T(){return [].slice.call(tabs.querySelectorAll('.tab'));}
-  function show(i){cur=i;T().forEach(function(t){var g=of[t.id];t.style.display=(g===undefined||g===i)?'':'none';});
+  function show(i){cur=i;T().forEach(function(t){var g=of[t.id];if(ord[t.id]!==undefined)t.style.order=ord[t.id];t.style.display=(g===undefined||g===i)?'':'none';});
     [].forEach.call(bar.children,function(b,k){b.setAttribute('aria-pressed',k===i?'true':'false');});}
   function selId(){var s=T().filter(function(t){return t.getAttribute('aria-selected')==='true';})[0];return s&&s.id;}
   function sel(){var s=T().filter(function(t){return t.getAttribute('aria-selected')==='true';})[0];return s&&of[s.id];}
   function init(){tabs=document.querySelector('.tabs');if(!tabs||tabs.__vjg||tabs.querySelectorAll('.tab').length<10)return false;tabs.__vjg=1;
     bar=document.createElement('div');bar.className='vjg';
-    G.forEach(function(g,i){var b=document.createElement('button');b.type='button';b.textContent=g[0];b.addEventListener('click',function(){if(cur===i){show(-1);return;}show(i);var s=sel();if(s!==i){var f=document.getElementById(g[1][0]);if(f)f.click();}});bar.appendChild(b);});
+    G.forEach(function(g,i){var b=document.createElement('button');b.type='button';b.textContent=g[0];b.addEventListener('click',function(){if(cur===i){show(-1);[].forEach.call(document.querySelectorAll('[id^=pane-]'),function(p){p.hidden=true;});T().forEach(function(t){t.setAttribute('aria-selected','false');});return;}show(i);var s=sel();if(s!==i){var f=document.getElementById(g[1][0]);if(f)f.click();}});bar.appendChild(b);});
     tabs.parentNode.insertBefore(bar,tabs);
     var s0=sel();show(s0===undefined?0:s0);
     var ls=selId();new MutationObserver(function(){var id=selId();if(id!==ls){ls=id;var s=sel();if(s!==undefined)show(s);else show(cur);}else show(cur);}).observe(tabs,{attributes:true,attributeFilter:['aria-selected'],childList:true,subtree:true});
     return true;}
   var n=0;(function go(){if(init()||++n>60)return;setTimeout(go,200);})();
 }catch(e){console.error('grp',e);}})();
+/* v238: पंचक अब पंचांग टैब के भीतर (अलग टैब नहीं) */
+(function(){try{var n=0;(function go(){
+  var D=document,pk=D.getElementById('pane-pk'),pp=D.getElementById('pane-p'),tb=D.getElementById('tab-pk'),gb=D.getElementById('pk_go');
+  if(!pk||!pp||!tb||!gb){if(++n<80)setTimeout(go,200);return;}
+  var pan=pk.querySelector('.panel'),h3=pan&&pan.querySelector('h3');if(!pan||!h3)return;
+  var det=D.createElement('details');det.className='par';det.id='pk_box';
+  var sm=D.createElement('summary');sm.innerHTML='<b>'+h3.textContent+'</b>';det.appendChild(sm);
+  h3.remove();var w=D.createElement('div');while(pan.firstChild)w.appendChild(pan.firstChild);det.appendChild(w);
+  pp.appendChild(det);
+  det.addEventListener('toggle',function(){if(det.open&&!D.getElementById('pk_res').innerHTML.trim())gb.click();});
+  tb.remove();pk.remove();
+}());}catch(e){console.error('pk',e);}})();
 </script>
 </body>
 </html>
