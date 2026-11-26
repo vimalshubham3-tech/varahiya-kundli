@@ -157,7 +157,7 @@ input[type=date],input[type=time]{min-height:48px}
 .about b{color:var(--maroon)}.about p{margin:4px 0}
 @media print{.brand .pbtn,.nmtools,.totop,.lang,.about{display:none!important}.brand{background:#fff;color:#000;border-bottom:2px solid #000}.brand b{color:#000}.brand span{color:#000}#nm_body{font-size:13px}}
 </style>
-<meta name="vj-ver" content="175">
+<meta name="vj-ver" content="176">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <script>try{if(window.top!==window.self){document.documentElement.style.display='none';window.top.location=window.self.location;}}catch(e){document.documentElement.style.display='none';}</script>
 
@@ -6321,6 +6321,10 @@ function key(b){var p=b.closest('.panel')||document,v=[b.id];[].forEach.call(p.q
 function hook(){var ok=0;L.forEach(function(x){var b=document.getElementById(x[0]),r=document.getElementById(x[1]);if(!b||!r)return;ok++;if(b.__vjt)return;b.__vjt=1;
 b.addEventListener('click',function(ev){var k=key(b);if(r.innerHTML.trim()&&r.getAttribute('data-vjk')===k){ev.stopImmediatePropagation();r.innerHTML='';r.removeAttribute('data-vjk');return;}r.setAttribute('data-vjk',k);},true);});return ok}
 var n=0;function go(){hook();if(++n<20)setTimeout(go,300)}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',go);else go();})();
+/* v176: जैन टैब का क्रम — दैनिक पंचांग, तिथि दर्पण, मासिक, वार्षिक */
+(function(){var n=0;function mv(){try{var ids=['hp_go','hd_go','jc_go','ha_go'],P=ids.map(function(i){var e=document.getElementById(i);return e&&e.closest('.panel')});if(P.some(function(x){return !x}))return false;var par=P[0].parentNode;if(P.some(function(x){return x.parentNode!==par}))return false;var first=par.children[0];if(P.indexOf(first)>-1)first=null;var ref=first?first.nextSibling:par.firstChild;P.forEach(function(x){par.insertBefore(x,ref)});return true}catch(e){return false}}
+function go(){if(mv()||++n>20)return;setTimeout(go,150)}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',go);else go();})();
 /* v158: जैन तिथि दर्पण टैब सबसे पहले */
 (function(){try{var h=document.getElementById('tab-h'),p=document.getElementById('tab-p'),f=h&&h.parentNode.firstElementChild;if(h&&f&&f!==h){h.parentNode.insertBefore(h,f);}
