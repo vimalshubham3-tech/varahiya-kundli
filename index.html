@@ -201,7 +201,7 @@ input[type=date],input[type=time]{min-height:48px}
 .about b{color:var(--maroon)}.about p{margin:4px 0}
 @media print{.brand .pbtn,.nmtools,.totop,.lang,.about{display:none!important}.brand{background:#fff;color:#000;border-bottom:2px solid #000}.brand b{color:#000}.brand span{color:#000}#nm_body{font-size:13px}}
 </style>
-<meta name="vj-ver" content="247">
+<meta name="vj-ver" content="248">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <script>try{if(window.top!==window.self){document.documentElement.style.display='none';window.top.location=window.self.location;}}catch(e){document.documentElement.style.display='none';}</script>
 
@@ -6847,6 +6847,16 @@ if(D.readyState==='loading')D.addEventListener('DOMContentLoaded',go);else go();
   yr.querySelectorAll('button[data-y]').forEach(function(b){b.onclick=function(e){e.stopPropagation();var v=yy+(+b.getAttribute('data-y'));if(v<1950||v>2050)return;yy=v;yrender();};});}
  yb.addEventListener('click',function(){if(yr.innerHTML.trim()){yr.innerHTML='';return;}yr.innerHTML='<p class="kmeta">गणना हो रही है…</p>';yy=new Date(Date.now()+19800000).getUTCFullYear();setTimeout(yrender,30);});
 
+
+ // दैनिक: 'तारीख़ / स्थान बदलें' बटन नहीं — खाने दैनिक के खुलने पर ही दिखें
+ (function(){var cbt=(pa.nextElementSibling&&pa.nextElementSibling.classList.contains('vjchg'))?pa.nextElementSibling:null;if(!cbt)return;cbt.style.display='none';
+  var w=D.createElement('div');w.id='pn_ctl';var dI=D.getElementById('pn_date'),dB=dI&&dI.previousElementSibling&&dI.previousElementSibling.classList.contains('vjdf')?dI.previousElementSibling:null;
+  [D.querySelector('label[for=pn_place]'),D.getElementById('pn_place'),D.querySelector('label[for=pn_date]'),dB,dI].forEach(function(e){if(e)w.appendChild(e);});pa.parentNode.insertBefore(w,pa.nextSibling);
+  var was=false,bz=false;pa.addEventListener('click',function(){if(bz)return;was=!!D.getElementById('pn_res').innerHTML.trim();},true);
+  pa.addEventListener('click',function(){if(bz)return;var open=!was;setTimeout(function(){
+    if(open){if(cbt.textContent.indexOf('⚙️')===0){bz=true;cbt.click();pa.click();bz=false;}}
+    else{if(cbt.textContent.indexOf('✖')===0){bz=true;cbt.click();bz=false;}}},400);});
+ })();
  // मासिक: 'महीना / स्थान बदलें' बटन नहीं — महीना व स्थान चुनने के खाने मासिक के खुलने पर ही दिखें, बंद पर छिपें
  (function(){var mbt=[].filter.call(nm.parentNode.children,function(e){return e.classList.contains('vjchg');})[0];if(!mbt)return;mbt.style.display='none';
   var w=D.createElement('div');w.id='nm_ctl';['label[for=pm_m]','#pm_m','label[for=pm_c]','#pm_c'].forEach(function(q){var e=D.querySelector(q);if(e)w.appendChild(e);});nm.parentNode.insertBefore(w,nm.nextSibling);
