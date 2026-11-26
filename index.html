@@ -74,6 +74,7 @@ button.vjmp-btn{background:linear-gradient(135deg,#6b1c28,#8e2b3a 60%,#b8860b);c
 #pn_res tr:nth-child(11) td{background:#e8f6ec}#pn_res tr:nth-child(11) td:first-child{border-color:#1b7a3d;background:#d3eedb;color:#145c2e}#pn_res tr:nth-child(11) td:last-child{color:#145c2e;font-weight:700}
 #pn_res .res-card>h3{background:#efe6f9;color:#55337f;border-left:6px solid #7a4fb0;border-radius:10px;padding:8px 10px}
 #pn_res .res-card>p.kmeta:nth-of-type(1){background:#f1ebfa;border-radius:10px;padding:8px 10px;color:#3d2766!important;font-weight:600}
+button.vjchg{display:block;margin:8px auto 0;background:#fff7e0;color:#6b1c28;border:1.5px solid #c9a227;border-radius:999px;padding:7px 16px;font-size:14px;font-weight:700}
 input[type=month]{width:100%;box-sizing:border-box;min-height:48px;font:inherit;font-size:16px;padding:12px;border:1px solid var(--line);border-radius:10px;background:#fbfbfd;color:var(--ink)} /* v173 */
 .detect{margin-top:10px;font-size:14px;min-height:0}
 .det-line{background:#faf4e8;border:1px dashed var(--gold);border-radius:10px;padding:8px 10px}
@@ -191,7 +192,7 @@ input[type=date],input[type=time]{min-height:48px}
 .about b{color:var(--maroon)}.about p{margin:4px 0}
 @media print{.brand .pbtn,.nmtools,.totop,.lang,.about{display:none!important}.brand{background:#fff;color:#000;border-bottom:2px solid #000}.brand b{color:#000}.brand span{color:#000}#nm_body{font-size:13px}}
 </style>
-<meta name="vj-ver" content="188">
+<meta name="vj-ver" content="189">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <script>try{if(window.top!==window.self){document.documentElement.style.display='none';window.top.location=window.self.location;}}catch(e){document.documentElement.style.display='none';}</script>
 
@@ -6367,9 +6368,9 @@ var pn=go.closest('.panel'),h=pn.querySelector('h3'),pp=pn.querySelector('p.kmet
 h.style.display='none';
 if(pp){pp.className='vjmp-info';pp.innerHTML='<b>📜 मासिक पंचांग दर्शन — इसमें मिलेगा</b>'+[['तिथि','c1'],['नक्षत्र','c2'],['योग','c3'],['करण','c4'],['चंद्र राशि','c5'],['सूर्योदय–सूर्यास्त','c2'],['चंद्रोदय–चंद्रास्त','c4'],['राहुकाल','c1'],['भद्रा','c6'],['पंचक','c7'],['मूल','c8']].map(function(x){return '<span class="ch '+x[1]+'">'+x[0]+'</span>'}).join('')+'<div style="margin-top:6px">पूरे महीने के हर दिन के लिए, चुने स्थान के अनुसार, भारतीय मानक समय में।</div>';var rs=document.getElementById('nm_res');rs.parentNode.insertBefore(pp,rs);}
 go.style.display='none';dk.style.display='none';
-var b=document.createElement('button');b.type='button';b.id='nm_all';b.className='vjmp-btn';[].forEach.call(pn.querySelectorAll('label,input,select'),function(e){e.style.display='none'});b.innerHTML='📜 वरहिया मासिक पंचांग दर्शन<small>पूरे महीने का पंचांग — देखने/बंद करने के लिए दबाएँ</small>';var l1=pn.querySelector('label[for=pm_m]');if(l1)l1.parentNode.insertBefore(b,l1);else go.parentNode.insertBefore(b,go);
+var b=document.createElement('button');b.type='button';b.id='nm_all';b.className='vjmp-btn';var ml=[].slice.call(pn.querySelectorAll('label,input,select')),mc=0,mb=document.createElement('button');mb.type='button';mb.className='vjchg';mb.textContent='⚙️ महीना / स्थान बदलें';ml.forEach(function(e){e.style.display='none'});b.__mc=function(){return mc};b.innerHTML='📜 वरहिया मासिक पंचांग दर्शन<small>पूरे महीने का पंचांग — देखने/बंद करने के लिए दबाएँ</small>';var l1=pn.querySelector('label[for=pm_m]');if(l1)l1.parentNode.insertBefore(b,l1);else go.parentNode.insertBefore(b,go);b.parentNode.insertBefore(mb,b.nextSibling);mb.addEventListener('click',function(){mc=!mc;ml.forEach(function(e){e.style.display=mc?'':'none'});mb.textContent=mc?'✖ महीना / स्थान छिपाएँ (चालू महीने पर लौटें)':'⚙️ महीना / स्थान बदलें';o.innerHTML='';o.removeAttribute('data-vjk');});
 function key(){return 'all|'+document.getElementById('pm_m').value+'|'+document.getElementById('pm_c').value}
-b.addEventListener('click',function(){var tn=new Date(Date.now()+19800000),mi=document.getElementById('pm_m');if(mi)mi.value=tn.getUTCFullYear()+'-'+String(tn.getUTCMonth()+1).padStart(2,'0');var k=key();
+b.addEventListener('click',function(){var tn=new Date(Date.now()+19800000),mi=document.getElementById('pm_m');if(mi&&!b.__mc())mi.value=tn.getUTCFullYear()+'-'+String(tn.getUTCMonth()+1).padStart(2,'0');var k=key();
  if(o.innerHTML.trim()&&o.getAttribute('data-vjk')===k){o.innerHTML='';o.removeAttribute('data-vjk');return;}
  o.removeAttribute('data-vjk');o.innerHTML='';go.click();var A=o.innerHTML;
  if(A.indexOf('class="warn"')>-1){o.removeAttribute('data-vjk');return;}
@@ -6400,9 +6401,10 @@ function go(){if(mv()||++n>20)return;setTimeout(go,150)}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',go);else go();})();
 /* v187: वरहिया दैनिक पंचांग — बैनर ही बटन: दबाने पर आज का पंचांग खुले/बंद */
 (function(){var n=0;function mv(){try{var pl=document.getElementById('pn_place'),go=document.getElementById('pn_go'),r=document.getElementById('pn_res');if(!pl||!go||!r)return false;if(pl.__vjh)return true;pl.__vjh=1;
-var l=document.querySelector('label[for=pn_place]');var b=document.createElement('button');b.type='button';b.id='pn_all';b.className='vjmp-btn';b.innerHTML='🌅 वरहिया दैनिक पंचांग<small>आज/चुनी तारीख़ का पंचांग — देखने/बंद करने के लिए दबाएँ</small>';l.parentNode.insertBefore(b,l);go.style.display='none';[].forEach.call(go.closest('.panel').querySelectorAll('label,select,input'),function(e){e.style.display='none'});r.innerHTML='';r.removeAttribute('data-vjk');
+var l=document.querySelector('label[for=pn_place]');var b=document.createElement('button');b.type='button';b.id='pn_all';b.className='vjmp-btn';b.innerHTML='🌅 वरहिया दैनिक पंचांग<small>आज/चुनी तारीख़ का पंचांग — देखने/बंद करने के लिए दबाएँ</small>';l.parentNode.insertBefore(b,l);go.style.display='none';var fl=[].slice.call(go.closest('.panel').querySelectorAll('label,select,input'));fl.forEach(function(e){e.style.display='none'});var cu=0,cb=document.createElement('button');cb.type='button';cb.className='vjchg';cb.textContent='⚙️ तारीख़ / स्थान बदलें';b.parentNode.insertBefore(cb,l);
+cb.addEventListener('click',function(){cu=!cu;fl.forEach(function(e){e.style.display=cu?'':'none'});cb.textContent=cu?'✖ तारीख़ / स्थान छिपाएँ (आज पर लौटें)':'⚙️ तारीख़ / स्थान बदलें';r.innerHTML='';r.removeAttribute('data-vjk');});b.__cu=function(){return cu};r.innerHTML='';r.removeAttribute('data-vjk');
 function key(){return 'd|'+pl.value+'|'+(document.getElementById('pn_date')?document.getElementById('pn_date').value:'')}
-b.addEventListener('click',function(){var dd=document.getElementById('pn_date');if(dd){var t=new Date(Date.now()+19800000);dd.value=t.getUTCFullYear()+'-'+String(t.getUTCMonth()+1).padStart(2,'0')+'-'+String(t.getUTCDate()).padStart(2,'0');}var k=key();if(r.innerHTML.trim()&&r.getAttribute('data-vjk')===k){r.innerHTML='';r.removeAttribute('data-vjk');return;}go.click();r.setAttribute('data-vjk',k);});return true}catch(e){return false}}
+b.addEventListener('click',function(){var dd=document.getElementById('pn_date');if(dd&&!b.__cu()){var t=new Date(Date.now()+19800000);dd.value=t.getUTCFullYear()+'-'+String(t.getUTCMonth()+1).padStart(2,'0')+'-'+String(t.getUTCDate()).padStart(2,'0');}var k=key();if(r.innerHTML.trim()&&r.getAttribute('data-vjk')===k){r.innerHTML='';r.removeAttribute('data-vjk');return;}go.click();r.setAttribute('data-vjk',k);});return true}catch(e){return false}}
 function go(){if(mv()||++n>20)return;setTimeout(go,150)}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',go);else go();})();
 /* v158: जैन तिथि दर्पण टैब सबसे पहले */
