@@ -201,7 +201,7 @@ input[type=date],input[type=time]{min-height:48px}
 .about b{color:var(--maroon)}.about p{margin:4px 0}
 @media print{.brand .pbtn,.nmtools,.totop,.lang,.about{display:none!important}.brand{background:#fff;color:#000;border-bottom:2px solid #000}.brand b{color:#000}.brand span{color:#000}#nm_body{font-size:13px}}
 </style>
-<meta name="vj-ver" content="276">
+<meta name="vj-ver" content="277">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <script>try{if(window.top!==window.self){document.documentElement.style.display='none';window.top.location=window.self.location;}}catch(e){document.documentElement.style.display='none';}</script>
 
@@ -7050,5 +7050,17 @@ function run(){if(busy)return;busy=true;try{var w=document.createTreeWalker(docu
 var tm=null;new MutationObserver(function(){if(busy)return;clearTimeout(tm);tm=setTimeout(run,160);}).observe(document.body,{childList:true,subtree:true,characterData:true});
 var lb=document.getElementById('lang');if(lb)lb.addEventListener('click',function(){setTimeout(run,120);setTimeout(run,600);});
 setTimeout(run,400);})();</script>
+<script>
+/* v277: दिन/महीना बदलने वाले ◀ ▶ बटन अब खुले पंचांग के भीतर ही दिखें, बाहर नहीं */
+(function(){var st=document.createElement('style');st.textContent='#pn_ctl,#nm_ctl{display:none}#pn_ctl.vjin,#nm_ctl.vjin{display:block}';document.head.appendChild(st);
+var n=0;function init(){var P=[['pn_ctl','pn_all','pn_res','__cu'],['nm_ctl','nm_all','nm_res','__mc']],ok=true;
+P.forEach(function(x){var c=document.getElementById(x[0]),b=document.getElementById(x[1]),r=document.getElementById(x[2]);if(!c||!b||!r){ok=false;return}if(c.__vj277)return;c.__vj277=1;
+var orig=b[x[3]];
+function sync(){var on=!!r.innerHTML.trim();c.classList.toggle('vjin',on);if(!on&&b[x[3]]!==orig)b[x[3]]=orig;}
+new MutationObserver(sync).observe(r,{childList:true,subtree:true});sync();
+c.querySelectorAll('button').forEach(function(a){a.addEventListener('click',function(){setTimeout(function(){b[x[3]]=function(){return true};b.click();},40);});});});
+if(!ok&&++n<30)setTimeout(init,300);}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();setTimeout(init,2000);})();
+</script>
 </body>
 </html>
