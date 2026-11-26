@@ -201,7 +201,7 @@ input[type=date],input[type=time]{min-height:48px}
 .about b{color:var(--maroon)}.about p{margin:4px 0}
 @media print{.brand .pbtn,.nmtools,.totop,.lang,.about{display:none!important}.brand{background:#fff;color:#000;border-bottom:2px solid #000}.brand b{color:#000}.brand span{color:#000}#nm_body{font-size:13px}}
 </style>
-<meta name="vj-ver" content="317">
+<meta name="vj-ver" content="318">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <script>try{if(window.top!==window.self){document.documentElement.style.display='none';window.top.location=window.self.location;}}catch(e){document.documentElement.style.display='none';}</script>
 
@@ -703,7 +703,11 @@ function sunLon(jd){
 }
 function rahuLon(jd){
   const T=(jd-2451545)/36525;
-  return nrm(125.0445479-1934.1362891*T+0.0020754*T*T-ayanamsa(jd));
+  let om=125.0445479-1934.1362891*T+0.0020754*T*T;
+  let tr=0;try{tr=(localStorage.getItem('vj_node')==='true');}catch(e){}
+  if(tr){const r=Math.PI/180,D=297.8501921+445267.1114034*T-0.0018819*T*T,M=357.5291092+35999.0502909*T,Mp=134.9633964+477198.8675055*T+0.0087414*T*T,F=93.272095+483202.0175233*T-0.0036539*T*T;
+   om+=-1.4979*Math.sin(2*(D-F)*r)-0.15*Math.sin(M*r)-0.1226*Math.sin(2*D*r)+0.1176*Math.sin(2*F*r)-0.0801*Math.sin(2*(Mp-F)*r);}
+  return nrm(om-ayanamsa(jd));
 }
 /* क्रम: 0 सूर्य 1 चंद्र 2 मंगल 3 बुध 4 गुरु 5 शुक्र 6 शनि 7 राहु 8 केतु */
 function allPlanets(jd){
@@ -1341,6 +1345,9 @@ function XR(d){
    nv+='<tr><td>दिशा शूल</td><td>'+DSH[wd]+'</td></tr>';
    const ss=SEGS(d,q=>SARV[wd].includes(q.nak)?1:0).filter(x=>x.v),as=SEGS(d,q=>AMRT[wd]===q.nak?1:0).filter(x=>x.v),fm=l=>l.map(x=>(x.a<=r+0.01&&x.b>=R2-0.02)?'अहोरात्र':tt(x.a)+' – '+tt(Math.min(x.b,R2))).join('<br>');
    if(ss.length)nv+='<tr><td>सर्वार्थ सिद्धि योग (शुभ)</td><td>'+fm(ss)+'</td></tr>';if(as.length)nv+='<tr><td>अमृत सिद्धि योग (शुभ)</td><td>'+fm(as)+'</td></tr>';}catch(e){}
+  try{const gq=q=>((q.t-1)%15)%5,AMT={0:0,2:0,1:1,5:1,3:2,4:3,6:4},SDT={5:0,3:1,2:2,6:3,4:4};
+   const tv=(mp,lab)=>{if(mp[wd]===undefined)return;const sg=SEGS(d,q=>gq(q)===mp[wd]?1:0).filter(x=>x.v);if(sg.length)nv+='<tr><td>'+lab+'</td><td>'+sg.map(x=>(x.a<=r+0.01&&x.b>=R2-0.02)?'अहोरात्र':tt(Math.max(x.a,r))+' – '+tt(Math.min(x.b,R2))).join('<br>')+'</td></tr>';};
+   tv(AMT,'अमृत योग (वार-तिथि, शुभ)');tv(SDT,'सिद्ध योग (वार-तिथि, शुभ)');}catch(e){}
   try{nv+=BALH(d);}catch(e){}
   try{const pn=PNR(d);nv+='<tr><td>पंचक रहित मुहूर्त</td><td>'+pn.map(x=>'<span style="color:'+(x.n==='शुभ मुहूर्त'?'#2e7d32':'#c62828')+'"><b>'+x.n+'</b></span> '+tt(x.a)+' – '+tt(x.b)).join('<br>')+'</td></tr>';}catch(e){}
   try{nv+='<tr><td>जैन पच्चक्खाण</td><td><details><summary>नवकारशी, पोरिसि, पुरिमड्ढ आदि</summary><table class="vjbal"><tbody>'+JNH(d)+'</tbody></table></details></td></tr>';}catch(e){}
@@ -7377,7 +7384,7 @@ function openRows(idx){closeHome();ensurePane();setTimeout(function(){var b=$('p
  if(!(r&&r.innerHTML.trim()))b.click();
  var n=0;(function w(){var tb=D.querySelector('#pn_res .tw>table');if(!tb||!tb.tBodies[0]||tb.tBodies[0].rows.length<30){if(n++<30)return setTimeout(w,150);return;}
   var k=0,done=0;(function ap(){var tb2=D.querySelector('#pn_res .tw>table');if(tb2&&tb2.tBodies[0]&&tb2.tBodies[0].rows.length>30){var rows=tb2.tBodies[0].rows,first=null,any=false;
-   idx.forEach(function(i){var r=rows[i];if(r){if(!r.classList.contains('open')){r.classList.add('open');any=true;}if(!first)first=r;}});
+   idx.forEach(function(i){var r=(function(){var LB={10:'राहुकाल',11:'गुलिक',12:'यमगंड',13:'अभिजित',22:'दुर्मुहूर्त',23:'भद्रा (',24:'चंद्र वास',25:'अग्निवास',26:'शिववास',27:'भद्रा वास',28:'चौघड़िया — दिन',29:'चौघड़िया — रात',30:'ग्रह-होरा',31:'विवाह मुहूर्त',32:'अमृत काल',33:'वर्ज्य',35:'दिशा शूल',37:'चंद्र बल',38:'तारा बल',39:'पंचक रहित',40:'जैन पच्चक्खाण',41:'लग्न'}[i];if(LB)for(var k=0;k<rows.length;k++){if((rows[k].cells[0].textContent||'').trim().indexOf(LB)===0)return rows[k];}return rows[i];})();if(r){if(!r.classList.contains('open')){r.classList.add('open');any=true;}if(!first)first=r;}});
    if(first&&(any||!done)){done=1;setTimeout(function(){try{first.scrollIntoView({behavior:'smooth',block:'start'});}catch(e){}},80);}}
    if(k++<12)setTimeout(ap,300);})();})();},150);}
 function openRashi(){closeHome();ensurePane();setTimeout(function(){var h=[].slice.call(D.querySelectorAll('#pane-p h3')).find(function(x){return /दैनिक राशिफल|Daily Rashifal/i.test(x.textContent);});if(h){var pn=h.closest('.panel')||h.parentNode;if(!h.classList.contains('open'))h.click();try{h.scrollIntoView({block:'start'});}catch(e){}}},150);}
@@ -7675,5 +7682,12 @@ if(!ok&&!D.getElementById('vj_regm')){var b=D.querySelector('#vj_tools>.vjregb')
 setInterval(tick,700);setTimeout(tick,900);})();
 </script>
 <style id="vj316css">#vj_pl{display:none!important}</style>
+<script>
+/* v318: सेटिंग में राहु-केतु पद्धति (मध्यम / सत्य) */
+(function(){var D=document;function cur(){try{return localStorage.getItem('vj_node')==='true';}catch(e){return false;}}
+function lab(b){var t=cur();var tx='\u260A राहु-केतु: '+(t?'सत्य':'मध्यम')+' (बदलें)';if(b.textContent!==tx)b.textContent=tx;}
+function mk(){try{var bar=D.getElementById('vj_tools');if(!bar)return;var b=bar.querySelector('.vjnode');if(!b){b=D.createElement('button');b.type='button';b.className='pbtn vjnode';b.addEventListener('click',function(){try{localStorage.setItem('vj_node',cur()?'mean':'true');}catch(e){}location.reload();});bar.appendChild(b);}lab(b);}catch(x){}}
+mk();new MutationObserver(mk).observe(D.body,{childList:true,subtree:true});})();
+</script>
 </body>
 </html>
