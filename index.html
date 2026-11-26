@@ -201,7 +201,7 @@ input[type=date],input[type=time]{min-height:48px}
 .about b{color:var(--maroon)}.about p{margin:4px 0}
 @media print{.brand .pbtn,.nmtools,.totop,.lang,.about{display:none!important}.brand{background:#fff;color:#000;border-bottom:2px solid #000}.brand b{color:#000}.brand span{color:#000}#nm_body{font-size:13px}}
 </style>
-<meta name="vj-ver" content="249">
+<meta name="vj-ver" content="250">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <script>try{if(window.top!==window.self){document.documentElement.style.display='none';window.top.location=window.self.location;}}catch(e){document.documentElement.style.display='none';}</script>
 
@@ -6739,7 +6739,7 @@ function mv(){var a=D.getElementById('nm_all');if(!a||D.getElementById('td_all')
   var mi=D.getElementById('pm_m'),pc_=D.getElementById('pm_c'),t=new Date(Date.now()+19800000),vv=(mi&&mi.value&&a.__mc&&a.__mc())?mi.value.split('-').map(Number):[t.getUTCFullYear(),t.getUTCMonth()+1],c=(pc_&&CITIES[+pc_.value])||CITIES[0];
   o.innerHTML='<p class="kmeta">गणना हो रही है…</p>';
   function show(){try{var p2=function(x){return String(x).padStart(2,'0');};
-   o.innerHTML='<div style="display:flex;gap:6px;align-items:center;margin:6px 0"><button type="button" data-mv="-1" style="padding:7px 12px;border-radius:8px;border:1px solid #b8860b;background:#fffdf7;color:#6b1c28">◀</button><input type="month" data-mi="1" value="'+vv[0]+'-'+p2(vv[1])+'" style="flex:1;min-width:0;padding:7px;border-radius:8px;border:1px solid #cdb98a;background:#fffdf7;font:inherit"><button type="button" data-mv="1" style="padding:7px 12px;border-radius:8px;border:1px solid #b8860b;background:#fffdf7;color:#6b1c28">▶</button></div>'+build(vv[0],vv[1],c)+'<p style="text-align:center;margin:8px 0"><a href="https://vidyasagar.net" target="_blank" rel="noopener" style="display:inline-block;background:#8e2b3a;color:#fff;text-decoration:none;padding:9px 16px;border-radius:20px">🔗 vidyasagar.net खोलें</a></p>';
+   o.innerHTML='<div style="display:flex;gap:6px;align-items:center;margin:6px 0"><button type="button" data-mv="-1" style="padding:7px 12px;border-radius:8px;border:1px solid #b8860b;background:#fffdf7;color:#6b1c28">◀</button><input type="month" data-mi="1" value="'+vv[0]+'-'+p2(vv[1])+'" style="flex:1;min-width:0;padding:7px;border-radius:8px;border:1px solid #cdb98a;background:#fffdf7;font:inherit"><button type="button" data-mv="1" style="padding:7px 12px;border-radius:8px;border:1px solid #b8860b;background:#fffdf7;color:#6b1c28">▶</button></div>'+build(vv[0],vv[1],c);
    o.querySelectorAll('button[data-tr]').forEach(function(bt){bt.onclick=function(ev){ev.stopPropagation();try{localStorage.setItem('vj_trad',bt.getAttribute('data-tr'));}catch(e){}show();};});
    o.querySelectorAll('button[data-mv]').forEach(function(bt){bt.onclick=function(ev){ev.stopPropagation();var d=new Date(Date.UTC(vv[0],vv[1]-1+ +bt.getAttribute('data-mv'),1));if(d.getUTCFullYear()<1900||d.getUTCFullYear()>2050)return;vv=[d.getUTCFullYear(),d.getUTCMonth()+1];show();};});
    var mi2=o.querySelector('input[data-mi]');mi2.onchange=function(){var q=mi2.value.split('-').map(Number);if(q[0]>=1900&&q[0]<=2050&&q[1]>=1&&q[1]<=12){vv=[q[0],q[1]];show();}};
