@@ -44,7 +44,7 @@ input:focus{outline:2px solid var(--gold);outline-offset:1px}
 .vjmp-h{background:linear-gradient(135deg,#6b1c28,#8e2b3a 60%,#b8860b);color:#fff;border-radius:16px;padding:12px 14px;margin:2px 2px 10px;text-align:center;font-weight:700;font-size:17px;letter-spacing:.3px}
 .vjmp-h small{display:block;font-weight:400;font-size:12.5px;opacity:.92;margin-top:3px}
 .vjmp .res-card{border:1px solid #e3d3a4;background:#fffdf7;margin-bottom:12px}
-button.vjmp-btn{background:linear-gradient(135deg,#d4a017,#b8860b 55%,#8a6508);color:#fff;border:0;border-radius:16px;padding:16px;font-size:18px;font-weight:700;width:100%;margin-top:10px;box-shadow:0 4px 12px rgba(138,101,8,.45);letter-spacing:.3px}
+button.vjmp-btn{background:linear-gradient(135deg,#6b1c28,#8e2b3a 60%,#b8860b);color:#fff;border:2px solid #c9a227;border-radius:18px;padding:14px;font-size:19px;font-weight:700;width:100%;margin-top:10px;box-shadow:0 4px 12px rgba(107,28,40,.4);letter-spacing:.3px;text-align:center}button.vjmp-btn small{display:block;font-weight:400;font-size:12.5px;opacity:.92;margin-top:3px}
 .vjbh{border:2px solid #e0a46a!important;background:linear-gradient(180deg,#fffaf3,#fff2e2)!important}
 .vjbh-h{background:linear-gradient(135deg,#b3261e,#d9534f 45%,#e8912d);color:#fff;border-radius:14px;padding:11px 14px;margin:0 0 10px;font-weight:700;font-size:16px;text-align:center}
 .vjbh-h small{display:block;font-weight:400;font-size:12.5px;opacity:.95;margin-top:2px}
@@ -169,7 +169,7 @@ input[type=date],input[type=time]{min-height:48px}
 .about b{color:var(--maroon)}.about p{margin:4px 0}
 @media print{.brand .pbtn,.nmtools,.totop,.lang,.about{display:none!important}.brand{background:#fff;color:#000;border-bottom:2px solid #000}.brand b{color:#000}.brand span{color:#000}#nm_body{font-size:13px}}
 </style>
-<meta name="vj-ver" content="179">
+<meta name="vj-ver" content="180">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <script>try{if(window.top!==window.self){document.documentElement.style.display='none';window.top.location=window.self.location;}}catch(e){document.documentElement.style.display='none';}</script>
 
@@ -6345,7 +6345,7 @@ var pn=go.closest('.panel'),h=pn.querySelector('h3'),pp=pn.querySelector('p.kmet
 h.textContent='📜 मासिक पंचांग दर्शन';
 if(pp)pp.textContent='पूरे महीने का पंचांग एक ही जगह: हर दिन की तिथि, नक्षत्र, योग, करण, चंद्र राशि, सूर्योदय-सूर्यास्त, चंद्रोदय-चंद्रास्त व राहुकाल — और साथ में भद्रा, पंचक व मूल का विचार। सब कुछ चुने स्थान के लिए, भारतीय मानक समय में।';
 go.style.display='none';dk.style.display='none';
-var b=document.createElement('button');b.type='button';b.id='nm_all';b.className='vjmp-btn';b.textContent='📜 पूरे महीने का पंचांग देखें';go.parentNode.insertBefore(b,go);
+var b=document.createElement('button');b.type='button';b.id='nm_all';b.className='vjmp-btn';b.innerHTML='📜 वरहिया पंचांग दर्शन<small>पूरे महीने का पंचांग — देखने/बंद करने के लिए दबाएँ</small>';go.parentNode.insertBefore(b,go);
 function key(){return 'all|'+document.getElementById('pm_m').value+'|'+document.getElementById('pm_c').value}
 b.addEventListener('click',function(){var k=key();
  if(o.innerHTML.trim()&&o.getAttribute('data-vjk')===k){o.innerHTML='';o.removeAttribute('data-vjk');return;}
@@ -6356,7 +6356,7 @@ b.addEventListener('click',function(){var k=key();
   B=B.replace(/\s*\(ड्रिक शैली\)/g,'').replace(/ड्रिक \(दृक्\) शैली में/g,'इस तालिका में').replace(/छपे पंचांग या drikpanchang\.com से/g,'छपे पंचांग से');
   A=A.replace(/<h3>/,'<h3>भद्रा · पंचक · मूल विचार — ');
   var c=document.getElementById('pm_c'),nm=c.options[c.selectedIndex]?c.options[c.selectedIndex].text:'';
-  o.innerHTML='<div class="vjmp"><div class="vjmp-h">वरहिया पंचांग दर्शन<small>'+nm+' · पूरे महीने का पंचांग</small></div>'+B+A+'</div>';
+  o.innerHTML='<div class="vjmp">'+B+A+'</div>';
   o.setAttribute('data-vjk',k);
   try{var cards=o.querySelectorAll('.vjmp .res-card'),bc=cards[cards.length-1];if(bc){bc.classList.add('vjbh');var h3=bc.querySelector('h3'),sub=h3.textContent.replace('भद्रा · पंचक · मूल विचार — ','');
    var hd=document.createElement('div');hd.className='vjbh-h';hd.innerHTML='भद्रा · पंचक · मूल विचार<small>'+sub+'</small>';h3.parentNode.replaceChild(hd,h3);
