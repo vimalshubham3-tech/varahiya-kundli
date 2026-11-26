@@ -201,7 +201,7 @@ input[type=date],input[type=time]{min-height:48px}
 .about b{color:var(--maroon)}.about p{margin:4px 0}
 @media print{.brand .pbtn,.nmtools,.totop,.lang,.about{display:none!important}.brand{background:#fff;color:#000;border-bottom:2px solid #000}.brand b{color:#000}.brand span{color:#000}#nm_body{font-size:13px}}
 </style>
-<meta name="vj-ver" content="196">
+<meta name="vj-ver" content="197">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <script>try{if(window.top!==window.self){document.documentElement.style.display='none';window.top.location=window.self.location;}}catch(e){document.documentElement.style.display='none';}</script>
 
@@ -1224,19 +1224,37 @@ function sunTimes(y,mo,dd,lat,lon,off){ // स्थानीय घड़ी �
   return est;
 }
 const hmS=h=>{h=((h%24)+24)%24;let H=Math.floor(h),M=Math.round((h-H)*60);if(M===60){H=(H+1)%24;M=0;}return String(H).padStart(2,'0')+':'+String(M).padStart(2,'0');};
-/* v196: Drik-शैली अतिरिक्त मुहूर्त */
-const dmH=h=>{const m=Math.round(h*60);return Math.floor(m/60)+' घं '+(m%60)+' मि'};
+/* v197: Drik-शैली अतिरिक्त मुहूर्त व निवास (गणना Drik 26-11-2026 ग्वालियर से मिलाई गई) */
+const dmH=h=>{const t=Math.round(h*3600);return Math.floor(t/3600)+' घं '+Math.floor(t%3600/60)+' मि '+(t%60)+' से'};
+const tt=h=>hmS(h)+(h>=24?' (+1)':'');
 const CHV=['पूर्व','दक्षिण','पश्चिम','उत्तर'];
+const DURM={0:[14],1:[9,12],2:[4],3:[8],4:[6,12],5:[4,9],6:[1]};
+const SHV=['श्मशान में','कैलाश में','गौरी सान्निध्य में','वृषारूढ़ (नंदी पर)','सभा में','भोजन में','क्रीड़ा में'];
+const AGN=['पृथ्वी','आकाश','पाताल','पृथ्वी'];
+const BHV=['स्वर्ग','स्वर्ग','स्वर्ग','पृथ्वी','पृथ्वी','पाताल','पाताल','स्वर्ग','पाताल','पाताल','पृथ्वी','पृथ्वी'];
 function XR(d){
-  const r=d.sun.rise,s=d.sun.set,dm=s-r,nr=24-dm,m=dm/15,mid=s+nr/2,rw=(a,b,c)=>'<tr><td>'+a+'</td><td>'+hmS(b)+' – '+hmS(c)+'</td></tr>';
-  const cv=[0,1,2,3,0,1,2,3,0,1,2,3][d.pc.moonR];
-  return rw('ब्रह्म मुहूर्त (शुभ)',r-1.6,r-0.8)+rw('प्रातः संध्या',r-1.2,r)
+  const y=d.ymd[0],mo=d.ymd[1],dd=d.ymd[2],r=d.sun.rise,s=d.sun.set,dm=s-r,m=dm/15,wd=d.wd;
+  const nx=new Date(Date.UTC(y,mo-1,dd+1)),ns=sunTimes(nx.getUTCFullYear(),nx.getUTCMonth()+1,nx.getUTCDate(),d.ymd[3],d.ymd[4],5.5),R2=24+ns.rise,nr=R2-s,mid=s+nr/2,nm=nr/15;
+  const at=h=>panchangAt(toJD(y,mo,dd,Math.floor(h),(h-Math.floor(h))*60,5.5));
+  function segs(f){const o=[];let prev=f(at(r)),st=r;for(let h=r+0.1;h<=R2;h+=0.1){const v=f(at(h));if(v!==prev){let lo=h-0.1,hi=h;for(let i=0;i<20;i++){const q=(lo+hi)/2;if(f(at(q))===prev)lo=q;else hi=q;}o.push({v:prev,a:st,b:(lo+hi)/2});st=(lo+hi)/2;prev=v;}}o.push({v:prev,a:st,b:R2});return o;}
+  const rw=(a,b,c)=>'<tr><td>'+a+'</td><td>'+tt(b)+' – '+tt(c)+'</td></tr>';
+  const kv=(a,b)=>'<tr><td>'+a+'</td><td>'+b+'</td></tr>';
+  let h=rw('ब्रह्म मुहूर्त (शुभ)',r-2*nm,r-nm)+rw('प्रातः संध्या',r-dm/8,r)
    +rw('विजय मुहूर्त (शुभ)',r+m*10,r+m*11)
-   +rw('गोधूलि मुहूर्त (शुभ)',s,s+0.4)+rw('सायाह्न संध्या',s,s+1.2)
-   +rw('निशीथ मुहूर्त',mid-0.4,mid+0.4)
-   +'<tr><td>दिनमान / रात्रिमान</td><td>'+dmH(dm)+' / '+dmH(nr)+'</td></tr>'
-   +'<tr><td>मध्याह्न (सूर्य शिखर)</td><td>'+hmS((r+s)/2)+'</td></tr>'
-   +'<tr><td>चंद्र वास</td><td>'+CHV[cv]+'</td></tr>';
+   +rw('गोधूलि मुहूर्त (शुभ)',s-0.03,s+0.4)+rw('सायाह्न संध्या',s,s+dm/8)
+   +rw('निशीथ मुहूर्त',mid-nm/2,mid+nm/2)
+   +kv('दिनमान / रात्रिमान',dmH(dm)+' / '+dmH(nr))+kv('मध्याह्न',hmS((r+s)/2));
+  const dur=(DURM[wd]||[]).map(k=>hmS(r+m*(k-1))+' – '+hmS(r+m*k)).join('<br>');
+  const bh=segs(q=>q.kn.indexOf('विष्टि')>=0).filter(x=>x.v);
+  let nv='';
+  const t=segs(q=>q.t),mr=segs(q=>q.moonR);
+  nv+=kv('चंद्र वास',mr.map((x,i)=>CHV[x.v%4]+(i<mr.length-1?' ('+hmS(x.b)+' तक)':'')).join('<br>'));
+  nv+=kv('अग्निवास',t.map((x,i)=>AGN[(x.v+wd+2)%4]+(i<t.length-1?' ('+hmS(x.b)+' तक)':'')).join('<br>'));
+  nv+=kv('शिववास',t.map((x,i)=>SHV[(x.v*2+5)%7]+(i<t.length-1?' ('+hmS(x.b)+' तक)':'')).join('<br>'));
+  if(bh.length)nv+=kv('भद्रा वास',bh.map(x=>{const mrr=at(x.a+0.01).moonR;return BHV[mrr]+' '+tt(x.a)+' से '+(x.b>=R2-0.02?'पूर्ण रात्रि':tt(x.b));}).join('<br>'));
+  const jd0=Date.UTC(y,mo-1,dd)/86400000+2440587.5;
+  nv+=kv('कलि अहर्गण / जूलियन दिन',Math.round(jd0-588465.5)+' दिन / '+jd0);
+  return h+'<tr><td>दुर्मुहूर्त (अशुभ)</td><td>'+dur+'</td></tr>'+(bh.length?'<tr><td>भद्रा (अशुभ)</td><td>'+bh.map(x=>tt(x.a)+' – '+tt(x.b)).join('<br>')+'</td></tr>':'')+nv;
 }
 function panchangDay(y,mo,dd,lat,lon,off){
   const wd=new Date(Date.UTC(y,mo-1,dd)).getUTCDay(), st_=sunTimes(y,mo,dd,lat,lon,off);
@@ -1244,7 +1262,7 @@ function panchangDay(y,mo,dd,lat,lon,off){
   const rk0=rh+part*(RKP-1);
   const gl0=rh+part*([7,6,5,4,3,2,1][wd]-1), yg0=rh+part*([5,4,3,2,1,7,6][wd]-1);
   const jdR=toJD(y,mo,dd,Math.floor(rh),Math.round((rh%1)*60),off), pc=panchangAt(jdR);
-  return {wd,vara:VARA_N[wd],sun:st_,rahu:[rk0,rk0+part],gulika:[gl0,gl0+part],yama:[yg0,yg0+part],abhijit:[st_.rise+(st_.set-st_.rise)*7/15,st_.rise+(st_.set-st_.rise)*8/15],pc};
+  return {wd,ymd:[y,mo,dd,lat,lon],vara:VARA_N[wd],sun:st_,rahu:[rk0,rk0+part],gulika:[gl0,gl0+part],yama:[yg0,yg0+part],abhijit:[st_.rise+(st_.set-st_.rise)*7/15,st_.rise+(st_.set-st_.rise)*8/15],pc};
 }
 function panchangHTML(d,title,showPl){
   const pc=d.pc;
