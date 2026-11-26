@@ -201,7 +201,7 @@ input[type=date],input[type=time]{min-height:48px}
 .about b{color:var(--maroon)}.about p{margin:4px 0}
 @media print{.brand .pbtn,.nmtools,.totop,.lang,.about{display:none!important}.brand{background:#fff;color:#000;border-bottom:2px solid #000}.brand b{color:#000}.brand span{color:#000}#nm_body{font-size:13px}}
 </style>
-<meta name="vj-ver" content="232">
+<meta name="vj-ver" content="233">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <script>try{if(window.top!==window.self){document.documentElement.style.display='none';window.top.location=window.self.location;}}catch(e){document.documentElement.style.display='none';}</script>
 
@@ -6500,8 +6500,17 @@ document.body.appendChild(f);
   function toDev(t){return t.replace(/[A-Za-z]+/g,word);}
   window.vjToDev=toDev;
   var KB=[['अ','आ','इ','ई','उ','ऊ','ए','ऐ','ओ','औ','अं','अः'],['ा','ि','ी','ु','ू','े','ै','ो','ौ','ं','ः','्'],['क','ख','ग','घ','ङ','च','छ','ज','झ','ञ','ट','ठ','ड','ढ','ण','त','थ','द','ध','न','प','फ','ब','भ','म','य','र','ल','व','श','ष','स','ह','क्ष','त्र','ज्ञ']];
-  [].forEach(function(id){
+  ['kc_q','kc2_q','kc4_q'].forEach(function(id){
     var ta=D.getElementById(id);if(!ta)return;
+    if(ta.__vjad)return;ta.__vjad=1;var raw=ta.value||'',shown=ta.value||'',busy=false;
+    ta.addEventListener('input',function(){if(busy)return;var nv=ta.value;
+      if(nv===shown)return;
+      if(nv.indexOf(shown)===0)raw+=nv.slice(shown.length);
+      else if(shown.indexOf(nv)===0)raw=raw.slice(0,-1);
+      else raw=nv;
+      var out=toDev(raw);shown=out;busy=true;ta.value=out;try{ta.setSelectionRange(out.length,out.length);}catch(e){}
+      ta.dispatchEvent(new Event('input',{bubbles:true}));busy=false;});
+    return;
     var box=D.createElement('details');box.style.margin='6px 0';
     var bt='';KB.forEach(function(r,ri){r.forEach(function(k){bt+='<button type="button" class="vjk" data-k="'+k+'" style="padding:8px 10px;margin:2px;border:1px solid #c9a15a;border-radius:8px;background:#fff;font:inherit;font-size:17px">'+(ri===1?'क'+k:k)+'</button>';});bt+='<br>';});
     bt+='<button type="button" class="vjk" data-k=" " style="padding:8px 18px;margin:2px;border:1px solid #c9a15a;border-radius:8px;background:#fff;font:inherit">खाली स्थान</button><button type="button" class="vjk" data-k="⌫" style="padding:8px 14px;margin:2px;border:1px solid #c9a15a;border-radius:8px;background:#fff;font:inherit">⌫ मिटाएँ</button>';
