@@ -201,7 +201,7 @@ input[type=date],input[type=time]{min-height:48px}
 .about b{color:var(--maroon)}.about p{margin:4px 0}
 @media print{.brand .pbtn,.nmtools,.totop,.lang,.about{display:none!important}.brand{background:#fff;color:#000;border-bottom:2px solid #000}.brand b{color:#000}.brand span{color:#000}#nm_body{font-size:13px}}
 </style>
-<meta name="vj-ver" content="318">
+<meta name="vj-ver" content="319">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <script>try{if(window.top!==window.self){document.documentElement.style.display='none';window.top.location=window.self.location;}}catch(e){document.documentElement.style.display='none';}</script>
 
@@ -7688,6 +7688,18 @@ setInterval(tick,700);setTimeout(tick,900);})();
 function lab(b){var t=cur();var tx='\u260A राहु-केतु: '+(t?'सत्य':'मध्यम')+' (बदलें)';if(b.textContent!==tx)b.textContent=tx;}
 function mk(){try{var bar=D.getElementById('vj_tools');if(!bar)return;var b=bar.querySelector('.vjnode');if(!b){b=D.createElement('button');b.type='button';b.className='pbtn vjnode';b.addEventListener('click',function(){try{localStorage.setItem('vj_node',cur()?'mean':'true');}catch(e){}location.reload();});bar.appendChild(b);}lab(b);}catch(x){}}
 mk();new MutationObserver(mk).observe(D.body,{childList:true,subtree:true});})();
+</script>
+<style id="vj319css">#pk_box{display:none!important}</style>
+<script>
+/* v319: फुटर के "About" अनुच्छेद अंग्रेज़ी में */
+(function(){var D=document;
+function ver(){var m=D.querySelector('meta[name="vj-ver"]');return m?m.content:'';}
+function html(){return '<p><b>Varahiya Help Desk \u2014 Kundli &amp; Jain Jyotish</b> \u00b7 Version '+ver()+'</p>'+
+'<p>Calculations follow the Vedic system (sidereal, Lahiri ayanamsa). This app works fully offline; your birth details are not sent or saved anywhere.</p>'+
+'<p>Jain sanskar and mantra content is drawn from texts such as the Adipurana (Acharya Jinasena, Parva 38\u201340) and Jain marriage-rite manuals. Perform rites under the guidance of a knowledgeable scholar/pratishthacharya, and verify against the original text.</p>'+
+'<p>Phaladesh (predictions) is guidance based on traditional astrology \u2014 not a definite forecast, nor medical, legal or financial advice.</p>';}
+function fx(){try{var a=D.querySelector('.about');if(!a||a.getAttribute('data-en')==='1')return;a.setAttribute('data-en','1');a.innerHTML=html();}catch(x){}}
+fx();new MutationObserver(function(){var a=D.querySelector('.about');if(a&&(a.getAttribute('data-en')!=='1'||/[\u0900-\u097F]/.test(a.textContent))){a.removeAttribute('data-en');fx();}}).observe(D.body,{childList:true,subtree:true,characterData:true});})();
 </script>
 </body>
 </html>
