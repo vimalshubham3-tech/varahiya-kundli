@@ -40,6 +40,11 @@ h1{text-align:center;font-family:'Noto Serif Devanagari',serif;color:var(--maroo
 label{display:block;font-size:13px;font-weight:600;color:var(--maroon);margin:10px 0 4px}
 input[type=text],input[type=date]{width:100%;font:inherit;font-size:16px;padding:12px 12px;border:1px solid var(--line);border-radius:10px;background:#fbfbfd;color:var(--ink)}
 input:focus{outline:2px solid var(--gold);outline-offset:1px}
+.vjmp{border:2px solid #c9a227;border-radius:22px;background:linear-gradient(180deg,#fffaf0,#f8efd8);padding:10px 8px 14px;margin-top:12px;box-shadow:0 6px 18px rgba(122,59,16,.18)}
+.vjmp-h{background:linear-gradient(135deg,#6b1c28,#8e2b3a 60%,#b8860b);color:#fff;border-radius:16px;padding:12px 14px;margin:2px 2px 10px;text-align:center;font-weight:700;font-size:17px;letter-spacing:.3px}
+.vjmp-h small{display:block;font-weight:400;font-size:12.5px;opacity:.92;margin-top:3px}
+.vjmp .res-card{border:1px solid #e3d3a4;background:#fffdf7;margin-bottom:12px}
+button.vjmp-btn{background:linear-gradient(135deg,#d4a017,#b8860b 55%,#8a6508);color:#fff;border:0;border-radius:16px;padding:16px;font-size:18px;font-weight:700;width:100%;margin-top:10px;box-shadow:0 4px 12px rgba(138,101,8,.45);letter-spacing:.3px}
 input[type=month]{width:100%;box-sizing:border-box;min-height:48px;font:inherit;font-size:16px;padding:12px;border:1px solid var(--line);border-radius:10px;background:#fbfbfd;color:var(--ink)} /* v173 */
 .detect{margin-top:10px;font-size:14px;min-height:0}
 .det-line{background:#faf4e8;border:1px dashed var(--gold);border-radius:10px;padding:8px 10px}
@@ -157,7 +162,7 @@ input[type=date],input[type=time]{min-height:48px}
 .about b{color:var(--maroon)}.about p{margin:4px 0}
 @media print{.brand .pbtn,.nmtools,.totop,.lang,.about{display:none!important}.brand{background:#fff;color:#000;border-bottom:2px solid #000}.brand b{color:#000}.brand span{color:#000}#nm_body{font-size:13px}}
 </style>
-<meta name="vj-ver" content="176">
+<meta name="vj-ver" content="177">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <script>try{if(window.top!==window.self){document.documentElement.style.display='none';window.top.location=window.self.location;}}catch(e){document.documentElement.style.display='none';}</script>
 
@@ -4497,11 +4502,11 @@ var RJAIN_NOTE='जैन दृष्टि: ग्रह निमित्त
   var d=D.createElement('div');d.className='panel';
   var n=istNow(),p2=function(x){return String(x).padStart(2,'0');};
   d.innerHTML='<h3>मासिक पंचांग-विचार — निर्णय सागर शैली (नीमच) · ड्रिक शैली</h3><p class="kmeta">निर्णय सागर पंचांग नीमच (म.प्र.) से छपने वाला लोकप्रिय हिंदी पंचांग है, जिसमें तिथि-नक्षत्र के साथ भद्रा, पंचक, मूल-विचार आदि दिए जाते हैं। यहाँ वही विचार चुने महीने के हर दिन के लिए गणना से बनता है। भद्रा, पंचक व मूल का समय चुने स्थान के लिए खगोलीय गणना से निकाला गया है।</p>'+
-   '<label for="nm_m">महीना</label><input id="nm_m" type="month" value="'+n.y+'-'+p2(n.mo)+'">'+
-   '<label for="nm_c">स्थान</label><select id="nm_c">'+cityOpts()+'</select>'+
+   '<label for="pm_m">महीना</label><input id="pm_m" type="month" value="'+n.y+'-'+p2(n.mo)+'">'+
+   '<label for="pm_c">स्थान</label><select id="pm_c">'+cityOpts()+'</select>'+
    '<button class="go" id="nm_go" type="button">निर्णय सागर शैली — महीने का पंचांग-विचार</button><button class="go" id="nm_dk" type="button" style="margin-top:8px">ड्रिक पंचांग शैली — महीने की तालिका</button><div id="nm_res"></div>';
   pp.insertBefore(d,pp.firstChild);
-  D.getElementById('nm_c').value=String(ni);
+  D.getElementById('pm_c').value=String(ni);
   var MOOL=[0,8,9,17,18,26];
   function endOf(y,mo,dd,sr,get){
     function g(h){var H=Math.floor(h);return get(panchangAt(toJD(y,mo,dd,H,Math.round((h-H)*60),5.5)));}
@@ -4525,7 +4530,7 @@ var RJAIN_NOTE='जैन दृष्टि: ग्रह निमित्त
     return {pd:pd,bh:bh,pk:pk,ml:ml};
   }
   D.getElementById('nm_go').addEventListener('click',function(){
-    var v=(D.getElementById('nm_m').value||new Date(Date.now()+19800000).toISOString().slice(0,7)).split('-').map(Number),c=CITIES[+D.getElementById('nm_c').value],o=D.getElementById('nm_res');
+    var v=(D.getElementById('pm_m').value||new Date(Date.now()+19800000).toISOString().slice(0,7)).split('-').map(Number),c=CITIES[+D.getElementById('pm_c').value],o=D.getElementById('nm_res');
     if(v.length<2||!v[0]){o.innerHTML='<p class="warn">महीना चुनें।</p>';return;}
     var y=v[0],mo=v[1],days=new Date(Date.UTC(y,mo,0)).getUTCDate(),h='<div class="res-card"><h3>'+E(c[0])+' — '+mo+'/'+y+'</h3><div class="tw"><table><thead><tr><th>दिन</th><th>तिथि (सूर्योदय)</th><th>नक्षत्र</th><th>उदय–अस्त</th><th>विशेष</th></tr></thead><tbody>';
     for(var dd=1;dd<=days;dd++){
@@ -4561,7 +4566,7 @@ var RJAIN_NOTE='जैन दृष्टि: ग्रह निमित्त
   D.getElementById('nm_dk').addEventListener('click',function(){
     var o=D.getElementById('nm_res');o.innerHTML='<p class="kmeta">गणना हो रही है…</p>';
     setTimeout(function(){try{
-      var v=(D.getElementById('nm_m').value||new Date(Date.now()+19800000).toISOString().slice(0,7)).split('-').map(Number),c=CITIES[+D.getElementById('nm_c').value];
+      var v=(D.getElementById('pm_m').value||new Date(Date.now()+19800000).toISOString().slice(0,7)).split('-').map(Number),c=CITIES[+D.getElementById('pm_c').value];
       var y=v[0],mo=v[1],days=new Date(Date.UTC(y,mo,0)).getUTCDate(),h='<div class="res-card"><h3>'+E(c[0])+' — '+mo+'/'+y+' (ड्रिक शैली)</h3><div class="tw"><table><thead><tr><th>दिन</th><th>सूर्योदय–अस्त</th><th>तिथि</th><th>नक्षत्र</th><th>योग</th><th>करण</th><th>चंद्र राशि</th><th>चंद्रोदय–अस्त</th><th>राहुकाल</th></tr></thead><tbody>';
       for(var dd=1;dd<=days;dd++){
         var pd=panchangDay(y,mo,dd,c[2],c[3],5.5),pc=pd.pc,sr=pd.sun.rise;
@@ -6325,6 +6330,29 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 /* v176: जैन टैब का क्रम — दैनिक पंचांग, तिथि दर्पण, मासिक, वार्षिक */
 (function(){var n=0;function mv(){try{var ids=['hp_go','hd_go','jc_go','ha_go'],P=ids.map(function(i){var e=document.getElementById(i);return e&&e.closest('.panel')});if(P.some(function(x){return !x}))return false;var par=P[0].parentNode;if(P.some(function(x){return x.parentNode!==par}))return false;var first=par.children[0];if(P.indexOf(first)>-1)first=null;var ref=first?first.nextSibling:par.firstChild;P.forEach(function(x){par.insertBefore(x,ref)});return true}catch(e){return false}}
 function go(){if(mv()||++n>20)return;setTimeout(go,150)}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',go);else go();})();
+/* v177: निर्णय सागर व ड्रिक — दोनों शैलियाँ एक में, नाम हटाकर अपना विशेष रूप */
+(function(){var n=0;
+function setup(){var go=document.getElementById('nm_go'),dk=document.getElementById('nm_dk'),o=document.getElementById('nm_res');if(!go||!dk||!o)return false;if(go.__vjall)return true;go.__vjall=1;
+var pn=go.closest('.panel'),h=pn.querySelector('h3'),pp=pn.querySelector('p.kmeta');
+h.textContent='📜 मासिक पंचांग दर्शन';
+if(pp)pp.textContent='पूरे महीने का पंचांग एक ही जगह: हर दिन की तिथि, नक्षत्र, योग, करण, चंद्र राशि, सूर्योदय-सूर्यास्त, चंद्रोदय-चंद्रास्त व राहुकाल — और साथ में भद्रा, पंचक व मूल का विचार। सब कुछ चुने स्थान के लिए, भारतीय मानक समय में।';
+go.style.display='none';dk.style.display='none';
+var b=document.createElement('button');b.type='button';b.id='nm_all';b.className='vjmp-btn';b.textContent='📜 पूरे महीने का पंचांग देखें';go.parentNode.insertBefore(b,go);
+function key(){return 'all|'+document.getElementById('pm_m').value+'|'+document.getElementById('pm_c').value}
+b.addEventListener('click',function(){var k=key();
+ if(o.innerHTML.trim()&&o.getAttribute('data-vjk')===k){o.innerHTML='';o.removeAttribute('data-vjk');return;}
+ o.removeAttribute('data-vjk');o.innerHTML='';go.click();var A=o.innerHTML;
+ if(A.indexOf('class="warn"')>-1){o.removeAttribute('data-vjk');return;}
+ o.innerHTML='';dk.click();var t=0;
+ (function w(){var B=o.innerHTML;if((B.indexOf('<table')<0||B.indexOf('गणना हो रही')>-1)&&++t<60){setTimeout(w,150);return;}
+  B=B.replace(/\s*\(ड्रिक शैली\)/g,'').replace(/ड्रिक \(दृक्\) शैली में/g,'इस तालिका में').replace(/छपे पंचांग या drikpanchang\.com से/g,'छपे पंचांग से');
+  A=A.replace(/<h3>/,'<h3>भद्रा · पंचक · मूल विचार — ');
+  var c=document.getElementById('pm_c'),nm=c.options[c.selectedIndex]?c.options[c.selectedIndex].text:'';
+  o.innerHTML='<div class="vjmp"><div class="vjmp-h">वरहिया पंचांग दर्शन<small>'+nm+' · पूरे महीने का पंचांग</small></div>'+B+A+'</div>';
+  o.setAttribute('data-vjk',k);})();});
+return true}
+function go(){if(setup()||++n>20)return;setTimeout(go,200)}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',go);else go();})();
 /* v158: जैन तिथि दर्पण टैब सबसे पहले */
 (function(){try{var h=document.getElementById('tab-h'),p=document.getElementById('tab-p'),f=h&&h.parentNode.firstElementChild;if(h&&f&&f!==h){h.parentNode.insertBefore(h,f);}
