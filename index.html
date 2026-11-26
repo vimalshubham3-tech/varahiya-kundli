@@ -201,7 +201,7 @@ input[type=date],input[type=time]{min-height:48px}
 .about b{color:var(--maroon)}.about p{margin:4px 0}
 @media print{.brand .pbtn,.nmtools,.totop,.lang,.about{display:none!important}.brand{background:#fff;color:#000;border-bottom:2px solid #000}.brand b{color:#000}.brand span{color:#000}#nm_body{font-size:13px}}
 </style>
-<meta name="vj-ver" content="301">
+<meta name="vj-ver" content="302">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <script>try{if(window.top!==window.self){document.documentElement.style.display='none';window.top.location=window.self.location;}}catch(e){document.documentElement.style.display='none';}</script>
 
@@ -7315,6 +7315,91 @@ var kids=[].slice.call(td.childNodes);kids.forEach(function(n){if(n.nodeType===1
 td.innerHTML='';td.appendChild(g);});}catch(x){}}
 fx();new MutationObserver(fx).observe(document.body,{childList:true,subtree:true});})();
 document.addEventListener('click',function(e){var l=e.target.closest&&e.target.closest('#lang');if(!l)return;setTimeout(function(){try{if(document.documentElement.lang!=='hi')return;var r=document.getElementById('nm_res'),b=document.getElementById('nm_all');if(r&&b&&r.innerHTML.trim()){b.click();setTimeout(function(){b.click();},80);}}catch(x){}},700);},true);
+</script>
+<style id="vj302css">
+#vjhome{display:none;position:fixed;inset:0;z-index:9996;background:linear-gradient(180deg,#f9e3ad,#f3d28a);overflow-y:auto;-webkit-overflow-scrolling:touch}
+body.vjhm #vjhome{display:block}
+body.vjhm{overflow:hidden}
+#vjhome .hb{position:sticky;top:0;z-index:2;display:flex;align-items:center;gap:10px;background:#8e1c1c;color:#fff;padding:12px 14px;box-shadow:0 2px 8px rgba(0,0,0,.3)}
+#vjhome .hb b{flex:1;font-size:17px}
+#vjhome .hb button{background:rgba(255,255,255,.18);color:#fff;border:0;border-radius:8px;padding:6px 12px;font:700 15px inherit;font-family:inherit}
+#vjhome .hg{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:12px 10px 90px}
+#vjhome .hc{display:block;text-align:left;background:#fff3d3;border:0;border-radius:6px;box-shadow:0 2px 5px rgba(120,70,0,.28);padding:11px 11px 13px;font-family:inherit;cursor:pointer;color:#4a3410;min-width:0}
+#vjhome .hc:active{background:#ffe9b5}
+#vjhome .hc .t{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:800;color:#b3261e;line-height:1.2;margin-bottom:6px}
+#vjhome .hc .t i{font-style:normal;font-size:30px;flex:0 0 auto;line-height:1}
+#vjhome .hc .d{font-size:13.5px;line-height:1.4;color:#5a4420}
+#vjhome .hs{grid-column:1/-1;font-weight:800;color:#6b1c28;font-size:15px;padding:4px 4px 0}
+</style>
+<script>
+/* v302: मेनू = कार्ड-ग्रिड होम (दैनिक मुहूर्त उप-ग्रिड सहित) */
+(function(){
+var D=document;
+function L(){return D.documentElement.lang==='en'?1:0;}
+var MAIN=[
+['🌅','दैनिक पंचांग','Daily Panchang','आज/चुनी तारीख़ का पूरा पंचांग — शुभ-अशुभ समय सहित','Full panchang of any date with auspicious/inauspicious times',['pn_all']],
+['📜','मासिक पंचांग','Monthly Panchang','पूरे माह की तिथि, नक्षत्र, योग, करण व विशेष योग','Tithi, nakshatra, yoga, karan & special yogas for the month',['nm_all']],
+['📆','वार्षिक पंचांग','Annual Panchang','पूरे वर्ष के व्रत, पर्व व कल्याणक','Vrats, festivals & kalyanaks of the whole year',['yr_all']],
+['🪔','जैन तिथि दर्पण','Jain Tithi Darpan','जैन पर्व, तीर्थंकर पंच कल्याणक, आचार्य दर्पण','Jain parvs, Tirthankar Panch Kalyanak, Acharya Darpan',['td_all']],
+['🕰️','दैनिक मुहूर्त','Daily Muhurta','चौघड़िया, होरा, लग्न, चंद्रबल, ताराबल व अन्य','Choghadiya, Hora, Lagna, Chandrabal, Tarabal & more','SUB'],
+['🌟','दैनिक राशिफल','Daily Rashifal','चंद्र राशि के अनुसार आज का राशिफल','Today\'s horoscope by Moon sign','RASHI'],
+['🔮','कुंडली व फलादेश','Kundli & Predictions','जन्म-विवरण से भाव, ग्रह, योग, दशा व फल','Houses, planets, yogas, dasha & results from birth details',['G1','tab-k']],
+['💍','विवाह व मिलान','Marriage & Matching','विवाह लग्न, नाम व जन्म से गुण-मिलान','Vivah lagna, name & birth matching',['G2','tab-vl']],
+['🏠','वास्तु','Vastu','वास्तु नियम, दिशा-दोष व बिना तोड़-फोड़ के उपाय','Vastu rules, direction doshas & remedies',['G3','tab-v']],
+['✨','अंक व फलित ज्योतिष','Numerology & Phalit','अंक ज्योतिष, फलित, रत्न व स्वास्थ्य ज्योतिष','Numerology, phalit, gems & health astrology',['G1','tab-a']],
+['🙏','जैन धर्म','Jain Dharma','जैन ज्योतिष, भक्तामर, णमोकार, पूजन व मंत्र','Jain jyotish, Bhaktamar, Namokar, puja & mantra',['G4','tab-j']],
+['📚','स्वाध्याय पुस्तकालय','Swadhyay Library','जैन ग्रंथ व स्वाध्याय-सामग्री','Jain texts & study material',['G4','tab-l']],
+['📋','सभी टैब की सूची','All tabs list','पूरे ऐप के सभी टैब सूची रूप में','Every tab of the app as a list','DRAWER']
+];
+var SUB=[
+['🪔','चौघड़िया','Choghadiya','दिन व रात के सभी चौघड़िया — शुभ/अशुभ रंग सहित','All day & night choghadiyas with good/bad colours',[28,29]],
+['⏳','ग्रह-होरा','Graha Hora','दिन-रात की 24 होरा — स्वामी ग्रह सहित','24 horas of day & night with ruling planets',[30]],
+['🌄','लग्न','Lagna','सूर्योदय से अगले सूर्योदय तक सभी लग्न','All lagnas from sunrise to next sunrise',[41]],
+['🌙','चंद्र बल','Chandra Bal','सभी 12 राशियों के लिए चंद्रबल','Chandrabal for all 12 rashis',[37]],
+['⭐','तारा बल','Tara Bal','सभी 27 नक्षत्रों के लिए ताराबल','Tarabal for all 27 nakshatras',[38]],
+['🛡️','पंचक रहित मुहूर्त','Panchak-free Muhurta','पंचक-रहित शुभ समय-खंड','Panchak-free auspicious windows',[39]],
+['☀️','राहुकाल · अभिजित','Rahu Kaal · Abhijit','राहुकाल, गुलिक, यमगंड व अभिजित मुहूर्त','Rahu Kaal, Gulika, Yamaganda & Abhijit muhurta',[10,11,12,13]],
+['💫','अमृत काल · वर्ज्य','Amrit Kaal · Varjya','अमृत काल व वर्ज्य का समय','Amrit Kaal and Varjya timings',[32,33]],
+['🚫','भद्रा · दुर्मुहूर्त','Bhadra · Durmuhurta','भद्रा, दुर्मुहूर्त व निशीथ विचार','Bhadra, durmuhurta & nishith',[23,22]],
+['💍','विवाह मुहूर्त','Vivah Muhurta','इस दिन विवाह की योग्यता व शुभ लग्न','Marriage suitability of the day & lagnas',[31]],
+['🧭','दिशा शूल · वास','Disha Shool · Vaas','दिशा शूल, चंद्र वास, अग्नि/शिव/भद्रा वास','Disha shool, chandra vaas, agni/shiva/bhadra vaas',[35,24,25,26,27]],
+['🕊️','जैन पच्चक्खाण','Jain Pachchakkhan','नवकारशी, पोरिसि आदि पच्चक्खाण-समय','Navkarshi, porisi & other pachchakkhan timings',[40]]
+];
+function $(i){return D.getElementById(i);}
+function pad(n){return String(n).padStart(2,'0');}
+function closeHome(){D.body.classList.remove('vjhm');}
+function openGroup(i){try{var b=D.querySelectorAll('.vjg > button')[i];if(b)b.click();}catch(e){}}
+function goTab(g,id){closeHome();openGroup(g);setTimeout(function(){var t=$(id);if(t)t.click();window.scrollTo(0,0);},60);}
+function ensurePane(){openGroup(0);var t=$('tab-p');if(t)t.click();}
+function openBanner(id){closeHome();ensurePane();setTimeout(function(){var b=$(id),r=$(id.replace('_all','_res'));if(!b)return;var has=r&&r.innerHTML.trim();if(!has||id==='pn_all'&&false)b.click();try{b.scrollIntoView({block:'start'});}catch(e){}},120);}
+function openRows(idx){closeHome();ensurePane();setTimeout(function(){var b=$('pn_all'),r=$('pn_res'),dd=$('pn_date');
+ if(dd&&!(r&&r.innerHTML.trim())){var t=new Date(Date.now()+19800000);dd.value=t.getUTCFullYear()+'-'+pad(t.getUTCMonth()+1)+'-'+pad(t.getUTCDate());}
+ if(!(r&&r.innerHTML.trim()))b.click();
+ var n=0;(function w(){var tb=D.querySelector('#pn_res .tw>table');if(!tb||!tb.tBodies[0]||tb.tBodies[0].rows.length<30){if(n++<30)return setTimeout(w,150);return;}
+  var k=0,done=0;(function ap(){var tb2=D.querySelector('#pn_res .tw>table');if(tb2&&tb2.tBodies[0]&&tb2.tBodies[0].rows.length>30){var rows=tb2.tBodies[0].rows,first=null,any=false;
+   idx.forEach(function(i){var r=rows[i];if(r){if(!r.classList.contains('open')){r.classList.add('open');any=true;}if(!first)first=r;}});
+   if(first&&(any||!done)){done=1;setTimeout(function(){try{first.scrollIntoView({behavior:'smooth',block:'start'});}catch(e){}},80);}}
+   if(k++<12)setTimeout(ap,300);})();})();},150);}
+function openRashi(){closeHome();ensurePane();setTimeout(function(){var h=[].slice.call(D.querySelectorAll('#pane-p h3')).find(function(x){return /दैनिक राशिफल|Daily Rashifal/i.test(x.textContent);});if(h){var pn=h.closest('.panel')||h.parentNode;if(!h.classList.contains('open'))h.click();try{h.scrollIntoView({block:'start'});}catch(e){}}},150);}
+function card(c,onclick){var b=D.createElement('button');b.type='button';b.className='hc';var en=L();b.innerHTML='<div class="t"><i>'+c[0]+'</i><span>'+(en?c[2]:c[1])+'</span></div><div class="d">'+(en?c[4]:c[3])+'</div>';b.addEventListener('click',onclick);return b;}
+function render(view){var h=$('vjhome');if(!h)return;var en=L();h.innerHTML='';
+ var bar=D.createElement('div');bar.className='hb';
+ var back=D.createElement('button');back.type='button';back.textContent=view==='sub'?'←':'✕';back.addEventListener('click',function(){if(view==='sub')render('main');else closeHome();});
+ var tt=D.createElement('b');tt.textContent=view==='sub'?(en?'Daily Muhurta':'दैनिक मुहूर्त'):(en?'Varahiya Jain Panchang — Menu':'वरहिया जैन पंचांग — मेनू');
+ bar.appendChild(back);bar.appendChild(tt);
+ if(view==='sub'){var x=D.createElement('button');x.type='button';x.textContent='✕';x.addEventListener('click',closeHome);bar.appendChild(x);}
+ h.appendChild(bar);
+ var g=D.createElement('div');g.className='hg';
+ if(view==='sub'){var hs=D.createElement('div');hs.className='hs';hs.textContent=en?'Tap a card — today\'s panchang opens with that section':'किसी कार्ड को दबाएँ — आज का पंचांग उसी खंड के साथ खुलेगा';g.appendChild(hs);
+  SUB.forEach(function(c){g.appendChild(card(c,function(){openRows(c[5]);}));});}
+ else MAIN.forEach(function(c){var a=c[5];g.appendChild(card(c,function(){
+  if(a==='SUB')render('sub');else if(a==='RASHI')openRashi();else if(a==='DRAWER'){closeHome();D.body.classList.add('vjdr');}
+  else if(a[0].charAt(0)==='G')goTab(+a[0].slice(1),a[1]);else openBanner(a[0]);}));});
+ h.appendChild(g);h.scrollTop=0;}
+function init(){var m=$('vj_menu');if(!m||$('vjhome'))return;var h=D.createElement('div');h.id='vjhome';D.body.appendChild(h);
+ m.addEventListener('click',function(e){e.stopImmediatePropagation();e.preventDefault();render('main');D.body.classList.add('vjhm');},true);}
+init();D.addEventListener('DOMContentLoaded',init);new MutationObserver(init).observe(D.body,{childList:true});
+})();
 </script>
 </body>
 </html>
