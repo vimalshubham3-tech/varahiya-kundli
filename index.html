@@ -201,7 +201,7 @@ input[type=date],input[type=time]{min-height:48px}
 .about b{color:var(--maroon)}.about p{margin:4px 0}
 @media print{.brand .pbtn,.nmtools,.totop,.lang,.about{display:none!important}.brand{background:#fff;color:#000;border-bottom:2px solid #000}.brand b{color:#000}.brand span{color:#000}#nm_body{font-size:13px}}
 </style>
-<meta name="vj-ver" content="208">
+<meta name="vj-ver" content="209">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <script>try{if(window.top!==window.self){document.documentElement.style.display='none';window.top.location=window.self.location;}}catch(e){document.documentElement.style.display='none';}</script>
 
@@ -1229,7 +1229,7 @@ const dmH=h=>{const t=Math.round(h*3600);return Math.floor(t/3600)+' घं '+Ma
 const tt=h=>hmS(h)+(h>=24?' (+1)':'');
 const CHV=['पूर्व','दक्षिण','पश्चिम','उत्तर'];
 const DURM={0:[14],1:[9,12],2:[4],3:[8],4:[6,12],5:[4,9],6:[1]};
-const SHV=['श्मशान में','कैलाश में','गौरी सान्निध्य में','वृषारूढ़ (नंदी पर)','सभा में','भोजन में','क्रीड़ा में'];
+const SHV=['श्मशान में','कैलाश में','गौरी के साथ','वृषारूढ़ (नंदी पर)','सभा में','भोजन में','क्रीड़ा में'];
 const AGN=['पृथ्वी','आकाश','पाताल','पृथ्वी'];
 const BHV=['स्वर्ग','स्वर्ग','स्वर्ग','पृथ्वी','पृथ्वी','पाताल','पाताल','स्वर्ग','पाताल','पाताल','पृथ्वी','पृथ्वी'];
 /* v201: लग्न सारणी (दैनिक व मासिक पंचांग) */
@@ -1254,6 +1254,11 @@ function VM(y,mo,dd,lat,lon){
    for(let i=0;i<cuts.length-1;i++){const m=(cuts[i]+cuts[i+1])/2,isD=m>=rs&&m<ss_;if((isD?'d':'n')!==k)out.push({r:w.r,a:cuts[i],b:cuts[i+1]});}});
   return {sp:L[0].sp,ws:L[0].ws,lg:out};
 }
+const AMV=[42,48,54,52,38,35,54,44,56,54,44,42,45,44,38,38,34,38,44,48,44,34,34,42,40,48,54];
+const VJV=[50,24,30,40,14,21,30,20,32,30,20,18,22,20,14,14,10,14,20,24,20,10,10,18,16,24,30];
+const ANY=['आनंद','कालदंड','धूम्र','धाता','सौम्य','ध्वांक्ष','ध्वज','श्रीवत्स','वज्र','मुद्गर','छत्र','मित्र','मानस','पद्म','लुंबक','उत्पात','मृत्यु','काण','सिद्धि','शुभ','अमृत','मुसल','गद','मातंग','राक्षस','चर','स्थिर','वर्धमान'];
+const ANS=[0,4,8,12,16,20,24],DSH=['पश्चिम','पूर्व','उत्तर','उत्तर','दक्षिण','पश्चिम','पूर्व'];
+function n28(q){const l=q.P[1].lon,u=360/27;if(l<276+2/3)return Math.floor(l/u);if(l<280+8/9)return 21;return 22+Math.floor((l-(280+8/9))/u);}
 function XR(d){
   const y=d.ymd[0],mo=d.ymd[1],dd=d.ymd[2],r=d.sun.rise,s=d.sun.set,dm=s-r,m=dm/15,wd=d.wd;
   const nx=new Date(Date.UTC(y,mo-1,dd+1)),ns=sunTimes(nx.getUTCFullYear(),nx.getUTCMonth()+1,nx.getUTCDate(),d.ymd[3],d.ymd[4],5.5),R2=24+ns.rise,nr=R2-s,mid=s+nr/2,nm=nr/15;
@@ -1279,6 +1284,15 @@ function XR(d){
    +'<tr><td>ग्रह-होरा</td><td>'+hr.map(x=>hmS(x.a)+'–'+hmS(x.b)+' <b>'+HN[x.pl]+'</b>').join('<br>')+'</td></tr>';}catch(e){}
   try{const v=VM(y,mo,dd,d.ymd[3],d.ymd[4]);
    nv+='<tr><td>विवाह मुहूर्त</td><td>'+(v?'<b style="color:#2e7d5b">✅ दिन विवाह योग्य</b>'+(v.sp.length?' ('+v.sp.join(', ')+')':'')+'<br>शुभ लग्न: '+(v.lg.length?v.lg.map(x=>'<b>'+RASHI_H[x.r]+'</b> '+tt(x.a)+'–'+tt(x.b)).join('; '):'<span style="color:#b23">कोई शुद्ध लग्न नहीं मिला</span>'):'<span style="color:#b23">✗ इस दिन विवाह योग्य नहीं (वार/तिथि/नक्षत्र/योग/भद्रा आदि नियमों के कारण)</span>')+'</td></tr>';}catch(e){}
+  try{const iv=[];let pv=at(r-40).nak,st0=null;for(let h=r-39.9;h<=R2+30;h+=0.1){const v=at(h).nak;if(v!==pv){let lo=h-0.1,hi=h;for(let i=0;i<20;i++){const q=(lo+hi)/2;if(at(q).nak===pv)lo=q;else hi=q;}const e=(lo+hi)/2;if(st0!==null)iv.push({n:pv,a:st0,b:e});st0=e;pv=v;}}
+   const win=(tb)=>iv.map(x=>{const L=x.b-x.a,a=x.a+L*tb[x.n]/60,b=a+L*4/60;return (b>r&&a<R2)?[a,b]:null;}).filter(Boolean).map(w=>tt(w[0])+' – '+tt(w[1])).join('<br>');
+   const am=win(AMV),vj=win(VJV);
+   if(am)nv+='<tr><td>अमृत काल (शुभ)</td><td>'+am+'</td></tr>';if(vj)nv+='<tr><td>वर्ज्य (अशुभ)</td><td>'+vj+'</td></tr>';}catch(e){}
+  try{const sg=SEGS(d,q=>q.nak*0+ANS[wd]*0+((n28(q)-ANS[wd]+28)%28));
+   nv+='<tr><td>आनन्दादि योग (कब से कब तक)</td><td>'+sg.map((x,i)=>'<b>'+ANY[x.v]+'</b>'+([16,17].includes(x.v)?' ✗':[19,20].includes(x.v)?' ✓':'')+' — '+(i===0?'सूर्योदय से ':tt(x.a)+' से ')+tt(x.b)+' तक').join('<br>')+'</td></tr>';
+   nv+='<tr><td>दिशा शूल</td><td>'+DSH[wd]+'</td></tr>';
+   const ss=SEGS(d,q=>SARV[wd].includes(q.nak)?1:0).filter(x=>x.v),as=SEGS(d,q=>AMRT[wd]===q.nak?1:0).filter(x=>x.v),fm=l=>l.map(x=>(x.a<=r+0.01&&x.b>=R2-0.02)?'अहोरात्र':tt(x.a)+' – '+tt(x.b)).join('<br>');
+   if(ss.length)nv+='<tr><td>सर्वार्थ सिद्धि योग (शुभ)</td><td>'+fm(ss)+'</td></tr>';if(as.length)nv+='<tr><td>अमृत सिद्धि योग (शुभ)</td><td>'+fm(as)+'</td></tr>';}catch(e){}
   const lg=LGD(y,mo,dd,d.ymd[3],d.ymd[4],r,R2);
   nv+='<tr><td>लग्न (सूर्योदय से अगले सूर्योदय तक)</td><td>'+lg.map(x=>'<b>'+RASHI_H[x.r]+'</b> '+tt(x.a)+' – '+tt(x.b)).join('<br>')+'</td></tr>';
   const jd0=Date.UTC(y,mo-1,dd)/86400000+2440587.5;
@@ -1316,7 +1330,7 @@ function panchangHTML(d,title,showPl){
    +'<tr><td>राहुकाल (अशुभ)</td><td>'+hmS(d.rahu[0])+' – '+hmS(d.rahu[1])+'</td></tr>'
    +'<tr><td>गुलिक काल</td><td>'+hmS(d.gulika[0])+' – '+hmS(d.gulika[1])+'</td></tr>'
    +'<tr><td>यमगंड</td><td>'+hmS(d.yama[0])+' – '+hmS(d.yama[1])+'</td></tr>'
-   +'<tr><td>अभिजित मुहूर्त (शुभ)</td><td>'+hmS(d.abhijit[0])+' – '+hmS(d.abhijit[1])+'</td></tr>'+XR(d)
+   +'<tr><td>अभिजित मुहूर्त (शुभ)</td><td>'+(d.wd===3?'कोई नहीं (बुधवार को मान्य नहीं)':hmS(d.abhijit[0])+' – '+hmS(d.abhijit[1]))+'</td></tr>'+XR(d)
    +'</tbody></table></div>';
   if(showPl) h+='<h3>आज के ग्रह (गोचर)</h3><p class="kmeta">'+pc.P.map((p,i)=>PL_H[i]+' '+RASHI_H[rashiOf(p.lon)]+(p.retro&&i<7?' (व)':'')).join(' · ')+'</p>';
   return h+'<p class="kmeta">सूर्योदय-सूर्यास्त व अन्य समय चुने गए स्थान के निर्देशांक से खगोलीय गणना द्वारा निकाले गए हैं।</p></div>';
@@ -4972,7 +4986,7 @@ var RJAIN_NOTE='जैन दृष्टि: ग्रह निमित्त
     +'<tr><td>राहुकाल</td><td>'+hmS(pd.rahu[0])+' – '+hmS(pd.rahu[1])+'</td></tr>'
     +'<tr><td>गुलिक काल</td><td>'+hmS(pd.gulika[0])+' – '+hmS(pd.gulika[1])+'</td></tr>'
     +'<tr><td>यमगंड</td><td>'+hmS(pd.yama[0])+' – '+hmS(pd.yama[1])+'</td></tr>'
-    +'<tr><td>अभिजित मुहूर्त</td><td>'+hmS(pd.abhijit[0])+' – '+hmS(pd.abhijit[1])+'</td></tr>'+XR(pd)
+    +'<tr><td>अभिजित मुहूर्त</td><td>'+(pd.wd===3?'कोई नहीं (बुधवार को मान्य नहीं)':hmS(pd.abhijit[0])+' – '+hmS(pd.abhijit[1]))+'</td></tr>'+XR(pd)
     +'</tbody></table></div>';
     var r={y:y,mo:mo,d:dd,wd:pd.wd,t:pv.t,pm:pv.t>15?(lm.m+1)%12:lm.m,adhik:lm.adhik,skip:0,nk:pv.nak,dup:false,dupNext:false},kk=kalOn(r);
     var pvx=parvaOn(r).concat(kk.length?[]:[]),yw=yogaWin(y,mo,dd,c,pd.wd);
