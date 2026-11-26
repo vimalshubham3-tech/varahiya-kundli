@@ -201,7 +201,7 @@ input[type=date],input[type=time]{min-height:48px}
 .about b{color:var(--maroon)}.about p{margin:4px 0}
 @media print{.brand .pbtn,.nmtools,.totop,.lang,.about{display:none!important}.brand{background:#fff;color:#000;border-bottom:2px solid #000}.brand b{color:#000}.brand span{color:#000}#nm_body{font-size:13px}}
 </style>
-<meta name="vj-ver" content="246">
+<meta name="vj-ver" content="247">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <script>try{if(window.top!==window.self){document.documentElement.style.display='none';window.top.location=window.self.location;}}catch(e){document.documentElement.style.display='none';}</script>
 
@@ -6846,6 +6846,15 @@ if(D.readyState==='loading')D.addEventListener('DOMContentLoaded',go);else go();
   yr.innerHTML='<div class="vjyr"><div style="display:flex;gap:6px;align-items:center;margin:4px 0"><button type="button" data-y="-1" style="padding:7px 12px;border-radius:8px;border:1px solid #b8860b;background:#fffdf7;color:#6b1c28">◀ पिछला वर्ष</button><span style="flex:1;text-align:center;font-weight:700;color:#6b1c28">'+yy+'</span><button type="button" data-y="1" style="padding:7px 12px;border-radius:8px;border:1px solid #b8860b;background:#fffdf7;color:#6b1c28">अगला वर्ष ▶</button></div>'+h+'</div>';
   yr.querySelectorAll('button[data-y]').forEach(function(b){b.onclick=function(e){e.stopPropagation();var v=yy+(+b.getAttribute('data-y'));if(v<1950||v>2050)return;yy=v;yrender();};});}
  yb.addEventListener('click',function(){if(yr.innerHTML.trim()){yr.innerHTML='';return;}yr.innerHTML='<p class="kmeta">गणना हो रही है…</p>';yy=new Date(Date.now()+19800000).getUTCFullYear();setTimeout(yrender,30);});
+
+ // मासिक: 'महीना / स्थान बदलें' बटन नहीं — महीना व स्थान चुनने के खाने मासिक के खुलने पर ही दिखें, बंद पर छिपें
+ (function(){var mbt=[].filter.call(nm.parentNode.children,function(e){return e.classList.contains('vjchg');})[0];if(!mbt)return;mbt.style.display='none';
+  var w=D.createElement('div');w.id='nm_ctl';['label[for=pm_m]','#pm_m','label[for=pm_c]','#pm_c'].forEach(function(q){var e=D.querySelector(q);if(e)w.appendChild(e);});nm.parentNode.insertBefore(w,nm.nextSibling);
+  var was=false,bz=false;nm.addEventListener('click',function(){if(bz)return;was=!!D.getElementById('nm_res').innerHTML.trim();},true);
+  nm.addEventListener('click',function(){if(bz)return;var open=!was;setTimeout(function(){
+    if(open){if(mbt.textContent.indexOf('⚙️')===0){bz=true;mbt.click();nm.click();bz=false;}}
+    else{if(mbt.textContent.indexOf('✖')===0){bz=true;mbt.click();bz=false;}}},400);});
+ })();
  var busy=false,L=[[wb,wr],[yb,yr],[pa,D.getElementById('pn_res')],[nm,D.getElementById('nm_res')],[td,D.getElementById('td_res')]];
  L.forEach(function(x){x[0].addEventListener('click',function(){if(busy||!x[0].isTrusted&&false)return;
    setTimeout(function(){if(!x[1].innerHTML.trim())return;busy=true;L.forEach(function(y){if(y!==x&&y[1].innerHTML.trim()){try{y[0].click();}catch(e){}}});busy=false;},60);});});
