@@ -201,7 +201,7 @@ input[type=date],input[type=time]{min-height:48px}
 .about b{color:var(--maroon)}.about p{margin:4px 0}
 @media print{.brand .pbtn,.nmtools,.totop,.lang,.about{display:none!important}.brand{background:#fff;color:#000;border-bottom:2px solid #000}.brand b{color:#000}.brand span{color:#000}#nm_body{font-size:13px}}
 </style>
-<meta name="vj-ver" content="291">
+<meta name="vj-ver" content="292">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <script>try{if(window.top!==window.self){document.documentElement.style.display='none';window.top.location=window.self.location;}}catch(e){document.documentElement.style.display='none';}</script>
 
@@ -7182,6 +7182,22 @@ fx();new MutationObserver(fx).observe(document.body,{childList:true,subtree:true
 <script>
 /* v291: दैनिक पंचांग सारणी — हर पंक्ति ड्रॉप-डाउन */
 (function(){function fx(){try{[].forEach.call(document.querySelectorAll('#pn_res .tw>table:not(.vjacc2)'),function(t){if(t.rows.length<5)return;t.classList.add('vjacc2');t.addEventListener('click',function(e){var td=e.target.closest('td');if(!td||td.cellIndex!==0)return;td.parentNode.classList.toggle('open');});});}catch(x){}}
+fx();new MutationObserver(fx).observe(document.body,{childList:true,subtree:true});})();
+</script>
+<style id="vj292css">
+#vl_body h3.vjgh{cursor:pointer}
+#vl_body h3.vjgh::after{content:" \25B8";color:#8a6d1d}
+#vl_body h3.vjgh.open::after{content:" \25BE"}
+#vl_body .vjgb{display:none}
+#vl_body .vjgb.open{display:block}
+</style>
+<script>
+/* v292: बारह लग्न + पहले यह जानें + दिन/रात प्रभाव — एक ही ड्रॉप-डाउन */
+(function(){function fx(){try{var f=document.querySelector('#vl_body .lg');if(!f)return;var h=f.previousElementSibling;if(!h||h.tagName!=='H3'||h.classList.contains('vjgh'))return;
+var body=h.parentNode,infos=[].slice.call(body.querySelectorAll(':scope > .vjmp-info'));var w=document.createElement('div');w.className='vjgb';
+h.parentNode.insertBefore(w,h.nextSibling);infos.forEach(function(e){w.appendChild(e);});
+var n=w.nextSibling,mv=[];while(n&&!(n.nodeType===1&&n.tagName==='H3')){mv.push(n);n=n.nextSibling;}mv.forEach(function(e){w.appendChild(e);});
+h.classList.add('vjgh');h.addEventListener('click',function(){h.classList.toggle('open');w.classList.toggle('open');});}catch(x){}}
 fx();new MutationObserver(fx).observe(document.body,{childList:true,subtree:true});})();
 </script>
 </body>
