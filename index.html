@@ -201,7 +201,7 @@ input[type=date],input[type=time]{min-height:48px}
 .about b{color:var(--maroon)}.about p{margin:4px 0}
 @media print{.brand .pbtn,.nmtools,.totop,.lang,.about{display:none!important}.brand{background:#fff;color:#000;border-bottom:2px solid #000}.brand b{color:#000}.brand span{color:#000}#nm_body{font-size:13px}}
 </style>
-<meta name="vj-ver" content="365">
+<meta name="vj-ver" content="366">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <script>try{if(window.top!==window.self){document.documentElement.style.display='none';window.top.location=window.self.location;}}catch(e){document.documentElement.style.display='none';}</script>
 
@@ -9487,7 +9487,7 @@ window.vjConc=function(K){
 }catch(e){console.error('v363',e);}})();
 </script>
 <script>
-/* v365: करियर · विवाह · संतान (विस्तृत, काल-सहित) */
+/* v366: करियर · विवाह · संतान (विस्तृत, काल-सहित) */
 (function(){try{
 var old=window.vjConc;
 var LR=[2,5,3,1,0,3,5,2,4,6,6,4];
@@ -9559,8 +9559,58 @@ function santan(K){
   L.push('<b>सुझाव:</b> गुरुवार का व्रत/दान, बड़ों का आशीर्वाद और समय पर चिकित्सकीय परामर्श।');
   return sec('👶 संतान — संतान-सुख व काल',li(L)+'<p class="kmeta">संतान-संख्या व निश्चित समय ज्योतिष से तय नहीं होते; ये सामान्य संकेत हैं।</p>');
 }
-window.vjConc=function(K){var h='';try{h=career(K)+marriage(K)+santan(K);}catch(e){console.error('v365',e);}return h+old(K);};
-}catch(e){console.error('v365 cm',e);}})();
+
+function rel(K,h,kar,lbl){
+  var rr=hr(K,h),l=LR[rr],o=inh(K,h),L=[];
+  L.push('<b>'+h+'वाँ भाव ('+lbl+'):</b> '+RASHI_H[rr]+' राशि, स्वामी '+tags(K,l)+'।'+(o.length?' स्थित: '+nm(o)+'।':''));
+  L.push('<b>कारक:</b> '+tags(K,kar)+'।');
+  var bad=o.filter(function(i){return [2,6,7,8].indexOf(i)>=0;}).length+([6,8,12].indexOf(K.P[l].h)>=0?1:0)+(DEBIL[kar]===K.P[kar].r?1:0);
+  var good=o.filter(function(i){return [1,3,4,5].indexOf(i)>=0;}).length+([1,4,5,7,9,10,11].indexOf(K.P[l].h)>=0?1:0)+((EXALT[kar]===K.P[kar].r||OWN[kar]&&OWN[kar].indexOf(K.P[kar].r)>=0)?1:0);
+  return {L:L,sc:good-bad,l:l,o:o};
+}
+function verdict(sc){return sc>=2?'सुख/सहयोग के अच्छे संकेत।':sc>=0?'मिश्रित-सामान्य फल; प्रयास व सेवा से सुधार।':'कुछ बाधा/दूरी के संकेत; विशेष सम्मान व उपाय लाभकारी।';}
+function parents(K){
+  var m=rel(K,4,1,'माता'),f=rel(K,9,0,'पिता');
+  return sec('🙏 माता-पिता',
+   '<h4 class="vjh4">माता</h4>'+li(m.L.concat(['<b>फल:</b> '+verdict(m.sc)]))+
+   '<h4 class="vjh4">पिता</h4>'+li(f.L.concat(['<b>फल:</b> '+verdict(f.sc)]))+
+   '<p class="kmeta">माता का विचार चतुर्थ भाव व चंद्र से, पिता का नवम भाव व सूर्य से किया गया है। यह सामान्य संकेत है; आयु या स्वास्थ्य की भविष्यवाणी नहीं।</p>');
+}
+function sibs(K){
+  var r=rel(K,3,2,'भाई-बहन/पराक्रम'),L=r.L;
+  var b11=hr(K,11),l11=LR[b11];
+  L.push('<b>बड़े भाई-बहन (एकादश):</b> '+RASHI_H[b11]+' राशि, स्वामी '+tags(K,l11)+'।');
+  var n=inh(K,3).length+(K.P[2].h===3?0:0);
+  L.push('<b>संख्या/संबंध का संकेत:</b> '+(r.sc>=1?'भाई-बहनों का सहयोग व स्नेह रहने के संकेत।':r.sc>=0?'संबंध सामान्य; आपसी संवाद से मधुरता।':'कभी-कभी मतभेद/दूरी; धैर्य रखें।')+' संख्या ज्योतिष से निश्चित नहीं होती।');
+  return sec('👫 भाई-बहन',li(L)+'<p class="kmeta">विचार तृतीय भाव, मंगल व एकादश भाव से।</p>');
+}
+function prop(K){
+  var r4=rel(K,4,2,'भूमि-गृह'),r2=rel(K,2,4,'धन-कुटुंब'),r11=rel(K,11,4,'लाभ'),L=[];
+  L.push('<b>अचल संपत्ति (भूमि-मकान):</b> चतुर्थ भाव '+RASHI_H[hr(K,4)]+', स्वामी '+tags(K,r4.l)+'; भूमि-कारक '+tags(K,2)+'। '+verdict(r4.sc));
+  L.push('<b>चल संपत्ति (धन, बचत, लाभ):</b> द्वितीय स्वामी '+tags(K,r2.l)+'; एकादश स्वामी '+tags(K,r11.l)+'। '+verdict(r2.sc+r11.sc));
+  var w=win(K,[r4.l,2].concat(r4.o),22,50,4);
+  L.push('<b>भूमि/गृह-सुख के संभावित काल:</b>'+li(w.length?w:['स्पष्ट प्रबल काल नहीं मिला।']));
+  var w2=win(K,[r2.l,r11.l,4],20,50,4);
+  L.push('<b>धन-लाभ के संभावित काल:</b>'+li(w2.length?w2:['स्पष्ट प्रबल काल नहीं मिला।']));
+  return sec('🏠 चल-अचल संपत्ति, भूमि व गृह',li(L)+'<p class="kmeta">दशा-अंतर के संकेत हैं; वास्तविक लाभ प्रयास, निर्णय और गोचर पर भी निर्भर है।</p>');
+}
+function vehicle(K){
+  var r4=rel(K,4,5,'वाहन'),L=r4.L.slice();
+  L.push('<b>वाहन-सुख:</b> '+verdict(r4.sc+(K.P[5].h===4||K.P[5].h===11?1:0)));
+  var w=win(K,[r4.l,5].concat(inh(K,4).filter(function(i){return i<7;})),18,50,4);
+  L.push('<b>वाहन-प्राप्ति के संभावित काल:</b>'+li(w.length?w:['स्पष्ट प्रबल काल नहीं मिला।']));
+  return sec('🚗 वाहन-सुख',li(L)+'<p class="kmeta">चतुर्थ भाव व शुक्र से विचार।</p>');
+}
+function vastra(K){
+  var l2=LR[hr(K,2)],l11=LR[hr(K,11)],L=[];
+  L.push('<b>वस्त्र:</b> '+tags(K,5)+' — '+(([1,2,4,5,7,9,10,11].indexOf(K.P[5].h)>=0)?'अच्छे वस्त्र व सजावट की रुचि/सुविधा।':'सादगी; आवश्यकता भर वस्त्र, दिखावा कम।'));
+  L.push('<b>आभूषण:</b> स्वर्ण-कारक '+tags(K,4)+'; द्वितीय स्वामी '+PL_H[l2]+' व एकादश स्वामी '+PL_H[l11]+'। '+verdict(((K.P[4].h&&[1,2,5,9,11].indexOf(K.P[4].h)>=0)?1:0)+(([1,2,4,5,7,9,10,11].indexOf(K.P[5].h)>=0)?1:0)+(([6,8,12].indexOf(K.P[l2].h)>=0)?-1:0)));
+  var w=win(K,[5,4,l2,l11],18,50,4);
+  L.push('<b>वस्त्र-आभूषण-लाभ के संभावित काल:</b>'+li(w.length?w:['स्पष्ट प्रबल काल नहीं मिला।']));
+  return sec('👗 वस्त्र व आभूषण-सुख',li(L)+'<p class="kmeta">शुक्र (वस्त्र/सौंदर्य), गुरु (स्वर्ण), द्वितीय व एकादश भाव से विचार।</p>');
+}
+window.vjConc=function(K){var h='';try{h=career(K)+marriage(K)+santan(K)+parents(K)+sibs(K)+prop(K)+vehicle(K)+vastra(K);}catch(e){console.error('v366',e);}return h+old(K);};
+}catch(e){console.error('v366 cm',e);}})();
 </script>
 </body>
 </html>
