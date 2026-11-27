@@ -201,7 +201,7 @@ input[type=date],input[type=time]{min-height:48px}
 .about b{color:var(--maroon)}.about p{margin:4px 0}
 @media print{.brand .pbtn,.nmtools,.totop,.lang,.about{display:none!important}.brand{background:#fff;color:#000;border-bottom:2px solid #000}.brand b{color:#000}.brand span{color:#000}#nm_body{font-size:13px}}
 </style>
-<meta name="vj-ver" content="330">
+<meta name="vj-ver" content="331">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <script>try{if(window.top!==window.self){document.documentElement.style.display='none';window.top.location=window.self.location;}}catch(e){document.documentElement.style.display='none';}</script>
 
@@ -8085,5 +8085,36 @@ setInterval(mk,500);mk();})();
 .vjg.vjtree>.vjposbtn{display:block!important;width:100%;margin:0 0 8px!important;padding:11px 10px!important;border:0!important;border-radius:10px!important;background:linear-gradient(135deg,#7a1428,#a01c36)!important;color:#ffe9a8!important;font-weight:800!important;font-size:15px!important;text-align:left}
 body.vjst .vjg.vjtree>.vjposbtn{display:none!important}
 </style>
+<style id="vj331css">
+#vjpnm{position:fixed;left:10px;right:10px;top:10px;z-index:2147483003;background:#fff7e0;border:2px solid #d9a441;border-radius:12px;padding:12px;box-shadow:0 4px 16px #0005;font-size:14px;line-height:1.5;color:#4a1220}
+#vjpnm button{margin-top:8px;padding:8px 14px;border-radius:8px;border:1px solid #d9a441;background:#6b1c28;color:#fff;font-family:inherit;font-weight:700}
+</style>
+<script>
+/* v331: सेटिंग में "सूचना चालू करें / फिर से जोड़ें" — हमेशा उपलब्ध; पुरानी सदस्यता हटाकर नई जोड़ता है */
+(function(){var D=document;
+var VAPID="BLIipe_dZmfa9hHbyRH3nZffAmNZWLFpZ0iZ7B0RzjJJkU_Hk_YpeSjxXZ3PS6blhJGh-WcB90yZq5qeCDCL9lU";
+var URL_='https://script.google.com/macros/s/AKfycbwRBH_bPXcOMLTnPd3aTdWggZhrDUnb0Mh6BlJG9oAU0GxX90ssmFi3yb2cl6eNB-sQ1w/exec',KEY='8i4WgUDgCvJkiTlgu8VBmHom';
+function u8(s){s=(s+'='.repeat((4-s.length%4)%4)).replace(/-/g,'+').replace(/_/g,'/');var r=atob(s),a=new Uint8Array(r.length);for(var i=0;i<r.length;i++)a[i]=r.charCodeAt(i);return a;}
+function ok(){return ('serviceWorker' in navigator)&&('PushManager' in window)&&('Notification' in window);}
+function msg(h){var o=D.getElementById('vjpnm');if(o)o.remove();o=D.createElement('div');o.id='vjpnm';o.innerHTML=h+'<br><button type="button" data-vj9="x">ठीक है</button>';D.body.appendChild(o);}
+function label(){if(!ok())return '\uD83D\uDD14 सूचना (इस ब्राउज़र में उपलब्ध नहीं)';var p=Notification.permission;return p==='granted'?'\uD83D\uDD14 सूचना चालू — फिर से जोड़ें':(p==='denied'?'\uD83D\uDD15 सूचना अवरुद्ध — ठीक करें':'\uD83D\uDD14 रोज़ की सूचना चालू करें');}
+function mk(){try{var bar=D.getElementById('vj_tools');if(!bar)return;var b=bar.querySelector('.vjpnbtn');if(!b){b=D.createElement('button');b.type='button';b.className='pbtn vjpnbtn';b.setAttribute('data-vj9','pn');var f=bar.querySelector('.vjprof');if(f&&f.nextSibling)bar.insertBefore(b,f.nextSibling);else bar.insertBefore(b,bar.firstChild);}
+ var t=label();if(b.textContent!==t)b.textContent=t;}catch(e){}}
+function run(){
+ if(!ok()){msg('\u26A0\uFE0F इस ब्राउज़र/फ़ोन में सूचना उपलब्ध नहीं है। Chrome में खोलें (iPhone पर पहले ऐप को "होम स्क्रीन पर जोड़ें")।');return;}
+ if(Notification.permission==='denied'){msg('\uD83D\uDD15 <b>सूचना अवरुद्ध है।</b> ठीक करने के लिए: फ़ोन में ऐप/Chrome आइकन दबाकर रखें → <b>App info / ऐप जानकारी</b> → <b>Notifications / सूचनाएँ</b> → चालू करें। या Chrome में ⋮ → सेटिंग → साइट सेटिंग → सूचनाएँ → इस साइट को <b>Allow</b> करें। फिर यह बटन दोबारा दबाएँ।');return;}
+ msg('\u23F3 सूचना जोड़ी जा रही है…');
+ Notification.requestPermission().then(function(r){
+  if(r!=='granted'){msg('\uD83D\uDD15 अनुमति नहीं मिली। जब फ़ोन "Allow / अनुमति दें" पूछे तो उसे दबाएँ, फिर यह बटन दोबारा दबाएँ।');return;}
+  return navigator.serviceWorker.ready.then(function(reg){
+   return reg.pushManager.getSubscription().then(function(o){return o?o.unsubscribe():true;}).catch(function(){return true;})
+    .then(function(){return reg.pushManager.subscribe({userVisibleOnly:true,applicationServerKey:u8(VAPID)});})
+    .then(function(s){fetch(URL_,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain'},body:JSON.stringify({type:'push',vjk:KEY,sub:s.toJSON()})});
+      msg('\u2705 <b>सूचना चालू हो गई।</b> हर सुबह जैन तिथि, राशिफल व व्यक्तित्व-विकास की सूचना आएगी (फ़ोन ऑनलाइन होने पर)।');mk();});});
+ }).catch(function(e){msg('\u26A0\uFE0F सूचना चालू नहीं हो सकी। कारण: '+(e&&e.name?e.name+' — ':'')+(e&&e.message?e.message:String(e)));});}
+window.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('[data-vj9]');if(!b)return;e.stopPropagation();e.preventDefault();var k=b.getAttribute('data-vj9');
+ if(k==='pn')run();else if(k==='x'){var o=D.getElementById('vjpnm');if(o)o.remove();}},true);
+setInterval(mk,800);mk();})();
+</script>
 </body>
 </html>
