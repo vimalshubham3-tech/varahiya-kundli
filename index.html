@@ -201,7 +201,7 @@ input[type=date],input[type=time]{min-height:48px}
 .about b{color:var(--maroon)}.about p{margin:4px 0}
 @media print{.brand .pbtn,.nmtools,.totop,.lang,.about{display:none!important}.brand{background:#fff;color:#000;border-bottom:2px solid #000}.brand b{color:#000}.brand span{color:#000}#nm_body{font-size:13px}}
 </style>
-<meta name="vj-ver" content="348">
+<meta name="vj-ver" content="349">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <script>try{if(window.top!==window.self){document.documentElement.style.display='none';window.top.location=window.self.location;}}catch(e){document.documentElement.style.display='none';}</script>
 
@@ -8622,6 +8622,71 @@ function add(res){
 D.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('#vjup [data-p]');if(!b)return;
   setTimeout(function(){var res=D.getElementById('pr_res');var h=res&&res.querySelector('h3');if(h&&/फँसा हुआ धन/.test(h.textContent))add(res.querySelector('.res-card')||res);},80);},true);
 }catch(e){console.error('v348 dhan',e);}})();
+</script>
+<script>(function(){try{
+var D=document;
+function ang(a,b){var d=Math.abs(a-b)%360;return d>180?360-d:d;}
+var GOOD=[1,2,4,5,7,9,10,11],UP=[3,6,10,11],MAL=[0,2,6,7,8];
+var C={ // index PR : {h:[भाव], k:[कारक], d:[देखने के कष्ट-भाव], x:'extra'}
+0:{h:[7,2,11],k:[5,4],x:'mang'},1:{h:[10,6,11],k:[6,0]},2:{h:[7,10,11,2],k:[3]},3:{h:[2,11,9],k:[4]},
+4:{h:[1],k:[0,1],d:[6,8],x:'hlth'},5:{h:[5,9],k:[4]},6:{h:[4,5,2],k:[3,4]},7:{h:[1,4],k:[1],d:[12],x:'mind'},
+8:{h:[4,2,7],k:[1,5],x:'kalah'},9:{h:[6,7,10],k:[6,2]},10:{h:[3,9,1],k:[2,7],d:[8,12],x:'acc'},11:{h:[4,11],k:[2]},
+12:{h:[1],k:[1],d:[8,12],x:'fear'},13:{h:[10,1,11],k:[0]},14:{h:[],k:[6,1],x:'sade'},15:{h:[4,11],k:[2,5]},
+16:{h:[10,6,11],k:[0,6]},17:{h:[9,5],k:[0,4],x:'pitr'},19:{h:[5,7],k:[5,1]},20:{h:[1,10,11],k:[0,1]}};
+function an(K,c){
+  var P=K.P,asc=K.ascR,L=function(h){return LORD[(asc+h-1)%12];},pts=0,out=[],hasJ=(c.h.length+c.k.length)>0;
+  function st(i){var p=P[i],s=[];if(DEBIL[i]===p.r)s.push('नीच');if(EXALT[i]===p.r||(OWN[i]&&OWN[i].indexOf(p.r)>=0))s.push('उच्च/स्वराशि');if(i>=2&&i<=6&&ang(p.lon,P[0].lon)<(i===5?10:11))s.push('अस्त');return s;}
+  function jud(i,target){var p=P[i],s=st(i),bad=([6,8,12].indexOf(p.h)>=0&&p.h!==target)||s.indexOf('नीच')>=0||s.indexOf('अस्त')>=0,good=!bad&&(GOOD.indexOf(p.h)>=0||s.indexOf('उच्च/स्वराशि')>=0||p.h===target);return {s:s,g:good,b:bad};}
+  function nm(i){var p=P[i],s=st(i);return PL_H[i]+' — '+ordH(p.h)+' भाव, '+RASHI_H[p.r]+(s.length?' ('+s.join(', ')+')':'');}
+  c.h.forEach(function(h){var l=L(h),j=jud(l,h);pts+=j.g?1:(j.b?-1:0);
+    out.push([ordH(h)+' भाव ('+RASHI_H[(asc+h-1)%12]+') का स्वामी '+nm(l),j.g?'अनुकूल':(j.b?'कमज़ोर (6/8/12, नीच या अस्त)':'सामान्य')]);
+    var oc=P.map(function(p,i){return p.h===h?i:-1;}).filter(function(i){return i>=0;});
+    if(oc.length){var mal=oc.filter(function(i){return MAL.indexOf(i)>=0;});var up=UP.indexOf(h)>=0;
+      out.push([ordH(h)+' भाव में स्थित: '+oc.map(function(i){return PL_H[i];}).join(', '),mal.length?(up?'पाप ग्रह उपचय भाव में — प्रायः परिश्रम से सहायक':'पाप ग्रह ('+mal.map(function(i){return PL_H[i];}).join(', ')+') की उपस्थिति — इस विषय में सावधानी'):'सौम्य ग्रह — सहायक']);if(mal.length&&!up)pts-=1;}});
+  c.k.forEach(function(i){var j=jud(i);pts+=j.g?1:(j.b?-1:0);out.push(['कारक '+nm(i),j.g?'अनुकूल':(j.b?'कमज़ोर':'सामान्य')]);});
+  (c.d||[]).forEach(function(h){var l=L(h),oc=P.map(function(p,i){return p.h===h?PL_H[i]:null;}).filter(Boolean);out.push([ordH(h)+' भाव (कष्ट-भाव): स्वामी '+nm(l),oc.length?'बैठे ग्रह: '+oc.join(', '):'कोई ग्रह नहीं']);});
+  var x=c.x,sd=(K.satR-P[1].r+12)%12,note=null;
+  if(x==='mang'){var mh=P[2].h,m=[1,4,7,8,12].indexOf(mh)>=0;out.push(['मंगल — '+ordH(mh)+' भाव',m?'मांगलिक संकेत (लग्न से) — कई परिहार भी होते हैं; मिलान टैब में देखें':'मांगलिक संकेत नहीं']);if(m)pts-=1;}
+  if(x==='hlth'){var l1=L(1),j=jud(l1,1);out.push(['लग्नेश '+nm(l1),j.g?'जीवन-शक्ति का आधार ठीक':(j.b?'लग्नेश को बल की कमी — दिनचर्या व जाँच पर ध्यान':'सामान्य')]);}
+  if(x==='mind'){out.push(['साढ़ेसाती/ढैया (चंद्र से शनि का गोचर)',(sd===11||sd===0||sd===1)?'साढ़ेसाती चल रही है — मन पर भार, नींद-आराम का ध्यान':((sd===3||sd===7)?'शनि की ढैया चल रही है':'अभी नहीं')]);if(sd===11||sd===0||sd===1)pts-=1;
+    var cj=P.map(function(p,i){return (i===6||i===7||i===8)&&p.r===P[1].r?PL_H[i]:null;}).filter(Boolean);out.push(['चंद्र के साथ पाप ग्रह',cj.length?cj.join(', ')+' — मन में भारीपन/अस्थिरता की प्रवृत्ति':'कोई नहीं']);if(cj.length)pts-=1;}
+  if(x==='kalah'){var kk=[2,7].filter(function(i){return P[i].h===4||P[i].h===7;}).map(function(i){return PL_H[i]+' ('+ordH(P[i].h)+' भाव)';});out.push(['मंगल/राहु का 4 या 7 भाव में होना',kk.length?kk.join(', ')+' — घर में तनाव/टकराव की प्रवृत्ति':'नहीं']);if(kk.length)pts-=1;}
+  if(x==='acc'){var aa=[2,6,7].filter(function(i){return [1,8,12].indexOf(P[i].h)>=0;}).map(function(i){return PL_H[i]+' ('+ordH(P[i].h)+' भाव)';});out.push(['मंगल/शनि/राहु का लग्न, 8 या 12 में होना',aa.length?aa.join(', ')+' — वाहन/यात्रा में अतिरिक्त सावधानी':'नहीं']);if(aa.length)pts-=1;}
+  if(x==='fear'){var fr=[7,8].filter(function(i){return P[i].r===P[1].r||P[i].h===1||P[i].h===12;}).map(function(i){return PL_H[i];});out.push(['राहु/केतु का चंद्र, लग्न या 12वें से संबंध',fr.length?fr.join(', ')+' — अकारण भय/भ्रम की प्रवृत्ति':'नहीं']);if(fr.length)pts-=1;}
+  if(x==='sade'){var ph=sd===11?'पहला चरण (चंद्र से 12वें भाव में शनि)':sd===0?'दूसरा चरण (चंद्र की राशि में शनि)':sd===1?'तीसरा चरण (चंद्र से दूसरे भाव में शनि)':null;var dh=sd===3?'ढैया (चंद्र से चौथे भाव में शनि)':sd===7?'ढैया (चंद्र से आठवें भाव में शनि)':null;
+    out.push(['गोचर शनि: '+RASHI_H[K.satR]+'; आपकी चंद्र-राशि: '+RASHI_H[P[1].r],ph?'साढ़ेसाती — '+ph:(dh?dh:'साढ़ेसाती/ढैया अभी नहीं है')]);out.push(['शनि की जन्म-स्थिति',nm(6)]);
+    var v=ph?'साढ़ेसाती का समय — धैर्य, अनुशासन व सेवा से कठिनाई घटती है':(dh?'ढैया का समय — सामान्य सावधानी':'अभी शनि का विशेष कष्ट-काल नहीं');return {rows:out,verdict:v,pts:0,custom:true};}
+  if(x==='pitr'){var n=0,add=function(c1,t){out.push([c1,t?'संकेत मिलता है':'नहीं']);if(t)n++;};
+    add('सूर्य के साथ राहु/केतु/शनि की युति',[6,7,8].some(function(i){return P[i].r===P[0].r;}));
+    add('नवम भाव में राहु/केतु/शनि',[6,7,8].some(function(i){return P[i].h===9;}));
+    var l9=L(9);add('नवम भाव का स्वामी ('+PL_H[l9]+') 6/8/12 में',[6,8,12].indexOf(P[l9].h)>=0);
+    add('चंद्र के साथ राहु/केतु की युति',[7,8].some(function(i){return P[i].r===P[1].r;}));
+    var v=n>=2?'परंपरागत नियमों से पितृ-दोष के '+n+' संकेत मिलते हैं — पूर्वजों की स्मृति में दान, सेवा व परिवार-सामंजस्य उपयोगी':(n===1?'1 संकेत मिलता है — सामान्य; बड़ों का आदर व दान पर्याप्त':'कोई विशेष संकेत नहीं');return {rows:out,verdict:v,pts:0,custom:true};}
+  // दशा
+  var now=K.nowMs,cur=(K.dasha||[]).filter(function(d){return d.start<=now&&now<d.end;})[0];
+  if(cur){var dl=cur.lord,tags=[];c.h.forEach(function(h){if(L(h)===dl)tags.push('इस विषय के '+ordH(h)+' भाव का स्वामी');});if(c.k.indexOf(dl)>=0)tags.push('इस विषय का कारक ग्रह');[6,8,12].forEach(function(h){if(L(h)===dl&&c.h.indexOf(h)<0)tags.push(ordH(h)+' भाव का स्वामी (चुनौतीपूर्ण)');});
+    var sup=tags.filter(function(t){return t.indexOf('चुनौती')<0;}).length>0;out.push(['चालू महादशा: '+PL_H[dl],tags.length?tags.join('; '):'इस विषय से सीधा संबंध नहीं']);if(sup)pts+=1;}
+  var v=pts>=3?'अनुकूल — प्रयास करने पर अच्छे परिणाम की संभावना':(pts<=-2?'कठिन — धैर्य, सही योजना व उपायों की ज़रूरत':'मिश्रित — प्रयास व समय दोनों चाहिए');
+  return {rows:out,verdict:v,pts:pts};}
+function html(K,c,title){var A=an(K,c);
+  return '<div class="res-card" style="margin-top:12px"><h3>आपकी कुंडली से: '+esc(title)+'</h3><p class="kmeta">लग्न '+RASHI_H[K.ascR]+'। संबंधित भाव, उनके स्वामी, कारक ग्रह व चालू दशा देखी गई है।</p>'
+  +'<div class="tw"><table><thead><tr><th>बिंदु</th><th>संकेत</th></tr></thead><tbody>'+A.rows.map(function(r){return '<tr><td>'+esc(r[0])+'</td><td>'+esc(r[1])+'</td></tr>';}).join('')+'</tbody></table></div>'
+  +'<div class="mg"><p><b>कुल संकेत:</b> '+A.verdict+'।</p></div>'
+  +'<p class="disc">यह परंपरागत सरल नियमों पर आधारित सामान्य संकेत है, कोई गारंटी नहीं। वास्तविक निर्णय के लिए विषय-विशेषज्ञ (चिकित्सक/अधिवक्ता/वित्तीय सलाहकार) से परामर्श लें।</p></div>';}
+function add(res,i,title){
+  if(D.getElementById('tg_box'))return;
+  var b=D.createElement('div');b.id='tg_box';b.className='panel';b.style.marginTop='12px';
+  b.innerHTML='<h3>अपनी कुंडली से देखें</h3><div id="bform-tg"></div><button class="go" id="tg_go" type="button">इस विषय का विश्लेषण देखें</button><div id="tg_res" aria-live="polite"></div>';
+  res.appendChild(b);
+  D.getElementById('bform-tg').innerHTML=birthFormHTML('bq','groom','tabBQ',true);
+  try{applyLang();}catch(e){}try{fillPlaces('bq');}catch(e){}
+  D.getElementById('bq_place').addEventListener('change',function(){D.getElementById('bq_oth').hidden=D.getElementById('bq_place').value!=='other';});
+  D.getElementById('tg_go').addEventListener('click',function(){var I=readInputs('bq'),o=D.getElementById('tg_res');if(I.err){o.innerHTML='<div class="err">'+esc(t(I.err))+'</div>';return;}
+    try{o.innerHTML=html(buildKundli(I),C[i],title);}catch(e){o.innerHTML='<div class="err">गणना में त्रुटि: '+esc(e.message)+'</div>';}});
+}
+D.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('#vjup [data-p]');if(!b)return;var i=+b.getAttribute('data-p');if(!C[i])return;
+  setTimeout(function(){var res=D.getElementById('pr_res'),h=res&&res.querySelector('h3');if(h)add(res.querySelector('.res-card')||res,i,h.textContent);},80);},true);
+}catch(e){console.error('v349 gen',e);}})();
 </script>
 </body>
 </html>
