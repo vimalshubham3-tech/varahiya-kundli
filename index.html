@@ -201,7 +201,7 @@ input[type=date],input[type=time]{min-height:48px}
 .about b{color:var(--maroon)}.about p{margin:4px 0}
 @media print{.brand .pbtn,.nmtools,.totop,.lang,.about{display:none!important}.brand{background:#fff;color:#000;border-bottom:2px solid #000}.brand b{color:#000}.brand span{color:#000}#nm_body{font-size:13px}}
 </style>
-<meta name="vj-ver" content="371">
+<meta name="vj-ver" content="372">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <script>try{if(window.top!==window.self){document.documentElement.style.display='none';window.top.location=window.self.location;}}catch(e){document.documentElement.style.display='none';}</script>
 
@@ -9721,5 +9721,17 @@ button.go:not(#x),.vjmp-btn:not(#x),#vj_menu:not(#x),.vjposbtn:not(#x),.vjsetbtn
 button.go:not(#x):hover,.vjmp-btn:not(#x):hover{background:linear-gradient(135deg,#fff3d9,#f9e4b0)!important}
 th:not(#x){background:linear-gradient(135deg,#f6e7c3,#fbf0d6)!important;color:#6b1c28!important;border-color:#e2c777!important}
 </style>
+<script>
+/* v372: राशि-स्वभाव व मासिक·वार्षिक·संपूर्ण भविष्यफल — शीर्षक दबाने पर खुलें (डिफ़ॉल्ट बंद) */
+(function(){var n=0;function init(){
+  ['rs_panel','fc_panel'].forEach(function(id){var p=document.getElementById(id);if(!p||p.__acc)return;var h=p.querySelector(':scope > h3');if(!h)return;
+    p.__acc=1;var b=document.createElement('div');b.className='vjacc-b';while(h.nextSibling)b.appendChild(h.nextSibling);p.appendChild(b);p.classList.add('vjacc');
+    h.addEventListener('click',function(){p.classList.toggle('open');});});
+  if(++n<12)setTimeout(init,1000);}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
+/* राशि चुनने पर प्रोफ़ाइल दिखे तो पैनल खुला रहे */
+document.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('#rs_panel .rsg button, #rs_panel .rsg *');if(b){var p=document.getElementById('rs_panel');if(p)p.classList.add('open');}},true);
+})();
+</script>
 </body>
 </html>
