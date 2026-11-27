@@ -201,7 +201,7 @@ input[type=date],input[type=time]{min-height:48px}
 .about b{color:var(--maroon)}.about p{margin:4px 0}
 @media print{.brand .pbtn,.nmtools,.totop,.lang,.about{display:none!important}.brand{background:#fff;color:#000;border-bottom:2px solid #000}.brand b{color:#000}.brand span{color:#000}#nm_body{font-size:13px}}
 </style>
-<meta name="vj-ver" content="339">
+<meta name="vj-ver" content="340">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <script>try{if(window.top!==window.self){document.documentElement.style.display='none';window.top.location=window.self.location;}}catch(e){document.documentElement.style.display='none';}</script>
 
@@ -8333,6 +8333,28 @@ function mk(){
 setInterval(mk,500);mk();
 window.vjLagna=function(){var s=D.querySelector('[data-vjrs="l"]');if(s)s.click();};
 }catch(e){console.error('v339 lagna',e);}})();
+</script>
+<style>.vjcl>.vjclh{cursor:pointer;position:relative;padding-right:30px}
+.vjcl>.vjclh::after{content:"▲";position:absolute;right:6px;top:50%;transform:translateY(-50%);font-size:13px;color:#6b1d2a}
+.vjcl.vjcc>.vjclh::after{content:"▼"}
+.vjcl.vjcc>*:not(.vjclh){display:none!important}
+</style><script>(function(){try{
+var D=document;
+function fix(){
+ var B=D.getElementById('bh_body');if(!B)return;
+ var kids=[].slice.call(B.querySelectorAll('.panel,.par')).filter(function(e){return e.parentElement&&e.parentElement.parentElement===B||e.parentElement===B;});
+ kids.forEach(function(e,i){
+  if(e.getAttribute('data-vjc'))return;
+  if(e.querySelector('select,input')||e.id==='bh_res'||e.querySelector('#bh_res'))return;
+  var h=e.firstElementChild;if(!h)return;
+  e.setAttribute('data-vjc','1');e.classList.add('vjcl','vjcc');
+  h.classList.add('vjclh');h.setAttribute('role','button');h.tabIndex=0;
+  h.addEventListener('click',function(){e.classList.toggle('vjcc');});
+  h.addEventListener('keydown',function(ev){if(ev.key==='Enter'||ev.key===' '){ev.preventDefault();e.classList.toggle('vjcc');}});
+ });
+}
+setInterval(fix,500);fix();
+}catch(e){console.error('v340 collapse',e);}})();
 </script>
 </body>
 </html>
