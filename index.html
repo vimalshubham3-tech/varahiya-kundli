@@ -201,7 +201,7 @@ input[type=date],input[type=time]{min-height:48px}
 .about b{color:var(--maroon)}.about p{margin:4px 0}
 @media print{.brand .pbtn,.nmtools,.totop,.lang,.about{display:none!important}.brand{background:#fff;color:#000;border-bottom:2px solid #000}.brand b{color:#000}.brand span{color:#000}#nm_body{font-size:13px}}
 </style>
-<meta name="vj-ver" content="360">
+<meta name="vj-ver" content="361">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <script>try{if(window.top!==window.self){document.documentElement.style.display='none';window.top.location=window.self.location;}}catch(e){document.documentElement.style.display='none';}</script>
 
@@ -8945,10 +8945,11 @@ function add(){
     var d=panchangDay(a[0],a[1],a[2],c[2],c[3],5.5);
     var def=isToday?String(n.getUTCHours()).padStart(2,'0')+':'+String(n.getUTCMinutes()).padStart(2,'0'):hm(d.sun.rise);
     var w=D.createElement('div');w.className='vjbl';
-    w.innerHTML='<h3>👶 इस दिन जन्मे बालक का भविष्यफल</h3><p class="kmeta">जन्म का समय चुनें — लग्न लगभग हर 2 घंटे में बदलता है, इसलिए सही समय डालें।</p>'
-     +'<label for="bl_t">जन्म समय</label><input id="bl_t" type="time" value="'+def+'"><button class="go" id="bl_go" type="button">भविष्यफल देखें</button><div id="bl_res"></div>';
+    w.innerHTML='<h3 class="vjah" id="bl_h">👶 इस दिन जन्मे बालक का भविष्यफल</h3><div class="vjab" id="bl_b"><p class="kmeta">जन्म का समय चुनें — लग्न लगभग हर 2 घंटे में बदलता है, इसलिए सही समय डालें।</p>'
+     +'<label for="bl_t">जन्म समय</label><input id="bl_t" type="time" value="'+def+'"><button class="go" id="bl_go" type="button">भविष्यफल देखें</button><div id="bl_res"></div></div>';
     g.appendChild(w);
     D.getElementById('bl_go').addEventListener('click',run);
+    D.getElementById('bl_h').addEventListener('click',function(){D.getElementById('bl_h').classList.toggle('open');D.getElementById('bl_b').classList.toggle('open');});
   }catch(e){console.error('v353 bl add',e);}
 }
 function run(){
@@ -8992,7 +8993,7 @@ function run(){
     ['panchangBirthHTML','namkaranHTML','careerHTML','lifeHTML','transitHTML'].forEach(function(fn){try{h+=window[fn]?window[fn](K,txt):eval(fn+'(K,txt)');}catch(e){console.error(fn,e);}});
     try{var ob=K.I.birthMs,sv=K.nowMs;K.nowMs=ob;var cu=K.dasha.find(function(m){return ob>=m.start&&ob<m.end;})||K.dasha[0],sb=cu.subs.find(function(x){return ob>=x.start&&ob<x.end;})||cu.subs[0];h+=dashaPlusHTML(K,cu,sb,txt);K.nowMs=sv;}catch(e){console.error('v357 dasha',e);}
     h+='<p class="disc">ये परंपरागत ज्योतिष के सामान्य संकेत हैं, निश्चित भविष्यवाणी नहीं। जन्म-समय में अंतर से लग्न बदल जाता है। जैन परंपरा में कर्म-सिद्धांत प्रधान है; संस्कार, धर्म-आचरण व पुरुषार्थ ही जीवन का आधार हैं।</p>';
-    out.innerHTML=h;if(window.vjAcc)window.vjAcc(out);
+    out.innerHTML=h;if(window.vjAcc)window.vjAcc(out);try{out.insertAdjacentHTML('beforeend',window.vjConc(K));}catch(e){console.error('v361',e);}
   }catch(e){out.innerHTML='<p class="warn">गणना में त्रुटि: '+esc2(e.message)+'</p>';console.error('v353 bl',e);}
 }
 new MutationObserver(add).observe(D.getElementById('pn_res')||D.body,{childList:true});
@@ -9223,7 +9224,7 @@ var PAYA=[
  [[3,7,10],'ताम्र (ताँबा) पाया','शुभ: परिश्रम से धन, पद व सम्मान की प्राप्ति।'],
  [[4,8,12],'लौह (लोहा) पाया','कठिन माना जाता है: शुरुआत में संघर्ष व बाधाएँ, पर परिश्रम व धैर्य से आगे सफलता।']];
 function sec(t,b){return '<h3>'+esc2(t)+'</h3><div class="pl">'+b+'</div>';}
-window.vjPU=PU;window.vjNak=function(n,pd,K){
+window.vjPU=PU;window.vjNKD={GANA:GANA,NADI:NADI,YONI:YONI,MOOL:MOOL,LORD:LORD};window.vjNak=function(n,pd,K){
   var lord=LORD[n%9],li=PL_H.indexOf(lord),g=GANA[n],nd=NADI[n],yn=YONI[n],h='';
   h+=sec('नक्षत्र-विशेष: स्वामी, गण, नाड़ी, योनि','<p>नक्षत्र-स्वामी: <b>'+lord+'</b> · गण: <b>'+g+'</b> · नाड़ी: <b>'+nd+'</b> · योनि: <b>'+yn+'</b></p><p>'+esc2(g+' गण — '+GT[g])+'।</p><p>'+esc2(nd+' नाड़ी — '+NT[nd])+'। विवाह-मिलान में एक ही नाड़ी को परंपरा में वर्जित माना जाता है।</p><p>योनि का मेल भी विवाह-मिलान में देखा जाता है।</p>');
   var m=MOOL[n];
@@ -9402,6 +9403,36 @@ function all53(){
 }
 window.vjKriya=function(K){var o='';try{o+=child(K);}catch(e){console.error('v360 c',e);}try{o+=all53();}catch(e){console.error('v360 a',e);}return o;};
 }catch(e){console.error('v360 kr',e);}})();
+</script>
+<style>.vjconc{margin:10px 0;padding:10px 12px;border:2px solid #b98a1c;border-radius:12px;background:linear-gradient(180deg,#fff8e1,#fff1cc)}.vjconc h4{margin:0 0 6px;color:#6b1d2a;font-size:16px}.vjconc ul{margin:0;padding-left:18px}.vjconc li{margin:4px 0;font-size:14.5px;line-height:1.5}</style>
+<script>
+/* v361: बालक के भविष्यफल का निष्कर्ष (सार) */
+(function(){try{
+function esc2(s){return String(s).replace(/[&<>]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;'}[c];});}
+function fd(ms){var d=new Date(ms+5.5*3600000);return String(d.getUTCDate()).padStart(2,'0')+'/'+String(d.getUTCMonth()+1).padStart(2,'0')+'/'+d.getUTCFullYear();}
+function first(s){s=String(s);var i=s.search(/[।;]/);return (i>0?s.slice(0,i):s).trim();}
+var MAJ=['गजकेसरी','बुधादित्य','चंद्र-मंगल','रुचक','भद्र','हंस','मालव्य','शश','राजयोग','पंच-महापुरुष','महापुरुष','धन योग','लक्ष्मी','सरस्वती','विपरीत'];
+var PY=[[[1,6,11],'स्वर्ण'],[[2,5,9],'रजत'],[[3,7,10],'ताम्र'],[[4,8,12],'लौह']];
+window.vjConc=function(K){
+  var P=K.P,m=P[1],D=window.vjNKD||{},RS=window.vjRS||[],L=[];
+  var lord=D.LORD?D.LORD[m.n%9]:'';
+  L.push('<b>मूल-परिचय:</b> लग्न '+RASHI_H[K.ascR]+', राशि '+RASHI_H[m.r]+', नक्षत्र '+NAK_H[m.n]+' (चरण '+m.pd+')'+(lord?', नक्षत्र-स्वामी '+lord:'')+(D.GANA?'; '+D.GANA[m.n]+' गण, '+D.NADI[m.n]+' नाड़ी, योनि '+D.YONI[m.n]:'')+'।');
+  var sw=first(LAGNA_T[K.ascR]),sr=RS[m.r]?first(RS[m.r][4]):'';
+  L.push('<b>स्वभाव का सार:</b> लग्न से — '+esc2(sw)+(sr?'; राशि से — '+esc2(sr):'')+'।');
+  var mool=D.MOOL&&D.MOOL[m.n];
+  L.push('<b>गंड-मूल:</b> '+(mool?NAK_H[m.n]+' गंड-मूल है — शांति/अभिषेक की परंपरा देखें।':'नहीं है।')+' <b>चंद्र पाया:</b> '+(function(){var p=PY.filter(function(x){return x[0].indexOf(m.h)>=0;})[0];return p?p[1]+' पाया।':'';})());
+  var vk=[];P.forEach(function(p){if(p.retro&&p.i<7)vk.push(PL_H[p.i]);});
+  L.push('<b>ग्रह-गति:</b> वक्री — '+(vk.join(', ')||'कोई नहीं')+'; शेष मार्गी (राहु-केतु सदा वक्री)।');
+  var yg=[];try{yg=yogasOf(K).concat(extraYogas(K)).concat(moreYogas(K));}catch(e){}
+  var st=yg.filter(function(x){return MAJ.some(function(k){return x.indexOf(k)>=0;});}).map(function(x){return x.split(/[:(]/)[0].trim();});
+  L.push('<b>प्रमुख योग:</b> '+(st.join(', ')||'कोई प्रमुख योग नहीं बना')+'।');
+  try{var dl=K.dasha[0];L.push('<b>जन्म-दशा:</b> '+PL_H[dl.lord]+' महादशा से जीवन का आरंभ।');}catch(e){}
+  var wk=[];for(var i=0;i<7;i++){if(DEBIL[i]===P[i].r||[6,8,12].indexOf(P[i].h)>=0)wk.push(PL_H[i]);}
+  L.push('<b>सावधानी / ध्यान:</b> '+(wk.length?wk.join(', ')+' से जुड़े विषयों में संयम व उपाय (नीच या 6/8/12 भाव में)।':'कोई ग्रह विशेष पीड़ित नहीं दिखता।'));
+  L.push('<b>पहले संस्कार:</b> नामकर्म '+fd(K.I.birthMs+12*86400000)+' के बाद शुभ दिन; जन्म-पंजीकरण 21 दिन में।');
+  return '<div class="vjconc"><h4>निष्कर्ष (सार)</h4><ul>'+L.map(function(x){return '<li>'+x+'</li>';}).join('')+'</ul><p class="kmeta">यह ऊपर के सभी खंडों का संक्षिप्त सार है; विस्तार के लिए संबंधित खंड खोलें। ग्रह संकेत हैं, निश्चित भविष्यवाणी नहीं।</p></div>';
+};
+}catch(e){console.error('v361 cn',e);}})();
 </script>
 </body>
 </html>
