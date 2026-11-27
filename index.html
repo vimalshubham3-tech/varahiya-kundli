@@ -201,7 +201,7 @@ input[type=date],input[type=time]{min-height:48px}
 .about b{color:var(--maroon)}.about p{margin:4px 0}
 @media print{.brand .pbtn,.nmtools,.totop,.lang,.about{display:none!important}.brand{background:#fff;color:#000;border-bottom:2px solid #000}.brand b{color:#000}.brand span{color:#000}#nm_body{font-size:13px}}
 </style>
-<meta name="vj-ver" content="340">
+<meta name="vj-ver" content="341">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <script>try{if(window.top!==window.self){document.documentElement.style.display='none';window.top.location=window.self.location;}}catch(e){document.documentElement.style.display='none';}</script>
 
@@ -8355,6 +8355,53 @@ function fix(){
 }
 setInterval(fix,500);fix();
 }catch(e){console.error('v340 collapse',e);}})();
+</script>
+<script>(function(){try{
+var D=document;
+function norm(s){return String(s||'').replace(/[\s.,;:_\-0-9]+/g,'').replace(/[क़-य़]/g,function(c){return {'क़':'क़','ख़':'ख़','ग़':'ग़','ज़':'ज़','ड़':'ड़','ढ़':'ढ़','फ़':'फ़','य़':'य़'}[c];}).replace(/़/g,'');}
+var VOW={'आ':'अ','इ':'ई','ऊ':'उ','ऐ':'ए','औ':'ओ','ऑ':'ओ','ऋ':'र'};
+var MAT={'ा':'ा','ि':'ि','ी':'ी','ु':'ु','ू':'ू','े':'े','ै':'े','ो':'ो','ौ':'ो','ॉ':'ो','ं':'','ः':'','ँ':'','्':''};
+function flat(){var o=[];VA_NAK.forEach(function(a,n){a.forEach(function(s,p){o.push([s,n,p+1]);});});return o;}
+function find(name){
+  var s=norm(name);if(!s)return null;var F=flat(),i,best=null;
+  // exact: first 2 chars then 1 char
+  for(var L=3;L>=1&&!best;L--){var k=s.slice(0,L);for(i=0;i<F.length;i++)if(F[i][0]===k){best=F[i];break;}}
+  if(best)return {sy:best[0],n:best[1],pd:best[2],exact:true};
+  var c=s.charAt(0);if(VOW[c]){c=VOW[c];for(i=0;i<F.length;i++)if(F[i][0]===c){return {sy:c,n:F[i][1],pd:F[i][2],exact:false};}}
+  // ङ/ञ etc: consonant-only fallback
+  for(i=0;i<F.length;i++)if(F[i][0].charAt(0)===c)return {sy:F[i][0],n:F[i][1],pd:F[i][2],exact:false,base:c};
+  return null;
+}
+function run(){
+  var box=D.getElementById('result_d'),nm=D.getElementById('vjhn_n').value,f=find(nm);
+  if(!f){box.innerHTML='<div class="err">नाम का पहला अक्षर पहचाना नहीं गया — कृपया हिंदी (देवनागरी) में नाम लिखें, जैसे: विमल, अनिता, राहुल।</div>';return;}
+  var nr=Math.floor((f.n*4+f.pd-1)/9);
+  var now=new Date(),ist=new Date(now.getTime()+19800000);
+  var I={y:ist.getUTCFullYear(),mo:ist.getUTCMonth()+1,dd:ist.getUTCDate(),hh:12,mm:0,off:5.5,lat:26.22,lon:78.18,name:nm,dob:'',tm:'12:00',place:'Gwalior'};
+  var K=buildKundli(I);
+  var P=K.P.map(function(p){var q=Object.assign({},p);return q;});
+  P[1].r=nr;P[1].n=f.n;
+  P.forEach(function(p){p.h=((p.r-nr+12)%12)+1;});
+  var K2=Object.assign({},K,{ascR:nr,P:P,dasha:[]});
+  var h=medHTML(K2);
+  var info='<div class="res-card"><h2 class="kh">नाम से स्वास्थ्य ज्योतिष</h2><p><b>'+esc(nm)+'</b> — पहला अक्षर/ध्वनि <b>'+f.sy+'</b> → नक्षत्र <b>'+NAK_H[f.n]+'</b> (पद '+f.pd+') → नाम-राशि <b>'+RASHI_H[nr]+'</b>'+(f.exact?'':' <i>(अक्षर का निकटतम मेल लिया गया)</i>')+'।</p><p class="warn">नाम-आधारित विधि में जन्म-समय/स्थान नहीं है, इसलिए नाम-राशि को चंद्र-लग्न मानकर आज के ग्रह-गोचर से स्वास्थ्य-संकेत दिए गए हैं। दशा नहीं दी जा सकती। यह जन्म-कुंडली से कम सटीक है; सही जन्म-कुंडली हो तो "जन्म-कुंडली से" चुनें। यह चिकित्सा-निदान नहीं है।</p></div>';
+  box.innerHTML=info+h;
+  try{box.scrollIntoView({behavior:'smooth',block:'start'});}catch(e){}
+}
+function mk(){
+  var P=D.getElementById('pane-d');if(!P||D.getElementById('vjhn'))return;
+  var bp=P.querySelector('.panel');if(!bp)return;
+  var seg=D.createElement('div');seg.className='vjrs';seg.id='vjhn_seg';
+  seg.innerHTML='<button type="button" data-m="b" class="on">📅 जन्म-कुंडली से</button><button type="button" data-m="n">✍️ नाम से</button>';
+  P.insertBefore(seg,bp);
+  var np=D.createElement('div');np.className='panel';np.id='vjhn';np.style.display='none';
+  np.innerHTML='<p class="kmeta">जन्म-विवरण न हो तो नाम से देखें: नाम के पहले अक्षर से नक्षत्र-पद व राशि निकालकर आज के ग्रह-गोचर के आधार पर शरीर के किन क्षेत्रों पर ध्यान देना है, इसका सामान्य संकेत मिलेगा।</p><label for="vjhn_n">नाम (हिंदी में)</label><input id="vjhn_n" type="text" placeholder="जैसे: विमल कुमार जैन" autocomplete="off"><button class="go" id="vjhn_go" type="button">नाम से स्वास्थ्य-विश्लेषण देखें</button>';
+  bp.parentNode.insertBefore(np,bp.nextSibling);
+  D.getElementById('vjhn_go').addEventListener('click',function(){try{run();}catch(e){D.getElementById('result_d').innerHTML='<div class="err">गणना में त्रुटि: '+esc(e.message)+'</div>';}});
+  seg.addEventListener('click',function(e){var b=e.target.closest('[data-m]');if(!b)return;var n=b.getAttribute('data-m')==='n';bp.style.display=n?'none':'';np.style.display=n?'':'none';D.getElementById('result_d').innerHTML='';[].forEach.call(seg.children,function(x){x.classList.toggle('on',x===b);});});
+}
+setInterval(mk,500);mk();
+}catch(e){console.error('v341 hn',e);}})();
 </script>
 </body>
 </html>
