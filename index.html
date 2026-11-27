@@ -201,7 +201,7 @@ input[type=date],input[type=time]{min-height:48px}
 .about b{color:var(--maroon)}.about p{margin:4px 0}
 @media print{.brand .pbtn,.nmtools,.totop,.lang,.about{display:none!important}.brand{background:#fff;color:#000;border-bottom:2px solid #000}.brand b{color:#000}.brand span{color:#000}#nm_body{font-size:13px}}
 </style>
-<meta name="vj-ver" content="331">
+<meta name="vj-ver" content="332">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <script>try{if(window.top!==window.self){document.documentElement.style.display='none';window.top.location=window.self.location;}}catch(e){document.documentElement.style.display='none';}</script>
 
@@ -8115,6 +8115,28 @@ function run(){
 window.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('[data-vj9]');if(!b)return;e.stopPropagation();e.preventDefault();var k=b.getAttribute('data-vj9');
  if(k==='pn')run();else if(k==='x'){var o=D.getElementById('vjpnm');if(o)o.remove();}},true);
 setInterval(mk,800);mk();})();
+</script>
+<script>
+/* v332: फिर से पंजीकरण बटन */
+(function(){try{
+var D=document;
+function mk(){
+  var t=D.getElementById('vj_tools');if(!t||t.querySelector('.vjrereg'))return;
+  var b=D.createElement('button');b.type='button';b.className='pbtn vjrereg';b.setAttribute('data-vjrr','1');
+  b.textContent='🔁 फिर से पंजीकरण करें';
+  var pn=t.querySelector('.vjpnbtn'),pf=t.querySelector('.vjprof');
+  var ref=pn||pf;
+  if(ref&&ref.nextSibling)t.insertBefore(b,ref.nextSibling);else t.appendChild(b);
+}
+setInterval(mk,700);mk();
+window.addEventListener('click',function(e){
+  var el=e.target.closest&&e.target.closest('[data-vjrr]');if(!el)return;
+  e.preventDefault();e.stopPropagation();
+  D.body.classList.remove('vjdr','vjst','vjhm');
+  var hb=[].slice.call(D.querySelectorAll('button.pbtn')).filter(function(x){return x.textContent.indexOf('🙏')===0&&x.textContent.indexOf('पंजीकरण')>-1&&!x.hasAttribute('data-vjrr');})[0];
+  if(hb)hb.click();
+},true);
+}catch(e){console.error('v332',e);}})();
 </script>
 </body>
 </html>
