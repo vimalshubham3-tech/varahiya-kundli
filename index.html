@@ -201,7 +201,7 @@ input[type=date],input[type=time]{min-height:48px}
 .about b{color:var(--maroon)}.about p{margin:4px 0}
 @media print{.brand .pbtn,.nmtools,.totop,.lang,.about{display:none!important}.brand{background:#fff;color:#000;border-bottom:2px solid #000}.brand b{color:#000}.brand span{color:#000}#nm_body{font-size:13px}}
 </style>
-<meta name="vj-ver" content="358">
+<meta name="vj-ver" content="359">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <script>try{if(window.top!==window.self){document.documentElement.style.display='none';window.top.location=window.self.location;}}catch(e){document.documentElement.style.display='none';}</script>
 
@@ -8983,6 +8983,7 @@ function run(){
     try{h+=window.vjNak(moon.n,moon.pd,K);}catch(e){console.error('v358',e);}
     // जन्म-दशा
     try{var dl=K.dasha[0];S('जन्म की महादशा','<p>जन्म के समय '+esc2(PL_H[dl.lord])+' की महादशा चल रही होती है।</p><p>'+esc2(DASHA_T[dl.lord])+'</p>');}catch(e){}
+    try{h+=window.vjChild(K);}catch(e){console.error('v359',e);}
     // योग, फलादेश
     try{var yg=yogasOf(K).concat(extraYogas(K)).concat(moreYogas(K));if(yg.length)h+='<h3>योग</h3><ul class="ul">'+yg.map(function(x){return '<li>'+esc2(x)+'</li>';}).join('')+'</ul>';}catch(e){}
     try{h+='<h3>फलादेश</h3>';phalLines(K).forEach(function(x){h+='<div class="pl"><b>'+esc2(x[0])+'</b><p>'+esc2(x[1])+'</p></div>';});}catch(e){}
@@ -9221,7 +9222,7 @@ var PAYA=[
  [[3,7,10],'ताम्र (ताँबा) पाया','शुभ: परिश्रम से धन, पद व सम्मान की प्राप्ति।'],
  [[4,8,12],'लौह (लोहा) पाया','कठिन माना जाता है: शुरुआत में संघर्ष व बाधाएँ, पर परिश्रम व धैर्य से आगे सफलता।']];
 function sec(t,b){return '<h3>'+esc2(t)+'</h3><div class="pl">'+b+'</div>';}
-window.vjNak=function(n,pd,K){
+window.vjPU=PU;window.vjNak=function(n,pd,K){
   var lord=LORD[n%9],li=PL_H.indexOf(lord),g=GANA[n],nd=NADI[n],yn=YONI[n],h='';
   h+=sec('नक्षत्र-विशेष: स्वामी, गण, नाड़ी, योनि','<p>नक्षत्र-स्वामी: <b>'+lord+'</b> · गण: <b>'+g+'</b> · नाड़ी: <b>'+nd+'</b> · योनि: <b>'+yn+'</b></p><p>'+esc2(g+' गण — '+GT[g])+'।</p><p>'+esc2(nd+' नाड़ी — '+NT[nd])+'। विवाह-मिलान में एक ही नाड़ी को परंपरा में वर्जित माना जाता है।</p><p>योनि का मेल भी विवाह-मिलान में देखा जाता है।</p>');
   var m=MOOL[n];
@@ -9243,6 +9244,67 @@ window.vjNak=function(n,pd,K){
   return h;
 };
 }catch(e){console.error('v358 nk',e);}})();
+</script>
+<style>.vjh4{margin:8px 0 2px;color:#8a5a00;font-size:14px}</style>
+<script>
+/* v359: बालक — आयु-वार क्रिया-चेष्टा, प्रबल योग (फल-काल सहित), ज्योतिषीय उपाय, धार्मिक (जैन-दिगंबर) उपाय */
+(function(){try{
+function esc2(s){return String(s).replace(/[&<>]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;'}[c];});}
+function sec(t,b){return '<h3>'+esc2(t)+'</h3><div class="pl">'+b+'</div>';}
+var PA=['नेतृत्व, मान-सम्मान और अधिकार पाने की चेष्टा','मन, माता, घर व भावनाओं से जुड़ी गतिविधियाँ','साहस, खेल-प्रतियोगिता, भूमि-भवन व ऊर्जा वाले कार्य','पढ़ाई, लेखन, व्यापार-बुद्धि व संवाद','ज्ञान, धर्म, गुरु व शिक्षा की ओर झुकाव','कला, सुख-साधन, सजावट व संबंध','परिश्रम, अनुशासन, ज़िम्मेदारी व धैर्य की परीक्षा','नए प्रयोग, तकनीक, विदेश-संपर्क; भ्रम से बचाव ज़रूरी','वैराग्य, ध्यान, अध्यात्म व एकांत की ओर झुकाव'];
+var BANDS=[[0,5,'शैशव: माता-पिता पर निर्भरता, खेल, बोलना-चलना सीखना, स्वास्थ्य-देखभाल।'],[5,12,'बाल्य: विद्यारंभ, खेल-कूद, आदतें व संस्कार बनना।'],[12,18,'किशोर: शिक्षा की दिशा, मित्र-मंडली, अनुशासन व करियर की चाह।'],[18,25,'युवा: उच्च शिक्षा, आजीविका की शुरुआत, संबंधों की खोज।'],[25,35,'गृहस्थ-आरंभ: नौकरी/व्यवसाय में स्थिरता, विवाह व संतान।'],[35,50,'उत्कर्ष: कार्य-क्षेत्र में पद, ज़िम्मेदारियाँ, संपत्ति।'],[50,65,'परिपक्वता: संतानों के दायित्व, प्रतिष्ठा, धर्म-ध्यान की ओर झुकाव।'],[65,80,'उत्तर-अवस्था: विश्राम, स्वाध्याय व धर्म-साधना।']];
+var YP={gaj:[4,1],bud:[3,0],cm:[1,2],pm2:[2],pm3:[3],pm4:[4],pm5:[5],pm6:[6]};
+var MAJ=['गजकेसरी','बुधादित्य','चंद्र-मंगल','रुचक','भद्र','हंस','मालव्य','शश','राजयोग','पंच-महापुरुष','महापुरुष','धन योग','लक्ष्मी','सरस्वती','विपरीत'];
+function ageOf(K,ms){return (ms-K.I.birthMs)/(365.25*86400000);}
+function a1(x){return Math.max(0,Math.round(x));}
+function kriya(K){
+  var h='';
+  BANDS.forEach(function(b){
+    var segs=[];
+    K.dasha.forEach(function(m){var s=ageOf(K,m.start),e=ageOf(K,m.end);if(e>b[0]&&s<b[1]){segs.push(m);}});
+    var t='<p>'+esc2(b[2])+'</p>';
+    segs.forEach(function(m){
+      var p=K.P[m.lord],s=a1(ageOf(K,m.start)),e=Math.round(ageOf(K,m.end)),st='';
+      try{st=strengthTxt(m.lord,p.r);}catch(x){}
+      t+='<p><b>'+PL_H[m.lord]+' की दशा (आयु '+s+'–'+e+'):</b> '+esc2(PA[m.lord])+'; '+p.h+'वें भाव ('+esc2(HT[p.h-1])+') से जुड़ा फल'+(st?' — '+esc2(st):'')+'।</p>';
+    });
+    h+='<h4 class="vjh4">आयु '+b[0]+'–'+b[1]+' वर्ष</h4>'+t;
+  });
+  return sec('कब क्या क्रिया व चेष्टा (आयु-वार)',h+'<p class="kmeta">आयु-खंड सामान्य जीवन-चरण हैं; उस समय चल रही महादशा के ग्रह से रुचि, कार्य व प्रवृत्ति का झुकाव निकाला गया है। ग्रह-बल के अनुसार फल कम-ज़्यादा हो सकता है।</p>');
+}
+function yogas(K){
+  var yg=[];try{yg=yogasOf(K).concat(extraYogas(K)).concat(moreYogas(K));}catch(e){}
+  var keyOf={};try{Object.keys(YOGA_T).forEach(function(k){keyOf[YOGA_T[k]]=k;});}catch(e){}
+  var strong=yg.filter(function(x){return MAJ.some(function(m){return x.indexOf(m)>=0;});});
+  var h='';
+  if(!strong.length){h+='<p>पंच-महापुरुष, गजकेसरी, बुधादित्य या राजयोग जैसा कोई प्रमुख योग नियम से नहीं बना। सामान्य फल ग्रहों के भाव-बल व दशा से देखें।</p>';}
+  strong.forEach(function(x){
+    var k=keyOf[x],pl=k&&YP[k]?YP[k]:null,when='';
+    if(pl){when=pl.map(function(i){var m=K.dasha.find(function(d){return d.lord===i&&ageOf(K,d.end)>0;});return m?PL_H[i]+' दशा (आयु '+a1(ageOf(K,m.start))+'–'+Math.round(ageOf(K,m.end))+')':'';}).filter(Boolean).join(', ');}
+    h+='<p>'+esc2(x)+(when?'<br><small>फल का मुख्य काल: '+esc2(when)+'</small>':'')+'</p>';
+  });
+  h+='<p class="kmeta">ये योग जन्म-कुंडली के नियमों से सीधे बने हैं, इसलिए निश्चित हैं। पर फल पूर्ण रूप से योग बनाने वाले ग्रहों के बल और उनकी दशा-अंतर्दशा आने पर मिलता है।</p>';
+  return sec('प्रबल योग (नियम से बने) व फल-काल',h);
+}
+function jup(K){
+  var P=K.P,w=[],PU=window.vjPU||{};
+  for(var i=0;i<7;i++){var why=[];if(DEBIL[i]===P[i].r)why.push('नीच राशि में');if([6,8,12].indexOf(P[i].h)>=0)why.push(P[i].h+'वें भाव में');if(why.length)w.push([i,why.join(', ')]);}
+  var ll=LORD[K.ascR],h='';
+  h+='<p><b>लग्नेश '+PL_H[ll]+'</b> ('+P[ll].h+'वें भाव में) को बल देने के लिए '+(PU[ll]?PU[ll][0]+' को संयम/व्रत रखें और '+PU[ll][1]+' का दान करें।':'उसके वार पर दान-सेवा करें।')+'</p>';
+  if(!w.length)h+='<p>कोई ग्रह नीच, वक्री या 6/8/12 भाव में विशेष पीड़ित नहीं दिखता; इसलिए अलग से ग्रह-शांति की आवश्यकता नहीं मानी जाती।</p>';
+  w.forEach(function(x){var i=x[0];h+='<p><b>'+PL_H[i]+'</b> ('+esc2(x[1])+'): '+(PU[i]?PU[i][0]+' को व्रत/संयम; दान — '+PU[i][1]+'।':'')+' '+esc2(PA[i])+' — इन विषयों में विशेष सावधानी व संयम रखें।</p>';});
+  h+='<p>सामान्य: माता-पिता व बुज़ुर्गों का आशीर्वाद लें, गरीबों व पशु-पक्षियों की सेवा करें, और बालक की दिनचर्या अनुशासित रखें।</p><p class="kmeta">रत्न-धारण केवल योग्य ज्योतिषी से कुंडली दिखाकर ही करें; बालक के लिए विशेष सावधानी रखें।</p>';
+  return sec('ज्योतिषीय उपाय',h);
+}
+function dh(K){
+  var h='<p><b>जन्म के समय/आरंभ में:</b> जिनालय में जिनेन्द्र अभिषेक व शांति-धारा; माता-पिता द्वारा देव-दर्शन; बालक को णमोकार मंत्र सुनाना; अभयदान, औषधि-दान, आहार-दान या शास्त्र-दान।</p>'
+   +'<p><b>नित्य:</b> णमोकार मंत्र का श्रवण/जाप; जिन-दर्शन; देव-शास्त्र-गुरु की भक्ति; अहिंसा, छना जल व रात्रि-भोजन त्याग जैसे संस्कार बचपन से डालना।</p>'
+   +'<p><b>परंपरागत संस्कार:</b> आदिपुराण में वर्णित क्रियाओं में नामकर्म, बहिर्यान, निषद्या, अन्नप्राशन, व्युष्टि, केशवाप और लिपिसंख्यान जैसी क्रियाएँ आती हैं; समय व विधि के लिए विद्वान/प्रतिष्ठाचार्य से परामर्श लें।</p>'
+   +'<p><b>बड़े होने पर:</b> पाठशाला में धार्मिक शिक्षा, स्वाध्याय, मंदिर-जाना, जन्म-दिन पर पूजन/दान; ग्रह-शांति हेतु शांति-विधान या नवग्रह-अरिष्ट-निवारक विधान।</p>';
+  return sec('धार्मिक उपाय (जैन परंपरा, दिगंबर)',h);
+}
+window.vjChild=function(K){var o='';[kriya,yogas,jup,dh].forEach(function(f){try{o+=f(K);}catch(e){console.error('v359',f.name,e);}});return o;};
+}catch(e){console.error('v359 ch',e);}})();
 </script>
 </body>
 </html>
