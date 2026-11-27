@@ -201,7 +201,7 @@ input[type=date],input[type=time]{min-height:48px}
 .about b{color:var(--maroon)}.about p{margin:4px 0}
 @media print{.brand .pbtn,.nmtools,.totop,.lang,.about{display:none!important}.brand{background:#fff;color:#000;border-bottom:2px solid #000}.brand b{color:#000}.brand span{color:#000}#nm_body{font-size:13px}}
 </style>
-<meta name="vj-ver" content="373">
+<meta name="vj-ver" content="374">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <script>try{if(window.top!==window.self){document.documentElement.style.display='none';window.top.location=window.self.location;}}catch(e){document.documentElement.style.display='none';}</script>
 
@@ -9745,6 +9745,27 @@ document.addEventListener('click',function(e){
   det.classList.remove('vjclosed');
 },true);
 }catch(err){console.error('v373',err);}})();
+</script>
+<script>
+/* v374: प्रशासक द्वारा उपयोगकर्ता रोकना (blocked.json में मोबाइल नंबर) */
+(function(){try{
+var K='vj_blk_v1',ID='vj_blkov';
+function mob(){try{var r=JSON.parse(localStorage.getItem('vj_reg_v1')||'{}');return String(r.mobile||'').replace(/\D/g,'').slice(-10);}catch(e){return '';}}
+function cache(){try{return JSON.parse(localStorage.getItem(K)||'{}');}catch(e){return {};}}
+function show(c){
+  if(document.getElementById(ID))return;
+  var o=document.createElement('div');o.id=ID;
+  o.style.cssText='position:fixed;inset:0;z-index:2147483647;background:#fdf6e3;display:flex;align-items:center;justify-content:center;padding:24px;box-sizing:border-box;overflow:auto';
+  var tel=String(c.contact||'99770 04518'),td=tel.replace(/\D/g,'');
+  o.innerHTML='<div style="max-width:420px;text-align:center;border:2px solid #6b1c28;border-radius:18px;background:#fff;padding:28px 22px"><div style="font-size:44px">🚫</div><h2 style="margin:10px 0;color:#6b1c28;font-size:24px">उपयोग रोक दिया गया है</h2><p style="margin:0 0 14px;font-size:17px;line-height:1.7;color:#3a1a1f">'+(c.msg||'आपका उपयोग प्रशासक द्वारा रोक दिया गया है। अधिक जानकारी के लिए संपर्क करें।').replace(/[<>&]/g,'')+'</p><a href="tel:+91'+td.slice(-10)+'" style="display:inline-block;background:#6b1c28;color:#fff;padding:12px 24px;border-radius:12px;font-weight:700;font-size:18px;text-decoration:none">'+tel.replace(/[<>&]/g,'')+'</a></div>';
+  document.body.appendChild(o);document.documentElement.style.overflow='hidden';
+}
+function hide(){var o=document.getElementById(ID);if(o){o.remove();document.documentElement.style.overflow='';}}
+function apply(){var c=cache(),m=mob();var bl=m&&Array.isArray(c.numbers)&&c.numbers.map(function(x){return String(x).replace(/\D/g,'').slice(-10);}).indexOf(m)>=0;if(bl)show(c);else hide();}
+function pull(){try{fetch('blocked.json?x='+Date.now(),{cache:'no-store'}).then(function(r){return r.ok?r.json():null;}).then(function(j){if(j&&typeof j==='object'){localStorage.setItem(K,JSON.stringify({numbers:j.numbers||[],msg:j.msg||'',contact:j.contact||''}));apply();}}).catch(function(){});}catch(e){}}
+apply();pull();setInterval(apply,2000);setInterval(pull,600000);
+document.addEventListener('visibilitychange',function(){if(!document.hidden)pull();});
+}catch(e){console.error('v374',e);}})();
 </script>
 </body>
 </html>
