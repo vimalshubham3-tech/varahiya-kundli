@@ -201,7 +201,7 @@ input[type=date],input[type=time]{min-height:48px}
 .about b{color:var(--maroon)}.about p{margin:4px 0}
 @media print{.brand .pbtn,.nmtools,.totop,.lang,.about{display:none!important}.brand{background:#fff;color:#000;border-bottom:2px solid #000}.brand b{color:#000}.brand span{color:#000}#nm_body{font-size:13px}}
 </style>
-<meta name="vj-ver" content="352">
+<meta name="vj-ver" content="353">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <script>try{if(window.top!==window.self){document.documentElement.style.display='none';window.top.location=window.self.location;}}catch(e){document.documentElement.style.display='none';}</script>
 
@@ -8863,6 +8863,7 @@ var R=[
 'पैर-तलवे, प्रतिरक्षा, सर्दी-ज़ुकाम, नींद और मानसिक थकान का ध्यान रखें। नशे व बाहरी भोजन से बचें; ध्यान व शांत दिनचर्या लाभकारी।',
 '3 (अंक 3, 12, 21 शुभ)','पीला, हल्का हरा, समुद्री नीला','गुरुवार (सोमवार भी शुभ)','पुखराज (कुंडली देखकर)']
 ];
+window.vjRS=R;
 var NOTE='ये परंपरागत ज्योतिष के सामान्य लक्षण हैं; हर व्यक्ति में कुंडली के अन्य ग्रहों व लग्न से अंतर संभव है। रत्न केवल योग्य ज्योतिषी से कुंडली दिखाकर ही धारण करें। जैन-परंपरा में कर्म-सिद्धांत प्रधान है — ग्रह केवल संकेत हैं, पुरुषार्थ व धर्म-आचरण ही आधार।';
 var rf=D.getElementById('rf_res');if(!rf||D.getElementById('rs_panel'))return;
 var pn=D.createElement('div');pn.className='panel';pn.id='rs_panel';
@@ -8920,6 +8921,78 @@ function add(){
 new MutationObserver(add).observe(D.getElementById('pn_res')||D.body,{childList:true,subtree:false});
 add();
 }catch(e){console.error('v351 gc',e);}})();
+</script>
+<style>
+.vjbl{margin-top:12px;border-top:2px dashed #c9a15a;padding-top:8px}.vjbl h3{margin:4px 0 6px!important}
+.vjbl .vjgtb{margin:6px 0}.vjgb2{grid-template-columns:1fr .9fr 1fr 1.6fr .6fr!important}
+.vjbl .pl{margin:6px 0}.vjbl .pills{margin:6px 0}
+</style>
+<script>
+/* v353: आज जन्मे बालक का भविष्यफल (दैनिक पंचांग में, गोचर कुंडली के नीचे) */
+(function(){try{
+var D=document;
+function esc2(s){return String(s).replace(/[&<>]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;'}[c];});}
+function nowIST(){var d=new Date(Date.now()+5.5*3600000);return d;}
+function hm(h){var H=Math.floor(h),M=Math.round((h-H)*60);if(M===60){H++;M=0;}return String(H%24).padStart(2,'0')+':'+String(M).padStart(2,'0');}
+function add(){
+  try{
+    var g=D.querySelector('#pn_res .vjgc');if(!g||g.querySelector('.vjbl'))return;
+    var v=D.getElementById('pn_date').value;if(!v)return;
+    var c=CITIES[+D.getElementById('pn_place').value];
+    var a=v.split('-').map(Number),n=nowIST();
+    var isToday=(a[0]===n.getUTCFullYear()&&a[1]===n.getUTCMonth()+1&&a[2]===n.getUTCDate());
+    var d=panchangDay(a[0],a[1],a[2],c[2],c[3],5.5);
+    var def=isToday?String(n.getUTCHours()).padStart(2,'0')+':'+String(n.getUTCMinutes()).padStart(2,'0'):hm(d.sun.rise);
+    var w=D.createElement('div');w.className='vjbl';
+    w.innerHTML='<h3>👶 इस दिन जन्मे बालक का भविष्यफल</h3><p class="kmeta">जन्म का समय चुनें — लग्न लगभग हर 2 घंटे में बदलता है, इसलिए सही समय डालें।</p>'
+     +'<label for="bl_t">जन्म समय</label><input id="bl_t" type="time" value="'+def+'"><button class="go" id="bl_go" type="button">भविष्यफल देखें</button><div id="bl_res"></div>';
+    g.appendChild(w);
+    D.getElementById('bl_go').addEventListener('click',run);
+  }catch(e){console.error('v353 bl add',e);}
+}
+function run(){
+  var out=D.getElementById('bl_res');
+  try{
+    var v=D.getElementById('pn_date').value,tm=D.getElementById('bl_t').value;
+    if(!tm){out.innerHTML='<p class="warn">जन्म समय डालें।</p>';return;}
+    var c=CITIES[+D.getElementById('pn_place').value],a=v.split('-').map(Number),b=tm.split(':').map(Number);
+    var K=buildKundli({y:a[0],mo:a[1],dd:a[2],hh:b[0],mm:b[1],off:5.5,lat:c[2],lon:c[3],name:'',dob:a[2]+'/'+a[1]+'/'+a[0],tm:tm,place:c[0]});
+    var P=K.P,ascR=K.ascR,moon=P[1],txt=[],h='';
+    function S(title,body){h+='<div class="pl"><b>'+esc2(title)+'</b>'+body+'</div>';}
+    // संक्षेप
+    h+='<div class="pills"><span>लग्न: <b>'+RASHI_H[ascR]+'</b></span><span>राशि: <b>'+RASHI_H[moon.r]+'</b></span><span>नक्षत्र: <b>'+NAK_H[moon.n]+' ('+moon.pd+')</b></span></div>';
+    h+='<p class="kmeta">'+a[2]+'/'+a[1]+'/'+a[0]+' · '+tm+' · '+esc2(c[0])+'</p>';
+    h+=chartAny(ascR,P.map(function(p){return {r:p.r,txt:plS(p.i)+(p.retro&&p.i<7?'(*)':'')};}));
+    // ग्रह: मार्गी/वक्री, नक्षत्र-पद
+    h+='<h3>ग्रह-स्थिति: मार्गी / वक्री, नक्षत्र-पद</h3><div class="vjgtb"><div class="vjgr vjgh vjgb2"><b>ग्रह</b><span>गति</span><span>राशि</span><span>नक्षत्र-पद</span><span>भाव</span></div>';
+    var vk=[],mg=[];
+    P.forEach(function(p){
+      var shadow=p.i>=7, retro=shadow||(p.retro&&p.i<7);
+      var gt=shadow?'सदा वक्री':(retro?'वक्री':'मार्गी');
+      if(!shadow){(retro?vk:mg).push(PL_H[p.i]);}
+      h+='<div class="vjgr vjgb2"><b>'+PL_H[p.i]+'</b><span>'+gt+'</span><span>'+RASHI_H[p.r]+'</span><span>'+NAK_H[p.n]+' '+p.pd+'</span><span>'+p.h+'</span></div>';
+    });
+    h+='</div>';
+    h+='<p class="kmeta">मार्गी: '+(mg.join(', ')||'—')+' · वक्री: '+(vk.join(', ')||'कोई नहीं')+' · राहु-केतु छाया ग्रह हैं, सदा उल्टी चाल (वक्री) से चलते हैं। परंपरा में वक्री ग्रह का फल अधिक गहरा, देर से या भीतरी स्तर पर मिलता माना जाता है।</p>';
+    // स्वभाव: लग्न, राशि, नक्षत्र, चरण
+    var RS=window.vjRS||[];
+    S('लग्न ('+RASHI_H[ascR]+') का स्वभाव','<p>'+esc2(LAGNA_T[ascR])+'</p>');
+    if(RS[moon.r]){S('जन्म राशि ('+RASHI_H[moon.r]+') का स्वभाव','<p>'+esc2(RS[moon.r][4])+'</p><p>'+esc2(RS[moon.r][5])+'</p>');}
+    S('नक्षत्र: '+NAK_H[moon.n]+' · चरण '+moon.pd,'<p>'+esc2(NAK_T[moon.n])+'</p><p>चंद्र का नवांश '+RASHI_H[moon.nv]+' में है'+(RS[moon.nv]?' — मन की प्रवृत्ति पर '+RASHI_H[moon.nv]+' के गुण का हल्का रंग: '+esc2(RS[moon.nv][4]):'')+'</p>');
+    // जन्म-दशा
+    try{var dl=K.dasha[0];S('जन्म की महादशा','<p>जन्म के समय '+esc2(PL_H[dl.lord])+' की महादशा चल रही होती है।</p><p>'+esc2(DASHA_T[dl.lord])+'</p>');}catch(e){}
+    // योग, फलादेश
+    try{var yg=yogasOf(K).concat(extraYogas(K)).concat(moreYogas(K));if(yg.length)h+='<h3>योग</h3><ul class="ul">'+yg.map(function(x){return '<li>'+esc2(x)+'</li>';}).join('')+'</ul>';}catch(e){}
+    try{h+='<h3>फलादेश</h3>';phalLines(K).forEach(function(x){h+='<div class="pl"><b>'+esc2(x[0])+'</b><p>'+esc2(x[1])+'</p></div>';});}catch(e){}
+    // पंचांग-जन्म, नामाक्षर, करियर, जीवन, गोचर
+    ['panchangBirthHTML','namkaranHTML','careerHTML','lifeHTML','transitHTML'].forEach(function(fn){try{h+=window[fn]?window[fn](K,txt):eval(fn+'(K,txt)');}catch(e){console.error(fn,e);}});
+    h+='<p class="disc">ये परंपरागत ज्योतिष के सामान्य संकेत हैं, निश्चित भविष्यवाणी नहीं। जन्म-समय में अंतर से लग्न बदल जाता है। जैन परंपरा में कर्म-सिद्धांत प्रधान है; संस्कार, धर्म-आचरण व पुरुषार्थ ही जीवन का आधार हैं।</p>';
+    out.innerHTML=h;
+  }catch(e){out.innerHTML='<p class="warn">गणना में त्रुटि: '+esc2(e.message)+'</p>';console.error('v353 bl',e);}
+}
+new MutationObserver(add).observe(D.getElementById('pn_res')||D.body,{childList:true});
+add();
+}catch(e){console.error('v353 bl',e);}})();
 </script>
 </body>
 </html>
