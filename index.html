@@ -201,7 +201,7 @@ input[type=date],input[type=time]{min-height:48px}
 .about b{color:var(--maroon)}.about p{margin:4px 0}
 @media print{.brand .pbtn,.nmtools,.totop,.lang,.about{display:none!important}.brand{background:#fff;color:#000;border-bottom:2px solid #000}.brand b{color:#000}.brand span{color:#000}#nm_body{font-size:13px}}
 </style>
-<meta name="vj-ver" content="325">
+<meta name="vj-ver" content="326">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <script>try{if(window.top!==window.self){document.documentElement.style.display='none';window.top.location=window.self.location;}}catch(e){document.documentElement.style.display='none';}</script>
 
@@ -7977,6 +7977,22 @@ setInterval(ensure,600);
 window.vjPoster={render:render,getData:getData,themes:ORDER,formats:FORD,TH:TH};
 })();
 
+</script>
+<style id="vj326css">
+.about.vjabc:not(.vjabo){display:none!important}
+button.vjabt{display:flex;align-items:center;justify-content:space-between;gap:8px;width:100%;margin:22px 0 0;padding:13px 14px;border:2px solid #d9b441;border-radius:12px;background:linear-gradient(135deg,#fbeab0,#f4d77a);color:#5a1a24;font:800 14px/1.3 inherit;font-family:inherit;text-align:left;cursor:pointer;box-shadow:0 2px 5px rgba(150,110,20,.25)}
+button.vjabt::after{content:"\25B8";font-size:18px}
+button.vjabt.vjabo::after{content:"\25BE"}
+button.vjabt.vjabo{border-radius:12px 12px 0 0}
+.about.vjabo{margin-top:0!important;border-radius:0 0 14px 14px}
+</style>
+<script>
+/* v326: फुटर का About अनुच्छेद — कॉलैप्स (डिफ़ॉल्ट बंद) */
+(function(){var D=document;function fx(){try{var a=D.querySelector('.about');if(!a||a.getAttribute('data-ab')==='1')return;a.setAttribute('data-ab','1');a.classList.add('vjabc');
+var b=D.createElement('button');b.type='button';b.className='vjabt';b.textContent='\u2139\uFE0F About this app';
+b.addEventListener('click',function(){var o=!a.classList.contains('vjabo');a.classList.toggle('vjabo',o);b.classList.toggle('vjabo',o);});
+a.parentNode.insertBefore(b,a);}catch(x){}}
+fx();setTimeout(fx,800);new MutationObserver(function(){var a=D.querySelector('.about');if(a&&a.getAttribute('data-ab')!=='1')fx();}).observe(D.body,{childList:true,subtree:true});})();
 </script>
 </body>
 </html>
