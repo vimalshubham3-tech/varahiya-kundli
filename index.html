@@ -201,7 +201,7 @@ input[type=date],input[type=time]{min-height:48px}
 .about b{color:var(--maroon)}.about p{margin:4px 0}
 @media print{.brand .pbtn,.nmtools,.totop,.lang,.about{display:none!important}.brand{background:#fff;color:#000;border-bottom:2px solid #000}.brand b{color:#000}.brand span{color:#000}#nm_body{font-size:13px}}
 </style>
-<meta name="vj-ver" content="369">
+<meta name="vj-ver" content="370">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <script>try{if(window.top!==window.self){document.documentElement.style.display='none';window.top.location=window.self.location;}}catch(e){document.documentElement.style.display='none';}</script>
 
@@ -9700,5 +9700,18 @@ window.vjConc=function(K){var h='';try{h=career(K)+shiksha(K)+vyavsay(K)+marriag
 /* मुख्य तख़्तियाँ/बटन: कम गाढ़ा */
 #vjpf .vjpa button,#vjpo .vjpa button.pri{background:linear-gradient(135deg,#eaf6ee,#dff0e5)!important;color:#1d6b3a!important;border-color:#8fcaa0!important}
 </style>
+<style>.vjbrow{display:flex;gap:10px;margin:10px 0}.vjbrow .go{flex:1 1 0;width:auto!important;margin:0!important;min-width:0;padding-left:6px;padding-right:6px}.vjprw{display:none!important}</style>
+<script>
+/* v370: भविष्यफल देखें और प्रिंट/PDF — अगल-बगल */
+(function(){try{
+function fix(){var g=document.getElementById('bl_go');if(!g||document.getElementById('bl_row'))return;
+  var row=document.createElement('div');row.id='bl_row';row.className='vjbrow';
+  g.parentNode.insertBefore(row,g);row.appendChild(g);
+  var p=document.createElement('button');p.type='button';p.className='go';p.id='bl_pr2';p.textContent='🖨 प्रिंट / PDF';
+  p.addEventListener('click',function(){var o=document.getElementById('bl_pr');if(o)o.click();else alert('पहले "भविष्यफल देखें" दबाएँ, फिर प्रिंट करें।');});
+  row.appendChild(p);}
+fix();new MutationObserver(fix).observe(document.documentElement,{childList:true,subtree:true});
+}catch(e){console.error('v370',e);}})();
+</script>
 </body>
 </html>
