@@ -201,7 +201,7 @@ input[type=date],input[type=time]{min-height:48px}
 .about b{color:var(--maroon)}.about p{margin:4px 0}
 @media print{.brand .pbtn,.nmtools,.totop,.lang,.about{display:none!important}.brand{background:#fff;color:#000;border-bottom:2px solid #000}.brand b{color:#000}.brand span{color:#000}#nm_body{font-size:13px}}
 </style>
-<meta name="vj-ver" content="364">
+<meta name="vj-ver" content="365">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <script>try{if(window.top!==window.self){document.documentElement.style.display='none';window.top.location=window.self.location;}}catch(e){document.documentElement.style.display='none';}</script>
 
@@ -9485,6 +9485,82 @@ window.vjConc=function(K){
   return h+old(K);
 };
 }catch(e){console.error('v363',e);}})();
+</script>
+<script>
+/* v365: करियर · विवाह · संतान (विस्तृत, काल-सहित) */
+(function(){try{
+var old=window.vjConc;
+var LR=[2,5,3,1,0,3,5,2,4,6,6,4];
+var AB=['एक','प्रथम'];
+function ageOf(K,ms){return (ms-K.I.birthMs)/(365.25*86400000);}
+function yr(K,a){return new Date(K.I.birthMs+a*365.25*86400000).getUTCFullYear();}
+function inh(K,h){return K.P.filter(function(p){return p.i<9&&p.h===h;}).map(function(p){return p.i;});}
+function hr(K,h){return (K.ascR+h-1)%12;}
+function nm(l){return l.map(function(i){return PL_H[i];}).join(', ');}
+function st(i,r){try{return strengthTxt(i,r)||'';}catch(e){return '';}}
+function win(K,S,lo,hi,max){
+  var best=[],mid=[];
+  K.dasha.forEach(function(m){
+    var ms=ageOf(K,m.start),me=ageOf(K,m.end);if(me<lo||ms>hi)return;
+    var mi=S.indexOf(m.lord)>=0;
+    (m.subs||[]).forEach(function(s){
+      var a=ageOf(K,s.start),b=ageOf(K,s.end);if(b<lo||a>hi)return;
+      var si=S.indexOf(s.lord)>=0;
+      var o={t:PL_H[m.lord]+'/'+PL_H[s.lord],a:Math.max(a,lo),b:Math.min(b,hi)};
+      if(mi&&si)best.push(o);else if(mi||si)mid.push(o);
+    });
+  });
+  var r=best.slice(0,max);
+  if(r.length<max)r=r.concat(mid.slice(0,max-r.length));
+  r.sort(function(x,y){return x.a-y.a;});
+  return r.map(function(o){return o.t+' दशा-अंतर: आयु '+o.a.toFixed(1)+'–'+o.b.toFixed(1)+' वर्ष (लगभग '+yr(K,o.a)+'–'+yr(K,o.b)+')';});
+}
+function tags(K,i){var p=K.P[i];return PL_H[i]+' '+p.h+'वें भाव में '+RASHI_H[p.r]+(p.retro?' (वक्री)':'')+(st(i,p.r)?' — '+st(i,p.r):'');}
+function sec(t,body){return '<h3 class="vjah" onclick="this.classList.toggle(\'open\');this.nextElementSibling.classList.toggle(\'open\')">'+t+'</h3><div class="vjab"><div class="pl">'+body+'</div></div>';}
+function li(a){return '<ul>'+a.map(function(x){return '<li>'+x+'</li>';}).join('')+'</ul>';}
+function career(K){
+  var r10=hr(K,10),l10=LR[r10],p10=K.P[l10],o=inh(K,10),L=[];
+  L.push('<b>दशम भाव:</b> '+RASHI_H[r10]+' राशि, स्वामी '+tags(K,l10)+'।'+(o.length?' दशम में स्थित: '+nm(o)+'।':' दशम में कोई ग्रह नहीं।'));
+  var k=[];if(K.P[6].h===10||l10===6)k.push('शनि — सेवा, अनुशासन, दीर्घकालीन पद');if(K.P[0].h===10)k.push('सूर्य — प्रशासन, सम्मान, सरकारी क्षेत्र');if(K.P[3].h===10||l10===3)k.push('बुध — व्यापार, लेखन, गणना');if(K.P[2].h===10||l10===2)k.push('मंगल — तकनीक, भूमि, सुरक्षा, विधि');if(K.P[4].h===10||l10===4)k.push('गुरु — शिक्षा, परामर्श, विधि, धर्म');if(K.P[5].h===10||l10===5)k.push('शुक्र — कला, सौंदर्य, वाहन, सुविधाएँ');if(K.P[1].h===10||l10===1)k.push('चंद्र — जनता से जुड़े कार्य, देखभाल, खाद्य/जल');
+  if(k.length)L.push('<b>कार्य-क्षेत्र का झुकाव:</b> '+k.join('; ')+'।');
+  var sv=[6,8].indexOf(p10.h)>=0||inh(K,6).length>0,bz=[7,2,11].indexOf(p10.h)>=0||inh(K,7).indexOf(3)>=0;
+  L.push('<b>नौकरी या व्यवसाय:</b> '+(bz&&!sv?'व्यवसाय/स्वतंत्र कार्य की ओर झुकाव अधिक।':sv&&!bz?'नौकरी/सेवा की ओर झुकाव अधिक।':'दोनों संभव; समय के साथ दशा तय करेगी।'));
+  var w=win(K,[l10].concat(o,[K.P[6].i===6?6:6]),20,45,4);
+  L.push('<b>कैरियर-आरंभ व उन्नति के संभावित काल:</b>'+li(w.length?w:['स्पष्ट प्रबल काल नहीं मिला; सामान्य दशा-क्रम देखें।']));
+  L.push('<b>शिक्षा से करियर तक:</b> पंचम (विद्या) के स्वामी '+PL_H[LR[hr(K,5)]]+' की स्थिति देखकर विषय चुनें; दशम से तालमेल वाले क्षेत्र में परिश्रम फल देता है।');
+  return sec('💼 करियर — क्षेत्र, नौकरी/व्यवसाय व काल',li(L)+'<p class="kmeta">काल-निर्धारण दशा-अंतर पर आधारित संकेत है; गोचर और प्रयास से बदल सकता है।</p>');
+}
+function marriage(K){
+  var r7=hr(K,7),l7=LR[r7],o=inh(K,7),L=[];
+  L.push('<b>सप्तम भाव:</b> '+RASHI_H[r7]+' राशि, स्वामी '+tags(K,l7)+'।'+(o.length?' सप्तम में स्थित: '+nm(o)+'।':' सप्तम में कोई ग्रह नहीं।'));
+  var sp='';try{sp=String(LAGNA_T[r7]).split(/[।;]/)[0].trim();}catch(e){}
+  if(sp)L.push('<b>जीवनसाथी का संभावित स्वभाव:</b> '+sp+'।');
+  var md=function(f){return [1,2,4,7,8,12].indexOf(f)>=0;};
+  var mh=K.P[2].h,mc=((K.P[2].r-K.P[1].r+12)%12)+1;
+  var dosh=md(mh)||md(mc);
+  L.push('<b>मांगलिक विचार:</b> '+(dosh?'मंगल लग्न से '+mh+'वें और चंद्र से '+mc+'वें भाव में है — मांगलिक संकेत; मिलान में वर/वधू की कुंडली देखकर शांति-उपाय करें।':'मंगल के भाव (लग्न से '+mh+', चंद्र से '+mc+') के अनुसार मांगलिक दोष नहीं दिखता।'));
+  var dl=[];[6,7,8,2].forEach(function(i){if(K.P[i].h===7||(i!==7&&i!==8&&K.P[i].h===7))dl.push(PL_H[i]);});
+  if(K.P[6].h===7||K.P[7].h===7||K.P[8].h===7||K.P[2].h===7)L.push('<b>विलंब/सावधानी:</b> सप्तम में '+nm(inh(K,7).filter(function(i){return [2,6,7,8].indexOf(i)>=0;}))+' — संबंध में धैर्य व देर संभव।');
+  L.push('<b>कारक:</b> '+tags(K,5)+' (वर हेतु); '+tags(K,4)+' (वधू हेतु)।');
+  var w=win(K,[l7,5,4].concat(o.filter(function(i){return i<7;})),20,36,4);
+  L.push('<b>विवाह के संभावित काल:</b>'+li(w.length?w:['स्पष्ट प्रबल काल नहीं मिला।']));
+  L.push('<b>दांपत्य सुख:</b> '+(st(l7,K.P[l7].r)||'सप्तमेश सामान्य स्थिति में')+'। '+(K.P[5].h===12||K.P[5].h===6||K.P[5].h===8?'शुक्र '+K.P[5].h+'वें भाव में है, इसलिए आपसी समझ पर विशेष ध्यान रखें।':'शुक्र की स्थिति सहयोगी है।'));
+  return sec('💍 विवाह — जीवनसाथी, मांगलिक विचार व काल',li(L)+'<p class="kmeta">विवाह-निर्णय में वर-वधू दोनों की कुंडली का मिलान आवश्यक है।</p>');
+}
+function santan(K){
+  var r5=hr(K,5),l5=LR[r5],o=inh(K,5),L=[];
+  L.push('<b>पंचम भाव:</b> '+RASHI_H[r5]+' राशि, स्वामी '+tags(K,l5)+'।'+(o.length?' पंचम में स्थित: '+nm(o)+'।':' पंचम में कोई ग्रह नहीं।'));
+  L.push('<b>संतान-कारक गुरु:</b> '+tags(K,4)+'।');
+  var bad=o.filter(function(i){return [2,6,7,8].indexOf(i)>=0;});
+  var good=o.filter(function(i){return [1,3,4,5].indexOf(i)>=0;});
+  L.push('<b>संकेत:</b> '+(good.length?'पंचम में '+nm(good)+' शुभ प्रभाव देते हैं। ':'')+(bad.length?'पंचम में '+nm(bad)+' होने से संतान-सुख में देरी/अतिरिक्त ध्यान संभव; उपाय करें। ':'')+([6,8,12].indexOf(K.P[l5].h)>=0?'पंचमेश दुःस्थान में है, इसलिए स्वास्थ्य व परामर्श पर ध्यान दें।':'पंचमेश की स्थिति सामान्यतः सहयोगी है।'));
+  var w=win(K,[l5,4].concat(o),24,42,4);
+  L.push('<b>संतान-प्राप्ति के संभावित काल:</b>'+li(w.length?w:['स्पष्ट प्रबल काल नहीं मिला।']));
+  L.push('<b>सुझाव:</b> गुरुवार का व्रत/दान, बड़ों का आशीर्वाद और समय पर चिकित्सकीय परामर्श।');
+  return sec('👶 संतान — संतान-सुख व काल',li(L)+'<p class="kmeta">संतान-संख्या व निश्चित समय ज्योतिष से तय नहीं होते; ये सामान्य संकेत हैं।</p>');
+}
+window.vjConc=function(K){var h='';try{h=career(K)+marriage(K)+santan(K);}catch(e){console.error('v365',e);}return h+old(K);};
+}catch(e){console.error('v365 cm',e);}})();
 </script>
 </body>
 </html>
