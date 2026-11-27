@@ -201,7 +201,7 @@ input[type=date],input[type=time]{min-height:48px}
 .about b{color:var(--maroon)}.about p{margin:4px 0}
 @media print{.brand .pbtn,.nmtools,.totop,.lang,.about{display:none!important}.brand{background:#fff;color:#000;border-bottom:2px solid #000}.brand b{color:#000}.brand span{color:#000}#nm_body{font-size:13px}}
 </style>
-<meta name="vj-ver" content="329">
+<meta name="vj-ver" content="330">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <script>try{if(window.top!==window.self){document.documentElement.style.display='none';window.top.location=window.self.location;}}catch(e){document.documentElement.style.display='none';}</script>
 
@@ -8057,5 +8057,33 @@ window.addEventListener('click',function(e){var k=e.target.closest&&e.target.clo
  var c=e.target.closest&&e.target.closest('#vjhome .hc');if(c){inM=/विवाह व मिलान|Marriage/.test(c.textContent);setTimeout(upd,150);}},true);
 setInterval(upd,300);upd();})();
 </script>
+<script>
+/* v330: "पंचांग का चित्र बनाएँ — शेयर / वॉट्सऐप" मेनू (कार्ड-ग्रिड + टैब-सूची) में */
+(function(){var D=document,busy=0;
+function en(){return D.documentElement.lang==='en';}
+function mk(){try{
+ var g=D.querySelector('#vjhome .hg');
+ if(g&&!g.querySelector('.vjposc')){var b=D.createElement('button');b.type='button';b.className='hc vjposc';b.setAttribute('data-vjm','poster');
+  b.innerHTML='<div class="t"><i>\uD83D\uDDBC\uFE0F</i><span>'+(en()?'Panchang Image':'पंचांग का चित्र')+'</span></div><div class="d">'+(en()?'Make a shareable panchang poster — 6 colours, 4 sizes, WhatsApp/save':'पंचांग का सुंदर चित्र बनाएँ — 6 रंग, 4 आकार; वॉट्सऐप पर भेजें / सेव करें')+'</div>';
+  var cs=g.querySelectorAll('.hc'),ref=cs[3]||cs[cs.length-1];if(ref&&ref.nextSibling)g.insertBefore(b,ref.nextSibling);else g.appendChild(b);}
+ var t=D.querySelector('.vjg.vjtree');
+ if(t&&!t.querySelector('.vjposbtn')){var d=D.createElement('button');d.type='button';d.className='vjposbtn';d.setAttribute('data-vjm','poster');d.textContent='\uD83D\uDDBC\uFE0F '+(en()?'Panchang Image (share)':'पंचांग का चित्र (शेयर)');t.insertBefore(d,t.firstChild);}
+}catch(e){}}
+function go(){if(busy)return;busy=1;
+ D.body.classList.remove('vjhm','vjdr','vjst');
+ var open=function(){var x=D.createElement('button');x.setAttribute('data-vjp','open');D.body.appendChild(x);x.click();x.remove();busy=0;};
+ var ready=function(){var r=D.getElementById('pn_res');return r&&r.querySelector('.tw>table');};
+ if(ready()){open();return;}
+ var cards=[].slice.call(D.querySelectorAll('#vjhome .hc')).filter(function(c){return /दैनिक पंचांग|Daily Panchang/.test(c.textContent)&&!c.classList.contains('vjposc');});
+ var tab=D.getElementById('tab-p'),all=D.getElementById('pn_all');
+ if(tab)tab.click();if(all)all.click();
+ var n=0,iv=setInterval(function(){n++;if(ready()){clearInterval(iv);setTimeout(open,200);}else if(n>40){clearInterval(iv);busy=0;}},250);}
+window.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('[data-vjm="poster"]');if(!b)return;e.stopPropagation();e.preventDefault();go();},true);
+setInterval(mk,500);mk();})();
+</script>
+<style id="vj330css">
+.vjg.vjtree>.vjposbtn{display:block!important;width:100%;margin:0 0 8px!important;padding:11px 10px!important;border:0!important;border-radius:10px!important;background:linear-gradient(135deg,#7a1428,#a01c36)!important;color:#ffe9a8!important;font-weight:800!important;font-size:15px!important;text-align:left}
+body.vjst .vjg.vjtree>.vjposbtn{display:none!important}
+</style>
 </body>
 </html>
