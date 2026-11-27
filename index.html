@@ -201,7 +201,7 @@ input[type=date],input[type=time]{min-height:48px}
 .about b{color:var(--maroon)}.about p{margin:4px 0}
 @media print{.brand .pbtn,.nmtools,.totop,.lang,.about{display:none!important}.brand{background:#fff;color:#000;border-bottom:2px solid #000}.brand b{color:#000}.brand span{color:#000}#nm_body{font-size:13px}}
 </style>
-<meta name="vj-ver" content="362">
+<meta name="vj-ver" content="363">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <script>try{if(window.top!==window.self){document.documentElement.style.display='none';window.top.location=window.self.location;}}catch(e){document.documentElement.style.display='none';}</script>
 
@@ -9457,6 +9457,34 @@ function add(){var r=document.getElementById('bl_res');if(!r||!r.querySelector('
   document.getElementById('bl_pr').addEventListener('click',function(){printIt(r);});}
 new MutationObserver(add).observe(document.documentElement,{childList:true,subtree:true});
 }catch(e){console.error('v362 pr',e);}})();
+</script>
+<script>
+/* v363: टीकाकरण तालिका */
+(function(){try{
+var old=window.vjConc;
+var V=[
+['जन्म पर (24 घंटे में, अधिकतम 15 दिन तक)',0,'बीसीजी, ओपीवी-0 (पोलियो), हेपेटाइटिस-बी (जन्म खुराक)'],
+['6 सप्ताह',42,'ओपीवी-1, पेंटावेलेंट-1 (DPT+हेप-बी+हिब), रोटावायरस-1, fIPV-1, पीसीवी-1'],
+['10 सप्ताह',70,'ओपीवी-2, पेंटावेलेंट-2, रोटावायरस-2'],
+['14 सप्ताह',98,'ओपीवी-3, पेंटावेलेंट-3, रोटावायरस-3, fIPV-2, पीसीवी-2'],
+['9 माह',274,'एमआर-1 (खसरा-रूबेला), fIPV-3, पीसीवी बूस्टर, जेई-1 (जहाँ लागू), विटामिन-ए की पहली खुराक'],
+['16-24 माह (16 माह से)',487,'एमआर-2, डीपीटी बूस्टर-1, ओपीवी बूस्टर, जेई-2 (जहाँ लागू); विटामिन-ए हर 6 माह में 5 वर्ष तक'],
+['5-6 वर्ष (5 वर्ष से)',1826,'डीपीटी बूस्टर-2'],
+['10 वर्ष',3652,'टीडी (टिटनेस-डिप्थीरिया)'],
+['16 वर्ष',5844,'टीडी']];
+var O=[['टाइफाइड कंजुगेट','6 माह के बाद, 1 खुराक'],['हेपेटाइटिस-ए','12 माह से, 2 खुराक (6 माह अंतर)'],['चिकनपॉक्स (वैरिसेला)','12-15 माह, फिर 4-6 वर्ष'],['एमएमआर','15 माह के आसपास (सरकारी एमआर के साथ चिकित्सक से पूछकर)'],['एचपीवी (बालिकाओं हेतु)','9-14 वर्ष की आयु में']];
+function fd(ms){var d=new Date(ms+5.5*3600000);return String(d.getUTCDate()).padStart(2,'0')+'/'+String(d.getUTCMonth()+1).padStart(2,'0')+'/'+d.getUTCFullYear();}
+window.vjConc=function(K){
+  var b=K.I.birthMs,rows='';
+  V.forEach(function(v){rows+='<div class="vjgr" style="display:grid;grid-template-columns:1fr;gap:2px;padding:6px 0;border-bottom:1px dashed #d9c48a"><b>'+v[0]+' — '+fd(b+v[1]*86400000)+'</b><span>'+v[2]+'</span></div>';});
+  var op='';O.forEach(function(o){op+='<li><b>'+o[0]+':</b> '+o[1]+'</li>';});
+  var h='<h3 class="vjah" onclick="this.classList.toggle(\'open\');this.nextElementSibling.classList.toggle(\'open\')">💉 टीकाकरण — कब-कब कौन-सा टीका</h3><div class="vjab"><div class="pl">'+
+  '<p>नीचे की तारीखें जन्म-तिथि से गिनकर दी गई हैं (भारत सरकार के सार्वभौमिक टीकाकरण कार्यक्रम के अनुसार)। टीका निर्धारित तारीख से कुछ दिन आगे-पीछे भी लग सकता है।</p>'+rows+
+  '<h4 class="vjh4">वैकल्पिक / निजी चिकित्सक की सलाह से (IAP)</h4><ul>'+op+'</ul>'+
+  '<p class="kmeta">टीकाकरण कार्ड सँभालकर रखें। सही कार्यक्रम व खुराक के लिए अपने बाल-रोग चिकित्सक, ANM या आँगनवाड़ी से पुष्टि अवश्य करें; यह सामान्य जानकारी है।</p></div></div>';
+  return h+old(K);
+};
+}catch(e){console.error('v363',e);}})();
 </script>
 </body>
 </html>
