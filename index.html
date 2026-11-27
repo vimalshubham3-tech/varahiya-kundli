@@ -201,7 +201,7 @@ input[type=date],input[type=time]{min-height:48px}
 .about b{color:var(--maroon)}.about p{margin:4px 0}
 @media print{.brand .pbtn,.nmtools,.totop,.lang,.about{display:none!important}.brand{background:#fff;color:#000;border-bottom:2px solid #000}.brand b{color:#000}.brand span{color:#000}#nm_body{font-size:13px}}
 </style>
-<meta name="vj-ver" content="346">
+<meta name="vj-ver" content="347">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <script>try{if(window.top!==window.self){document.documentElement.style.display='none';window.top.location=window.self.location;}}catch(e){document.documentElement.style.display='none';}</script>
 
@@ -8529,6 +8529,54 @@ window.vjSec=function(tabId,rx){
 };
 D.addEventListener('click',function(e){var t=e.target.closest&&e.target.closest('.tab');if(t)restore();},true);
 }catch(e){console.error('v343 sec',e);}})();
+</script>
+<style>.vjupl{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.vjupl button{font:inherit;font-size:14px;text-align:left;padding:10px 10px;border:1px solid #e0cfa8;border-radius:10px;background:#fffdf7;color:#8b1a1a;font-weight:700;cursor:pointer;line-height:1.35}
+</style><script>(function(){try{
+var D=document;
+function esc2(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+var GR=[
+['सूर्य','आत्मबल, पिता, अधिकार, हृदय-हड्डी','आत्मविश्वास की कमी, अधिकारी/सरकारी कार्य में अड़चन, पिता से तनाव','रविवार','गुड़-गेहूँ का दान; प्रातः की धूप व सूर्य-दर्शन; पिता व बड़ों का सम्मान'],
+['चंद्र','मन, माता, नींद, तरल पदार्थ','चिंता, अनिद्रा, मन की अस्थिरता, माता से दूरी','सोमवार','दूध/चावल/सफेद वस्तु का दान; माता की सेवा; नियमित नींद व पर्याप्त जल'],
+['मंगल','साहस, भाई, भूमि, रक्त','क्रोध, चोट-दुर्घटना, भूमि/भाई से विवाद','मंगलवार','मसूर/गुड़ का दान; क्रोध पर संयम; भाइयों से सुलह; नियमित व्यायाम'],
+['बुध','वाणी, बुद्धि, व्यापार, त्वचा-नसें','निर्णय में भ्रम, हिसाब की गड़बड़ी, वाणी-दोष, त्वचा की समस्या','बुधवार','मूँग/हरी वस्तु का दान; सत्य व मधुर वाणी; कन्याओं का सम्मान; हिसाब लिखित रखना'],
+['गुरु','ज्ञान, धर्म, संतान, धन, यकृत','विद्या/संतान में बाधा, गुरुजन से दूरी, मोटापा-यकृत की शिकायत','गुरुवार','पीली वस्तु/दाल/पुस्तक का दान; गुरुजन की सेवा; स्वाध्याय'],
+['शुक्र','दांपत्य, सुख-सुविधा, कला, सौंदर्य','संबंधों में खटास, भोग-विलास की अति, कला/सुख में कमी','शुक्रवार','सफेद वस्तु/मिश्री का दान; जीवनसाथी का सम्मान; स्वच्छता व संयम'],
+['शनि','कर्म, परिश्रम, न्याय, सेवक','काम में देरी, थकान, जोड़ों का दर्द, कर्ज, सेवकों से विवाद','शनिवार','काले चने/सरसों तेल या श्रमिकों की सहायता; सेवकों से अच्छा व्यवहार; पशु-पक्षियों को भोजन; नशा त्याग'],
+['राहु','भ्रम, अचानक लाभ-हानि, विदेश, व्यसन','भ्रम, छल-धोखा, व्यसन, अकारण भय','शनिवार (परंपरा)','सफाईकर्मियों की सहायता; अन्न-दान; सत्य का पालन; व्यसन से दूरी'],
+['केतु','वैराग्य, ध्यान, अंतर्मुखता','अकारण उदासी, एकाकीपन, ध्यान न लगना, अचानक चोट','मंगलवार/गुरुवार (परंपरा)','कुत्ते/पशुओं को रोटी; कंबल का दान; ध्यान व जीव-दया']];
+function planetCard(i){
+  var g=GR[i],jt=(typeof JAIN_T!=='undefined'&&JAIN_T[i])||'',why=(typeof RWHY!=='undefined'&&RWHY[i])||'';
+  var note=(typeof RJAIN_NOTE!=='undefined')?RJAIN_NOTE:'';
+  return '<div class="res-card" style="margin-top:12px"><h3>'+g[0]+' ग्रह के उपाय</h3>'
+   +'<div class="par"><b>कारकत्व</b><p>'+esc2(g[1])+'</p></div>'
+   +'<div class="par"><b>कमज़ोर/पीड़ित होने के सामान्य संकेत</b><p>'+esc2(g[2])+'</p></div>'
+   +'<div class="pl"><b>वार: '+esc2(g[3])+'</b><p>'+esc2(g[4])+'।</p></div>'
+   +(why?'<div class="pl"><b>कारण</b><p>'+esc2(why)+'</p></div>':'')
+   +'<div class="pl"><b>जैन परंपरा में</b><p>तीर्थंकर-स्मरण: '+esc2(jt)+'; णमोकार मंत्र का जाप, जिनदर्शन, दान व जीवदया।</p></div>'
+   +(note?'<div class="par"><p>'+esc2(note)+'</p></div>':'')
+   +'<p class="disc">ये परंपरागत मान्यताओं व सामान्य विवेक पर आधारित सुझाव हैं; इनके फल की गारंटी नहीं। कुंडली में ग्रह की वास्तविक स्थिति देखकर ही उपाय का महत्व तय होता है।</p></div>';
+}
+function build(){
+  var s=D.getElementById('pr_s'),go=D.getElementById('pr_go'),res=D.getElementById('pr_res');
+  if(!s||!go||!res||D.getElementById('vjup'))return false;
+  var pan=s.closest('.panel');
+  var opts=[].slice.call(s.options).filter(function(o){return +o.value>=0;});
+  var box=D.createElement('div');box.id='vjup';box.className='vjupg';
+  var h='<p class="kmeta">विषय चुनें — उपाय कारण सहित खुलेंगे।</p><div class="vjupl">'+opts.map(function(o){return '<button type="button" data-p="'+o.value+'">'+esc2(o.textContent)+'</button>';}).join('')+'</div>'
+   +'<p class="kmeta" style="margin-top:10px"><b>ग्रह के उपाय</b></p><div class="vjupl">'+GR.map(function(g,i){return '<button type="button" data-g="'+i+'">'+g[0]+' ग्रह के उपाय</button>';}).join('')+'</div>'
+   +'<p class="kmeta" style="margin-top:10px"><b>अन्य</b></p><div class="vjupl"><button type="button" data-t="1">घर में शुभ-अशुभ पेड़-पौधे</button></div>';
+  box.innerHTML=h;
+  var lb=pan.querySelector('label[for=pr_s]');[lb,s,go].forEach(function(e){if(e)e.style.display='none';});
+  pan.appendChild(box);
+  box.addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;
+    if(b.hasAttribute('data-p')){s.value=b.getAttribute('data-p');go.click();}
+    else if(b.hasAttribute('data-g')){res.innerHTML=planetCard(+b.getAttribute('data-g'));}
+    else if(b.hasAttribute('data-t')){var tv=D.getElementById('tab-v');if(tv){tv.click();setTimeout(function(){window.vjSec&&window.vjSec('tab-v','वृक्ष व लकड़ी');},500);}return;}
+    try{res.scrollIntoView({behavior:'smooth',block:'start'});}catch(x){}});
+  return true;}
+var n=0;(function w(){if(build()||++n>80)return;setTimeout(w,250);})();
+}catch(e){console.error('v347 upay',e);}})();
 </script>
 </body>
 </html>
