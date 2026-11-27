@@ -201,7 +201,7 @@ input[type=date],input[type=time]{min-height:48px}
 .about b{color:var(--maroon)}.about p{margin:4px 0}
 @media print{.brand .pbtn,.nmtools,.totop,.lang,.about{display:none!important}.brand{background:#fff;color:#000;border-bottom:2px solid #000}.brand b{color:#000}.brand span{color:#000}#nm_body{font-size:13px}}
 </style>
-<meta name="vj-ver" content="342">
+<meta name="vj-ver" content="343">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <script>try{if(window.top!==window.self){document.documentElement.style.display='none';window.top.location=window.self.location;}}catch(e){document.documentElement.style.display='none';}</script>
 
@@ -7355,6 +7355,11 @@ var MAIN=[
 ['📕','लाल किताब','Lal Kitab','ग्रह-भाव फल व सरल उपाय','Planet-house results & remedies',['G1','tab-lk']],
 ['🧿','सामुद्रिक व शकुन','Samudrik & Shakun','अंग-लक्षण व शकुन-अपशकुन','Body signs & omens',['G1','tab-sm']],
 ['🖐️','हस्तरेखा','Palmistry','रेखाएँ, पर्वत व हाथ के प्रकार','Lines, mounts & hand types',['G1','tab-hr']],
+['🚗','वाहन-सुरक्षा','Vehicle Safety','भाग्यांक से शुभ अंक व रंग (भक्तामर पुस्तक)','Lucky number & colour for vehicle',['SEC',4,'tab-y','वाहन-सुरक्षा']],
+['🌬️','स्वर-विज्ञान','Swar Vigyan','स्वर-विज्ञान का सार — कार्य के लिए शुभ स्वर','Breath-science basics',['SEC',4,'tab-y','स्वर-विज्ञान']],
+['🕉️','भक्तामर से वास्तु-समाधान','Bhaktamar Vastu Remedies','भक्तामर पुस्तक के अनुसार वास्तु-दोष समाधान','Vastu remedies per Bhaktamar book',['SEC',4,'tab-y','भक्तामर से वास्तु']],
+['💼','करियर वास्तु','Career Vastu','नौकरी, परीक्षा, व्यवसाय — बैठने की दिशा','Seating direction for career',['SEC',3,'tab-v','करियर वास्तु']],
+['🎨','रंग-सलाह','Colour Advice','राशि, नाम, विद्यार्थी, नौकरीपेशा व व्यवसाय हेतु','By rashi, name, student, job, business',['SEC',3,'tab-v','रंग-सलाह']],
 ['🔮','कुंडली व फलादेश','Kundli & Predictions','जन्म-विवरण से भाव, ग्रह, योग, दशा व फल','Houses, planets, yogas, dasha & results from birth details',['G1','tab-k']],
 ['💍','विवाह व मिलान','Marriage & Matching','विवाह लग्न, नाम व जन्म से गुण-मिलान','Vivah lagna, name & birth matching',['G2','tab-vl']],
 ['🏠','वास्तु','Vastu','वास्तु नियम, दिशा-दोष व बिना तोड़-फोड़ के उपाय','Vastu rules, direction doshas & remedies',['G3','tab-v']],
@@ -7418,6 +7423,7 @@ function render(view){var h=$('vjhome');if(!h)return;var en=L();h.innerHTML='';
   SUB.forEach(function(c){g.appendChild(card(c,function(){openRows(c[5]);}));});}
  else MAIN.forEach(function(c){var a=c[5];g.appendChild(card(c,function(){
   if(a==='SUB')render('sub');else if(a==='RASHI')openRashi();else if(a==='LAGNA'){openRashi();setTimeout(function(){window.vjLagna&&window.vjLagna();},500);}else if(a==='DRAWER'){closeHome();D.body.classList.add('vjdr');}
+  else if(a[0]==='SEC'){goTab(a[1],a[2]);setTimeout(function(){window.vjSec&&window.vjSec(a[2],a[3]);},400);}
   else if(a[0].charAt(0)==='G')goTab(+a[0].slice(1),a[1]);else openBanner(a[0]);}));});
  h.appendChild(g);h.scrollTop=0;}
 function init(){var m=$('vj_menu');if(!m||$('vjhome'))return;var h=D.createElement('div');h.id='vjhome';D.body.appendChild(h);
@@ -8521,6 +8527,34 @@ function ensure(){lkPane();samPane();hrPane();}
 ['lk','sm','hr'].forEach(function(m){var tb=$('tab-'+m);if(tb)tb.addEventListener('click',function(){try{setMode(m);}catch(e){}ensure();});});
 var n=0;(function w(){ensure();if(++n<40&&!($('pane-lk')&&$('pane-lk').getAttribute('data-b')))setTimeout(w,300);})();
 }catch(e){console.error('v342',e);}})();
+</script>
+<style>.vjsechide{display:none!important}
+.vjsecbar{margin:4px 0 8px}.vjsecbar button{font:inherit;font-weight:800;font-size:14px;padding:8px 12px;border-radius:10px;border:1.5px solid #c9a15a;background:#fffdf7;color:#6b1d2a}
+</style><script>(function(){try{
+var D=document;
+function restore(pn){
+  [].forEach.call(D.querySelectorAll('.vjsechide'),function(e){e.classList.remove('vjsechide');});
+  [].forEach.call(D.querySelectorAll('.vjsecbar'),function(e){e.remove();});
+}
+window.vjSec=function(tabId,rx){
+  var pane=D.getElementById(tabId.replace('tab-','pane-'));if(!pane)return;
+  restore();
+  var re=new RegExp(rx),H=[].slice.call(pane.querySelectorAll('h3')).filter(function(h){return re.test(h.textContent);})[0];
+  if(!H){return;}
+  var T=H.closest('.panel')||H.parentElement;
+  T.classList.remove('vjcc');
+  var par=T.parentElement;
+  [].forEach.call(par.children,function(c){if(c!==T)c.classList.add('vjsechide');});
+  // pane-y: also hide the selector panel/results above (outside par)
+  var up=par;while(up&&up!==pane){[].forEach.call(up.parentElement.children,function(c){if(c!==up)c.classList.add('vjsechide');});up=up.parentElement;}
+  var bar=D.createElement('div');bar.className='vjsecbar';
+  bar.innerHTML='<button type="button">← इस टैब के सभी खंड देखें</button>';
+  bar.firstChild.addEventListener('click',function(){restore();});
+  par.insertBefore(bar,T);
+  try{window.scrollTo(0,0);}catch(e){}
+};
+D.addEventListener('click',function(e){var t=e.target.closest&&e.target.closest('.tab');if(t)restore();},true);
+}catch(e){console.error('v343 sec',e);}})();
 </script>
 </body>
 </html>
