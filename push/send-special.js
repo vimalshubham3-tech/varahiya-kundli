@@ -14,7 +14,7 @@ webpush.setVapidDetails('mailto:vimalshubham3@gmail.com', process.env.VAPID_PUBL
   for (const s of subs) {
     try { await webpush.sendNotification(s, msg, { TTL: 43200 }); ok++; }
     catch (e) {
-      if (e.statusCode === 404 || e.statusCode === 410) {
+      if (e.statusCode === 404 || e.statusCode === 410 || (!e.statusCode && /subscription|p256dh|auth|endpoint/i.test(String(e.message)))) {
         dead++;
         await fetch(URL_, { method: 'POST', headers: { 'Content-Type': 'text/plain' }, body: JSON.stringify({ type: 'pushdel', token: TOKEN, endpoint: s.endpoint }) }).catch(() => {});
       } else console.log('err', e.statusCode);
