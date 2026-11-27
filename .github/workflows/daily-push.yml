@@ -1,7 +1,7 @@
 name: daily-rashifal-push
 on:
   schedule:
-    - cron: '30 0 * * *'   # रोज़ 06:00 IST
+    - cron: '30 22 * * *'   # रोज़ 04:00 IST (GitHub की देरी जुड़कर लगभग 05:00–05:45 पर पहुँचे)
   workflow_dispatch:
 jobs:
   send:
