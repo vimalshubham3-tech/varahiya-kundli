@@ -201,7 +201,7 @@ input[type=date],input[type=time]{min-height:48px}
 .about b{color:var(--maroon)}.about p{margin:4px 0}
 @media print{.brand .pbtn,.nmtools,.totop,.lang,.about{display:none!important}.brand{background:#fff;color:#000;border-bottom:2px solid #000}.brand b{color:#000}.brand span{color:#000}#nm_body{font-size:13px}}
 </style>
-<meta name="vj-ver" content="350">
+<meta name="vj-ver" content="351">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <script>try{if(window.top!==window.self){document.documentElement.style.display='none';window.top.location=window.self.location;}}catch(e){document.documentElement.style.display='none';}</script>
 
@@ -8880,6 +8880,35 @@ function show(i){
 pn.querySelector('.rsg').addEventListener('click',function(e){var b=e.target.closest('.rsb');if(b)show(+b.getAttribute('data-r'));});
 window.vjRashiProfile=show;
 }catch(e){console.error('v350 rs',e);}})();
+</script>
+<style>
+.vjgc{margin:8px 0}.vjgc h3{margin:6px 0 4px!important}.vjgc .kchart{width:100%;max-width:340px;display:block;margin:6px auto}
+</style>
+<script>
+/* v351: दैनिक पंचांग में उस दिन की ग्रह-गोचर कुंडली (सूर्योदय के समय) */
+(function(){try{
+var D=document;
+function add(){
+  try{
+    var res=D.getElementById('pn_res');if(!res)return;
+    var card=res.querySelector('.res-card');if(!card||card.querySelector('.vjgc'))return;
+    var v=D.getElementById('pn_date').value;if(!v)return;
+    var c=CITIES[+D.getElementById('pn_place').value];if(!c)return;
+    var a=v.split('-').map(Number),d=panchangDay(a[0],a[1],a[2],c[2],c[3],5.5);
+    var rh=d.sun.rise,jd=toJD(a[0],a[1],a[2],Math.floor(rh),Math.round((rh%1)*60),5.5);
+    var pc=d.pc,asc=((ascTropical(jd,c[2],c[3])-ayanamsa(jd))%360+360)%360,ar=Math.floor(asc/30);
+    var items=pc.P.map(function(p,i){var r=Math.floor(p.lon/30);return {r:r,txt:plS(i)+(p.retro&&i<7?'(*)':'')};});
+    var mr=Math.floor(pc.P[1].lon/30);
+    var w=D.createElement('div');w.className='vjgc';
+    w.innerHTML='<h3>ग्रह-गोचर कुंडली (सूर्योदय के समय)</h3><p class="kmeta">लग्न: <b>'+RASHI_H[ar]+'</b> · चंद्र राशि: <b>'+RASHI_H[mr]+'</b> · (*) = वक्री ग्रह</p>'+chartAny(ar,items)+'<p class="kmeta">यह उस दिन सूर्योदय के क्षण के ग्रहों की स्थिति है; लग्न चुने हुए स्थान के अनुसार।</p>';
+    var tw=card.querySelector('.tw'),ref=tw?tw.nextSibling:null;
+    // 'आज के ग्रह (गोचर)' पंक्ति के बाद, पाद-टिप्पणी से पहले
+    var last=card.lastElementChild;card.insertBefore(w,last);
+  }catch(e){console.error('v351 gc',e);}
+}
+new MutationObserver(add).observe(D.getElementById('pn_res')||D.body,{childList:true,subtree:false});
+add();
+}catch(e){console.error('v351 gc',e);}})();
 </script>
 </body>
 </html>
