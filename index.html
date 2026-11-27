@@ -201,7 +201,7 @@ input[type=date],input[type=time]{min-height:48px}
 .about b{color:var(--maroon)}.about p{margin:4px 0}
 @media print{.brand .pbtn,.nmtools,.totop,.lang,.about{display:none!important}.brand{background:#fff;color:#000;border-bottom:2px solid #000}.brand b{color:#000}.brand span{color:#000}#nm_body{font-size:13px}}
 </style>
-<meta name="vj-ver" content="334">
+<meta name="vj-ver" content="335">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <script>try{if(window.top!==window.self){document.documentElement.style.display='none';window.top.location=window.self.location;}}catch(e){document.documentElement.style.display='none';}</script>
 
@@ -8152,6 +8152,36 @@ function mk(){
 }
 setInterval(mk,700);mk();
 }catch(e){console.error('v333',e);}})();
+</script>
+<style id="vj335css">#vj_inst{background:linear-gradient(90deg,#6b1d2a,#8a3a10)!important;color:#fff!important;border-bottom:3px solid #d4a72c!important;font-size:16px!important;font-weight:600}
+#vj_inst #vj_inst_go{background:#f5c842!important;color:#3b1d0a!important;font-size:16px!important;box-shadow:0 2px 6px rgba(0,0,0,.3)}
+#vj_inst #vj_inst_x{color:#fff!important}
+</style>
+<script>
+/* v335: install button + stronger banner */
+(function(){try{
+var D=document,dp=null;
+if((window.matchMedia&&window.matchMedia('(display-mode: standalone)').matches)||navigator.standalone)return;
+window.addEventListener('beforeinstallprompt',function(e){e.preventDefault();dp=e;});
+window.addEventListener('appinstalled',function(){dp=null;var x=D.querySelector('.vjinst');if(x)x.remove();});
+var ua=navigator.userAgent||'',ios=/iphone|ipad|ipod/i.test(ua);
+function mk(){
+  var t=D.getElementById('vj_tools');if(!t||t.querySelector('.vjinst'))return;
+  var b=D.createElement('button');b.type='button';b.className='pbtn vjinst';b.setAttribute('data-vjin','1');
+  b.textContent='📲 ऐप फ़ोन में रखें (इंस्टॉल)';
+  var ref=t.querySelector('.vjrereg')||t.querySelector('.vjpnbtn');
+  if(ref&&ref.nextSibling)t.insertBefore(b,ref.nextSibling);else t.appendChild(b);
+}
+setInterval(mk,700);mk();
+window.addEventListener('click',function(e){
+  var el=e.target.closest&&e.target.closest('[data-vjin]');if(!el)return;
+  e.preventDefault();e.stopPropagation();
+  var x=D.getElementById('vj_inst');if(x)x.remove();
+  if(dp){dp.prompt();dp.userChoice.then(function(){dp=null;});return;}
+  if(ios)alert('iPhone में: नीचे Share (⬆️) दबाएँ, फिर "Add to Home Screen" चुनें।');
+  else alert('Chrome के ऊपर दाएँ कोने में तीन बिंदु (⋮) दबाएँ, फिर "Install app" या "Add to Home screen" चुनें।');
+},true);
+}catch(e){console.error('v335',e);}})();
 </script>
 </body>
 </html>
