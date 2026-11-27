@@ -201,7 +201,7 @@ input[type=date],input[type=time]{min-height:48px}
 .about b{color:var(--maroon)}.about p{margin:4px 0}
 @media print{.brand .pbtn,.nmtools,.totop,.lang,.about{display:none!important}.brand{background:#fff;color:#000;border-bottom:2px solid #000}.brand b{color:#000}.brand span{color:#000}#nm_body{font-size:13px}}
 </style>
-<meta name="vj-ver" content="367">
+<meta name="vj-ver" content="368">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <script>try{if(window.top!==window.self){document.documentElement.style.display='none';window.top.location=window.self.location;}}catch(e){document.documentElement.style.display='none';}</script>
 
@@ -9487,7 +9487,7 @@ window.vjConc=function(K){
 }catch(e){console.error('v363',e);}})();
 </script>
 <script>
-/* v367: करियर · विवाह · संतान (विस्तृत, काल-सहित) */
+/* v368: करियर · विवाह · संतान (विस्तृत, काल-सहित) */
 (function(){try{
 var old=window.vjConc;
 var LR=[2,5,3,1,0,3,5,2,4,6,6,4];
@@ -9636,8 +9636,42 @@ function grih(K){
   L.push('<b>गृहस्थ-धर्म (दिगंबर जैन):</b> देव-पूजा, गुरु-उपासना, स्वाध्याय, संयम, तप और दान — ये छह आवश्यक कर्म घर में रोज़ निभाएँ; सायंकाल सामूहिक भक्ति/आरती और रात्रि-भोजन का त्याग।');
   return sec('🏡 घर-गृहस्थी',li(L)+'<p class="kmeta">द्वितीय, चतुर्थ, पंचम, सप्तम व द्वादश भावों के संयुक्त संकेत; निश्चित भविष्यवाणी नहीं।</p>');
 }
-window.vjConc=function(K){var h='';try{h=career(K)+marriage(K)+santan(K)+parents(K)+sibs(K)+prop(K)+vehicle(K)+vastra(K)+tirth(K)+grih(K);}catch(e){console.error('v367',e);}return h+old(K);};
-}catch(e){console.error('v367 cm',e);}})();
+
+function shiksha(K){
+  var r5=rel(K,5,3,'विद्या-बुद्धि'),r4=rel(K,4,4,'प्रारंभिक शिक्षा'),r9=rel(K,9,4,'उच्च शिक्षा'),L=[];
+  L.push('<b>पंचम (बुद्धि/विद्या):</b> '+RASHI_H[hr(K,5)]+' राशि, स्वामी '+tags(K,r5.l)+(r5.o.length?'; स्थित: '+nm(r5.o):'')+'। '+verdict(r5.sc));
+  L.push('<b>चतुर्थ (प्रारंभिक शिक्षा):</b> स्वामी '+tags(K,r4.l)+'। '+verdict(r4.sc));
+  L.push('<b>नवम (उच्च शिक्षा/शोध):</b> स्वामी '+tags(K,r9.l)+'। '+verdict(r9.sc));
+  L.push('<b>बुध (तर्क) व गुरु (ज्ञान):</b> '+tags(K,3)+'; '+tags(K,4)+'।');
+  var sj=[],pl=[r5.l,3,4].concat(r5.o);
+  var M={0:'प्रशासन, राजनीति-शास्त्र, चिकित्सा',1:'कला, भाषा, नर्सिंग, होटल/खाद्य, मनोविज्ञान',2:'इंजीनियरिंग, विधि, पुलिस/सेना, खेल, तकनीकी',3:'वाणिज्य, गणित, लेखा, कंप्यूटर, पत्रकारिता, भाषा',4:'विधि, शिक्षण, धर्म-दर्शन, वित्त, परामर्श',5:'कला, डिज़ाइन, संगीत, फैशन, मीडिया',6:'तकनीकी, खनन/भूविज्ञान, कृषि, इतिहास, श्रम-विधि'};
+  pl.forEach(function(i){if(M[i]&&sj.indexOf(M[i])<0)sj.push(M[i]);});
+  L.push('<b>अनुकूल विषय-क्षेत्र:</b> '+sj.slice(0,3).join('; ')+'।');
+  var w=win(K,[r5.l,3,4,r9.l],5,28,5);
+  L.push('<b>शिक्षा में विशेष प्रगति के संभावित काल:</b>'+li(w.length?w:['स्पष्ट प्रबल काल नहीं मिला।']));
+  var bl=win(K,[6,7,8].filter(function(i){return K.P[i].h===5||K.P[i].h===4;}),5,25,2);
+  if(bl.length)L.push('<b>एकाग्रता पर ध्यान के काल:</b>'+li(bl));
+  L.push('<b>सुझाव:</b> सरस्वती-वंदना, गुरु/शिक्षक का सम्मान, बुधवार व गुरुवार को पढ़ाई का विशेष संकल्प; जिनवाणी (स्वाध्याय) का नित्य पाठ।');
+  return sec('📚 शिक्षा — विद्या, विषय व काल',li(L)+'<p class="kmeta">पंचम, चतुर्थ, नवम भाव, बुध व गुरु से विचार; बच्चे की रुचि व प्रयास सर्वोपरि है।</p>');
+}
+function vyavsay(K){
+  var r7=rel(K,7,3,'साझेदारी'),r10=rel(K,10,6,'कर्म'),r11=rel(K,11,4,'लाभ'),r2=rel(K,2,4,'धन-संचय'),L=[];
+  L.push('<b>दशम (कर्म-क्षेत्र):</b> स्वामी '+tags(K,r10.l)+(r10.o.length?'; स्थित: '+nm(r10.o):'')+'। '+verdict(r10.sc));
+  L.push('<b>सप्तम (व्यापार/साझेदारी):</b> स्वामी '+tags(K,r7.l)+'। '+verdict(r7.sc));
+  L.push('<b>एकादश (लाभ) व द्वितीय (संचय):</b> '+verdict(r11.sc+r2.sc));
+  var ty=[],pl=[r10.l,r7.l].concat(r10.o);
+  var B={0:'सरकारी ठेके, दवा/चिकित्सा, स्वर्ण, लकड़ी',1:'दूध-डेयरी, जल, खाद्य/होटल, कपड़ा, जनता से जुड़ी सेवाएँ',2:'भूमि-मकान/प्रॉपर्टी, निर्माण, मशीनरी, हथियार-सुरक्षा, खेल',3:'व्यापार, कमीशन, लेखा/कंप्यूटर, प्रिंटिंग, संचार',4:'शिक्षा/कोचिंग, वित्त, सलाह, धार्मिक सामग्री, विधि',5:'वाहन, सौंदर्य, वस्त्र-आभूषण, कला, मनोरंजन',6:'लोहा, खनिज, कृषि-उपकरण, तेल, श्रम-आधारित/पुराना सामान'};
+  pl.forEach(function(i){if(B[i]&&ty.indexOf(B[i])<0)ty.push(B[i]);});
+  L.push('<b>अनुकूल व्यवसाय-क्षेत्र:</b> '+ty.slice(0,3).join('; ')+'।');
+  var sole=(r10.o.length>0&&r10.o.indexOf(0)>=0)||[1,10].indexOf(K.P[r10.l].h)>=0;
+  L.push('<b>शैली:</b> '+(sole?'स्वयं के बल पर/स्वतंत्र व्यवसाय अनुकूल।':r7.sc>=1?'साझेदारी में लाभ के संकेत; लिखित समझौते से करें।':'पहले अनुभव/नौकरी के बाद व्यवसाय बेहतर; साझेदारी में सावधानी।'));
+  var w=win(K,[r10.l,r7.l,r11.l].concat(r10.o),22,55,5);
+  L.push('<b>व्यवसाय-आरंभ व वृद्धि के संभावित काल:</b>'+li(w.length?w:['स्पष्ट प्रबल काल नहीं मिला।']));
+  L.push('<b>सुझाव:</b> ईमानदारी, उधारी पर नियंत्रण, बहीखाता साफ़; दान का अंश नियमित निकालें। अत्यधिक हिंसा/जीव-घात वाले व्यवसाय से दूर रहना जैन गृहस्थ के लिए उचित है।');
+  return sec('🏪 व्यवसाय — क्षेत्र, शैली व काल',li(L)+'<p class="kmeta">दशम, सप्तम, एकादश, द्वितीय भाव से विचार; काल संकेत मात्र हैं।</p>');
+}
+window.vjConc=function(K){var h='';try{h=career(K)+shiksha(K)+vyavsay(K)+marriage(K)+santan(K)+parents(K)+sibs(K)+prop(K)+vehicle(K)+vastra(K)+tirth(K)+grih(K);}catch(e){console.error('v368',e);}return h+old(K);};
+}catch(e){console.error('v368 cm',e);}})();
 </script>
 </body>
 </html>
