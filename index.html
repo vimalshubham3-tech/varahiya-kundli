@@ -201,7 +201,7 @@ input[type=date],input[type=time]{min-height:48px}
 .about b{color:var(--maroon)}.about p{margin:4px 0}
 @media print{.brand .pbtn,.nmtools,.totop,.lang,.about{display:none!important}.brand{background:#fff;color:#000;border-bottom:2px solid #000}.brand b{color:#000}.brand span{color:#000}#nm_body{font-size:13px}}
 </style>
-<meta name="vj-ver" content="337">
+<meta name="vj-ver" content="338">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <script>try{if(window.top!==window.self){document.documentElement.style.display='none';window.top.location=window.self.location;}}catch(e){document.documentElement.style.display='none';}</script>
 
@@ -7353,7 +7353,15 @@ var MAIN=[
 ['🔮','कुंडली व फलादेश','Kundli & Predictions','जन्म-विवरण से भाव, ग्रह, योग, दशा व फल','Houses, planets, yogas, dasha & results from birth details',['G1','tab-k']],
 ['💍','विवाह व मिलान','Marriage & Matching','विवाह लग्न, नाम व जन्म से गुण-मिलान','Vivah lagna, name & birth matching',['G2','tab-vl']],
 ['🏠','वास्तु','Vastu','वास्तु नियम, दिशा-दोष व बिना तोड़-फोड़ के उपाय','Vastu rules, direction doshas & remedies',['G3','tab-v']],
-['✨','अंक व फलित ज्योतिष','Numerology & Phalit','अंक ज्योतिष, फलित, रत्न व स्वास्थ्य ज्योतिष','Numerology, phalit, gems & health astrology',['G1','tab-a']],
+['🧰','वास्तु उपाय','Vastu Upay','दिशा के अनुसार दोष व बिना तोड़-फोड़ के उपाय','Direction-wise doshas & remedies without demolition',['G3','tab-u']],
+['🔢','अंक ज्योतिष','Numerology','अंक ज्योतिष — मूलांक, भाग्यांक व अंक-फल','Numerology — mulank, bhagyank & number results',['G1','tab-a']],
+['📖','फलित ज्योतिष','Phalit Jyotish','फलित ज्योतिष — भाव, ग्रह व योग का फल','Phalit Jyotish — houses, planets & yogas',['G1','tab-f']],
+['💎','रत्न ज्योतिष','Ratna Jyotish','नवरत्न, धारण-विधि, मूलांक से रत्न व कुंडली अनुसार सलाह','Navratna, wearing method, gems by mulank & kundli advice',['G1','tab-r']],
+['🩺','स्वास्थ्य ज्योतिष','Health Astrology','स्वास्थ्य ज्योतिष — ग्रह-भाव से संकेत व सावधानियाँ','Health astrology — indications & cautions',['G1','tab-d']],
+['❓','प्रश्न चूड़ामणि','Prashna Chudamani','केवलज्ञान प्रश्न चूड़ामणि — मूक/मुष्टिका व प्रश्न-फल','Kevalgyan Prashna Chudamani — muk/mushtika & prashna results',['G1','tab-q']],
+['🛠️','समस्या व उपाय','Problems & Remedies','विवाह कब, मांगलिक दोष व समस्या-उपाय कारण सहित','Marriage timing, manglik dosh & problems with remedies',['G1','tab-o']],
+['🌀','भृगु · होरा · सामुद्रिक','Bhrigu · Hora · Samudrik','भृगु, मुहूर्त चिंतामणि, होरा, लग्न-ग्रह फल-तालिका व शरीर-लक्षण','Bhrigu, muhurta chintamani, hora, lagna-graha table & body signs',['G1','tab-g']],
+['🌱','व्यक्तित्व विकास','Personality Growth','आज की आदत, राशि अनुसार सुझाव, आत्म-मूल्यांकन व 21 दिन ट्रैकर','Daily habit, rashi tips, self-assessment & 21-day tracker',['G1','tab-pd']],
 ['🌌','जैन ज्योतिष','Jain Jyotish','जैन परंपरा का ज्योतिष — ग्रह, काल व गणना','Jain-tradition jyotish — planets, time & calculation',['G4','tab-j']],
 ['📿','भक्तामर','Bhaktamar','भक्तामर स्तोत्र — पाठ, अर्थ व साधना','Bhaktamar Stotra — text, meaning & sadhana',['G4','tab-y']],
 ['🙏','णमोकार व जैन संस्कार','Namokar & Jain Sanskar','णमोकार मंत्र व जैन संस्कार-विधियाँ','Namokar mantra & Jain sanskar vidhis',['G4','tab-w']],
@@ -8210,6 +8218,65 @@ function fix(){
 }
 setInterval(fix,400);fix();
 }catch(e){console.error('v336',e);}})();
+</script>
+<style id="vj338css">.vjcal{margin:6px 0}
+.vjcalt{display:flex;gap:6px;margin-bottom:6px}
+.vjcalt button{flex:1;padding:8px;border-radius:10px;border:1.5px solid #c9a15a;background:#fffdf7;color:#6b1d2a;font:inherit;font-weight:700}
+.vjcalt button.on{background:#6b1d2a;color:#fff;border-color:#6b1d2a}
+.vjcal .cg{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}
+.vjcal .ch{text-align:center;font-size:12px;font-weight:800;color:#fff;background:#8e2b3a;border-radius:6px;padding:4px 0}
+.vjcal .cx{min-height:1px}
+.vjcal .cd{display:flex;flex-direction:column;align-items:center;justify-content:flex-start;min-height:58px;padding:3px 1px;border:1px solid #e0c78a;border-radius:8px;background:#fffdf7;color:#4a1220;font:inherit;cursor:pointer;min-width:0}
+.vjcal .cd b{font-size:15px;line-height:1.1}
+.vjcal .cd small{font-size:9.5px;line-height:1.15;color:#6b4a1a;text-align:center;word-break:keep-all}
+.vjcal .cd span{display:flex;gap:1px;font-size:10px;line-height:1;margin-top:2px;min-height:11px}
+.vjcal .cd i{font-style:normal}
+.vjcal .cd.g{background:#e8f3df;border-color:#a9cf8c}
+.vjcal .cd.p{background:#fde7e9;border-color:#e5a3ad}
+.vjcal .cd.k{background:#e3eefb;border-color:#9bb8dd}
+.vjcal .cd.sel{outline:2.5px solid #6b1d2a;outline-offset:-1px}
+.vjcal .cdet{margin-top:8px;padding:10px 12px;border:1.5px solid #c9a15a;border-radius:12px;background:#fff8e3;font-size:14.5px;line-height:1.55;color:#3b1d0a}
+.vjcal .cleg{margin-top:6px;font-size:12px;color:#6b4a1a;text-align:center}
+</style>
+<script>
+/* v338: jain tithi calendar grid */
+(function(){try{
+var D=document;
+var WD=['रवि','सोम','मंगल','बुध','गुरु','शुक्र','शनि'];
+function txt(e){return (e.textContent||'').replace(/\s+/g,' ').trim();}
+function build(card){
+  if(!card||card.getAttribute('data-vjcal'))return;
+  var tw=card.querySelector('.tw'),tb=tw&&tw.querySelector('tbody');if(!tb)return;
+  var h=card.querySelector('h2.kh');var m=h&&/(\d{2})\/(\d{4})/.exec(h.textContent);if(!m)return;
+  card.setAttribute('data-vjcal','1');
+  var mo=+m[1],yr=+m[2],first=new Date(Date.UTC(yr,mo-1,1)).getUTCDay(),rows=[].slice.call(tb.rows);
+  var info={},cells='';
+  for(var i=0;i<first;i++)cells+='<div class="cx"></div>';
+  rows.forEach(function(r,k){
+    var d=k+1,td=r.cells,tl=td[2].querySelector('span'),full=tl?txt(tl):'',short=/अमावस्या$/.test(full)?'अमावस्या':/पूर्णिमा$/.test(full)?'पूर्णिमा':full.split(' ').slice(-2).join(' ');
+    var cls=/e3eefb/.test(r.getAttribute('style')||'')?'k':/fde7e9/.test(r.getAttribute('style')||'')?'p':/e8f3df/.test(r.getAttribute('style')||'')?'g':'';
+    var c4=td[3],hasG=/🌿/.test(c4.textContent),par=c4.querySelector('b'),kal=c4.querySelector('span');
+    info[d]={vara:txt(td[1]),tithi:td[2].innerHTML,parv:par?txt(par):'',kal:kal?txt(kal):'',pp:hasG?txt(c4).split('🌸')[0].replace(par?txt(par):'','').replace('🌿','').trim():''};
+    var ic=(hasG?'<i class="g">🌿</i>':'')+(par?'<i class="p">🪔</i>':'')+(kal?'<i class="k">🌸</i>':'');
+    cells+='<button type="button" class="cd '+cls+'" data-vjcd="'+d+'"><b>'+d+'</b><small>'+short+'</small><span>'+ic+'</span></button>';
+  });
+  var head=WD.map(function(w){return '<div class="ch">'+w+'</div>';}).join('');
+  var box=D.createElement('div');box.className='vjcal';
+  box.innerHTML='<div class="vjcalt"><button type="button" data-vjct="g" class="on">📅 कैलेंडर</button><button type="button" data-vjct="l">📋 सूची</button></div><div class="cg">'+head+cells+'</div><div class="cdet">किसी तारीख़ को दबाएँ — तिथि, पर्व व कल्याणक का विवरण यहाँ दिखेगा।</div><div class="cleg">🌿 पंच-पर्व तिथि · 🪔 जैन पर्व · 🌸 तीर्थंकर कल्याणक</div>';
+  tw.parentNode.insertBefore(box,tw);tw.style.display='none';
+  box.addEventListener('click',function(e){
+    var t=e.target.closest('[data-vjct]');
+    if(t){e.stopPropagation();var g=t.getAttribute('data-vjct')==='g';box.querySelector('.cg').style.display=g?'':'none';box.querySelector('.cdet').style.display=g?'':'none';box.querySelector('.cleg').style.display=g?'':'none';tw.style.display=g?'none':'';[].forEach.call(box.querySelectorAll('[data-vjct]'),function(x){x.classList.toggle('on',x===t);});return;}
+    var c=e.target.closest('[data-vjcd]');if(!c)return;e.stopPropagation();
+    var d=+c.getAttribute('data-vjcd'),f=info[d],det=box.querySelector('.cdet');
+    [].forEach.call(box.querySelectorAll('.cd.sel'),function(x){x.classList.remove('sel');});c.classList.add('sel');
+    det.innerHTML='<b>'+d+'/'+mo+'/'+yr+' · '+f.vara+'</b><br>'+f.tithi+(f.pp?'<br>🌿 '+f.pp:'')+(f.parv?'<br>🪔 <b style="color:#8e2b3a">'+f.parv+'</b>':'')+(f.kal?'<br><span style="color:#1a4f8a">'+f.kal+'</span>':'');
+  });
+  var today=new Date(Date.now()+19800000);if(today.getUTCFullYear()===yr&&today.getUTCMonth()+1===mo){var tc=box.querySelector('[data-vjcd="'+today.getUTCDate()+'"]');if(tc)tc.click();}
+}
+function scan(){var o=D.getElementById('td_res');if(!o)return;[].forEach.call(o.querySelectorAll('.res-card.vjmp'),build);}
+setInterval(scan,500);
+}catch(e){console.error('v338',e);}})();
 </script>
 </body>
 </html>
