@@ -201,7 +201,7 @@ input[type=date],input[type=time]{min-height:48px}
 .about b{color:var(--maroon)}.about p{margin:4px 0}
 @media print{.brand .pbtn,.nmtools,.totop,.lang,.about{display:none!important}.brand{background:#fff;color:#000;border-bottom:2px solid #000}.brand b{color:#000}.brand span{color:#000}#nm_body{font-size:13px}}
 </style>
-<meta name="vj-ver" content="355">
+<meta name="vj-ver" content="356">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <script>try{if(window.top!==window.self){document.documentElement.style.display='none';window.top.location=window.self.location;}}catch(e){document.documentElement.style.display='none';}</script>
 
@@ -7373,6 +7373,7 @@ var MAIN=[
 ['🕰️','दैनिक मुहूर्त','Daily Muhurta','चौघड़िया, होरा, लग्न, चंद्रबल, ताराबल व अन्य','Choghadiya, Hora, Lagna, Chandrabal, Tarabal & more','SUB'],
 ['🌟','दैनिक राशिफल','Daily Rashifal','चंद्र राशि के अनुसार आज का राशिफल','Today\'s horoscope by Moon sign','RASHI'],
 ['🪐','राशि-स्वभाव (12 राशियाँ)','Rashi Nature (12 signs)','चिन्ह, स्वभाव, प्रेम, विवाह, स्वास्थ्य व भाग्यशाली अंक-रंग-रत्न','Traits, love, marriage, health & lucky number-colour-gem',['SEC',0,'tab-p','राशि-स्वभाव']],
+['📅','मासिक · वार्षिक · संपूर्ण फल','Monthly · Yearly · Full Forecast','लग्न, चंद्र राशि या नक्षत्र से — गोचर आधारित भविष्यफल','By lagna, Moon sign or nakshatra — transit based',['SEC',0,'tab-p','मासिक · वार्षिक']],
 ['🔆','राशिफल — लग्न से','Rashifal by Lagna','12 लग्न के अनुसार आज का फल (चंद्र-गोचर सहित)','Today by Ascendant (with Moon transit)','LAGNA'],
 ['📕','लाल किताब','Lal Kitab','ग्रह-भाव फल व सरल उपाय','Planet-house results & remedies',['G1','tab-lk']],
 ['🧿','सामुद्रिक व शकुन','Samudrik & Shakun','अंग-लक्षण व शकुन-अपशकुन','Body signs & omens',['G1','tab-sm']],
@@ -9012,6 +9013,166 @@ function mv(){try{
 new MutationObserver(mv).observe(D.getElementById('pn_res')||D.body,{childList:true,subtree:true});
 mv();
 }catch(e){console.error('v354',e);}})();
+</script>
+<style>
+.fcseg{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;gap:6px;margin:4px 0 8px}
+.fcseg button{font:inherit;font-weight:800;font-size:14px;padding:9px 2px;border-radius:10px;border:1.5px solid #c9a15a;background:#fffdf7;color:#6b1d2a}
+.fcseg button.on{background:#6b1d2a;color:#fff;border-color:#6b1d2a}
+.vjfc{font-size:12.5px}.vjfc small{color:#7a5a30}
+#fc_res .vjgr{align-items:start}
+#fc_res .vjgr span{text-align:left}
+#fc_res h3{margin:10px 0 4px!important}
+</style>
+<script>
+/* v356: मासिक · वार्षिक · संपूर्ण भविष्यफल — लग्न / चंद्र राशि / नक्षत्र से (गोचर आधारित) */
+(function(){try{
+var D=document;
+function esc2(s){return String(s).replace(/[&<>]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;'}[c];});}
+var MN=['जनवरी','फ़रवरी','मार्च','अप्रैल','मई','जून','जुलाई','अगस्त','सितंबर','अक्टूबर','नवंबर','दिसंबर'];
+var HT=['','स्वास्थ्य, मन व स्वभाव','धन, वाणी व परिवार','साहस, प्रयास व भाई-बंधु','घर, माता, वाहन व सुख','विद्या, संतान व प्रेम','रोग, ऋण व शत्रु','जीवनसाथी, साझेदारी व यात्रा','अचानक घटनाएँ, बाधा व स्वास्थ्य','भाग्य, धर्म व गुरुजन','कर्म, पद व आजीविका','लाभ, आय व मित्र','खर्च, हानि व एकांत/विदेश'];
+var PF=['सूर्य','चंद्र','मंगल','बुध','गुरु','शुक्र','शनि','राहु'];
+var JT=['','मन में उलझन व भाग-दौड़; स्वास्थ्य और खर्च पर ध्यान रखें।','धन-लाभ, वाणी का प्रभाव और परिवार में सुख।','प्रयासों में रुकावट, स्थान-परिवर्तन के योग; धैर्य रखें।','घरेलू चिंता, सुख में कमी; मकान-वाहन में सावधानी।','विद्या, संतान व सम्मान में उन्नति; शुभ समय।','विरोध व रोग से परेशानी; ऋण से बचें।','दांपत्य-सुख, साझेदारी में लाभ, शुभ यात्राएँ।','कठिन समय व अवरोध; स्वास्थ्य और निर्णयों में सावधानी।','भाग्योदय, धर्म-कार्य व गुरुजनों की कृपा; उत्तम समय।','कार्य-क्षेत्र में खींचतान; नौकरी/पद में सावधानी।','आय, लाभ व मनोकामना-पूर्ति; श्रेष्ठ समय।','अधिक खर्च व यात्राएँ; धन धार्मिक कार्यों में लगाएँ।'];
+var ST=['','शरीर-मन पर बोझ, परिश्रम बढ़ता है (साढ़ेसाती का मध्य चरण)।','धन व वाणी में सावधानी; परिवार में तनाव से बचें (साढ़ेसाती का अंतिम चरण)।','साहस, सफलता व लाभ देने वाला समय।','घरेलू तनाव व सुख में कमी (ढैया)।','विद्या-संतान में बाधा, मानसिक दबाव।','शत्रु पर विजय, ऋण-मुक्ति; अनुकूल।','दांपत्य/साझेदारी में तनाव, यात्रा में कष्ट।','कठिन ढैया; स्वास्थ्य व रुकावटों में सावधानी।','भाग्य में रुकावट; धैर्य व धर्म-आचरण ज़रूरी।','कार्य में परिश्रम, देर से पर स्थायी फल।','आय-लाभ व इच्छा-पूर्ति; अनुकूल।','खर्च व एकांत; साढ़ेसाती का प्रारंभ।'];
+var RT=['','भ्रम व मानसिक बेचैनी; स्वास्थ्य पर ध्यान।','धन व वाणी में अनबन; सोच-समझकर बोलें।','साहस व सफलता; अनुकूल।','घरेलू अशांति; माता/वाहन से चिंता।','पढ़ाई-संतान में भ्रम; जल्दबाज़ी न करें।','विरोधियों पर विजय; अनुकूल।','साझेदारी/दांपत्य में उलझन।','अचानक बाधाएँ; सावधानी।','भाग्य में उतार-चढ़ाव; गुरुजन की सलाह लें।','कार्य में प्रगति, पद-लाभ; अनुकूल।','अप्रत्याशित लाभ; अनुकूल।','खर्च व विदेश-यात्रा के योग।'];
+var AREAS=[['धन व आय',[2,11]],['कार्य व आजीविका',[10,6]],['स्वास्थ्य',[1,6,8]],['घर-परिवार',[4,2]],['संबंध व दांपत्य',[7,5]],['भाग्य व यात्रा',[9,3,12]]];
+var TARA=['','जन्म (मिश्र)','संपत् (शुभ)','विपत् (अशुभ)','क्षेम (शुभ)','प्रत्यरि (अशुभ)','साधक (शुभ)','वध (अशुभ)','मित्र (शुभ)','अति-मित्र (शुभ)'];
+var TBAD={3:1,5:1,7:1};
+var RSH=['राशि चिन्ह व स्वामी','शारीरिक बनावट','व्यक्तित्व','रुचियाँ / शौक','कमियाँ','आर्थिक पक्ष','शिक्षा एवं व्यवसाय','प्रेम-संबंध','विवाह व दांपत्य जीवन','घर-परिवार','इष्ट-मित्र','स्वास्थ्य व खान-पान','भाग्यशाली अंक','भाग्यशाली रंग','भाग्यशाली दिन','भाग्यशाली रत्न'];
+var DY=[['केतु',7],['शुक्र',20],['सूर्य',6],['चंद्र',10],['मंगल',7],['राहु',18],['गुरु',16],['शनि',19],['बुध',17]];
+var st={basis:'m',per:'M'};
+function jdOf(y,m,d){return Date.UTC(y,m-1,d,6,30)/86400000+2440587.5;}
+function dim(y,m){return new Date(Date.UTC(y,m,0)).getUTCDate();}
+function hOf(lon,B){return ((rashiOf(lon)-B+12)%12)+1;}
+function fd(y,m,d){return d+' '+MN[m-1];}
+function rate(sc){return rateD(sc);}
+function basisRashi(){
+  var b=st.basis;
+  if(b==='n'){var n=+D.getElementById('fc_n').value,p=+D.getElementById('fc_p').value;return Math.floor((n*4+p-1)/9);}
+  return +D.getElementById('fc_r').value;
+}
+function basisName(B){
+  if(st.basis==='l')return 'लग्न '+RASHI_H[B];
+  if(st.basis==='m')return 'चंद्र राशि '+RASHI_H[B];
+  var n=+D.getElementById('fc_n').value,p=+D.getElementById('fc_p').value;
+  return 'जन्म नक्षत्र '+NAK_H[n]+' (चरण '+p+') → चंद्र राशि '+RASHI_H[B];
+}
+function areaScore(P,B){
+  return AREAS.map(function(a){
+    var s=0;for(var i=0;i<8;i++){if(i===1)continue;var h=hOf(P[i].lon,B);if(a[1].indexOf(h)>=0)s+=(GF[i].indexOf(h)>=0?GW[i]:-GW[i]*0.5)+ (GF[i].indexOf(h)>=0?0:0);}
+    // हर क्षेत्र का आधार: उन भावों में बैठे ग्रहों का अनुकूल/प्रतिकूल योग; ग्रह न हो तो मध्यम
+    var any=false;for(var j=0;j<8;j++){if(j!==1&&a[1].indexOf(hOf(P[j].lon,B))>=0)any=true;}
+    return {n:a[0],s:s,any:any};
+  });
+}
+function areaTxt(a){
+  if(!a.any)return 'सामान्य/मध्यम; कोई विशेष गोचर नहीं।';
+  return a.s>=2?'अनुकूल — इस क्षेत्र में प्रगति के संकेत।':a.s>=0.5?'ठीक-ठाक; प्रयास से अच्छा फल।':a.s>-0.5?'मिश्रित; धैर्य रखें।':'सावधानी — इस क्षेत्र में संयम रखें।';
+}
+function grid(rows,cols,head){ // cols template; head array
+  var h='<div class="vjgtb"><div class="vjgr vjgh vjfc" style="grid-template-columns:'+cols+'">'+head.map(function(x,i){return i?'<span>'+x+'</span>':'<b>'+x+'</b>';}).join('')+'</div>';
+  rows.forEach(function(r){h+='<div class="vjgr vjfc" style="grid-template-columns:'+cols+'">'+r.map(function(x,i){return i?'<span>'+x+'</span>':'<b>'+x+'</b>';}).join('')+'</div>';});
+  return h+'</div>';
+}
+function monthly(B,y,m){
+  var N=dim(y,m),days=[],i,d;
+  for(d=1;d<=N;d++){var q=rashiScore(B,jdOf(y,m,d)),nk=Math.floor(q.P[1].lon/(360/27));days.push({d:d,sc:q.sc,mh:q.mh,nk:nk,P:q.P});}
+  var avg=days.reduce(function(a,x){return a+x.sc;},0)/N;
+  var h='<h3>'+MN[m-1]+' '+y+' का भविष्यफल</h3><div class="pills"><span>माह का संकेत: <b>'+rate(avg)+'</b></span></div>';
+  var wk=[[1,7],[8,14],[15,21],[22,N]];
+  h+='<h3>सप्ताह-वार संकेत</h3>'+grid(wk.map(function(w){var s=0,c=0;for(var k=w[0];k<=w[1];k++){s+=days[k-1].sc;c++;}return [fd(y,m,w[0])+' – '+fd(y,m,w[1]),rate(s/c)];}),'2fr 1fr',['अवधि','संकेत']);
+  var mid=days[Math.min(14,N-1)].P;
+  h+='<h3>क्षेत्र-वार फल (माह के मध्य के गोचर से)</h3>'+grid(areaScore(mid,B).map(function(a){return [a.n,areaTxt(a)];}),'1fr 2.2fr',['क्षेत्र','संकेत']);
+  var rows=[];
+  for(i=0;i<8;i++){if(i===1)continue;var h0=hOf(days[0].P[i].lon,B),h1=hOf(days[N-1].P[i].lon,B),good=GF[i].indexOf(h1)>=0;
+    var chg='';if(h0!==h1){for(var k=1;k<N;k++){if(hOf(days[k].P[i].lon,B)!==hOf(days[k-1].P[i].lon,B)){chg=fd(y,m,days[k].d);break;}}}
+    rows.push([PF[i]+(days[N-1].P[i].retro&&i<7?' (व)':''),(h0===h1?h0:h0+'→'+h1)+(chg?'<br><small>'+chg+'</small>':''),HT[h1],good?'अनुकूल':'सावधानी']);}
+  h+='<h3>ग्रह-गोचर (आपके भाव से)</h3>'+grid(rows,'.9fr .8fr 1.9fr .9fr',['ग्रह','भाव','क्षेत्र','फल']);
+  var s=days.slice().sort(function(a,b){return b.sc-a.sc;});
+  h+='<p><b>सबसे अनुकूल दिन:</b> '+s.slice(0,5).map(function(x){return x.d;}).sort(function(a,b){return a-b;}).join(', ')+' तारीख़<br><b>सावधानी के दिन:</b> '+s.slice(-4).map(function(x){return x.d;}).sort(function(a,b){return a-b;}).join(', ')+' तारीख़</p>';
+  if(st.basis==='m'||st.basis==='n'){
+    var cb=days.filter(function(x){return [1,3,6,7,10,11].indexOf(x.mh)>=0;}).map(function(x){return x.d;});
+    h+='<p><b>चंद्रबल अच्छा (चंद्र आपसे 1,3,6,7,10,11 भाव में):</b> '+cb.length+' दिन — '+cb.join(', ')+'</p>';
+  }
+  if(st.basis==='n'){
+    var jn=+D.getElementById('fc_n').value,good=[],bad=[];
+    days.forEach(function(x){var t=((x.nk-jn+27)%27)%9+1;if(TBAD[t])bad.push(x.d);else if(t!==1)good.push(x.d);});
+    h+='<p><b>ताराबल शुभ दिन (जन्म नक्षत्र से):</b> '+good.join(', ')+'<br><b>ताराबल अशुभ (विपत्/प्रत्यरि/वध):</b> '+bad.join(', ')+'</p>';
+  }
+  return h;
+}
+function yearly(B,y){
+  var d0=Date.UTC(y,0,1),N=Math.round((Date.UTC(y+1,0,1)-d0)/86400000),days=[],i;
+  for(i=0;i<N;i++){var dt=new Date(d0+i*86400000),q=rashiScore(B,jdOf(y,dt.getUTCMonth()+1,dt.getUTCDate()));days.push({m:dt.getUTCMonth()+1,d:dt.getUTCDate(),sc:q.sc,P:q.P});}
+  var ms=[];for(i=1;i<=12;i++){var a=days.filter(function(x){return x.m===i;});ms.push({m:i,sc:a.reduce(function(s,x){return s+x.sc;},0)/a.length});}
+  var avg=ms.reduce(function(s,x){return s+x.sc;},0)/12;
+  var h='<h3>वर्ष '+y+' का भविष्यफल</h3><div class="pills"><span>वर्ष का संकेत: <b>'+rate(avg)+'</b></span></div>';
+  h+='<h3>माह-वार संकेत</h3>'+grid(ms.map(function(x){return [MN[x.m-1],rate(x.sc)];}),'1.4fr 1fr',['माह','संकेत']);
+  var so=ms.slice().sort(function(a,b){return b.sc-a.sc;});
+  h+='<p><b>श्रेष्ठ माह:</b> '+so.slice(0,3).map(function(x){return MN[x.m-1];}).join(', ')+'<br><b>सावधानी के माह:</b> '+so.slice(-3).map(function(x){return MN[x.m-1];}).join(', ')+'</p>';
+  function phases(idx,T,title){
+    var out=[],cur=null;
+    days.forEach(function(x){var hh=hOf(x.P[idx].lon,B);if(!cur||cur.h!==hh){cur={h:hh,from:fd(y,x.m,x.d),to:fd(y,x.m,x.d)};out.push(cur);}cur.to=fd(y,x.m,x.d);});
+    var s='<h3>'+title+'</h3>';
+    out.forEach(function(p){s+='<div class="pl"><b>'+p.from+' – '+p.to+' · '+p.h+'वें भाव</b><p>'+esc2(T[p.h])+'</p></div>';});
+    return s;
+  }
+  h+=phases(4,JT,'गुरु का गोचर (वर्ष भर)');
+  h+=phases(6,ST,'शनि का गोचर (वर्ष भर)');
+  h+=phases(7,RT,'राहु का गोचर (केतु उससे सातवें भाव में)');
+  if(st.basis!=='l'){
+    var shs=days.some(function(x){var h=hOf(x.P[6].lon,B);return h===12||h===1||h===2;}),dh=days.some(function(x){var h=hOf(x.P[6].lon,B);return h===4||h===8;});
+    h+='<p><b>साढ़ेसाती/ढैया:</b> '+(shs?'इस वर्ष साढ़ेसाती का प्रभाव रहता है (शनि चंद्र से 12/1/2 भाव में)।':dh?'इस वर्ष शनि की ढैया (4/8 भाव) का प्रभाव रहता है।':'इस वर्ष साढ़ेसाती या ढैया नहीं है।')+'</p>';
+  }
+  var mid=days[Math.floor(N/2)].P;
+  h+='<h3>क्षेत्र-वार फल (वर्ष के मध्य के गोचर से)</h3>'+grid(areaScore(mid,B).map(function(a){return [a.n,areaTxt(a)];}),'1fr 2.2fr',['क्षेत्र','संकेत']);
+  return h;
+}
+function full(B){
+  var RS=window.vjRS||[],h='<h3>संपूर्ण (जीवन-स्तर का) भविष्यफल</h3>';
+  if(st.basis==='l'){h+='<div class="pl"><b>लग्न ('+RASHI_H[B]+') का स्वभाव</b><p>'+esc2(LAGNA_T[B])+'</p></div>';}
+  if(st.basis==='n'){var n=+D.getElementById('fc_n').value,p=+D.getElementById('fc_p').value;
+    h+='<div class="pl"><b>नक्षत्र: '+NAK_H[n]+' · चरण '+p+'</b><p>'+esc2(NAK_T[n])+'</p></div>';
+    var dl=DY[n%9];h+='<div class="pl"><b>जन्म की महादशा: '+dl[0]+'</b><p>'+esc2(DASHA_T[['सूर्य','चंद्र','मंगल','बुध','गुरु','शुक्र','शनि','राहु','केतु'].indexOf(dl[0])])+'</p></div>';
+    var seq='';for(var k=0;k<9;k++){var e=DY[(n%9+k)%9];seq+=e[0]+' '+e[1]+' वर्ष'+(k<8?' → ':'');}
+    h+='<div class="pl"><b>विंशोत्तरी दशा-क्रम</b><p>'+seq+'</p><p>जन्म के समय पहली दशा पूरी नहीं, शेष बची हुई मिलती है; सही आयु-काल के लिए "कुंडली" टैब में जन्म-विवरण डालें।</p></div>';}
+  var R=RS[B];
+  if(R){h+='<div class="rsc"><div class="rst">'+R[0]+' '+R[1]+' '+(st.basis==='l'?'लग्न/राशि':'राशि')+' का जीवन-चित्र</div>';for(var j=0;j<16;j++){h+='<div class="rss"><b>'+RSH[j]+'</b><p>'+esc2(R[2+j])+'</p></div>';}h+='</div>';}
+  h+='<p class="kmeta">यह जीवन-स्तर का सामान्य चित्र है। लग्न, चंद्र व सभी ग्रहों के संयुक्त फल के लिए जन्म-कुंडली ही सही आधार है।</p>';
+  return h;
+}
+function run(){
+  var out=D.getElementById('fc_res');
+  try{
+    var B=basisRashi(),y=+D.getElementById('fc_y').value,mv=D.getElementById('fc_m').value,my=+mv.split('-')[0],mm=+mv.split('-')[1];
+    var h='<div class="res-card"><h2 class="kh">'+esc2(basisName(B))+'</h2>';
+    if(st.per==='M')h+=monthly(B,my,mm);else if(st.per==='Y')h+=yearly(B,y);else h+=full(B);
+    if(st.per!=='F')h+='<p class="kmeta">यह गोचर (ग्रहों की वर्तमान चाल) पर आधारित सामान्य फल है'+(st.basis==='l'?'; भाव आपके लग्न से गिने गए हैं':'; भाव चंद्र राशि से गिने गए हैं')+'। व्यक्तिगत फल जन्म-कुंडली से ही सही मिलता है। जैन परंपरा में कर्म-सिद्धांत प्रधान है — ग्रह संकेत हैं, पुरुषार्थ व धर्माचरण आधार।</p>';
+    out.innerHTML=h+'</div>';
+  }catch(e){out.innerHTML='<p class="warn">गणना में त्रुटि: '+esc2(e.message)+'</p>';console.error('v356',e);}
+}
+var rs=D.getElementById('rs_panel')||D.getElementById('rf_res');if(!rs||D.getElementById('fc_panel'))return;
+var pn=D.createElement('div');pn.className='panel';pn.id='fc_panel';
+var now=new Date(Date.now()+5.5*3600000),cy=now.getUTCFullYear(),cm=String(now.getUTCMonth()+1).padStart(2,'0');
+var ro='',no='';RASHI_H.forEach(function(r,i){ro+='<option value="'+i+'">'+r+'</option>';});NAK_H.forEach(function(r,i){no+='<option value="'+i+'">'+r+'</option>';});
+var yo='';for(var yy=cy-1;yy<=cy+3;yy++)yo+='<option value="'+yy+'"'+(yy===cy?' selected':'')+'>'+yy+'</option>';
+pn.innerHTML='<h3>मासिक · वार्षिक · संपूर्ण भविष्यफल</h3>'
+ +'<p class="kmeta">किस आधार पर देखना है?</p><div class="fcseg" id="fc_b"><button type="button" data-b="l">लग्न से</button><button type="button" data-b="m" class="on">चंद्र राशि से</button><button type="button" data-b="n">नक्षत्र से</button></div>'
+ +'<div id="fc_rw"><label for="fc_r">राशि चुनें</label><select id="fc_r">'+ro+'</select></div>'
+ +'<div id="fc_nw" hidden><label for="fc_n">जन्म नक्षत्र</label><select id="fc_n">'+no+'</select><label for="fc_p">चरण</label><select id="fc_p"><option>1</option><option>2</option><option>3</option><option>4</option></select></div>'
+ +'<p class="kmeta">कौन-सा भविष्यफल?</p><div class="fcseg" id="fc_pr"><button type="button" data-p="M" class="on">मासिक</button><button type="button" data-p="Y">वार्षिक</button><button type="button" data-p="F">संपूर्ण</button></div>'
+ +'<div id="fc_mw"><label for="fc_m">माह</label><input id="fc_m" type="month" value="'+cy+'-'+cm+'"></div>'
+ +'<div id="fc_yw" hidden><label for="fc_y">वर्ष</label><select id="fc_y">'+yo+'</select></div>'
+ +'<button class="go" id="fc_go" type="button">भविष्यफल देखें</button><div id="fc_res"></div>';
+rs.parentNode.insertBefore(pn,rs.nextSibling);
+function sync(){D.getElementById('fc_rw').hidden=st.basis==='n';D.getElementById('fc_nw').hidden=st.basis!=='n';D.getElementById('fc_mw').hidden=st.per!=='M';D.getElementById('fc_yw').hidden=st.per!=='Y';
+  [].forEach.call(pn.querySelectorAll('#fc_b button'),function(b){b.classList.toggle('on',b.getAttribute('data-b')===st.basis);});
+  [].forEach.call(pn.querySelectorAll('#fc_pr button'),function(b){b.classList.toggle('on',b.getAttribute('data-p')===st.per);});
+  D.querySelector('#fc_rw label').textContent=st.basis==='l'?'लग्न चुनें':'चंद्र राशि चुनें';}
+pn.querySelector('#fc_b').addEventListener('click',function(e){var b=e.target.closest('button');if(b){st.basis=b.getAttribute('data-b');sync();}});
+pn.querySelector('#fc_pr').addEventListener('click',function(e){var b=e.target.closest('button');if(b){st.per=b.getAttribute('data-p');sync();}});
+D.getElementById('fc_go').addEventListener('click',run);
+sync();window.vjFcRun=run;
+}catch(e){console.error('v356 init',e);}})();
 </script>
 </body>
 </html>
