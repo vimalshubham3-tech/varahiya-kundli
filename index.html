@@ -201,7 +201,7 @@ input[type=date],input[type=time]{min-height:48px}
 .about b{color:var(--maroon)}.about p{margin:4px 0}
 @media print{.brand .pbtn,.nmtools,.totop,.lang,.about{display:none!important}.brand{background:#fff;color:#000;border-bottom:2px solid #000}.brand b{color:#000}.brand span{color:#000}#nm_body{font-size:13px}}
 </style>
-<meta name="vj-ver" content="338">
+<meta name="vj-ver" content="339">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <script>try{if(window.top!==window.self){document.documentElement.style.display='none';window.top.location=window.self.location;}}catch(e){document.documentElement.style.display='none';}</script>
 
@@ -7350,6 +7350,7 @@ var MAIN=[
 ['🪔','जैन तिथि दर्पण','Jain Tithi Darpan','जैन पर्व, तीर्थंकर पंच कल्याणक, आचार्य दर्पण','Jain parvs, Tirthankar Panch Kalyanak, Acharya Darpan',['td_all']],
 ['🕰️','दैनिक मुहूर्त','Daily Muhurta','चौघड़िया, होरा, लग्न, चंद्रबल, ताराबल व अन्य','Choghadiya, Hora, Lagna, Chandrabal, Tarabal & more','SUB'],
 ['🌟','दैनिक राशिफल','Daily Rashifal','चंद्र राशि के अनुसार आज का राशिफल','Today\'s horoscope by Moon sign','RASHI'],
+['🔆','राशिफल — लग्न से','Rashifal by Lagna','12 लग्न के अनुसार आज का फल (चंद्र-गोचर सहित)','Today by Ascendant (with Moon transit)','LAGNA'],
 ['🔮','कुंडली व फलादेश','Kundli & Predictions','जन्म-विवरण से भाव, ग्रह, योग, दशा व फल','Houses, planets, yogas, dasha & results from birth details',['G1','tab-k']],
 ['💍','विवाह व मिलान','Marriage & Matching','विवाह लग्न, नाम व जन्म से गुण-मिलान','Vivah lagna, name & birth matching',['G2','tab-vl']],
 ['🏠','वास्तु','Vastu','वास्तु नियम, दिशा-दोष व बिना तोड़-फोड़ के उपाय','Vastu rules, direction doshas & remedies',['G3','tab-v']],
@@ -7412,7 +7413,7 @@ function render(view){var h=$('vjhome');if(!h)return;var en=L();h.innerHTML='';
  if(view==='sub'){var hs=D.createElement('div');hs.className='hs';hs.textContent=en?'Tap a card — today\'s panchang opens with that section':'किसी कार्ड को दबाएँ — आज का पंचांग उसी खंड के साथ खुलेगा';g.appendChild(hs);
   SUB.forEach(function(c){g.appendChild(card(c,function(){openRows(c[5]);}));});}
  else MAIN.forEach(function(c){var a=c[5];g.appendChild(card(c,function(){
-  if(a==='SUB')render('sub');else if(a==='RASHI')openRashi();else if(a==='DRAWER'){closeHome();D.body.classList.add('vjdr');}
+  if(a==='SUB')render('sub');else if(a==='RASHI')openRashi();else if(a==='LAGNA'){openRashi();setTimeout(function(){window.vjLagna&&window.vjLagna();},500);}else if(a==='DRAWER'){closeHome();D.body.classList.add('vjdr');}
   else if(a[0].charAt(0)==='G')goTab(+a[0].slice(1),a[1]);else openBanner(a[0]);}));});
  h.appendChild(g);h.scrollTop=0;}
 function init(){var m=$('vj_menu');if(!m||$('vjhome'))return;var h=D.createElement('div');h.id='vjhome';D.body.appendChild(h);
@@ -8277,6 +8278,61 @@ function build(card){
 function scan(){var o=D.getElementById('td_res');if(!o)return;[].forEach.call(o.querySelectorAll('.res-card.vjmp'),build);}
 setInterval(scan,500);
 }catch(e){console.error('v338',e);}})();
+</script>
+<style>.vjrs{display:flex;gap:6px;margin:6px 0 8px}
+.vjrs button{flex:1;padding:10px 6px;border-radius:12px;border:1.5px solid #c9a15a;background:#fffdf7;color:#6b1d2a;font:inherit;font-weight:800;font-size:15px}
+.vjrs button.on{background:linear-gradient(135deg,#6b1d2a,#922b40);color:#fff;border-color:#6b1d2a}
+.vjlgb{padding:7px 12px;border-radius:8px;border:1px solid #b8860b;background:#fffdf7;color:#6b1c28;font:inherit}
+</style><script>(function(){try{
+var D=document;
+var LG=[
+[4,'चंद्र आपके लग्न (प्रथम भाव) में है। मन में उत्साह व आत्मविश्वास रहेगा; स्वास्थ्य व स्वभाव पर ध्यान दें, भावुकता पर संयम रखें।'],
+[3,'द्वितीय भाव — धन, वाणी व परिवार का दिन। बोलचाल में मिठास रखें, खर्च सोच-समझकर करें।'],
+[5,'तृतीय भाव — साहस, परिश्रम, भाई-बंधु व छोटी यात्राएँ। प्रयासों का फल मिलेगा; संवाद व लेखन में सफलता।'],
+[3,'चतुर्थ भाव — घर, माता, वाहन व मन की शांति। घरेलू कार्य व विश्राम ठीक रहेंगे; बाहर के जोखिम से बचें।'],
+[4,'पंचम भाव — विद्या, संतान, रचनात्मकता व मनोरंजन। पढ़ाई व कला में अच्छा दिन; जल्दबाज़ी में निवेश न करें।'],
+[4,'षष्ठ भाव — रुके कार्य निपटाने व प्रतिस्पर्धा में विजय का दिन। विरोधी शांत रहेंगे; सेहत व खान-पान सँभालें।'],
+[4,'सप्तम भाव — जीवनसाथी, साझेदारी व जन-संपर्क। मिलना-जुलना लाभकारी रहेगा; समझौते से काम बनेगा।'],
+[2,'अष्टम भाव — अचानक बदलाव व अनिश्चितता। जोखिम, बहस व वाहन चलाने में सावधानी रखें; धैर्य से काम लें।'],
+[4,'नवम भाव — भाग्य, धर्म, गुरु व लंबी यात्रा। बड़ों का आशीर्वाद व पूजन-स्वाध्याय शुभ फल देंगे।'],
+[5,'दशम भाव — कर्म, कार्यक्षेत्र व मान-सम्मान। नौकरी/व्यापार में प्रगति; अपने काम को अच्छे से प्रस्तुत करें।'],
+[5,'एकादश भाव — आय, लाभ, मित्र व इच्छा-पूर्ति। रुका हुआ धन या लाभ मिल सकता है; मित्रों का सहयोग रहेगा।'],
+[2,'द्वादश भाव — खर्च, थकान व एकांत। नई प्रतिबद्धताओं से बचें, विश्राम व दान-पुण्य करें।']];
+var HT=['स्वास्थ्य व आत्मबल','धन व परिवार','साहस व प्रयास','घर व मन-सुख','विद्या व संतान','प्रतिस्पर्धा व सेवा','साझेदारी व संबंध','अनिश्चितता व सावधानी','भाग्य व धर्म','कर्म व पद','लाभ व मित्र','खर्च व विश्राम'];
+var ST=function(n){return '★★★★★'.slice(0,n)+'☆☆☆☆☆'.slice(0,5-n);};
+var off=0;
+function istToday(){var t=new Date(Date.now()+19800000);return Date.UTC(t.getUTCFullYear(),t.getUTCMonth(),t.getUTCDate());}
+function ord(n){return n+'वें';}
+function render(){
+  var box=D.getElementById('vjlg_r');if(!box)return;
+  var ms=istToday()+off*86400000,q=new Date(ms),y=q.getUTCFullYear(),m=q.getUTCMonth()+1,d=q.getUTCDate();
+  var P=panchangAt(toJD(y,m,d,6,0,5.5)),pl=P.P,mr=Math.floor(pl[1].lon/30),sr=Math.floor(pl[0].lon/30),jr=Math.floor(pl[4].lon/30),shr=Math.floor(pl[6].lon/30);
+  var pin=-1;try{pin=+(localStorage.getItem('vj_lg_pin')||-1);}catch(e){}
+  var lst=[];for(var l=0;l<12;l++)lst.push(l);
+  lst.sort(function(a,b){return (a===pin?-1:0)-(b===pin?-1:0)||a-b;});
+  var h='<div style="display:flex;gap:6px;align-items:center;margin:6px 0"><button type="button" data-lgd="-1" class="vjlgb">◀</button><span style="flex:1;text-align:center;font-weight:800;color:#6b1c28">'+d+'/'+m+'/'+y+(off===0?' (आज)':'')+'</span><button type="button" data-lgd="1" class="vjlgb">▶</button><button type="button" data-lgd="0" class="vjlgb">आज</button></div>';
+  h+='<p class="kmeta">चंद्र-राशि: '+RASHI_H[mr]+' · सूर्य: '+RASHI_H[sr]+' · गुरु: '+RASHI_H[jr]+' · शनि: '+RASHI_H[shr]+'। लग्न = जन्म के समय पूर्व में उदित राशि (जन्म-कुंडली टैब में देखें)। अपने लग्न को ऊपर रखने के लिए ☆ दबाएँ।</p>';
+  h+=lst.map(function(L){
+    var hm=(mr-L+12)%12,hs=(sr-L+12)%12,hj=(jr-L+12)%12,hh=(shr-L+12)%12,t=LG[hm];
+    return '<div style="border:1px solid #e7d9b8;border-radius:10px;padding:8px 10px;margin:6px 0"><b>'+RASHI_H[L]+' लग्न</b> <span style="color:#b45309">'+ST(t[0])+'</span> <button type="button" data-lgp="'+L+'" style="float:right;border:0;background:none;font-size:20px">'+(L===pin?'★':'☆')+'</button><div>'+t[1]+'</div><div style="font-size:12.5px;color:#6b4a1a;margin-top:4px">☀️ सूर्य '+ord(hs+1)+' भाव ('+HT[hs]+') · 🟡 गुरु '+ord(hj+1)+' ('+HT[hj]+') · 🪐 शनि '+ord(hh+1)+' ('+HT[hh]+')</div></div>';
+  }).join('')+'<p class="kmeta">आज का फल मुख्यतः चंद्र-गोचर के भाव पर आधारित सामान्य संकेत है; सूर्य, गुरु व शनि की पंक्ति माह/वर्ष के प्रमुख विषय बताती है। व्यक्तिगत फल हेतु जन्म-कुंडली व दशा देखें। केवल मार्गदर्शन के लिए।</p>';
+  box.innerHTML=h;
+  [].forEach.call(box.querySelectorAll('[data-lgd]'),function(b){b.onclick=function(){var v=+b.getAttribute('data-lgd');off=v===0?0:off+v;render();};});
+  [].forEach.call(box.querySelectorAll('[data-lgp]'),function(b){b.onclick=function(){var p=+b.getAttribute('data-lgp');try{localStorage.setItem('vj_lg_pin',String(p===pin?-1:p));}catch(e){}render();};});
+}
+function mk(){
+  var rr=D.getElementById('rf_r');if(!rr||D.getElementById('vjlg'))return;
+  var cp=rr.closest('.panel');if(!cp)return;
+  var seg=D.createElement('div');seg.className='vjrs';seg.innerHTML='<button type="button" data-vjrs="c" class="on">🌙 चंद्र राशि से</button><button type="button" data-vjrs="l">🔆 लग्न से</button>';
+  cp.parentNode.insertBefore(seg,cp);
+  var lp=D.createElement('div');lp.className='panel';lp.id='vjlg';lp.style.display='none';
+  lp.innerHTML='<h3>🔆 दैनिक राशिफल — लग्न से</h3><div id="vjlg_r"></div>';
+  cp.parentNode.insertBefore(lp,cp.nextSibling);
+  seg.addEventListener('click',function(e){var b=e.target.closest('[data-vjrs]');if(!b)return;e.stopPropagation();var l=b.getAttribute('data-vjrs')==='l';cp.style.display=l?'none':'';lp.style.display=l?'':'none';[].forEach.call(seg.children,function(x){x.classList.toggle('on',x===b);});if(l)render();});
+}
+setInterval(mk,500);mk();
+window.vjLagna=function(){var s=D.querySelector('[data-vjrs="l"]');if(s)s.click();};
+}catch(e){console.error('v339 lagna',e);}})();
 </script>
 </body>
 </html>
