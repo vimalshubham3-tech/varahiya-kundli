@@ -201,7 +201,7 @@ input[type=date],input[type=time]{min-height:48px}
 .about b{color:var(--maroon)}.about p{margin:4px 0}
 @media print{.brand .pbtn,.nmtools,.totop,.lang,.about{display:none!important}.brand{background:#fff;color:#000;border-bottom:2px solid #000}.brand b{color:#000}.brand span{color:#000}#nm_body{font-size:13px}}
 </style>
-<meta name="vj-ver" content="327">
+<meta name="vj-ver" content="328">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <script>try{if(window.top!==window.self){document.documentElement.style.display='none';window.top.location=window.self.location;}}catch(e){document.documentElement.style.display='none';}</script>
 
@@ -8008,6 +8008,26 @@ var b=D.createElement('button');b.type='button';b.className='vjabt';b.textConten
 b.addEventListener('click',function(){var o=!a.classList.contains('vjabo');a.classList.toggle('vjabo',o);b.classList.toggle('vjabo',o);});
 a.parentNode.insertBefore(b,a);}catch(x){}}
 fx();setTimeout(fx,800);new MutationObserver(function(){var a=D.querySelector('.about');if(a&&a.getAttribute('data-ab')!=='1')fx();}).observe(D.body,{childList:true,subtree:true});})();
+</script>
+<style id="vj328css">
+#vj_lk2,.about,button.vjabt{display:none!important}
+#vjab{display:block!important;position:fixed;inset:0;z-index:2147483002;background:rgba(0,0,0,.6);overflow:auto;padding:14px;align-items:initial!important;justify-content:initial!important}
+#vjab .c{background:#fff;border:2px solid #d9b441;border-radius:14px;padding:14px;color:#4a3b40;font-size:14px;line-height:1.55}
+#vjab .c p{margin:0 0 10px}
+#vjab .t{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;color:#fff;font-weight:800;font-size:17px}
+#vjab .t button{background:#6b1c28;color:#fff;border:1px solid #d9b441;border-radius:8px;padding:6px 12px;font-family:inherit;font-weight:700}
+</style>
+<script>
+/* v328: About / Privacy policy / Disclaimer — मेनू (सेटिंग) में */
+(function(){var D=document;
+function mk(){try{var bar=D.getElementById('vj_tools');if(!bar)return;
+ [['vjabtn','ab','\u2139\uFE0F About this app'],['vjprivbtn','priv','\uD83D\uDD12 Privacy policy'],['vjdiscbtn','disc','\u26A0\uFE0F Disclaimer']].forEach(function(x){var b=bar.querySelector('.'+x[0]);if(!b){b=D.createElement('button');b.type='button';b.className='pbtn '+x[0];b.setAttribute('data-vj8',x[1]);b.textContent=x[2];bar.appendChild(b);}});}catch(e){}}
+function about(){var old=D.getElementById('vjab');if(old)old.remove();var a=D.querySelector('.about');var o=D.createElement('div');o.id='vjab';o.className='vjov';
+ o.innerHTML='<div class="t"><span>\u2139\uFE0F About this app</span><button type="button" data-vj8="abx">\u2715 Close</button></div><div class="c">'+(a?a.innerHTML:'')+'</div>';D.body.appendChild(o);}
+window.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('[data-vj8]');if(!b)return;e.stopPropagation();e.preventDefault();var k=b.getAttribute('data-vj8');
+ if(k==='ab')about();else if(k==='abx'){var o=D.getElementById('vjab');if(o)o.remove();}
+ else if(k==='priv'&&window.vjPriv)window.vjPriv();else if(k==='disc'&&window.vjDisc)window.vjDisc();},true);
+mk();setInterval(mk,800);})();
 </script>
 </body>
 </html>
