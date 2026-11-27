@@ -201,7 +201,7 @@ input[type=date],input[type=time]{min-height:48px}
 .about b{color:var(--maroon)}.about p{margin:4px 0}
 @media print{.brand .pbtn,.nmtools,.totop,.lang,.about{display:none!important}.brand{background:#fff;color:#000;border-bottom:2px solid #000}.brand b{color:#000}.brand span{color:#000}#nm_body{font-size:13px}}
 </style>
-<meta name="vj-ver" content="332">
+<meta name="vj-ver" content="333">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <script>try{if(window.top!==window.self){document.documentElement.style.display='none';window.top.location=window.self.location;}}catch(e){document.documentElement.style.display='none';}</script>
 
@@ -8137,6 +8137,21 @@ window.addEventListener('click',function(e){
   if(hb)hb.click();
 },true);
 }catch(e){console.error('v332',e);}})();
+</script>
+<script>
+/* v333: sanskaran label */
+(function(){try{
+var D=document;
+function ver(){var m=D.querySelector('meta[name="vj-ver"]');return m?m.content:'?';}
+function mk(){
+  var t=D.getElementById('vj_tools');if(!t||t.querySelector('.vjvl'))return;
+  var d=D.createElement('div');d.className='vjvl';
+  d.style.cssText='grid-column:1/-1;width:100%;text-align:center;font-size:13px;color:#7c2d12;opacity:.8;padding:8px 0 2px;flex-basis:100%';
+  d.textContent='संस्करण v'+ver();
+  t.appendChild(d);
+}
+setInterval(mk,700);mk();
+}catch(e){console.error('v333',e);}})();
 </script>
 </body>
 </html>
