@@ -201,7 +201,7 @@ input[type=date],input[type=time]{min-height:48px}
 .about b{color:var(--maroon)}.about p{margin:4px 0}
 @media print{.brand .pbtn,.nmtools,.totop,.lang,.about{display:none!important}.brand{background:#fff;color:#000;border-bottom:2px solid #000}.brand b{color:#000}.brand span{color:#000}#nm_body{font-size:13px}}
 </style>
-<meta name="vj-ver" content="328">
+<meta name="vj-ver" content="329">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <script>try{if(window.top!==window.self){document.documentElement.style.display='none';window.top.location=window.self.location;}}catch(e){document.documentElement.style.display='none';}</script>
 
@@ -8028,6 +8028,34 @@ window.addEventListener('click',function(e){var b=e.target.closest&&e.target.clo
  if(k==='ab')about();else if(k==='abx'){var o=D.getElementById('vjab');if(o)o.remove();}
  else if(k==='priv'&&window.vjPriv)window.vjPriv();else if(k==='disc'&&window.vjDisc)window.vjDisc();},true);
 mk();setInterval(mk,800);})();
+</script>
+<style id="vj329css">
+#vjmsub{display:none;flex-wrap:wrap;gap:6px;margin:8px 0 10px}
+#vjmsub.on{display:flex}
+#vjmsub button{flex:1 1 auto;padding:9px 10px;border-radius:12px;border:2px solid #d9b441;background:#fff8e4;color:#6b1c28;font:700 13.5px/1.25 inherit;font-family:inherit;cursor:pointer}
+#vjmsub button.on{background:linear-gradient(135deg,#6b1c28,#9b2c3d);color:#fff;border-color:#6b1c28}
+@media print{#vjmsub{display:none!important}}
+</style>
+<script>
+/* v329: "विवाह व मिलान" — भीतर उप-टैब: विवाह लग्न · नाम से मिलान · जन्म से मिलान · जन्म कुंडली · विवाह समय */
+(function(){var D=document,inM=false;
+var MS=[['tab-vl','\uD83D\uDC8D विवाह लग्न','\uD83D\uDC8D Vivah Lagna'],['tab-n','नाम से मिलान','Name Matching'],['tab-b','जन्म से मिलान','Birth Matching'],['tab-k','जन्म कुंडली','Birth Kundli']];
+function en(){return D.documentElement.lang==='en';}
+function selId(){var t=D.querySelector('.tabs .tab[aria-selected="true"]');return t?t.id:'';}
+function ensure(){var m=D.getElementById('vj_menu');if(!m)return null;var b=D.getElementById('vjmsub');
+ if(!b){b=D.createElement('div');b.id='vjmsub';MS.forEach(function(x){var k=D.createElement('button');k.type='button';k.setAttribute('data-ms',x[0]);b.appendChild(k);});m.parentNode.insertBefore(b,m.nextSibling);}
+ return b;}
+function upd(){try{var b=ensure();if(!b)return;var id=selId();
+ var show=(id==='tab-vl'||id==='tab-n'||id==='tab-b')||(id==='tab-k'&&inM);
+ if(id!=='tab-k'&&id!=='tab-vl'&&id!=='tab-n'&&id!=='tab-b')inM=false;
+ if(show&&id!=='tab-k')inM=true;
+ var home=D.body.classList.contains('vjhm');
+ b.classList.toggle('on',show&&!home);
+ [].forEach.call(b.querySelectorAll('button'),function(k,i){var tx=en()?MS[i][2]:MS[i][1];if(k.textContent!==tx)k.textContent=tx;k.classList.toggle('on',k.getAttribute('data-ms')===id);});}catch(e){}}
+window.addEventListener('click',function(e){var k=e.target.closest&&e.target.closest('#vjmsub button');
+ if(k){e.stopPropagation();e.preventDefault();inM=true;var t=D.getElementById(k.getAttribute('data-ms'));if(t)t.click();setTimeout(upd,60);setTimeout(upd,400);return;}
+ var c=e.target.closest&&e.target.closest('#vjhome .hc');if(c){inM=/विवाह व मिलान|Marriage/.test(c.textContent);setTimeout(upd,150);}},true);
+setInterval(upd,300);upd();})();
 </script>
 </body>
 </html>
