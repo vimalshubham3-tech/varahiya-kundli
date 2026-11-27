@@ -201,7 +201,7 @@ input[type=date],input[type=time]{min-height:48px}
 .about b{color:var(--maroon)}.about p{margin:4px 0}
 @media print{.brand .pbtn,.nmtools,.totop,.lang,.about{display:none!important}.brand{background:#fff;color:#000;border-bottom:2px solid #000}.brand b{color:#000}.brand span{color:#000}#nm_body{font-size:13px}}
 </style>
-<meta name="vj-ver" content="361">
+<meta name="vj-ver" content="362">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <script>try{if(window.top!==window.self){document.documentElement.style.display='none';window.top.location=window.self.location;}}catch(e){document.documentElement.style.display='none';}</script>
 
@@ -9433,6 +9433,30 @@ window.vjConc=function(K){
   return '<div class="vjconc"><h4>निष्कर्ष (सार)</h4><ul>'+L.map(function(x){return '<li>'+x+'</li>';}).join('')+'</ul><p class="kmeta">यह ऊपर के सभी खंडों का संक्षिप्त सार है; विस्तार के लिए संबंधित खंड खोलें। ग्रह संकेत हैं, निश्चित भविष्यवाणी नहीं।</p></div>';
 };
 }catch(e){console.error('v361 cn',e);}})();
+</script>
+<script>
+/* v362: बालक भविष्यफल प्रिंट / PDF */
+(function(){try{
+function printIt(res){
+  var css='';[].forEach.call(document.querySelectorAll('style'),function(s){css+=s.textContent;});
+  var body=res.cloneNode(true);
+  [].forEach.call(body.querySelectorAll('#bl_pr,.vjprw,button'),function(e){e.remove();});
+  var h3=document.querySelector('#bl_h');
+  var html='<!DOCTYPE html><html lang="hi"><head><meta charset="utf-8"><title>बालक का भविष्यफल</title><style>'+css+
+  '@page{size:A4;margin:12mm}body{background:#fff!important;color:#000;margin:0;padding:0;font-family:inherit}.vjab{display:block!important}.vjah:after{display:none!important}'+
+  '.vjah{break-after:avoid;cursor:default}.pl,.vjconc,svg{break-inside:avoid}.vjpt{text-align:center;color:#6b1d2a;margin:0 0 6px;font-size:20px}.vjps{text-align:center;font-size:12px;color:#555;margin:0 0 10px}</style></head><body>'+
+  '<h1 class="vjpt">वरहिया जैन पंचांग एवं ज्योतिष वास्तु दर्शन</h1><p class="vjps">जन्मे बालक का भविष्यफल &mdash; '+new Date().toLocaleDateString('hi-IN')+' को तैयार</p>'+body.innerHTML+'</body></html>';
+  var f=document.createElement('iframe');f.style.cssText='position:fixed;left:-9999px;top:0;width:800px;height:600px;border:0';
+  document.body.appendChild(f);var d=f.contentWindow.document;d.open();d.write(html);d.close();
+  setTimeout(function(){try{f.contentWindow.focus();f.contentWindow.print();}catch(e){alert('प्रिंट नहीं खुल सका');}setTimeout(function(){f.remove();},60000);},500);
+}
+function add(){var r=document.getElementById('bl_res');if(!r||!r.querySelector('.vjconc')||document.getElementById('bl_pr'))return;
+  var w=document.createElement('div');w.className='vjprw';w.style.cssText='margin:10px 0;text-align:center';
+  w.innerHTML='<button class="go" id="bl_pr" type="button">🖨 प्रिंट / PDF सेव करें</button>';
+  r.insertBefore(w,r.firstChild);
+  document.getElementById('bl_pr').addEventListener('click',function(){printIt(r);});}
+new MutationObserver(add).observe(document.documentElement,{childList:true,subtree:true});
+}catch(e){console.error('v362 pr',e);}})();
 </script>
 </body>
 </html>
