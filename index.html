@@ -201,7 +201,7 @@ input[type=date],input[type=time]{min-height:48px}
 .about b{color:var(--maroon)}.about p{margin:4px 0}
 @media print{.brand .pbtn,.nmtools,.totop,.lang,.about{display:none!important}.brand{background:#fff;color:#000;border-bottom:2px solid #000}.brand b{color:#000}.brand span{color:#000}#nm_body{font-size:13px}}
 </style>
-<meta name="vj-ver" content="372">
+<meta name="vj-ver" content="373">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <script>try{if(window.top!==window.self){document.documentElement.style.display='none';window.top.location=window.self.location;}}catch(e){document.documentElement.style.display='none';}</script>
 
@@ -9732,6 +9732,19 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 /* राशि चुनने पर प्रोफ़ाइल दिखे तो पैनल खुला रहे */
 document.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('#rs_panel .rsg button, #rs_panel .rsg *');if(b){var p=document.getElementById('rs_panel');if(p)p.classList.add('open');}},true);
 })();
+</script>
+<style>.vjcal .cdet.vjclosed{display:none!important}</style>
+<script>
+/* v373: तिथि-दर्पण कैलेंडर — चुनी हुई तारीख़ दोबारा दबाने पर विवरण बंद */
+(function(){try{
+document.addEventListener('click',function(e){
+  var c=e.target.closest&&e.target.closest('.vjcal [data-vjcd]');if(!c)return;
+  var box=c.closest('.vjcal'),det=box&&box.querySelector('.cdet');if(!det)return;
+  if(c.classList.contains('sel')&&!det.classList.contains('vjclosed')){
+    e.stopPropagation();e.preventDefault();c.classList.remove('sel');det.classList.add('vjclosed');return;}
+  det.classList.remove('vjclosed');
+},true);
+}catch(err){console.error('v373',err);}})();
 </script>
 </body>
 </html>
