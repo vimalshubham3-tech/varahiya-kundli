@@ -201,7 +201,7 @@ input[type=date],input[type=time]{min-height:48px}
 .about b{color:var(--maroon)}.about p{margin:4px 0}
 @media print{.brand .pbtn,.nmtools,.totop,.lang,.about{display:none!important}.brand{background:#fff;color:#000;border-bottom:2px solid #000}.brand b{color:#000}.brand span{color:#000}#nm_body{font-size:13px}}
 </style>
-<meta name="vj-ver" content="335">
+<meta name="vj-ver" content="336">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <script>try{if(window.top!==window.self){document.documentElement.style.display='none';window.top.location=window.self.location;}}catch(e){document.documentElement.style.display='none';}</script>
 
@@ -8182,6 +8182,30 @@ window.addEventListener('click',function(e){
   else alert('Chrome के ऊपर दाएँ कोने में तीन बिंदु (⋮) दबाएँ, फिर "Install app" या "Add to Home screen" चुनें।');
 },true);
 }catch(e){console.error('v335',e);}})();
+</script>
+<style id="vj336css">.vjg.vjtree>div.vjposbtn{display:block!important;width:100%;margin:0 0 8px!important;padding:12px 34px 12px 14px!important;border-radius:14px!important;background:linear-gradient(135deg,#7a1428,#a01c36)!important;color:#ffe9a8!important;font-weight:800!important;font-size:16px!important;text-align:left;box-shadow:0 3px 8px rgba(122,20,40,.35);cursor:pointer;position:relative;box-sizing:border-box}
+.vjg.vjtree>div.vjposbtn::after{content:'\25B8';position:absolute;right:14px;top:50%;transform:translateY(-50%)}
+body.vjst .vjg.vjtree>div.vjposbtn{display:none!important}
+.vjg.vjtree>button:not(.vjsetbtn):not(.vjsupbtn){font-size:15.5px!important;font-weight:800!important;padding:12px 36px 12px 14px!important;border-radius:14px!important;background:linear-gradient(180deg,#fffdf7,#f9ebc8)!important;border:1.5px solid #c9a15a!important;color:#6b1d2a!important;box-shadow:0 2px 6px rgba(107,29,42,.15)!important}
+.vjg.vjtree>button:not(.vjsetbtn):not(.vjsupbtn)[aria-pressed=true]{background:linear-gradient(135deg,#6b1d2a,#922b40)!important;color:#fff!important;border-color:#6b1d2a!important;box-shadow:0 3px 9px rgba(107,29,42,.4)!important}
+.vjg.vjtree>.tabs .tab{font-size:14px!important;font-weight:700!important;padding:10px 12px 10px 16px!important;border-radius:11px!important;background:#fff!important;border:1.5px solid #e0c78a!important;color:#5a1a26!important;box-shadow:0 1px 3px rgba(0,0,0,.08)!important}
+.vjg.vjtree>.tabs .tab[aria-selected=true]{background:linear-gradient(135deg,#f5d36a,#d9a22a)!important;color:#3b1d0a!important;border-color:#b88a1c!important;box-shadow:0 2px 6px rgba(184,138,28,.45)!important}
+.vjg.vjtree>.tabs{gap:5px!important;margin:2px 0 8px 16px!important}
+</style>
+<script>
+/* v336: menu index fix + look */
+(function(){try{
+var D=document;
+function fix(){
+  var t=D.querySelector('.vjg.vjtree');if(!t)return;
+  var b=t.querySelector('button.vjposbtn');if(!b)return;
+  var d=D.createElement('div');d.className=b.className;d.setAttribute('role','button');d.setAttribute('tabindex','0');
+  [].forEach.call(b.attributes,function(a){if(a.name!=='class'&&a.name!=='type')d.setAttribute(a.name,a.value);});
+  d.innerHTML=b.innerHTML;b.parentNode.replaceChild(d,b);
+  var s=D.querySelector('.tab[aria-selected="true"]');if(s)s.setAttribute('aria-selected','true');
+}
+setInterval(fix,400);fix();
+}catch(e){console.error('v336',e);}})();
 </script>
 </body>
 </html>
