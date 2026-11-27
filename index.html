@@ -201,7 +201,7 @@ input[type=date],input[type=time]{min-height:48px}
 .about b{color:var(--maroon)}.about p{margin:4px 0}
 @media print{.brand .pbtn,.nmtools,.totop,.lang,.about{display:none!important}.brand{background:#fff;color:#000;border-bottom:2px solid #000}.brand b{color:#000}.brand span{color:#000}#nm_body{font-size:13px}}
 </style>
-<meta name="vj-ver" content="326">
+<meta name="vj-ver" content="327">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <script>try{if(window.top!==window.self){document.documentElement.style.display='none';window.top.location=window.self.location;}}catch(e){document.documentElement.style.display='none';}</script>
 
@@ -7728,7 +7728,7 @@ fx();new MutationObserver(fx).observe(D.body,{childList:true,subtree:true});})()
 <style id="vj323css">
 #nm_res .vjdk>.vjtgl,#nm_res .vjsm>.vjtgl{background:linear-gradient(135deg,#fbeab0,#f4d77a)!important;color:#5a1a24!important;border:2px solid #d9b441;box-shadow:0 2px 5px rgba(150,110,20,.25)}
 </style>
-<style id="vj325css">
+<style id="vj327css">
 .vjpbar{margin:0 0 10px}
 .vjpbar button{width:100%;padding:12px 10px;border-radius:12px;border:2px solid #d9b441;background:linear-gradient(135deg,#7a1428,#a01c36);color:#ffe9a8;font:800 15px/1.3 inherit;font-family:inherit;box-shadow:0 2px 6px rgba(0,0,0,.25)}
 #vjpo,#vjpf{display:block!important;align-items:initial!important;justify-content:initial!important;position:fixed;inset:0;z-index:2147483000;background:#2b0a12;overflow:auto;padding:10px 12px 40px;color:#ffe9a8;-webkit-overflow-scrolling:touch}
@@ -7757,6 +7757,12 @@ fx();new MutationObserver(fx).observe(D.body,{childList:true,subtree:true});})()
 #vjpf .vjpa{display:flex;margin-top:14px}
 #vjpf .vjpa button{flex:1;padding:13px 8px;border-radius:12px;border:2px solid #9ccf9a;background:linear-gradient(135deg,#1d7a3a,#2f9b52);color:#fff;font-family:inherit;font-size:16px;font-weight:800}
 #vjpf .vjpn{font-size:12.5px;color:#cdb98a;margin-top:10px;text-align:center}
+
+#vjpf .vjph2{display:flex;gap:14px;align-items:center;margin:8px 0}
+#vjpf .vjav{width:84px;height:84px;border-radius:50%;border:3px solid #e2bd52;overflow:hidden;background:#3d1220;display:flex;align-items:center;justify-content:center;font-size:36px;flex:none}
+#vjpf .vjav img{width:100%;height:100%;object-fit:cover}
+#vjpf .vjfb{display:inline-block;padding:10px 14px;border-radius:10px;border:2px solid #d9b441;background:#5c0d1c;color:#ffe9a8;font-weight:800;font-size:14px}
+#vjpf .vjrm{display:block;margin-top:8px;padding:6px 10px;border-radius:8px;border:1px solid #6b4a3a;background:transparent;color:#cdb98a;font-family:inherit;font-size:12.5px}
 </style>
 <script>
 (function(){
@@ -7805,7 +7811,7 @@ function getData(){
   var reg={},pf=getProf();try{reg=JSON.parse(localStorage.getItem('vj_reg_v1')||'{}')||{};}catch(e){}
   return {city:d.city,day:d.dd.replace(/^0/,''),mon:MON[d.mm-1]+' '+d.yy,dd:d.dd,mm:d.mm,yy:d.yy,wd:find('वार',true),pk:pk,
     sr:nz(sr[0]),ss:nz(sr[1]),five:[['तिथि',ti],['नक्षत्र',na],['योग',yo],['करण',ka]],shubh:shubh,ashubh:ashubh,
-    dch:ch(find('चौघड़िया — दिन')),nch:ch(find('चौघड़िया — रात')),sv:svt,gh:gh,name:pf.show?(pf.pname||reg.name||''):'',mob:pf.show?(pf.pcontact||reg.mobile||''):''};
+    dch:ch(find('चौघड़िया — दिन')),nch:ch(find('चौघड़िया — रात')),sv:svt,gh:gh,name:pf.show?(pf.pname||reg.name||''):'',mob:pf.show?(pf.pcontact||reg.mobile||''):'',photo:(pf.show&&pf.photo!==0)?getPhoto():''};
 }
 
 /* ---------- drawing ---------- */
@@ -7829,9 +7835,14 @@ function header(c,t,d,full,y2){
     c.strokeStyle=t.hbSub;c.globalAlpha=.55;c.lineWidth=2;c.beginPath();c.moveTo(140,207);c.lineTo(540-w/2-44,207);c.moveTo(540+w/2+44,207);c.lineTo(940,207);c.stroke();c.globalAlpha=1;}
   if(logoImg){var lx=full?96:70,ly=full?60:44,ls=full?104:92;if(t.logoBg){box(c,lx-10,ly-8,ls+20,ls+16,16,t.logoBg);}c.drawImage(logoImg,lx,ly,ls,ls);}
 }
+var phCache={k:'',img:null};
+function getPhoto(){try{return localStorage.getItem('vj_photo_v1')||'';}catch(e){return '';}}
+function loadPhoto(src,cb){if(!src){cb(null);return;}if(phCache.k===src&&phCache.img){cb(phCache.img);return;}var i=new Image();i.onload=function(){phCache={k:src,img:i};cb(i);};i.onerror=function(){cb(null);};i.src=src;}
+var PH=null;
 function footer(c,t,d,H,pb){
-  var cy=pb+(H-pb)/2;
-  if(d.name){T(c,d.name,44,cy-18,36,t.fn,'left',800);if(d.mob)T(c,'मो. '+d.mob,44,cy+22,28,t.fp,'left',700);}
+  var cy=pb+(H-pb)/2,x0=44;
+  if(PH){var R=37,px=44+R,pc=cy;c.save();c.beginPath();c.arc(px,pc,R,0,Math.PI*2);c.closePath();c.clip();c.drawImage(PH,px-R,pc-R,2*R,2*R);c.restore();c.lineWidth=4;c.strokeStyle=t.frame;c.beginPath();c.arc(px,pc,R,0,Math.PI*2);c.stroke();x0=44+2*R+16;}
+  if(d.name){fitT(c,d.name,x0,cy-18,36,t.fn,'left',800,(PH?420:520));if(d.mob)T(c,'मो. '+d.mob,x0,cy+22,28,t.fp,'left',700);}
   T(c,'वरहिया हेल्प डेस्क · हर पल आपके साथ',1036,cy-26,24,t.fn,'right',800);
   T(c,'वरहिया जैन पंचांग एवं ज्योतिष वास्तु दर्शन',1036,cy+3,20,t.fl,'right',600);
   T(c,'tinyurl.com/varahiya-jyotish-darshan',1036,cy+30,21,t.fl,'right',600);
@@ -7853,7 +7864,7 @@ function bPairs(t,d,rows){ /* rows: array of [ {lbl,val,sub,th} , {..} ] */
 function bList(t,title,arr){var h=36+arr.length*46;return {h:h,draw:function(c,W){T(c,title,W/2,18,28,t.ttl,'center',700);arr.forEach(function(x,i){var cc=t['c'+x.t],y=36+i*46;box(c,0,y,W,41,10,cc[0]);T(c,x.n,22,y+21,27,cc[1],'left',800);T(c,x.a+'–'+x.b,W-22,y+21,27,cc[1],'right',800);});}};}
 
 function render(d,fm,tk,cb){
-  loadLogo(function(){
+  loadLogo(function(){loadPhoto(d.photo,function(pi){PH=pi;
     var t=TH[tk]||TH.saffron,H=FM[fm][1],cv=document.createElement('canvas');cv.width=1080;cv.height=H;var c=cv.getContext('2d');
     c.fillStyle=grad(c,0,0,1080,H,t.bg,true);
     var g=c.createRadialGradient(540,0,0,540,0,H);g.addColorStop(0,t.bg[0]);g.addColorStop(.7,t.bg[1]);c.fillStyle=g;c.fillRect(0,0,1080,H);
@@ -7891,7 +7902,7 @@ function render(d,fm,tk,cb){
     all.forEach(function(b){c.save();c.translate(64,y);c.scale(s,s);b.draw(c,Wl);c.restore();y+=b.h*s+gap;});
     footer(c,t,d,H,pb);
     cb(cv);
-  });
+  });});
 }
 
 
@@ -7909,6 +7920,8 @@ function openProf(){
    +'<label class="vjf">मोबाइल (10 अंक)<input id="vjpf_m" value="'+esc(r.mobile)+'" inputmode="numeric" maxlength="10" autocomplete="tel"></label>'
    +'<label class="vjf">शहर / गाँव<input id="vjpf_c" value="'+esc(r.city)+'"></label>'
    +'<div class="vjpl">पंचांग-चित्र (पोस्टर) की सेटिंग</div>'
+   +'<div class="vjph2"><div class="vjav" id="vjpf_av">'+(getPhoto()?'<img src="'+getPhoto()+'">':'<span>👤</span>')+'</div><div><label class="vjfb">📷 फ़ोटो जोड़ें / बदलें<input type="file" id="vjpf_file" accept="image/*" hidden></label><button type="button" class="vjrm" data-vjp="phx">✕ फ़ोटो हटाएँ</button></div></div>'
+   +'<label class="vjk"><input type="checkbox" id="vjpf_ph" '+(p.photo!==0?'checked':'')+'> पोस्टर पर फ़ोटो दिखाएँ</label>'
    +'<label class="vjk"><input type="checkbox" id="vjpf_s" '+(p.show?'checked':'')+'> पोस्टर के नीचे नाम व संपर्क दिखाएँ</label>'
    +'<label class="vjf">पोस्टर पर दिखने वाला नाम <small>(ख़ाली = ऊपर वाला नाम)</small><input id="vjpf_pn" value="'+esc(p.pname)+'" placeholder="जैसे: वरहिया समाज, सुमावली"></label>'
    +'<label class="vjf">पोस्टर पर दिखने वाला संपर्क <small>(ख़ाली = ऊपर वाला मोबाइल)</small><input id="vjpf_pc" value="'+esc(p.pcontact)+'" placeholder="मोबाइल / वॉट्सऐप नंबर"></label>'
@@ -7924,12 +7937,14 @@ function saveProf(){
   if(mo.length!==10){m.textContent='⚠ मोबाइल नंबर 10 अंक का होना चाहिए।';m.style.color='#ffb3b3';return;}
   var r=getReg();r.name=n;r.mobile=mo;r.city=c;r.done=1;
   var pc=g('vjpf_pc').replace(/[^\d+\- ]/g,'').trim();
-  var p={show:document.getElementById('vjpf_s').checked?1:0,pname:g('vjpf_pn').trim(),pcontact:pc};
+  var p={photo:document.getElementById('vjpf_ph').checked?1:0,show:document.getElementById('vjpf_s').checked?1:0,pname:g('vjpf_pn').trim(),pcontact:pc};
   st.fmt=g('vjpf_f');st.th=g('vjpf_t');
   try{localStorage.setItem('vj_reg_v1',JSON.stringify(r));localStorage.setItem('vj_prof_v1',JSON.stringify(p));localStorage.setItem('vj_pfmt',st.fmt);localStorage.setItem('vj_pth',st.th);}catch(e){m.textContent='⚠ सहेज नहीं सके (स्टोरेज बंद है)।';return;}
   m.textContent='✔ प्रोफ़ाइल सहेज ली गई।';m.style.color='#b8f0b8';
   var o=ov();if(o)draw();
 }
+function onPhoto(f){if(!f)return;var m=document.getElementById('vjpf_msg');var fr=new FileReader();fr.onload=function(){var im=new Image();im.onload=function(){try{var S=Math.min(im.width,im.height),cv=document.createElement('canvas');cv.width=cv.height=300;var x=cv.getContext('2d');x.drawImage(im,(im.width-S)/2,(im.height-S)/2,S,S,0,0,300,300);var u=cv.toDataURL('image/jpeg',.85);localStorage.setItem('vj_photo_v1',u);document.getElementById('vjpf_av').innerHTML='<img src="'+u+'">';m.textContent='✔ फ़ोटो जुड़ गई।';m.style.color='#b8f0b8';}catch(e){m.textContent='⚠ फ़ोटो सहेज नहीं सके।';m.style.color='#ffb3b3';}};im.onerror=function(){m.textContent='⚠ यह फ़ोटो खुल नहीं सकी।';m.style.color='#ffb3b3';};im.src=fr.result;};fr.readAsDataURL(f);}
+document.addEventListener('change',function(e){if(e.target&&e.target.id==='vjpf_file')onPhoto(e.target.files&&e.target.files[0]);},true);
 function mkProf(){try{var bar=document.getElementById('vj_tools');if(!bar)return;var b=bar.querySelector('.vjprof');if(!b){b=document.createElement('button');b.type='button';b.className='pbtn vjprof';b.setAttribute('data-vjp','prof');bar.insertBefore(b,bar.firstChild);}
   var r=getReg(),tx='👤 मेरी प्रोफ़ाइल'+(r.name?' — '+r.name:'');if(b.textContent!==tx)b.textContent=tx;}catch(e){}}
 setInterval(mkProf,800);
@@ -7965,7 +7980,7 @@ function share(){var d=getData();toBlob(function(b){var f=new File([b],fname(d),
   else{save();}});}
 window.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('[data-vjp]');if(!b)return;e.stopPropagation();e.preventDefault();
   var a=b.getAttribute('data-vjp');
-  if(a==='prof')openProf();else if(a==='pfx'){var q=document.getElementById('vjpf');if(q)q.remove();}else if(a==='pfs')saveProf();else if(a==='open')open();else if(a==='x'){var o=ov();if(o)o.remove();}
+  if(a==='prof')openProf();else if(a==='pfx'){var q=document.getElementById('vjpf');if(q)q.remove();}else if(a==='pfs')saveProf();else if(a==='phx'){try{localStorage.removeItem('vj_photo_v1');}catch(x){}var av=document.getElementById('vjpf_av');if(av)av.innerHTML='<span>👤</span>';}else if(a==='open')open();else if(a==='x'){var o=ov();if(o)o.remove();}
   else if(a==='share')share();else if(a==='save')save();
   else if(a.indexOf('f:')===0){st.fmt=a.slice(2);try{localStorage.setItem('vj_pfmt',st.fmt);}catch(x){}draw();}
   else if(a.indexOf('t:')===0){st.th=a.slice(2);try{localStorage.setItem('vj_pth',st.th);}catch(x){}draw();}
