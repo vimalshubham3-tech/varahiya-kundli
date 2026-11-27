@@ -201,7 +201,7 @@ input[type=date],input[type=time]{min-height:48px}
 .about b{color:var(--maroon)}.about p{margin:4px 0}
 @media print{.brand .pbtn,.nmtools,.totop,.lang,.about{display:none!important}.brand{background:#fff;color:#000;border-bottom:2px solid #000}.brand b{color:#000}.brand span{color:#000}#nm_body{font-size:13px}}
 </style>
-<meta name="vj-ver" content="356">
+<meta name="vj-ver" content="357">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <script>try{if(window.top!==window.self){document.documentElement.style.display='none';window.top.location=window.self.location;}}catch(e){document.documentElement.style.display='none';}</script>
 
@@ -8959,7 +8959,7 @@ function run(){
     var c=CITIES[+D.getElementById('pn_place').value],a=v.split('-').map(Number),b=tm.split(':').map(Number);
     var K=buildKundli({y:a[0],mo:a[1],dd:a[2],hh:b[0],mm:b[1],off:5.5,lat:c[2],lon:c[3],name:'',dob:a[2]+'/'+a[1]+'/'+a[0],tm:tm,place:c[0]});
     var P=K.P,ascR=K.ascR,moon=P[1],txt=[],h='';
-    function S(title,body){h+='<div class="pl"><b>'+esc2(title)+'</b>'+body+'</div>';}
+    function S(title,body){h+='<h3>'+esc2(title)+'</h3><div class="pl">'+body+'</div>';}
     // संक्षेप
     h+='<div class="pills"><span>लग्न: <b>'+RASHI_H[ascR]+'</b></span><span>राशि: <b>'+RASHI_H[moon.r]+'</b></span><span>नक्षत्र: <b>'+NAK_H[moon.n]+' ('+moon.pd+')</b></span></div>';
     h+='<p class="kmeta">'+a[2]+'/'+a[1]+'/'+a[0]+' · '+tm+' · '+esc2(c[0])+'</p>';
@@ -8987,8 +8987,9 @@ function run(){
     try{h+='<h3>फलादेश</h3>';phalLines(K).forEach(function(x){h+='<div class="pl"><b>'+esc2(x[0])+'</b><p>'+esc2(x[1])+'</p></div>';});}catch(e){}
     // पंचांग-जन्म, नामाक्षर, करियर, जीवन, गोचर
     ['panchangBirthHTML','namkaranHTML','careerHTML','lifeHTML','transitHTML'].forEach(function(fn){try{h+=window[fn]?window[fn](K,txt):eval(fn+'(K,txt)');}catch(e){console.error(fn,e);}});
+    try{var ob=K.I.birthMs,sv=K.nowMs;K.nowMs=ob;var cu=K.dasha.find(function(m){return ob>=m.start&&ob<m.end;})||K.dasha[0],sb=cu.subs.find(function(x){return ob>=x.start&&ob<x.end;})||cu.subs[0];h+=dashaPlusHTML(K,cu,sb,txt);K.nowMs=sv;}catch(e){console.error('v357 dasha',e);}
     h+='<p class="disc">ये परंपरागत ज्योतिष के सामान्य संकेत हैं, निश्चित भविष्यवाणी नहीं। जन्म-समय में अंतर से लग्न बदल जाता है। जैन परंपरा में कर्म-सिद्धांत प्रधान है; संस्कार, धर्म-आचरण व पुरुषार्थ ही जीवन का आधार हैं।</p>';
-    out.innerHTML=h;
+    out.innerHTML=h;if(window.vjAcc)window.vjAcc(out);
   }catch(e){out.innerHTML='<p class="warn">गणना में त्रुटि: '+esc2(e.message)+'</p>';console.error('v353 bl',e);}
 }
 new MutationObserver(add).observe(D.getElementById('pn_res')||D.body,{childList:true});
@@ -9127,16 +9128,37 @@ function yearly(B,y){
   h+='<h3>क्षेत्र-वार फल (वर्ष के मध्य के गोचर से)</h3>'+grid(areaScore(mid,B).map(function(a){return [a.n,areaTxt(a)];}),'1fr 2.2fr',['क्षेत्र','संकेत']);
   return h;
 }
+var YG=[['मंगला','चंद्र',1],['पिंगला','सूर्य',2],['धान्या','गुरु',3],['भ्रामरी','मंगल',4],['भद्रिका','बुध',5],['उल्का','शनि',6],['सिद्धा','शुक्र',7],['संकटा','राहु',8]];
+function acc(root){
+  if(!root)return;
+  var kids=[].slice.call(root.children),i=0;
+  while(i<kids.length){
+    var e=kids[i];
+    if(e.tagName==='H3'&&!(kids[i+1]&&kids[i+1].className==='pills')&&!e.classList.contains('vjah')){
+      var w=D.createElement('div');w.className='vjab';
+      var j=i+1;while(j<kids.length&&kids[j].tagName!=='H3'){w.appendChild(kids[j]);j++;}
+      e.classList.add('vjah');e.setAttribute('role','button');
+      e.parentNode.insertBefore(w,e.nextSibling);
+      (function(h,ww){h.addEventListener('click',function(){h.classList.toggle('open');ww.classList.toggle('open');});})(e,w);
+      i=j;
+    }else i++;
+  }
+}
+window.vjAcc=acc;
 function full(B){
-  var RS=window.vjRS||[],h='<h3>संपूर्ण (जीवन-स्तर का) भविष्यफल</h3>';
-  if(st.basis==='l'){h+='<div class="pl"><b>लग्न ('+RASHI_H[B]+') का स्वभाव</b><p>'+esc2(LAGNA_T[B])+'</p></div>';}
+  var RS=window.vjRS||[],h='';
+  if(st.basis==='l'){h+='<h3>लग्न ('+RASHI_H[B]+') का स्वभाव</h3><div class="pl"><p>'+esc2(LAGNA_T[B])+'</p></div>';}
   if(st.basis==='n'){var n=+D.getElementById('fc_n').value,p=+D.getElementById('fc_p').value;
-    h+='<div class="pl"><b>नक्षत्र: '+NAK_H[n]+' · चरण '+p+'</b><p>'+esc2(NAK_T[n])+'</p></div>';
-    var dl=DY[n%9];h+='<div class="pl"><b>जन्म की महादशा: '+dl[0]+'</b><p>'+esc2(DASHA_T[['सूर्य','चंद्र','मंगल','बुध','गुरु','शुक्र','शनि','राहु','केतु'].indexOf(dl[0])])+'</p></div>';
+    h+='<h3>नक्षत्र: '+NAK_H[n]+' · चरण '+p+'</h3><div class="pl"><p>'+esc2(NAK_T[n])+'</p></div>';
+    var dl=DY[n%9];h+='<h3>जन्म की महादशा (विंशोत्तरी): '+dl[0]+'</h3><div class="pl"><p>'+esc2(DASHA_T[['सूर्य','चंद्र','मंगल','बुध','गुरु','शुक्र','शनि','राहु','केतु'].indexOf(dl[0])])+'</p></div>';
     var seq='';for(var k=0;k<9;k++){var e=DY[(n%9+k)%9];seq+=e[0]+' '+e[1]+' वर्ष'+(k<8?' → ':'');}
-    h+='<div class="pl"><b>विंशोत्तरी दशा-क्रम</b><p>'+seq+'</p><p>जन्म के समय पहली दशा पूरी नहीं, शेष बची हुई मिलती है; सही आयु-काल के लिए "कुंडली" टैब में जन्म-विवरण डालें।</p></div>';}
+    h+='<h3>विंशोत्तरी दशा-क्रम</h3><div class="pl"><p>'+seq+'</p><p>जन्म के समय पहली दशा पूरी नहीं, शेष बची हुई मिलती है; सही आयु-काल के लिए "कुंडली" टैब में जन्म-विवरण डालें।</p></div>';
+    var i0=(((n+1+3)%8)||8)-1,rows=[];
+    for(var c=0;c<8;c++){var y=YG[(i0+c)%8];rows.push([y[0],y[1],y[2]+' वर्ष']);}
+    h+='<h3>योगिनी दशा-क्रम (36 वर्ष का चक्र)</h3>'+grid(rows,'1.2fr 1fr 1fr',['योगिनी','ग्रह','अवधि'])+'<p class="kmeta">जन्म नक्षत्र से योगिनी दशा का क्रम यही रहता है; पहली दशा जन्म के समय आंशिक होती है। सही तिथियाँ व अंतर्दशा के लिए "कुंडली" टैब देखें।</p>';
+  }
   var R=RS[B];
-  if(R){h+='<div class="rsc"><div class="rst">'+R[0]+' '+R[1]+' '+(st.basis==='l'?'लग्न/राशि':'राशि')+' का जीवन-चित्र</div>';for(var j=0;j<16;j++){h+='<div class="rss"><b>'+RSH[j]+'</b><p>'+esc2(R[2+j])+'</p></div>';}h+='</div>';}
+  if(R){h+='<h3>'+R[0]+' '+R[1]+' '+(st.basis==='l'?'लग्न/राशि':'राशि')+' का जीवन-चित्र (16 खंड)</h3><div class="rsc">';for(var j=0;j<16;j++){h+='<div class="rss"><b>'+RSH[j]+'</b><p>'+esc2(R[2+j])+'</p></div>';}h+='</div>';}
   h+='<p class="kmeta">यह जीवन-स्तर का सामान्य चित्र है। लग्न, चंद्र व सभी ग्रहों के संयुक्त फल के लिए जन्म-कुंडली ही सही आधार है।</p>';
   return h;
 }
@@ -9147,8 +9169,8 @@ function run(){
     var h='<div class="res-card"><h2 class="kh">'+esc2(basisName(B))+'</h2>';
     if(st.per==='M')h+=monthly(B,my,mm);else if(st.per==='Y')h+=yearly(B,y);else h+=full(B);
     if(st.per!=='F')h+='<p class="kmeta">यह गोचर (ग्रहों की वर्तमान चाल) पर आधारित सामान्य फल है'+(st.basis==='l'?'; भाव आपके लग्न से गिने गए हैं':'; भाव चंद्र राशि से गिने गए हैं')+'। व्यक्तिगत फल जन्म-कुंडली से ही सही मिलता है। जैन परंपरा में कर्म-सिद्धांत प्रधान है — ग्रह संकेत हैं, पुरुषार्थ व धर्माचरण आधार।</p>';
-    out.innerHTML=h+'</div>';
-  }catch(e){out.innerHTML='<p class="warn">गणना में त्रुटि: '+esc2(e.message)+'</p>';console.error('v356',e);}
+    out.innerHTML=h+'</div>';acc(out.firstChild);
+  }catch(e){out.innerHTML='<p class="warn">गणना में त्रुटि: '+esc2(e.message)+'</p>';console.error('v357',e);}
 }
 var rs=D.getElementById('rs_panel')||D.getElementById('rf_res');if(!rs||D.getElementById('fc_panel'))return;
 var pn=D.createElement('div');pn.className='panel';pn.id='fc_panel';
@@ -9174,5 +9196,9 @@ D.getElementById('fc_go').addEventListener('click',run);
 sync();window.vjFcRun=run;
 }catch(e){console.error('v356 init',e);}})();
 </script>
+<style>
+.vjah{cursor:pointer;position:relative;padding-right:30px!important}.vjah:after{content:"▸";position:absolute;right:12px;top:50%;transform:translateY(-50%);transition:transform .15s}.vjah.open:after{transform:translateY(-50%) rotate(90deg)}
+.vjab{display:none;padding:2px 0 6px}.vjab.open{display:block}
+</style>
 </body>
 </html>
