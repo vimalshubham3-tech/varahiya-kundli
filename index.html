@@ -201,7 +201,7 @@ input[type=date],input[type=time]{min-height:48px}
 .about b{color:var(--maroon)}.about p{margin:4px 0}
 @media print{.brand .pbtn,.nmtools,.totop,.lang,.about{display:none!important}.brand{background:#fff;color:#000;border-bottom:2px solid #000}.brand b{color:#000}.brand span{color:#000}#nm_body{font-size:13px}}
 </style>
-<meta name="vj-ver" content="366">
+<meta name="vj-ver" content="367">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <script>try{if(window.top!==window.self){document.documentElement.style.display='none';window.top.location=window.self.location;}}catch(e){document.documentElement.style.display='none';}</script>
 
@@ -9487,7 +9487,7 @@ window.vjConc=function(K){
 }catch(e){console.error('v363',e);}})();
 </script>
 <script>
-/* v366: करियर · विवाह · संतान (विस्तृत, काल-सहित) */
+/* v367: करियर · विवाह · संतान (विस्तृत, काल-सहित) */
 (function(){try{
 var old=window.vjConc;
 var LR=[2,5,3,1,0,3,5,2,4,6,6,4];
@@ -9603,14 +9603,41 @@ function vehicle(K){
 }
 function vastra(K){
   var l2=LR[hr(K,2)],l11=LR[hr(K,11)],L=[];
-  L.push('<b>वस्त्र:</b> '+tags(K,5)+' — '+(([1,2,4,5,7,9,10,11].indexOf(K.P[5].h)>=0)?'अच्छे वस्त्र व सजावट की रुचि/सुविधा।':'सादगी; आवश्यकता भर वस्त्र, दिखावा कम।'));
-  L.push('<b>आभूषण:</b> स्वर्ण-कारक '+tags(K,4)+'; द्वितीय स्वामी '+PL_H[l2]+' व एकादश स्वामी '+PL_H[l11]+'। '+verdict(((K.P[4].h&&[1,2,5,9,11].indexOf(K.P[4].h)>=0)?1:0)+(([1,2,4,5,7,9,10,11].indexOf(K.P[5].h)>=0)?1:0)+(([6,8,12].indexOf(K.P[l2].h)>=0)?-1:0)));
+  L.push('<b>वस्त्र:</b> शुक्र '+tags(K,5)+' — '+(([1,2,4,5,7,9,10,11].indexOf(K.P[5].h)>=0)?'अच्छे वस्त्र व सजावट की रुचि/सुविधा।':'सादगी; आवश्यकता भर वस्त्र, दिखावा कम।'));
+  L.push('<b>आभूषण:</b> गुरु (स्वर्ण) '+tags(K,4)+'; द्वितीय स्वामी '+PL_H[l2]+' व एकादश स्वामी '+PL_H[l11]+'। '+verdict(((K.P[4].h&&[1,2,5,9,11].indexOf(K.P[4].h)>=0)?1:0)+(([1,2,4,5,7,9,10,11].indexOf(K.P[5].h)>=0)?1:0)+(([6,8,12].indexOf(K.P[l2].h)>=0)?-1:0)));
   var w=win(K,[5,4,l2,l11],18,50,4);
   L.push('<b>वस्त्र-आभूषण-लाभ के संभावित काल:</b>'+li(w.length?w:['स्पष्ट प्रबल काल नहीं मिला।']));
   return sec('👗 वस्त्र व आभूषण-सुख',li(L)+'<p class="kmeta">शुक्र (वस्त्र/सौंदर्य), गुरु (स्वर्ण), द्वितीय व एकादश भाव से विचार।</p>');
 }
-window.vjConc=function(K){var h='';try{h=career(K)+marriage(K)+santan(K)+parents(K)+sibs(K)+prop(K)+vehicle(K)+vastra(K);}catch(e){console.error('v366',e);}return h+old(K);};
-}catch(e){console.error('v366 cm',e);}})();
+
+function tirth(K){
+  var r9=rel(K,9,4,'धर्म-भाग्य'),l12=LR[hr(K,12)],L=r9.L.slice();
+  L.push('<b>12वाँ भाव (विदेश/दूर-यात्रा/मोक्ष):</b> '+RASHI_H[hr(K,12)]+' राशि, स्वामी '+tags(K,l12)+(inh(K,12).length?'; स्थित: '+nm(inh(K,12)):'')+'।');
+  var pk=(K.P[8].h===9||K.P[8].h===12||K.P[8].h===4)?'केतु '+K.P[8].h+'वें भाव में — वैराग्य व तीर्थ/साधना की ओर झुकाव।':'';
+  if(pk)L.push('<b>वैराग्य-संकेत:</b> '+pk);
+  var yg=[];if(K.P[4].h===9)yg.push('गुरु नवम में');if(r9.l===4)yg.push('नवमेश गुरु');if(K.P[6].h===9)yg.push('शनि नवम में — देर से, परिश्रम सहित');if(K.P[1].h===9||K.P[1].h===12)yg.push('चंद्र '+K.P[1].h+'वें भाव में');if(K.P[0].h===9)yg.push('सूर्य नवम में');
+  L.push('<b>धार्मिक-यात्रा योग:</b> '+(r9.sc>=1||yg.length?'यात्रा/तीर्थ-वंदना के अच्छे योग'+(yg.length?' ('+yg.join('; ')+')':'')+'।':'यात्रा-योग सामान्य; संकल्प व समय निकालने से फल मिलता है।'));
+  var w=win(K,[r9.l,4,l12].concat(inh(K,9),inh(K,12)),22,70,5);
+  L.push('<b>तीर्थ-यात्रा के संभावित काल:</b>'+li(w.length?w:['स्पष्ट प्रबल काल नहीं मिला।']));
+  L.push('<b>दिगंबर जैन तीर्थ-वंदना (सुझाव):</b> श्री सम्मेदशिखरजी, श्रवणबेलगोला (गोम्मटेश्वर), कुंडलपुर, सोनागिरजी, मांगीतुंगी जैसे सिद्ध/अतिशय क्षेत्रों की वंदना; यात्रा में देव-शास्त्र-गुरु का दर्शन, संयम व दान।');
+  return sec('🛕 धार्मिक व तीर्थ-यात्रा योग',li(L)+'<p class="kmeta">नवम, द्वादश भाव व गुरु से विचार; काल संकेत मात्र हैं।</p>');
+}
+function grih(K){
+  var f=rel(K,2,4,'कुटुंब'),h=rel(K,4,1,'घर-सुख'),sp=rel(K,7,5,'जीवनसाथी'),sn=rel(K,5,4,'संतान'),b12=rel(K,12,5,'शयन-सुख/व्यय');
+  var tot=f.sc+h.sc+sp.sc+sn.sc+b12.sc,L=[];
+  L.push('<b>कुटुंब (द्वितीय):</b> '+verdict(f.sc)+' — स्वामी '+PL_H[f.l]+' '+K.P[f.l].h+'वें भाव में।');
+  L.push('<b>घर की शांति व सुख (चतुर्थ):</b> '+verdict(h.sc)+' — स्वामी '+PL_H[h.l]+' '+K.P[h.l].h+'वें भाव में।');
+  L.push('<b>पति/पत्नी से तालमेल (सप्तम):</b> '+verdict(sp.sc));
+  L.push('<b>संतान-सुख (पंचम):</b> '+verdict(sn.sc));
+  L.push('<b>शयन-सुख व खर्च (द्वादश):</b> '+verdict(b12.sc));
+  L.push('<b>गृहस्थ-जीवन का सार:</b> '+(tot>=4?'कुल मिलाकर सुखी, सहयोगी व स्थिर गृहस्थी के योग।':tot>=0?'गृहस्थी सामान्यतः ठीक; आपसी संवाद, धैर्य और बड़ों के सम्मान से सुख बढ़ता है।':'गृहस्थी में कुछ चुनौतियाँ संभव; विवाह-पूर्व मिलान, संयम और उपाय सहायक।'));
+  var w=win(K,[h.l,sp.l,f.l,4,5],24,55,4);
+  L.push('<b>गृहस्थ-जीवन में सुख-वृद्धि के संभावित काल:</b>'+li(w.length?w:['स्पष्ट प्रबल काल नहीं मिला।']));
+  L.push('<b>गृहस्थ-धर्म (दिगंबर जैन):</b> देव-पूजा, गुरु-उपासना, स्वाध्याय, संयम, तप और दान — ये छह आवश्यक कर्म घर में रोज़ निभाएँ; सायंकाल सामूहिक भक्ति/आरती और रात्रि-भोजन का त्याग।');
+  return sec('🏡 घर-गृहस्थी',li(L)+'<p class="kmeta">द्वितीय, चतुर्थ, पंचम, सप्तम व द्वादश भावों के संयुक्त संकेत; निश्चित भविष्यवाणी नहीं।</p>');
+}
+window.vjConc=function(K){var h='';try{h=career(K)+marriage(K)+santan(K)+parents(K)+sibs(K)+prop(K)+vehicle(K)+vastra(K)+tirth(K)+grih(K);}catch(e){console.error('v367',e);}return h+old(K);};
+}catch(e){console.error('v367 cm',e);}})();
 </script>
 </body>
 </html>
