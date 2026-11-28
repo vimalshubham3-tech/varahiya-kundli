@@ -201,7 +201,7 @@ input[type=date],input[type=time]{min-height:48px}
 .about b{color:var(--maroon)}.about p{margin:4px 0}
 @media print{.brand .pbtn,.nmtools,.totop,.lang,.about{display:none!important}.brand{background:#fff;color:#000;border-bottom:2px solid #000}.brand b{color:#000}.brand span{color:#000}#nm_body{font-size:13px}}
 </style>
-<meta name="vj-ver" content="413">
+<meta name="vj-ver" content="414">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <script>try{if(window.top!==window.self){document.documentElement.style.display='none';window.top.location=window.self.location;}}catch(e){document.documentElement.style.display='none';}</script>
 
@@ -10277,6 +10277,19 @@ function reord(r){var jc=r.querySelector('.vjtdc'),rc=r.querySelector('.res-card
  if(tw)top.insertBefore(w2,rc);}
 new MutationObserver(function(){try{var r=D.getElementById('pn_res');if(r){card(r);reord(r);}}catch(e){console.error('v404',e);}}).observe(D.body,{childList:true,subtree:true});
 }catch(e){console.error('v404',e);}})();
+</script>
+<script>
+/* v414: दैनिक पंचांग के सभी समय AM/PM में (HH:MM:SS वाली उलटी गिनती छोड़कर) */
+(function(){try{
+var D=document,RE=/(?<![\d:])([01]?\d|2[0-3]):([0-5]\d)(?![\d:])(?!\s?[AP]M)/g;
+function cv(t){var v=t.nodeValue;if(!v||v.indexOf(':')<0)return;var n=v.replace(RE,function(m,h,mi){h=+h;return ((h%12)||12)+':'+mi+' '+(h<12?'AM':'PM');});if(n!==v)t.nodeValue=n;}
+function walk(r){if(r.nodeType===3){cv(r);return;}if(r.nodeType!==1)return;var tg=r.tagName;if(tg==='SCRIPT'||tg==='STYLE'||tg==='INPUT'||tg==='TEXTAREA'||tg==='SELECT')return;var w=D.createTreeWalker(r,NodeFilter.SHOW_TEXT,null),n,L=[];while(n=w.nextNode()){var p=n.parentNode&&n.parentNode.tagName;if(p==='SCRIPT'||p==='STYLE'||p==='OPTION')continue;L.push(n);}L.forEach(cv);}
+var root=null,first=true;
+new MutationObserver(function(ms){try{var r=D.getElementById('pn_res');if(!r)return;
+ if(first){first=false;walk(r);}
+ ms.forEach(function(m){if(!r.contains(m.target))return;if(m.type==='characterData')cv(m.target);else [].forEach.call(m.addedNodes,function(n){walk(n);});});
+}catch(e){console.error('v414',e);}}).observe(D.body,{childList:true,subtree:true,characterData:true});
+}catch(e){console.error('v414',e);}})();
 </script>
 </body>
 </html>
