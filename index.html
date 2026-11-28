@@ -201,7 +201,7 @@ input[type=date],input[type=time]{min-height:48px}
 .about b{color:var(--maroon)}.about p{margin:4px 0}
 @media print{.brand .pbtn,.nmtools,.totop,.lang,.about{display:none!important}.brand{background:#fff;color:#000;border-bottom:2px solid #000}.brand b{color:#000}.brand span{color:#000}#nm_body{font-size:13px}}
 </style>
-<meta name="vj-ver" content="378">
+<meta name="vj-ver" content="379">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <script>try{if(window.top!==window.self){document.documentElement.style.display='none';window.top.location=window.self.location;}}catch(e){document.documentElement.style.display='none';}</script>
 
@@ -9783,8 +9783,8 @@ document.addEventListener('visibilitychange',function(){if(!document.hidden)pull
 <script id="vj375js">
 (function(){
 var D=document,BASE='https://vimalshubham3-tech.github.io/varahiya-kundli/daily/';
-var TYPES=[['panchang','🗓️ दैनिक पंचांग','c'],['panchang_status','📱 पंचांग — स्टेटस (लंबा)','c'],['panchang_chhota','🟧 पंचांग — छोटा कार्ड','c'],['choghadiya','⏱️ चौघड़िया','c'],
- ['rashifal_1','🌟 आज का राशिफल (मेष–कन्या)','m'],['rashifal_2','🌟 आज का राशिफल (तुला–मीन)','m'],['jain_tithi','🪔 जैन तिथि व कल्याणक','m'],['aaj_ki_aadat','💡 आज की आदत व सीख','m']];
+var TYPES=[['panchang','🗓️ दैनिक पंचांग','c'],['saptah_panchang','📅 अगले 7 दिन का पंचांग','c'],['shubh_muhurat','✅ आज का शुभ मुहूर्त','c'],['panchang_status','📱 पंचांग — स्टेटस (लंबा)','c'],['panchang_chhota','🟧 पंचांग — छोटा कार्ड','c'],['choghadiya','⏱️ चौघड़िया','c'],
+ ['rashifal_1','🌟 आज का राशिफल (मेष–कन्या)','m'],['rashifal_2','🌟 आज का राशिफल (तुला–मीन)','m'],['jain_tithi','🪔 जैन तिथि व कल्याणक','m'],['aaj_ki_aadat','💡 आज की आदत व सीख','m'],['vrat_calendar','🪔 आगामी कल्याणक व पर्व','m'],['jain_sutra','📿 आज का जैन सूत्र','m']];
 function city(){var c='gwalior';try{c=localStorage.getItem('vj_dp_city')||'gwalior';}catch(e){}return c==='sumaoli'?'sumaoli':'gwalior';}
 function url(t){return BASE+(t[2]==='c'?city():'common')+'/'+t[0]+'.png?d='+new Date(Date.now()+19800000).toISOString().slice(0,10);}
 function blobOf(t){return fetch(url(t),{cache:'no-store'}).then(function(r){if(!r.ok)throw 0;return r.blob();});}

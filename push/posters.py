@@ -63,6 +63,19 @@ def save_canvas(pg, path):
     with open(path, 'wb') as f:
         f.write(base64.b64decode(d.split(',')[1]))
 
+
+JS_DAY = """()=>{
+ const res=document.getElementById('pn_res');const R=[];
+ res.querySelectorAll('.tw>table>tbody>tr').forEach(tr=>{if(tr.cells.length>1)R.push([tr.cells[0].textContent.replace(/\\s+/g,' ').trim(),tr.cells[1].textContent.replace(/\\s+/g,' ').trim()]);});
+ const find=(k,st)=>{for(const r of R){if(st?r[0].indexOf(k)===0:r[0].indexOf(k)>-1)return r[1];}return '';};
+ const ang=k=>{const t=find(k,true).split(' | ')[0];return t.split(' — ')[0].replace(/\\s*\\(.*?\\)\\s*/g,'').trim();};
+ const iv=s=>{const m=(s||'').match(/(\\d\\d:\\d\\d)\\s*[–-]\\s*(\\d\\d:\\d\\d)/);return m?m[1]+'–'+m[2]:'';};
+ const lst=a=>{const o=[];a.forEach(x=>{const t=iv(find(x[1]));if(t)o.push([x[0],t]);});return o;};
+ const sr=find('सूर्योदय / सूर्यास्त').split('/')[0].trim();
+ return {tithi:ang('तिथि ('),nak:ang('नक्षत्र ('),wd:find('वार',true),sr:sr,
+  shubh:lst([['अमृत काल','अमृत काल'],['अभिजित','अभिजित'],['विजय','विजय'],['गोधूलि','गोधूलि'],['ब्रह्म मुहूर्त','ब्रह्म']]),
+  ashubh:lst([['राहुकाल','राहुकाल'],['गुलिक','गुलिक'],['यमगंड','यमगंड'],['भद्रा','भद्रा (अशुभ)'],['दुर्मुहूर्त','दुर्मुहूर्त']])};}"""
+
 def jain_poster():
     D = json.load(open(os.path.join(ROOT, 'push', 'daily.json'), encoding='utf-8'))
     k = today.isoformat()
@@ -119,6 +132,86 @@ def tip_poster(habit, career, skill):
         body += '<div class="bx s"><h3>💻 आज की स्किल टिप</h3><p>%s</p></div>' % esc(skill)
     return page('आज की आदत', 'सुविचार व सीख', body)
 
+
+SUTRA = [
+ ('सम्यग्दर्शनज्ञानचारित्राणि मोक्षमार्गः', 'तत्त्वार्थ सूत्र', 'सही श्रद्धा, सही ज्ञान और सही आचरण — इन तीनों का मेल ही मोक्ष का मार्ग है।'),
+ ('तत्त्वार्थश्रद्धानं सम्यग्दर्शनम्', 'तत्त्वार्थ सूत्र', 'जीवादि तत्त्वों पर सच्ची श्रद्धा रखना ही सम्यग्दर्शन है।'),
+ ('उपयोगो लक्षणम्', 'तत्त्वार्थ सूत्र', 'जानना-देखना (उपयोग) ही जीव की पहचान है।'),
+ ('परस्परोपग्रहो जीवानाम्', 'तत्त्वार्थ सूत्र', 'जीवों का काम एक-दूसरे का सहयोग करना है।'),
+ ('उत्पादव्ययध्रौव्ययुक्तं सत्', 'तत्त्वार्थ सूत्र', 'जो नया रूप लेता है, पुराना छोड़ता है और फिर भी मूल रूप में बना रहता है, वही सत् है।'),
+ ('हिंसानृतस्तेयाब्रह्मपरिग्रहेभ्यो विरतिर्व्रतम्', 'तत्त्वार्थ सूत्र', 'हिंसा, झूठ, चोरी, अब्रह्म और परिग्रह से दूर रहना ही व्रत है।'),
+ ('प्रमत्तयोगात्प्राणव्यपरोपणं हिंसा', 'तत्त्वार्थ सूत्र', 'असावधानी या कषाय से किसी के प्राणों को कष्ट पहुँचाना हिंसा है।'),
+ ('असदभिधानमनृतम्', 'तत्त्वार्थ सूत्र', 'अप्रिय या हानिकारक असत्य बोलना झूठ है।'),
+ ('अदत्तादानं स्तेयम्', 'तत्त्वार्थ सूत्र', 'बिना दी हुई वस्तु ले लेना चोरी है।'),
+ ('मूर्छा परिग्रहः', 'तत्त्वार्थ सूत्र', 'वस्तुओं में ममत्व (मोह) रखना ही परिग्रह है।'),
+ ('तपसा निर्जरा च', 'तत्त्वार्थ सूत्र', 'तप से पुराने कर्म झड़ते हैं।'),
+ ('कायवाङ्मनःकर्म योगः', 'तत्त्वार्थ सूत्र', 'शरीर, वाणी और मन की क्रिया को योग कहा गया है।'),
+ ('णमो अरिहंताणं', 'णमोकार मंत्र', 'अरिहंत भगवान को नमस्कार, जिन्होंने राग-द्वेष जीतकर केवलज्ञान पाया।'),
+ ('णमो सिद्धाणं', 'णमोकार मंत्र', 'सिद्ध भगवान को नमस्कार, जो सब कर्मों से मुक्त हो चुके हैं।'),
+ ('णमो आयरियाणं', 'णमोकार मंत्र', 'आचार्य परमेष्ठी को नमस्कार, जो स्वयं आचरण करते और संघ का मार्गदर्शन करते हैं।'),
+ ('णमो उवज्झायाणं', 'णमोकार मंत्र', 'उपाध्याय परमेष्ठी को नमस्कार, जो शास्त्र पढ़ाते और ज्ञान देते हैं।'),
+ ('णमो लोए सव्वसाहूणं', 'णमोकार मंत्र', 'लोक के सभी साधुओं को नमस्कार।'),
+ ('अहिंसा परमो धर्मः', 'जैन सिद्धांत', 'किसी भी जीव को कष्ट न देना सबसे बड़ा धर्म है।'),
+ ('मित्ती मे सव्वभूदेसु', 'क्षमा-पाठ', 'सब प्राणियों से मेरी मैत्री है; किसी से मेरा बैर नहीं।'),
+]
+NAMOKAR = 'णमो अरिहंताणं · णमो सिद्धाणं · णमो आयरियाणं<br>णमो उवज्झायाणं · णमो लोए सव्वसाहूणं'
+
+def sutra_poster():
+    t = SUTRA[today.toordinal() % len(SUTRA)]
+    css = ('<style>.bx{background:#fff3d6;border:2px solid #d4a84b;border-radius:24px;padding:40px 40px;margin-bottom:22px;text-align:center}'
+           '.bx small{display:block;font-size:30px;color:#a0651b;font-weight:600;margin-bottom:14px}'
+           '.bx .s{font-size:64px;line-height:1.4;color:#7a1a2c;font-weight:700}'
+           '.bx .m{font-size:38px;line-height:1.55;color:#3b0c16;font-weight:500;margin-top:20px}'
+           '.nm{background:#7a1a2c;color:#ffd978;border-radius:20px;padding:22px;text-align:center;font-size:36px;font-weight:600;line-height:1.6}'
+           '.nm small{display:block;color:#fff;font-size:26px;font-weight:500;margin-bottom:6px}</style>')
+    body = (css + '<div class="dt">%s</div><div class="bx"><small>%s</small><div class="s">%s</div><div class="m">अर्थ: %s</div></div>'
+            '<div class="nm"><small>णमोकार मंत्र</small>%s</div>' % (DATE_H, esc(t[1]), esc(t[0]), esc(t[2]), NAMOKAR))
+    return page('आज का जैन सूत्र', 'रोज़ एक सूत्र, सरल अर्थ के साथ', body)
+
+def vrat_poster():
+    D = json.load(open(os.path.join(ROOT, 'push', 'daily.json'), encoding='utf-8'))
+    rows, n = '', 0
+    for i in range(0, 45):
+        dt = today + datetime.timedelta(days=i)
+        e = D.get(dt.isoformat())
+        if not e or not (e['kal'] or e['parv']):
+            continue
+        rows += '<div class="r%s"><b>%d %s<small>%s</small></b><em>%s</em><span>%s</span></div>' % (
+            ' now' if i == 0 else '', dt.day, MON[dt.month - 1], WD[dt.weekday()], esc(e['tithi']), esc(' · '.join(e['kal'] + e['parv'])))
+        n += 1
+        if n >= 9:
+            break
+    if not rows:
+        rows = '<div class="r"><span>अगले 45 दिन में कोई कल्याणक/पर्व दर्ज नहीं</span></div>'
+    css = ('<style>.r{display:flex;gap:16px;align-items:center;background:#fff;border:2px solid #e3c987;border-radius:16px;padding:14px 18px;margin-bottom:12px;font-size:28px}'
+           '.r b{min-width:190px;color:#7a1a2c;font-size:34px;line-height:1.15}.r b small{display:block;font-size:23px;color:#a0651b;font-weight:600}'
+           '.r em{font-style:normal;min-width:170px;color:#a0651b;font-weight:600;font-size:26px}.r span{flex:1;font-weight:600;line-height:1.35}'
+           '.r.now{background:#fff0c2;border-color:#d4a84b}</style>')
+    return page('आगामी कल्याणक व पर्व', 'अगले कुछ सप्ताह · ' + DATE_H, css + '<div>%s</div>' % rows)
+
+def week_poster(city_hn, days):
+    css = ('<style>.r{display:flex;align-items:center;gap:16px;background:#fff;border:2px solid #e3c987;border-radius:18px;padding:16px 22px;margin-bottom:14px}'
+           '.r.now{background:#fff0c2;border-color:#d4a84b}.r .d{min-width:210px}.r .d b{display:block;font-size:44px;color:#7a1a2c;line-height:1.1}'
+           '.r .d small{font-size:26px;color:#a0651b;font-weight:600}.r .t{flex:1;font-size:32px;font-weight:700;color:#3b0c16;line-height:1.35}'
+           '.r .t small{display:block;font-size:26px;font-weight:500;color:#5a2a35}</style>')
+    rows = ''
+    for i, x in enumerate(days):
+        rows += ('<div class="r%s"><div class="d"><b>%s</b><small>%s %s</small></div><div class="t">%s<small>नक्षत्र: %s · सूर्योदय %s</small></div></div>'
+                 % (' now' if i == 0 else '', esc(x['day']), esc(x['mon']), esc(x['wd']), esc(x['tithi']), esc(x['nak']), esc(x['sr'])))
+    return page('अगले 7 दिन का पंचांग', 'तिथि व नक्षत्र · ' + city_hn, css + rows)
+
+def shubh_poster(city_hn, d):
+    def blk(title, items, cls):
+        r = ''.join('<div class="i"><span>%s</span><b>%s</b></div>' % (esc(a), esc(b)) for a, b in items) or '<div class="i"><span>—</span></div>'
+        return '<div class="bk %s"><h3>%s</h3>%s</div>' % (cls, title, r)
+    css = ('<style>.bk{border-radius:22px;padding:22px 30px;margin-bottom:20px}.bk h3{font-size:38px;margin-bottom:10px}'
+           '.bk.g{background:#fff3d6;border:2px solid #d4a84b;color:#3b0c16}.bk.g h3{color:#7a1a2c}.bk.b{background:#7a1a2c;color:#fff}.bk.b h3{color:#ffd978}'
+           '.i{display:flex;justify-content:space-between;font-size:38px;padding:9px 0;border-bottom:1px solid #ffffff33}.bk.g .i{border-color:#d4a84b66}.i b{font-weight:700}'
+           '.nt{font-size:27px;color:#5a2a35;text-align:center;margin-top:6px}</style>')
+    body = (css + '<div class="dt">%s</div>' % DATE_H + blk('✅ शुभ समय (नए काम, खरीदारी, यात्रा)', d['shubh'], 'g')
+            + blk('⚠️ अशुभ समय (इनमें शुभ कार्य टालें)', d['ashubh'], 'b') + '<div class="nt">समय %s के सूर्योदय के अनुसार</div>' % esc(city_hn))
+    return page('आज का शुभ मुहूर्त', city_hn, body)
+
 def main():
     os.makedirs(OUT, exist_ok=True)
     with sync_playwright() as p:
@@ -146,6 +239,21 @@ def main():
                 pg.wait_for_timeout(1500)
                 save_canvas(pg, os.path.join(d, name + '.png'))
                 info['files'].setdefault(key, []).append(name + '.png')
+            # 7 दिन का पंचांग + आज के शुभ/अशुभ समय
+            days = []
+            for i in range(7):
+                dt = today + datetime.timedelta(days=i)
+                pg.evaluate("(v)=>{const e=document.getElementById('pn_date');e.value=v;e.dispatchEvent(new Event('change',{bubbles:true}));document.getElementById('pn_go').click();}", dt.isoformat())
+                pg.wait_for_timeout(700)
+                x = pg.evaluate(JS_DAY)
+                x['day'] = str(dt.day); x['mon'] = MON[dt.month - 1]; x['wd'] = WD[dt.weekday()]
+                days.append(x)
+                if i == 0:
+                    today_x = x
+            shot(ctx, week_poster(hn, days), os.path.join(d, 'saptah_panchang.png'))
+            shot(ctx, shubh_poster(hn, today_x), os.path.join(d, 'shubh_muhurat.png'))
+            info['files'][key] += ['saptah_panchang.png', 'shubh_muhurat.png']
+            pg.evaluate("(v)=>{const e=document.getElementById('pn_date');e.value=v;e.dispatchEvent(new Event('change',{bubbles:true}));document.getElementById('pn_go').click();}", today.isoformat())
             if key == 'gwalior':
                 data = pg.evaluate("""()=>{
                   const r=[...document.getElementById('rf_r').children];
@@ -164,6 +272,8 @@ def main():
         j = jain_poster()
         if j:
             shot(ctx, j, os.path.join(cm, 'jain_tithi.png')); files.append('jain_tithi.png')
+        shot(ctx, vrat_poster(), os.path.join(cm, 'vrat_calendar.png')); files.append('vrat_calendar.png')
+        shot(ctx, sutra_poster(), os.path.join(cm, 'jain_sutra.png')); files.append('jain_sutra.png')
         shot(ctx, tip_poster(data['habit'], data['career'], data['skill']), os.path.join(cm, 'aaj_ki_aadat.png')); files.append('aaj_ki_aadat.png')
         info['files']['common'] = files
         json.dump(info, open(os.path.join(OUT, 'today.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)

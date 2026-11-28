@@ -6,18 +6,24 @@
    "panchang.png",
    "panchang_status.png",
    "panchang_chhota.png",
-   "choghadiya.png"
+   "choghadiya.png",
+   "saptah_panchang.png",
+   "shubh_muhurat.png"
   ],
   "sumaoli": [
    "panchang.png",
    "panchang_status.png",
    "panchang_chhota.png",
-   "choghadiya.png"
+   "choghadiya.png",
+   "saptah_panchang.png",
+   "shubh_muhurat.png"
   ],
   "common": [
    "rashifal_1.png",
    "rashifal_2.png",
    "jain_tithi.png",
+   "vrat_calendar.png",
+   "jain_sutra.png",
    "aaj_ki_aadat.png"
   ]
  }
