@@ -201,7 +201,7 @@ input[type=date],input[type=time]{min-height:48px}
 .about b{color:var(--maroon)}.about p{margin:4px 0}
 @media print{.brand .pbtn,.nmtools,.totop,.lang,.about{display:none!important}.brand{background:#fff;color:#000;border-bottom:2px solid #000}.brand b{color:#000}.brand span{color:#000}#nm_body{font-size:13px}}
 </style>
-<meta name="vj-ver" content="376">
+<meta name="vj-ver" content="377">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <script>try{if(window.top!==window.self){document.documentElement.style.display='none';window.top.location=window.self.location;}}catch(e){document.documentElement.style.display='none';}</script>
 
@@ -9808,7 +9808,15 @@ function add(){var g=D.querySelector('#vjhome .hg');if(!g||g.querySelector('.vjd
  var b=D.createElement('button');b.type='button';b.className='hc vjdpc';b.innerHTML='<div class="t"><i>🖼️</i><span>आज के पोस्टर</span></div><div class="d">पंचांग, चौघड़िया, राशिफल, जैन तिथि व आदत — रोज़ नए, WhatsApp पर भेजें</div>';
  b.addEventListener('click',function(){D.body.classList.remove('vjhm');open();});
  g.insertBefore(b,g.children[1]||null);}
-try{new MutationObserver(add).observe(D.body,{childList:true,subtree:true});add();}catch(e){}
+function addPo(){var o=D.getElementById('vjpo');if(!o||o.querySelector('.vjdpx'))return;
+ var w=D.createElement('div');w.className='vjdpx';w.style.cssText='margin:18px 0 28px;border-top:2px solid #d4a84b55;padding-top:12px';
+ var h='<div style="color:#ffd978;font-weight:700;font-size:17px;margin:0 2px 8px">🌟 आज के और पोस्टर</div><div style="color:#e9d9b0;font-size:13px;margin:0 2px 6px">राशिफल, जैन तिथि, आज की आदत — रोज़ अपने-आप नए (इंटरनेट चाहिए)</div>';
+ var ix=[];TYPES.forEach(function(t,i){if(t[2]==='m'){ix.push(i);h+='<div class="dt" data-i="'+i+'" style="margin:10px 0;background:#fff;border-radius:12px;padding:8px"><h4 style="margin:2px 4px 8px;font-size:15px;color:#7a1a2c">'+t[1]+'</h4><img alt="" style="width:100%;height:auto;border-radius:8px;display:block;min-height:120px;background:#f2e6c4" src="'+url(t)+'"><div class="bt" style="display:flex;gap:8px;margin-top:8px"><button type="button" data-s="'+i+'" style="flex:1;padding:10px;border:0;border-radius:9px;font:inherit;font-weight:600;background:#25a244;color:#fff">📤 शेयर</button><button type="button" data-v="'+i+'" style="flex:1;padding:10px;border:0;border-radius:9px;font:inherit;font-weight:600;background:#7a3b10;color:#fff">💾 सेव</button></div></div>';}});
+ h+='<button type="button" data-allm="1" style="width:100%;padding:13px;border:0;border-radius:10px;background:#25a244;color:#fff;font:inherit;font-weight:700;margin-top:6px">📤 ये सारे पोस्टर एक साथ भेजें</button>';
+ w.innerHTML=h;o.appendChild(w);
+ w.addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;e.stopPropagation();
+  if(b.hasAttribute('data-s'))share([TYPES[+b.getAttribute('data-s')]]);else if(b.hasAttribute('data-v'))save(TYPES[+b.getAttribute('data-v')]);else if(b.hasAttribute('data-allm'))share(ix.map(function(i){return TYPES[i];}));});}
+try{new MutationObserver(function(){add();addPo();}).observe(D.body,{childList:true,subtree:true});add();addPo();}catch(e){}
 })();
 </script>
 </body>
