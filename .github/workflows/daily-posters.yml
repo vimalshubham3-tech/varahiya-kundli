@@ -1,0 +1,28 @@
+name: daily-posters
+on:
+  schedule:
+    - cron: '45 22 * * *'   # रोज़ सुबह लगभग 4:15 (भारतीय समय)
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: daily-posters
+  cancel-in-progress: false
+jobs:
+  posters:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install playwright && python -m playwright install --with-deps chromium
+      - run: python push/posters.py daily
+      - name: commit
+        run: |
+          git config user.name "daily-posters"
+          git config user.email "actions@users.noreply.github.com"
+          git add daily
+          git diff --cached --quiet || git commit -m "daily posters $(date -u +%F)"
+          git pull --rebase origin main
+          git push

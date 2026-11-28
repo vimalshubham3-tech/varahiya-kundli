@@ -1,0 +1,24 @@
+{
+ "date": "2026-11-28",
+ "theme": "saffron",
+ "files": {
+  "gwalior": [
+   "panchang.png",
+   "panchang_status.png",
+   "panchang_chhota.png",
+   "choghadiya.png"
+  ],
+  "sumaoli": [
+   "panchang.png",
+   "panchang_status.png",
+   "panchang_chhota.png",
+   "choghadiya.png"
+  ],
+  "common": [
+   "rashifal_1.png",
+   "rashifal_2.png",
+   "jain_tithi.png",
+   "aaj_ki_aadat.png"
+  ]
+ }
+}

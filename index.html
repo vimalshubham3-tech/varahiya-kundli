@@ -201,7 +201,7 @@ input[type=date],input[type=time]{min-height:48px}
 .about b{color:var(--maroon)}.about p{margin:4px 0}
 @media print{.brand .pbtn,.nmtools,.totop,.lang,.about{display:none!important}.brand{background:#fff;color:#000;border-bottom:2px solid #000}.brand b{color:#000}.brand span{color:#000}#nm_body{font-size:13px}}
 </style>
-<meta name="vj-ver" content="374">
+<meta name="vj-ver" content="375">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <script>try{if(window.top!==window.self){document.documentElement.style.display='none';window.top.location=window.self.location;}}catch(e){document.documentElement.style.display='none';}</script>
 
@@ -9766,6 +9766,50 @@ function pull(){try{fetch('blocked.json?x='+Date.now(),{cache:'no-store'}).then(
 apply();pull();setInterval(apply,2000);setInterval(pull,600000);
 document.addEventListener('visibilitychange',function(){if(!document.hidden)pull();});
 }catch(e){console.error('v374',e);}})();
+</script>
+<style id="vj375css">
+#vjdp{position:fixed;inset:0;z-index:99990;background:#fdf3d8;overflow-y:auto;-webkit-overflow-scrolling:touch;font-family:inherit}
+#vjdp .dh{position:sticky;top:0;z-index:2;display:flex;align-items:center;gap:8px;background:#8e1c1c;color:#fff;padding:12px 14px}
+#vjdp .dh b{flex:1;font-size:17px}#vjdp .dh button{background:#fff2;border:0;color:#fff;border-radius:8px;padding:7px 12px;font:inherit}
+#vjdp .dc{padding:10px 12px;display:flex;gap:8px;align-items:center}#vjdp .dc select{flex:1;padding:9px;border-radius:8px;border:1px solid #cdb98a;font:inherit;background:#fff}
+#vjdp .dn{padding:0 12px 6px;font-size:13px;color:#6b4a1d}
+#vjdp .dt{margin:10px 12px;background:#fff;border:1px solid #e0c98a;border-radius:12px;padding:8px}
+#vjdp .dt h4{margin:2px 4px 8px;font-size:15px;color:#7a1a2c}
+#vjdp .dt img{width:100%;border-radius:8px;display:block;background:#f2e6c4;min-height:120px}
+#vjdp .dt .bt{display:flex;gap:8px;margin-top:8px}#vjdp .dt .bt button{flex:1;padding:10px;border:0;border-radius:9px;font:inherit;font-weight:600;background:#25a244;color:#fff}
+#vjdp .dt .bt button+button{background:#7a3b10}
+#vjdp .da{margin:10px 12px 24px;padding:13px;width:calc(100% - 24px);border:0;border-radius:10px;background:#8e1c1c;color:#fff;font:inherit;font-weight:700}
+</style>
+<script id="vj375js">
+(function(){
+var D=document,BASE='https://vimalshubham3-tech.github.io/varahiya-kundli/daily/';
+var TYPES=[['panchang','🗓️ दैनिक पंचांग','c'],['panchang_status','📱 पंचांग — स्टेटस (लंबा)','c'],['panchang_chhota','🟧 पंचांग — छोटा कार्ड','c'],['choghadiya','⏱️ चौघड़िया','c'],
+ ['rashifal_1','🌟 आज का राशिफल (मेष–कन्या)','m'],['rashifal_2','🌟 आज का राशिफल (तुला–मीन)','m'],['jain_tithi','🪔 जैन तिथि व कल्याणक','m'],['aaj_ki_aadat','💡 आज की आदत व सीख','m']];
+function city(){var c='gwalior';try{c=localStorage.getItem('vj_dp_city')||'gwalior';}catch(e){}return c==='sumaoli'?'sumaoli':'gwalior';}
+function url(t){return BASE+(t[2]==='c'?city():'common')+'/'+t[0]+'.png?d='+new Date(Date.now()+19800000).toISOString().slice(0,10);}
+function blobOf(t){return fetch(url(t),{cache:'no-store'}).then(function(r){if(!r.ok)throw 0;return r.blob();});}
+function save(t){blobOf(t).then(function(b){var a=D.createElement('a');a.href=URL.createObjectURL(b);a.download=t[0]+'.png';D.body.appendChild(a);a.click();setTimeout(function(){URL.revokeObjectURL(a.href);a.remove();},1500);}).catch(function(){alert('इंटरनेट चाहिए — पोस्टर लोड नहीं हो सका।');});}
+function share(ts){Promise.all(ts.map(blobOf)).then(function(bs){var fs=bs.map(function(b,i){return new File([b],ts[i][0]+'.png',{type:'image/png'});});
+ if(navigator.canShare&&navigator.canShare({files:fs}))navigator.share({files:fs,title:'वरहिया जैन पंचांग',text:'वरहिया जैन पंचांग एवं ज्योतिष वास्तु दर्शन\nhttps://tinyurl.com/varahiya-jyotish-darshan'}).catch(function(){});
+ else ts.forEach(save);}).catch(function(){alert('इंटरनेट चाहिए — पोस्टर लोड नहीं हो सका।');});}
+function open(){var old=D.getElementById('vjdp');if(old)old.remove();
+ var o=D.createElement('div');o.id='vjdp';
+ var h='<div class="dh"><b>🖼️ आज के पोस्टर</b><button type="button" data-x="1">✕ बंद</button></div>'
+  +'<div class="dc"><span>स्थान:</span><select id="vjdp_c"><option value="gwalior">ग्वालियर</option><option value="sumaoli">सुमावली</option></select></div>'
+  +'<div class="dn">हर सुबह अपने-आप नए बन जाते हैं। शेयर दबाकर सीधे WhatsApp पर भेजें। (इंटरनेट चाहिए)</div>';
+ TYPES.forEach(function(t,i){h+='<div class="dt" data-i="'+i+'"><h4>'+t[1]+'</h4><img alt="" loading="lazy" src="'+url(t)+'"><div class="bt"><button type="button" data-s="'+i+'">📤 शेयर</button><button type="button" data-v="'+i+'">💾 सेव</button></div></div>';});
+ h+='<button type="button" class="da" data-all="1">📤 सारे पोस्टर एक साथ भेजें</button>';
+ o.innerHTML=h;D.body.appendChild(o);D.getElementById('vjdp_c').value=city();
+ o.addEventListener('change',function(e){if(e.target.id!=='vjdp_c')return;try{localStorage.setItem('vj_dp_city',e.target.value);}catch(x){}
+  [].forEach.call(o.querySelectorAll('.dt'),function(d){d.querySelector('img').src=url(TYPES[+d.getAttribute('data-i')]);});});
+ o.addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;
+  if(b.hasAttribute('data-x'))o.remove();else if(b.hasAttribute('data-s'))share([TYPES[+b.getAttribute('data-s')]]);else if(b.hasAttribute('data-v'))save(TYPES[+b.getAttribute('data-v')]);else if(b.hasAttribute('data-all'))share(TYPES);});}
+function add(){var g=D.querySelector('#vjhome .hg');if(!g||g.querySelector('.vjdpc'))return;
+ var b=D.createElement('button');b.type='button';b.className='hc vjdpc';b.innerHTML='<div class="t"><i>🖼️</i><span>आज के पोस्टर</span></div><div class="d">पंचांग, चौघड़िया, राशिफल, जैन तिथि व आदत — रोज़ नए, WhatsApp पर भेजें</div>';
+ b.addEventListener('click',function(){D.body.classList.remove('vjhm');open();});
+ g.insertBefore(b,g.children[1]||null);}
+try{new MutationObserver(add).observe(D.body,{childList:true,subtree:true});add();}catch(e){}
+})();
 </script>
 </body>
 </html>
