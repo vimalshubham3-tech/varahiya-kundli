@@ -201,7 +201,7 @@ input[type=date],input[type=time]{min-height:48px}
 .about b{color:var(--maroon)}.about p{margin:4px 0}
 @media print{.brand .pbtn,.nmtools,.totop,.lang,.about{display:none!important}.brand{background:#fff;color:#000;border-bottom:2px solid #000}.brand b{color:#000}.brand span{color:#000}#nm_body{font-size:13px}}
 </style>
-<meta name="vj-ver" content="406">
+<meta name="vj-ver" content="407">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <script>try{if(window.top!==window.self){document.documentElement.style.display='none';window.top.location=window.self.location;}}catch(e){document.documentElement.style.display='none';}</script>
 
@@ -10215,7 +10215,7 @@ function dec(){var r=D.getElementById('pn_res');if(!r)return;ravi(r);gand(r);
 new MutationObserver(function(){try{dec();}catch(e){console.error('v401',e);}}).observe(D.body,{childList:true,subtree:true});dec();
 }catch(e){console.error('v401',e);}})();
 </script>
-<style>#pn_res .vjtdc{border-radius:16px;overflow:hidden;margin:0 0 12px;padding:12px 14px;background:linear-gradient(135deg,#7a1a2c,#5d0d1c);color:#fff;border:2px solid #d4a84b;box-shadow:0 2px 8px rgba(90,20,30,.25);font-size:15px;line-height:1.6}#pn_res .vjtdc .vjhd{border:0;border-top:1px solid #d4a84b;border-radius:0;box-shadow:none;margin:10px -14px -12px;background:#00000026}#pn_res .vjtdc h4{margin:0 0 6px;font-size:19px;color:#ffd978}#pn_res .vjtdc b{color:#ffd978}#pn_res .vjtdc span{color:#fff!important}#pn_res .vjtdc [style*="8e2b3a"]{color:#ffd978!important}#pn_res .vjtdc [style*="1a4f8a"]{color:#bfe0ff!important}</style>
+<style>#pn_res .vjcw{border:1.5px solid #dcc58a;border-radius:16px;background:#fffdf7;padding:8px;margin:0 0 12px}#pn_res .vjcw>div{margin-top:0;margin-bottom:8px}#pn_res .vjcw>div:last-child{margin-bottom:0}#pn_res .vjtdc{border-radius:16px;overflow:hidden;margin:0 0 12px;padding:12px 14px;background:linear-gradient(135deg,#7a1a2c,#5d0d1c);color:#fff;border:2px solid #d4a84b;box-shadow:0 2px 8px rgba(90,20,30,.25);font-size:15px;line-height:1.6}#pn_res .vjtdc .vjhd{border:0;border-top:1px solid #d4a84b;border-radius:0;box-shadow:none;margin:10px -14px -12px;background:#00000026}#pn_res .vjtdc h4{margin:0 0 6px;font-size:19px;color:#ffd978}#pn_res .vjtdc b{color:#ffd978}#pn_res .vjtdc span{color:#fff!important}#pn_res .vjtdc [style*="8e2b3a"]{color:#ffd978!important}#pn_res .vjtdc [style*="1a4f8a"]{color:#bfe0ff!important}</style>
 <script>
 /* v404: जैन तिथि दर्पण का "आज की तिथि" विवरण-कार्ड दैनिक पंचांग में */
 (function(){try{
@@ -10233,7 +10233,11 @@ function card(r){var h=r.querySelector('.vjhd');if(!h||typeof window.vjTdBuild!=
  var el=D.createElement('div');el.className='vjtdc';
  el.innerHTML='<h4>🪔 जैन तिथि दर्पण — '+d+'/'+m+'/'+y+' · '+nz(td[1].textContent)+'</h4>'+td[2].innerHTML+(pp?'<br>🌿 '+pp:'')+(par?'<br>🪔 <b style="color:#8e2b3a">'+nz(par.textContent)+'</b>':'')+(kal?'<br><span style="color:#1a4f8a">'+nz(kal.textContent)+'</span>':'');
  h.setAttribute('data-vjtd',key);h.parentNode.insertBefore(el,h);el.appendChild(h);}
-new MutationObserver(function(){try{var r=D.getElementById('pn_res');if(r)card(r);}catch(e){console.error('v404',e);}}).observe(D.body,{childList:true,subtree:true});
+function reord(r){var jc=r.querySelector('.vjtdc'),rc=r.querySelector('.res-card'),kh=rc&&rc.querySelector('h2.kh');if(!jc||!kh)return;
+ var saar=null,cb=rc.querySelector('.vjcb');[].forEach.call(rc.children,function(e){if(!saar&&e.tagName==='DIV'&&nz(e.textContent).indexOf('आज का सार')===0)saar=e;});
+ var top=jc.parentNode;top.insertBefore(kh,jc);
+ if(saar||cb){var w=D.createElement('div');w.className='vjcw';if(saar)w.appendChild(saar);if(cb)w.appendChild(cb);top.insertBefore(w,jc);}}
+new MutationObserver(function(){try{var r=D.getElementById('pn_res');if(r){card(r);reord(r);}}catch(e){console.error('v404',e);}}).observe(D.body,{childList:true,subtree:true});
 }catch(e){console.error('v404',e);}})();
 </script>
 </body>
