@@ -201,7 +201,7 @@ input[type=date],input[type=time]{min-height:48px}
 .about b{color:var(--maroon)}.about p{margin:4px 0}
 @media print{.brand .pbtn,.nmtools,.totop,.lang,.about{display:none!important}.brand{background:#fff;color:#000;border-bottom:2px solid #000}.brand b{color:#000}.brand span{color:#000}#nm_body{font-size:13px}}
 </style>
-<meta name="vj-ver" content="398">
+<meta name="vj-ver" content="399">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <script>try{if(window.top!==window.self){document.documentElement.style.display='none';window.top.location=window.self.location;}}catch(e){document.documentElement.style.display='none';}</script>
 
@@ -9787,12 +9787,44 @@ document.addEventListener('visibilitychange',function(){if(!document.hidden)pull
 var D=document,BASE='https://vimalshubham3-tech.github.io/varahiya-kundli/daily/';
 var TYPES=[['panchang','🗓️ दैनिक पंचांग','c'],['saptah_panchang','📅 अगले 7 दिन का पंचांग','c'],['shubh_muhurat','✅ आज का शुभ मुहूर्त','c'],['panchang_status','📱 पंचांग — स्टेटस (लंबा)','c'],['panchang_chhota','🟧 पंचांग — छोटा कार्ड','c'],['choghadiya','⏱️ चौघड़िया','c'],
  ['rashifal_1','🌟 आज का राशिफल (मेष–कन्या)','m'],['rashifal_2','🌟 आज का राशिफल (तुला–मीन)','m'],['jain_tithi','🪔 जैन तिथि व कल्याणक','m'],['aaj_ki_aadat','💡 आज की आदत व सीख','m'],['vrat_calendar','🪔 आगामी कल्याणक व पर्व','m'],['jain_sutra','📿 आज का जैन सूत्र','m']];
-function city(){var c='gwalior';try{c=localStorage.getItem('vj_dp_city')||'gwalior';}catch(e){}return c==='sumaoli'?'sumaoli':'gwalior';}
+function LS(k){try{return localStorage.getItem(k);}catch(e){return null;}}
+function gwIdx(n){for(var i=0;i<CITIES.length;i++)if(CITIES[i][0]===n)return i;return 0;}
+function pref(){var p=LS('vj_dp_city')||'auto';if(p==='gwalior')return String(gwIdx('ग्वालियर'));if(p==='sumaoli')return String(gwIdx('सुमावली'));return p;}
+function nearest(la,lo){var b=0,bd=1e9;CITIES.forEach(function(c,i){var dy=c[2]-la,dx=(c[3]-lo)*Math.cos(la*Math.PI/180),d=dy*dy+dx*dx;if(d<bd){bd=d;b=i;}});return b;}
+function cidx(){var p=pref();if(p!=='auto'&&CITIES[+p])return +p;var l=LS('vj_dp_loc');if(l){try{var o=JSON.parse(l);return nearest(o[0],o[1]);}catch(e){}}var c=LS('vj_city');if(c!==null&&CITIES[+c])return +c;return gwIdx('ग्वालियर');}
+function city(){var n=CITIES[cidx()][0];return n==='ग्वालियर'?'gwalior':(n==='सुमावली'?'sumaoli':'');}
+function istDay(){return new Date(Date.now()+19800000).toISOString().slice(0,10);}
+var WDH=['सोमवार','मंगलवार','बुधवार','गुरुवार','शुक्रवार','शनिवार','रविवार'],MONH=['जनवरी','फ़रवरी','मार्च','अप्रैल','मई','जून','जुलाई','अगस्त','सितम्बर','अक्टूबर','नवम्बर','दिसम्बर'],FMAP={panchang:'main',panchang_status:'status',panchang_chhota:'short',choghadiya:'chg'};
+function dh(dt){var d=new Date(dt+'T00:00:00Z');return d.getUTCDate()+' '+MONH[d.getUTCMonth()]+' '+d.getUTCFullYear()+' · '+WDH[(d.getUTCDay()+6)%7];}
+var FFAM='"Noto Sans Devanagari","Mangal","Nirmala UI",sans-serif';
+function rr(c,x,y,w,h,r,f,bd){c.beginPath();c.moveTo(x+r,y);c.arcTo(x+w,y,x+w,y+h,r);c.arcTo(x+w,y+h,x,y+h,r);c.arcTo(x,y+h,x,y,r);c.arcTo(x,y,x+w,y,r);c.closePath();if(f){c.fillStyle=f;c.fill();}if(bd){c.strokeStyle=bd;c.lineWidth=3;c.stroke();}}
+function tx(c,s,x,y,sz,col,al,wt){c.font=(wt||700)+' '+sz+'px '+FFAM;c.fillStyle=col;c.textAlign=al||'left';c.textBaseline='middle';c.fillText(s,x,y);}
+function frame(title,sub,draw,cb){var cv=D.createElement('canvas');cv.width=1080;cv.height=1350;var c=cv.getContext('2d');c.fillStyle='#5d0d1c';c.fillRect(0,0,1080,1350);rr(c,16,16,1048,1318,28,'#fffaf0','#d4a84b');
+ rr(c,19,19,1042,170,26,'#f9e2a8');tx(c,'॥ श्री जिनाय नमः ॥',540,52,26,'#7a1a2c','center',600);tx(c,title,540,104,50,'#7a1a2c','center',700);tx(c,sub,540,160,28,'#a0651b','center',600);
+ draw(c);rr(c,19,1224,1042,107,26,'#5d0d1c');tx(c,'वरहिया हेल्प डेस्क · हर पल आपके साथ',540,1262,28,'#fff','center',600);tx(c,'वरहिया जैन पंचांग एवं ज्योतिष वास्तु दर्शन · tinyurl.com/varahiya-jyotish-darshan',540,1302,20,'#ffd978','center',500);cb(cv);}
+function wt(ms){return new Promise(function(r){setTimeout(r,ms);});}
+function pnRun(idx,date){var s=D.getElementById('pn_place'),dt=D.getElementById('pn_date'),g=D.getElementById('pn_go');if(!s||!dt||!g||!window.vjPoster)return Promise.reject(0);s.value=String(idx);if(date)dt.value=date;g.click();return wt(600);}
+function cvBlob(cv){return new Promise(function(r){cv.toBlob(r,'image/png');});}
+function mkDyn(t,idx){var s=D.getElementById('pn_place'),dt=D.getElementById('pn_date');if(!s||!dt)return Promise.reject(0);var pv=s.value,pd=dt.value,td=istDay(),th=LS('vj_pth');if(window.vjPoster&&window.vjPoster.themes.indexOf(th)<0)th='saffron';var cn=CITIES[idx][0];
+ function done(b){s.value=pv;dt.value=pd;D.getElementById('pn_go').click();return b;}
+ if(FMAP[t[0]])return pnRun(idx,td).then(function(){var d=vjPoster.getData();return new Promise(function(r){vjPoster.render(d,FMAP[t[0]],th,r);});}).then(cvBlob).then(done,function(e){done();throw e;});
+ if(t[0]==='shubh_muhurat')return pnRun(idx,td).then(function(){var d=vjPoster.getData();return new Promise(function(r){frame('आज का शुभ मुहूर्त',cn,function(c){tx(c,dh(td),540,235,38,'#fff','center',700);rr(c,44,205,992,60,18,'#7a1a2c');tx(c,dh(td),540,235,36,'#ffd978','center',700);
+  var y=290;[['✅ शुभ समय (नए काम, खरीदारी, यात्रा)',d.shubh,'#fff3d6','#7a1a2c','#3b0c16'],['⚠️ अशुभ समय (इनमें शुभ कार्य टालें)',d.ashubh,'#7a1a2c','#ffd978','#fff']].forEach(function(b){var n=Math.max(1,b[1].length),h=70+n*62;rr(c,44,y,992,h,22,b[2],b[2]==='#fff3d6'?'#d4a84b':null);tx(c,b[0],72,y+40,34,b[3],'left',700);b[1].forEach(function(it,i){tx(c,it[0],80,y+100+i*62,34,b[4],'left',600);tx(c,it[1],1008,y+100+i*62,34,b[4],'right',700);});y+=h+24;});
+  tx(c,'समय '+cn+' के सूर्योदय के अनुसार',540,y+20,26,'#5a2a35','center',500);},r);});}).then(cvBlob).then(done,function(e){done();throw e;});
+ if(t[0]==='saptah_panchang'){var days=[],p=Promise.resolve();for(var i=0;i<7;i++)(function(i){p=p.then(function(){var dd=new Date(Date.now()+19800000+i*86400000).toISOString().slice(0,10);return pnRun(idx,dd).then(function(){var d=vjPoster.getData();days.push({dt:dd,tithi:d.five[0][1].v,nak:d.five[1][1].v,sr:d.sr});});});})(i);
+  return p.then(function(){return new Promise(function(r){frame('अगले 7 दिन का पंचांग','तिथि व नक्षत्र · '+cn,function(c){days.forEach(function(x,i){var y=210+i*144,dd=new Date(x.dt+'T00:00:00Z');rr(c,44,y,992,128,18,i?'#fff':'#fff0c2','#e3c987');tx(c,String(dd.getUTCDate()),90,y+44,56,'#7a1a2c','center',800);tx(c,MONH[dd.getUTCMonth()]+' '+WDH[(dd.getUTCDay()+6)%7],240,y+44,28,'#a0651b','left',600);tx(c,x.tithi,160,y+94,34,'#3b0c16','left',700);tx(c,'नक्षत्र: '+x.nak+' · सूर्योदय '+x.sr,500,y+44,26,'#5a2a35','left',500);});},r);});}).then(cvBlob).then(done,function(e){done();throw e;});}
+ return Promise.reject(0);}
+var Q=Promise.resolve(),CACHE={};
+function gen(t){var idx=cidx(),k=idx+'|'+istDay()+'|'+t[0];if(CACHE[k])return CACHE[k];var p=Q.then(function(){return mkDyn(t,idx);});Q=p.catch(function(){});CACHE[k]=p;p.catch(function(){delete CACHE[k];});return p;}
+function dyn(t){return t[2]==='c'&&!city();}
+function refresh(o){[].forEach.call(o.querySelectorAll('.dt'),function(d){var t=TYPES[+d.getAttribute('data-i')],im=d.querySelector('img');if(!dyn(t)){im.removeAttribute('data-k');im.src=url(t);return;}var k=cidx()+'|'+istDay();if(im.getAttribute('data-k')===k+t[0])return;im.setAttribute('data-k',k+t[0]);im.removeAttribute('src');gen(t).then(function(b){if(im.getAttribute('data-k')===k+t[0])im.src=URL.createObjectURL(b);}).catch(function(){});});
+ var n=o.querySelector('#vjdp_n');if(n)n.textContent=(pref()==='auto'?'📍 ऑटो: ':'स्थान: ')+CITIES[cidx()][0]+(pref()==='auto'?' (आपके फ़ोन की लोकेशन के सबसे नज़दीकी शहर के अनुसार)':'');}
+function autoLoc(o){if(pref()!=='auto'||!navigator.geolocation)return;navigator.geolocation.getCurrentPosition(function(p){try{localStorage.setItem('vj_dp_loc',JSON.stringify([p.coords.latitude,p.coords.longitude]));}catch(e){}if(D.body.contains(o))refresh(o);},function(){},{timeout:9000,maximumAge:3600000});}
 var TEN=['🗓️ Daily Panchang','📅 Next 7 days Panchang','✅ Today\'s Shubh Muhurta','📱 Panchang — Status','🟧 Panchang — small card','⏱️ Choghadiya','🌟 Today\'s Horoscope (Aries–Virgo)','🌟 Today\'s Horoscope (Libra–Pisces)','🪔 Jain Tithi & Kalyanak','💡 Today\'s Habit & Lesson','🪔 Upcoming Kalyanak & Parv','📿 Today\'s Jain Sutra'],NOEN={panchang_status:1,panchang_chhota:1};
 function EN(){return D.documentElement.lang==='en';}
 function lab(i){return EN()?TEN[i]:TYPES[i][1];}
 function url(t){return BASE+(t[2]==='c'?city():'common')+'/'+(EN()&&!NOEN[t[0]]?'en/':'')+t[0]+'.png?d='+new Date(Date.now()+19800000).toISOString().slice(0,10);}
-function blobOf(t){return fetch(url(t),{cache:'no-store'}).then(function(r){if(!r.ok)throw 0;return r.blob();});}
+function blobOf(t){if(dyn(t))return gen(t);return fetch(url(t),{cache:'no-store'}).then(function(r){if(!r.ok)throw 0;return r.blob();});}
 function save(t){blobOf(t).then(function(b){var a=D.createElement('a');a.href=URL.createObjectURL(b);a.download=t[0]+'.png';D.body.appendChild(a);a.click();setTimeout(function(){URL.revokeObjectURL(a.href);a.remove();},1500);}).catch(function(){alert('इंटरनेट चाहिए — पोस्टर लोड नहीं हो सका।');});}
 function share(ts){Promise.all(ts.map(blobOf)).then(function(bs){var fs=bs.map(function(b,i){return new File([b],ts[i][0]+'.png',{type:'image/png'});});
  if(navigator.canShare&&navigator.canShare({files:fs}))navigator.share({files:fs,title:'वरहिया जैन पंचांग',text:'वरहिया जैन पंचांग एवं ज्योतिष वास्तु दर्शन\nhttps://tinyurl.com/varahiya-jyotish-darshan'}).catch(function(){});
@@ -9800,13 +9832,13 @@ function share(ts){Promise.all(ts.map(blobOf)).then(function(bs){var fs=bs.map(f
 function open(){var old=D.getElementById('vjdp');if(old)old.remove();
  var o=D.createElement('div');o.id='vjdp';
  var E=EN();var h='<div class="dh"><b>'+(E?'🖼️ Today\'s Posters':'🖼️ आज के पोस्टर')+'</b><button type="button" data-x="1">'+(E?'✕ Close':'✕ बंद')+'</button></div>'
-  +'<div class="dc"><span>'+(E?'Place:':'स्थान:')+'</span><select id="vjdp_c"><option value="gwalior">'+(E?'Gwalior':'ग्वालियर')+'</option><option value="sumaoli">'+(E?'Sumaoli':'सुमावली')+'</option></select></div>'
+  +'<div class="dc"><span>'+(E?'Place:':'स्थान:')+'</span><select id="vjdp_c"><option value="auto">'+(E?'📍 My location (Auto)':'📍 मेरा स्थान (ऑटो)')+'</option>'+CITIES.map(function(c,i){return '<option value="'+i+'">'+(E?c[1]:c[0])+'</option>';}).join('')+'</select></div><div class="dn" id="vjdp_n"></div>'
   +'<div class="dn">'+(E?'New ones are made automatically every morning. Tap Share to send straight to WhatsApp. (Internet needed)':'हर सुबह अपने-आप नए बन जाते हैं। शेयर दबाकर सीधे WhatsApp पर भेजें। (इंटरनेट चाहिए)')+'</div>';
- TYPES.forEach(function(t,i){if(E&&NOEN[t[0]])return;h+='<div class="dt" data-i="'+i+'"><h4>'+lab(i)+'</h4><img alt="" src="'+url(t)+'"><div class="bt"><button type="button" data-s="'+i+'">'+(E?'📤 Share':'📤 शेयर')+'</button><button type="button" data-v="'+i+'">'+(E?'💾 Save':'💾 सेव')+'</button></div></div>';});
+ TYPES.forEach(function(t,i){if(E&&NOEN[t[0]])return;h+='<div class="dt" data-i="'+i+'"><h4>'+lab(i)+'</h4><img alt="" src=""><div class="bt"><button type="button" data-s="'+i+'">'+(E?'📤 Share':'📤 शेयर')+'</button><button type="button" data-v="'+i+'">'+(E?'💾 Save':'💾 सेव')+'</button></div></div>';});
  
- o.innerHTML=h;D.body.appendChild(o);D.getElementById('vjdp_c').value=city();
+ o.innerHTML=h;D.body.appendChild(o);D.getElementById('vjdp_c').value=pref();refresh(o);autoLoc(o);
  o.addEventListener('change',function(e){if(e.target.id!=='vjdp_c')return;try{localStorage.setItem('vj_dp_city',e.target.value);}catch(x){}
-  [].forEach.call(o.querySelectorAll('.dt'),function(d){d.querySelector('img').src=url(TYPES[+d.getAttribute('data-i')]);});});
+  refresh(o);});
  o.addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;
   if(b.hasAttribute('data-x'))o.remove();else if(b.hasAttribute('data-s'))share([TYPES[+b.getAttribute('data-s')]]);else if(b.hasAttribute('data-v'))save(TYPES[+b.getAttribute('data-v')]);else if(b.hasAttribute('data-all'))share(TYPES);});}
 function add(){var g=D.querySelector('#vjhome .hg');if(!g||g.querySelector('.vjdpc'))return;
