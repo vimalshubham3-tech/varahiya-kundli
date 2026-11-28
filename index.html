@@ -201,7 +201,7 @@ input[type=date],input[type=time]{min-height:48px}
 .about b{color:var(--maroon)}.about p{margin:4px 0}
 @media print{.brand .pbtn,.nmtools,.totop,.lang,.about{display:none!important}.brand{background:#fff;color:#000;border-bottom:2px solid #000}.brand b{color:#000}.brand span{color:#000}#nm_body{font-size:13px}}
 </style>
-<meta name="vj-ver" content="399">
+<meta name="vj-ver" content="400">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <script>try{if(window.top!==window.self){document.documentElement.style.display='none';window.top.location=window.self.location;}}catch(e){document.documentElement.style.display='none';}</script>
 
@@ -10054,6 +10054,73 @@ function init(){fix();var g=D.querySelector('#vjhome .hg');if(g&&!g.__vj398){g._
 var n=0,t=setInterval(function(){init();if(++n>20)clearInterval(t);},500);
 D.addEventListener('click',function(){setTimeout(init,50);},true);
 }catch(e){console&&console.error&&console.error(e);}})();
+</script>
+<style id="vj400css">
+#pn_res .vjhd{border-radius:16px;overflow:hidden;margin:0 0 12px;background:linear-gradient(135deg,#7a1a2c,#5d0d1c);color:#fff;border:2px solid #d4a84b;box-shadow:0 2px 8px rgba(90,20,30,.25)}
+#pn_res .vjhd .a{display:flex;gap:12px;align-items:center;padding:12px 12px 6px}
+#pn_res .vjhd .mo{font-size:54px;line-height:1}
+#pn_res .vjhd .l{flex:1;min-width:0}
+#pn_res .vjhd .l b{display:block;font-size:21px;color:#ffd978}
+#pn_res .vjhd .l span{display:block;font-size:15px;line-height:1.45}
+#pn_res .vjhd .r{text-align:center;min-width:104px}
+#pn_res .vjhd .r i{display:block;font-style:normal;font-size:44px;font-weight:800;line-height:1.05;color:#ffd978;text-decoration:underline}
+#pn_res .vjhd .r b{display:block;font-size:15px}
+#pn_res .vjhd .r span{display:block;font-size:14px;opacity:.95}
+#pn_res .vjhd .pl{padding:0 14px 6px;font-size:14px;opacity:.95}
+#pn_res .vjhd .yg{background:#00000030;padding:8px 14px;font-size:14px;line-height:1.55}
+#pn_res .vjhd .yg b{color:#ffd978}
+#pn_res .vjtd{margin:0 0 12px;background:#fff8e4;border:1px solid #e0c98a;border-radius:12px;padding:10px 12px;font-size:14px;line-height:1.55;color:#3b0c16}
+#pn_res .vjtd h4{margin:0 0 6px;font-size:15px;color:#7a1a2c}
+#pn_res .vjtd p{margin:2px 0}#pn_res .vjtd p+h4{margin-top:10px}
+</style>
+<script id="vj400js">
+/* v400: दैनिक पंचांग — शीर्ष कार्ड (दिन-संख्या, मास, पक्ष, तिथि, संवत), आडल/विडाल योग, तिथि-स्वामी व श्रेणी */
+(function(){try{var D=document;
+var MON=['चैत्र','वैशाख','ज्येष्ठ','आषाढ़','श्रावण','भाद्रपद','आश्विन','कार्तिक','मार्गशीर्ष','पौष','माघ','फाल्गुन'],
+MONE=['Chaitra','Vaishakha','Jyeshtha','Ashadha','Shravana','Bhadrapada','Ashvina','Kartika','Margashirsha','Pausha','Magha','Phalguna'],
+SAM=['प्रभव','विभव','शुक्ल','प्रमोद','प्रजापति','अंगिरा','श्रीमुख','भाव','युवा','धाता','ईश्वर','बहुधान्य','प्रमाथी','विक्रम','वृष','चित्रभानु','सुभानु','तारण','पार्थिव','व्यय','सर्वजित्','सर्वधारी','विरोधी','विकृति','खर','नन्दन','विजय','जय','मन्मथ','दुर्मुख','हेमलम्बी','विलम्बी','विकारी','शार्वरी','प्लव','शुभकृत्','शोभकृत्','क्रोधी','विश्वावसु','पराभव','प्लवंग','कीलक','सौम्य','साधारण','विरोधकृत्','परिधावी','प्रमादी','आनन्द','राक्षस','नल','पिंगल','कालयुक्त','सिद्धार्थी','रौद्र','दुर्मति','दुन्दुभि','रुधिरोद्गारी','रक्ताक्षी','क्रोधन','अक्षय'],
+WD=['रविवार','सोमवार','मंगलवार','बुधवार','गुरुवार','शुक्रवार','शनिवार'],WDE=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'],
+TN=['प्रतिपदा','द्वितीया','तृतीया','चतुर्थी','पंचमी','षष्ठी','सप्तमी','अष्टमी','नवमी','दशमी','एकादशी','द्वादशी','त्रयोदशी','चतुर्दशी','पूर्णिमा','अमावस्या'],
+LORD=['अग्नि','ब्रह्मा','गौरी (पार्वती)','गणेश','नाग (सर्प)','कार्तिकेय','सूर्य','शिव (रुद्र)','दुर्गा','यम (धर्मराज)','विश्वेदेव','विष्णु','कामदेव','शिव','चन्द्रमा'],
+CAT=['नन्दा','भद्रा','जया','रिक्ता','पूर्णा'],
+AAD=[2,7,9,14,16,21,23,28],VID=[3,6,10,13,17,20,24,27];
+function en(){return D.documentElement.lang==='en';}
+function nz(x){return String(x||'').replace(/\s+/g,' ').trim();}
+function nak28(l){var i=Math.floor(l/(40/3));if(i<20)return i+1;if(i===20)return l<=276+2/3?21:22;if(i===21)return l<280+8/9?22:23;return i+2;}
+function pos(jd){var P=allPlanets(jd);return ((nak28(P[1].lon)-nak28(P[0].lon)+28)%28)+1;}
+function kind(jd){var c=pos(jd);return AAD.indexOf(c)>-1?'A':(VID.indexOf(c)>-1?'V':'');}
+function hm(jd){var m=Math.round((jd-toJD(2000,1,1,0,0,5.5))*1440),t=((m%1440)+1440)%1440;return ('0'+Math.floor(t/60)).slice(-2)+':'+('0'+(t%60)).slice(-2);}
+function segs(j0,j1){var out=[],st=1/288,cur=kind(j0),s=j0,j=j0;
+ while(j<j1){var n=Math.min(j+st,j1),k=kind(n);if(k!==cur){var a=j,b=n;for(var q=0;q<14;q++){var m=(a+b)/2;if(kind(m)===cur)a=m;else b=m;}if(cur)out.push([cur,s,b]);cur=k;s=b;}j=n;}
+ if(cur)out.push([cur,s,j1]);return out;}
+function build(r){
+ var tb=r.querySelector('.tw>table');if(!tb||r.querySelector('.vjhd'))return;
+ var R={};[].forEach.call(tb.querySelectorAll('tbody>tr'),function(tr){if(tr.cells.length>1)R[nz(tr.cells[0].textContent)]=tr.cells[1];});
+ function row(k){for(var x in R)if(x.indexOf(k)===0)return R[x];return null;}
+ var dv=(D.getElementById('pn_date')||{}).value,p=(dv||'').split('-');if(p.length<3)return;var y=+p[0],mo=+p[1],dd=+p[2];
+ var sr=nz((row('सूर्योदय / सूर्यास्त')||{}).textContent).split('/')[0].trim().match(/(\d\d):(\d\d)/);if(!sr)return;
+ var j0=toJD(y,mo,dd,+sr[1],+sr[2],5.5),pc=panchangAt(j0),t=pc.t,lm=lunarMonthOf(j0),E=en();
+ var kr=t>15,pm=kr?(lm.m+1)%12:lm.m,dn=kr?t-15:t+15;if(t===30)dn=15;if(t===15)dn=30;
+ var vs=y+((lm.m>=9&&mo<=3)?56:57),sn=SAM[((vs-2031)%60+60)%60];
+ var ph=['🌑','🌒','🌓','🌔','🌕','🌖','🌗','🌘'][Math.round((t%30)/30*8)%8];
+ var pk=kr?(E?'Krishna':'कृष्ण'):(E?'Shukla':'शुक्ल'),tn=TN[t===30?15:(t===15?14:(t-1)%15)];
+ var city=nz((r.querySelector('.res-card')||{}).textContent).split(' — ')[0];
+ var wd=new Date(Date.UTC(y,mo-1,dd)).getUTCDay();
+ var sg=segs(j0,j0+1),yg='';
+ if(sg.length)yg=sg.map(function(s){return '<div><b>'+(s[0]==='A'?(E?'Aadal Yoga':'आडल योग'):(E?'Vidaal Yoga':'विडाल योग'))+'</b> — '+hm(s[1])+' '+(E?'to':'से')+' '+hm(s[2])+(s[2]>j0+0.99?'':'')+'</div>';}).join('');
+ var h=D.createElement('div');h.className='vjhd';
+ h.innerHTML='<div class="a"><div class="mo">'+ph+'</div><div class="l"><b>'+('0'+dn).slice(-2)+', '+(lm.adhik?(E?'Adhik ':'अधिक '):'')+(E?MONE[pm]:MON[pm])+'</b><span>'+pk+(E?' Paksha, ':' पक्ष, ')+tn+'</span><span>'+vs+' '+(E?'':sn+', ')+(E?'Vikram Samvat':'विक्रम संवत्')+'</span></div><div class="r"><i>'+dd+'</i><b>'+(E?['','January','February','March','April','May','June','July','August','September','October','November','December'][mo]:MON_G[mo])+' '+y+'</b><span>'+(E?WDE[wd]:WD[wd])+'</span></div></div>'
+  +(city?'<div class="pl">📍 '+city+(E?' · month shown in Purnimanta style':' · मास पूर्णिमान्त पद्धति')+'</div>':'')+(yg?'<div class="yg">'+yg+'</div>':'');
+ var tr=row('तिथि (');var tx=nz(tr&&tr.textContent),names=[],re=/(?:^|तक)\s*([^—\d]+?)\s*—/g,m;while((m=re.exec(tx)))names.push(nz(m[1]));
+ var det='';names.forEach(function(nm){var k=-1;for(var i=0;i<16;i++)if(nm.indexOf(TN[i])>-1)k=i;if(k<0)return;var n15=k===15?15:k+1;
+  det+='<h4>'+nm+'</h4><p>'+(E?'Lord: ':'स्वामी: ')+(k===15?'पितृ':LORD[k])+'</p><p>'+(E?'Class: ':'श्रेणी: ')+(k===15?'पूर्णा':CAT[(n15-1)%5])+(E?' tithi':' तिथि')+'</p>';});
+ r.insertBefore(h,r.firstChild);
+ if(det){var d=D.createElement('div');d.className='vjtd';d.innerHTML=det;h.insertAdjacentElement('afterend',d);}
+}
+var MON_G=['','जनवरी','फ़रवरी','मार्च','अप्रैल','मई','जून','जुलाई','अगस्त','सितम्बर','अक्टूबर','नवम्बर','दिसम्बर'];
+function go(){try{var r=D.getElementById('pn_res');if(r)build(r);}catch(e){console.error('v400',e);}}
+new MutationObserver(function(){go();}).observe(D.body,{childList:true,subtree:true});go();
+}catch(e){console.error('v400',e);}})();
 </script>
 </body>
 </html>
