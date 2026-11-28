@@ -201,7 +201,7 @@ input[type=date],input[type=time]{min-height:48px}
 .about b{color:var(--maroon)}.about p{margin:4px 0}
 @media print{.brand .pbtn,.nmtools,.totop,.lang,.about{display:none!important}.brand{background:#fff;color:#000;border-bottom:2px solid #000}.brand b{color:#000}.brand span{color:#000}#nm_body{font-size:13px}}
 </style>
-<meta name="vj-ver" content="375">
+<meta name="vj-ver" content="376">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <script>try{if(window.top!==window.self){document.documentElement.style.display='none';window.top.location=window.self.location;}}catch(e){document.documentElement.style.display='none';}</script>
 
@@ -9775,7 +9775,7 @@ document.addEventListener('visibilitychange',function(){if(!document.hidden)pull
 #vjdp .dn{padding:0 12px 6px;font-size:13px;color:#6b4a1d}
 #vjdp .dt{margin:10px 12px;background:#fff;border:1px solid #e0c98a;border-radius:12px;padding:8px}
 #vjdp .dt h4{margin:2px 4px 8px;font-size:15px;color:#7a1a2c}
-#vjdp .dt img{width:100%;border-radius:8px;display:block;background:#f2e6c4;min-height:120px}
+#vjdp .dt img{width:100%;height:auto;border-radius:8px;display:block;background:#f2e6c4;min-height:120px}
 #vjdp .dt .bt{display:flex;gap:8px;margin-top:8px}#vjdp .dt .bt button{flex:1;padding:10px;border:0;border-radius:9px;font:inherit;font-weight:600;background:#25a244;color:#fff}
 #vjdp .dt .bt button+button{background:#7a3b10}
 #vjdp .da{margin:10px 12px 24px;padding:13px;width:calc(100% - 24px);border:0;border-radius:10px;background:#8e1c1c;color:#fff;font:inherit;font-weight:700}
@@ -9797,7 +9797,7 @@ function open(){var old=D.getElementById('vjdp');if(old)old.remove();
  var h='<div class="dh"><b>🖼️ आज के पोस्टर</b><button type="button" data-x="1">✕ बंद</button></div>'
   +'<div class="dc"><span>स्थान:</span><select id="vjdp_c"><option value="gwalior">ग्वालियर</option><option value="sumaoli">सुमावली</option></select></div>'
   +'<div class="dn">हर सुबह अपने-आप नए बन जाते हैं। शेयर दबाकर सीधे WhatsApp पर भेजें। (इंटरनेट चाहिए)</div>';
- TYPES.forEach(function(t,i){h+='<div class="dt" data-i="'+i+'"><h4>'+t[1]+'</h4><img alt="" loading="lazy" src="'+url(t)+'"><div class="bt"><button type="button" data-s="'+i+'">📤 शेयर</button><button type="button" data-v="'+i+'">💾 सेव</button></div></div>';});
+ TYPES.forEach(function(t,i){h+='<div class="dt" data-i="'+i+'"><h4>'+t[1]+'</h4><img alt="" src="'+url(t)+'"><div class="bt"><button type="button" data-s="'+i+'">📤 शेयर</button><button type="button" data-v="'+i+'">💾 सेव</button></div></div>';});
  h+='<button type="button" class="da" data-all="1">📤 सारे पोस्टर एक साथ भेजें</button>';
  o.innerHTML=h;D.body.appendChild(o);D.getElementById('vjdp_c').value=city();
  o.addEventListener('change',function(e){if(e.target.id!=='vjdp_c')return;try{localStorage.setItem('vj_dp_city',e.target.value);}catch(x){}
