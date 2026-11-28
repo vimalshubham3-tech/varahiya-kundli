@@ -201,7 +201,7 @@ input[type=date],input[type=time]{min-height:48px}
 .about b{color:var(--maroon)}.about p{margin:4px 0}
 @media print{.brand .pbtn,.nmtools,.totop,.lang,.about{display:none!important}.brand{background:#fff;color:#000;border-bottom:2px solid #000}.brand b{color:#000}.brand span{color:#000}#nm_body{font-size:13px}}
 </style>
-<meta name="vj-ver" content="397">
+<meta name="vj-ver" content="398">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <script>try{if(window.top!==window.self){document.documentElement.style.display='none';window.top.location=window.self.location;}}catch(e){document.documentElement.style.display='none';}</script>
 
@@ -10009,6 +10009,19 @@ function all(){try{add();}catch(e){}}
 try{new MutationObserver(all).observe(D.body,{childList:true,subtree:true});new MutationObserver(all).observe(D.documentElement,{attributes:true,attributeFilter:['lang']});}catch(e){}
 all();setTimeout(all,500);setTimeout(all,1500);
 })();
+</script>
+<script id="vj398js">
+/* v398: मेनू-कार्ड क्रम — तिथि दर्पण, दैनिक, मासिक, वार्षिक, मुहूर्त, पोस्टर... */
+(function(){try{var D=document,ORD=[['जैन तिथि दर्पण','Jain Tithi Darpan'],['दैनिक पंचांग','Daily Panchang'],['मासिक पंचांग','Monthly Panchang'],['वार्षिक पंचांग','Annual Panchang'],['दैनिक मुहूर्त','Daily Muhurta'],'.vjdpc','.vjposc','.vjvkc','.vjtac','.vjpjc'],busy=false;
+function nm(c){var sp=c.querySelector('.t span');return sp?sp.textContent.trim():'';}
+function fix(){if(busy)return;var g=D.querySelector('#vjhome .hg');if(!g)return;var ch=[].slice.call(g.children),first=[];
+ ORD.forEach(function(o){var f=ch.filter(function(c){return typeof o==='string'?c.matches(o):(nm(c)===o[0]||nm(c)===o[1]);})[0];if(f&&first.indexOf(f)<0)first.push(f);});
+ var want=first.concat(ch.filter(function(c){return first.indexOf(c)<0;})),same=want.every(function(c,i){return c===ch[i];});
+ if(same)return;busy=true;want.forEach(function(c){g.appendChild(c);});if(g.__mo)g.__mo.takeRecords();busy=false;}
+function init(){fix();var g=D.querySelector('#vjhome .hg');if(g&&!g.__vj398){g.__vj398=1;g.__mo=new MutationObserver(fix);g.__mo.observe(g,{childList:true});}}
+var n=0,t=setInterval(function(){init();if(++n>20)clearInterval(t);},500);
+D.addEventListener('click',function(){setTimeout(init,50);},true);
+}catch(e){console&&console.error&&console.error(e);}})();
 </script>
 </body>
 </html>
