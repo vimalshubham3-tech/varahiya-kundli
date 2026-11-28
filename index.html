@@ -201,7 +201,7 @@ input[type=date],input[type=time]{min-height:48px}
 .about b{color:var(--maroon)}.about p{margin:4px 0}
 @media print{.brand .pbtn,.nmtools,.totop,.lang,.about{display:none!important}.brand{background:#fff;color:#000;border-bottom:2px solid #000}.brand b{color:#000}.brand span{color:#000}#nm_body{font-size:13px}}
 </style>
-<meta name="vj-ver" content="409">
+<meta name="vj-ver" content="410">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <script>try{if(window.top!==window.self){document.documentElement.style.display='none';window.top.location=window.self.location;}}catch(e){document.documentElement.style.display='none';}</script>
 
@@ -10236,6 +10236,7 @@ function card(r){var h=r.querySelector('.vjhd');if(!h||typeof window.vjTdBuild!=
 function reord(r){var jc=r.querySelector('.vjtdc'),rc=r.querySelector('.res-card'),kh=rc&&rc.querySelector('h2.kh');if(!jc||!kh)return;
  var saar=null,cb=rc.querySelector('.vjcb');[].forEach.call(rc.children,function(e){if(!saar&&e.tagName==='DIV'&&nz(e.textContent).indexOf('आज का सार')===0)saar=e;});
  var top=jc.parentNode;top.insertBefore(kh,jc);
+ var gc=rc.querySelector('.vjgc'),tw=rc.querySelector(':scope>.tw');if(gc&&tw&&(gc.compareDocumentPosition(tw)&4)){var km=tw.nextElementSibling;rc.insertBefore(tw,gc);if(km&&km.classList.contains('kmeta'))rc.insertBefore(km,gc);}
  if(saar||cb){var w=D.createElement('div');w.className='vjcw';if(saar)w.appendChild(saar);if(cb)w.appendChild(cb);top.insertBefore(w,jc);}}
 new MutationObserver(function(){try{var r=D.getElementById('pn_res');if(r){card(r);reord(r);}}catch(e){console.error('v404',e);}}).observe(D.body,{childList:true,subtree:true});
 }catch(e){console.error('v404',e);}})();
