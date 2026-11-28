@@ -201,7 +201,7 @@ input[type=date],input[type=time]{min-height:48px}
 .about b{color:var(--maroon)}.about p{margin:4px 0}
 @media print{.brand .pbtn,.nmtools,.totop,.lang,.about{display:none!important}.brand{background:#fff;color:#000;border-bottom:2px solid #000}.brand b{color:#000}.brand span{color:#000}#nm_body{font-size:13px}}
 </style>
-<meta name="vj-ver" content="403">
+<meta name="vj-ver" content="404">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <script>try{if(window.top!==window.self){document.documentElement.style.display='none';window.top.location=window.self.location;}}catch(e){document.documentElement.style.display='none';}</script>
 
@@ -6796,6 +6796,7 @@ function build(y,m,c){
   (parv.length?'<div style="background:#fff7de;border:1px solid #d9c38a;border-radius:10px;padding:8px 10px;margin:6px 0"><b style="color:#6b1c28">इस माह के जैन पर्व</b><br>'+parv.map(esc).join('<br>')+'</div>':'<p class="kmeta">इस माह में कोई प्रमुख जैन पर्व नहीं।</p>')+
   (kal.length?'<div style="background:#e3eefb;border:1px solid #9bb8dd;border-radius:10px;padding:8px 10px;margin:6px 0"><b style="color:#1a4f8a">इस माह के तीर्थंकर पंच कल्याणक</b><br>'+kal.map(esc).join('<br>')+'</div>':'<p class="kmeta">इस माह में कोई तीर्थंकर कल्याणक नहीं।</p>')+extra(y,m)+'<div class="tw"><table><thead><tr><th>तारीख़</th><th>वार</th><th>तिथि (कब से कब तक)</th><th>पंच-पर्व / पर्व / कल्याणक</th></tr></thead><tbody>'+rows+'</tbody></table></div>'+
   '<p class="kmeta">🌿 हरी पंच-पर्व तिथि (द्वितीया, पंचमी, अष्टमी, एकादशी, चतुर्दशी, अमावस्या, पूर्णिमा) — परंपरा में हरी सब्ज़ी/तप का ध्यान। गुलाबी पंक्ति = जैन पर्व, नीली = तीर्थंकर कल्याणक। '+'कल्याणक-तिथियाँ दिगंबर परंपरा (पूर्णिमांत मास, उदया तिथि) के अनुसार हैं। दिन की तिथि छपे जैन कैलेंडर (तीर्थंकर वर्धमान) की रीति से — सूर्योदय के लगभग 96 मिनट (4 घड़ी) बाद की तिथि (वृद्धि तिथि पहले दिन की तरह दोनों दिन); जो तिथि दिन में बदलती या क्षय होती है उसका कल्याणक उसी दिन ("14-15" की तरह) और वृद्धि तिथि का पहले दिन; संप्रदाय अनुसार पर्व-तिथि में अंतर संभव है, अंतिम निर्णय हेतु अपने पंचांग/गुरुजन से मिलान करें।</p></div>';}
+window.vjTdBuild=build;
 function mv(){var a=D.getElementById('nm_all');if(!a||D.getElementById('td_all'))return !!D.getElementById('td_all');
  var anchor=a.nextSibling&&a.nextSibling.className==='vjchg'?a.nextSibling:a;
  var b=D.createElement('button');b.type='button';b.id='td_all';b.className='vjmp-btn';b.innerHTML='🪔 वरहिया जैन तिथि एवं तीर्थंकर पंच कल्याणक दर्पण<small>इस माह की तिथियाँ, पर्व व कल्याणक — देखने/बंद करने के लिए दबाएँ</small>';
@@ -10213,6 +10214,27 @@ function dec(){var r=D.getElementById('pn_res');if(!r)return;ravi(r);gand(r);
  [].forEach.call(r.querySelectorAll('.vjhd .yg>div'),function(d){if(d.getAttribute('data-vjy'))return;var t=nz(d.textContent);var k=t.indexOf('आडल')===0?'aadal':(t.indexOf('विडाल')===0?'vidaal':'');if(!k)return;d.setAttribute('data-vjy','1');d.appendChild(D.createTextNode(' '));d.appendChild(mk(k,'अर्थ'));});}
 new MutationObserver(function(){try{dec();}catch(e){console.error('v401',e);}}).observe(D.body,{childList:true,subtree:true});dec();
 }catch(e){console.error('v401',e);}})();
+</script>
+<style>#pn_res .vjtdc{margin:8px 0;padding:10px 12px;border:1.5px solid #c9a15a;border-radius:12px;background:#fff8e3;font-size:14.5px;line-height:1.55;color:#3b1d0a}#pn_res .vjtdc h4{margin:0 0 4px;font-size:15px;color:#6b1d2a}</style>
+<script>
+/* v404: जैन तिथि दर्पण का "आज की तिथि" विवरण-कार्ड दैनिक पंचांग में */
+(function(){try{
+var D=document;
+function nz(x){return String(x||'').replace(/\s+/g,' ').trim();}
+function card(r){var h=r.querySelector('.vjhd');if(!h||typeof window.vjTdBuild!=='function')return;
+ var dv=(D.getElementById('pn_date')||{}).value,pl=D.getElementById('pn_place'),p=(dv||'').split('-');if(p.length<3||!pl)return;
+ var key=dv+'|'+pl.value;if(h.getAttribute('data-vjtd')===key&&r.querySelector('.vjtdc'))return;
+ var old=r.querySelector('.vjtdc');if(old)old.remove();
+ var c=CITIES[+pl.value];if(!c)return;var y=+p[0],m=+p[1],d=+p[2],html;
+ try{html=window.vjTdBuild(y,m,c);}catch(e){return;}
+ var t=D.createElement('div');t.innerHTML=html;var tb=t.querySelector('.tw tbody'),row=tb&&tb.rows[d-1];if(!row)return;
+ var td=row.cells,c4=td[3],par=c4.querySelector('b'),kal=c4.querySelector('span'),hasG=/🌿/.test(c4.textContent),
+  pp=hasG?nz(c4.textContent).split('🌸')[0].replace(par?nz(par.textContent):'','').replace('🌿','').trim():'';
+ var el=D.createElement('div');el.className='vjtdc';
+ el.innerHTML='<h4>🪔 जैन तिथि दर्पण — '+d+'/'+m+'/'+y+' · '+nz(td[1].textContent)+'</h4>'+td[2].innerHTML+(pp?'<br>🌿 '+pp:'')+(par?'<br>🪔 <b style="color:#8e2b3a">'+nz(par.textContent)+'</b>':'')+(kal?'<br><span style="color:#1a4f8a">'+nz(kal.textContent)+'</span>':'');
+ h.setAttribute('data-vjtd',key);h.parentNode.insertBefore(el,h.nextSibling);}
+new MutationObserver(function(){try{var r=D.getElementById('pn_res');if(r)card(r);}catch(e){console.error('v404',e);}}).observe(D.body,{childList:true,subtree:true});
+}catch(e){console.error('v404',e);}})();
 </script>
 </body>
 </html>
