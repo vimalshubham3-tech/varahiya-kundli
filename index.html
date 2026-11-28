@@ -201,7 +201,7 @@ input[type=date],input[type=time]{min-height:48px}
 .about b{color:var(--maroon)}.about p{margin:4px 0}
 @media print{.brand .pbtn,.nmtools,.totop,.lang,.about{display:none!important}.brand{background:#fff;color:#000;border-bottom:2px solid #000}.brand b{color:#000}.brand span{color:#000}#nm_body{font-size:13px}}
 </style>
-<meta name="vj-ver" content="414">
+<meta name="vj-ver" content="415">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <script>try{if(window.top!==window.self){document.documentElement.style.display='none';window.top.location=window.self.location;}}catch(e){document.documentElement.style.display='none';}</script>
 
@@ -10290,6 +10290,32 @@ new MutationObserver(function(ms){try{var r=D.getElementById('pn_res');if(!r)ret
  ms.forEach(function(m){if(!r.contains(m.target))return;if(m.type==='characterData')cv(m.target);else [].forEach.call(m.addedNodes,function(n){walk(n);});});
 }catch(e){console.error('v414',e);}}).observe(D.body,{childList:true,subtree:true,characterData:true});
 }catch(e){console.error('v414',e);}})();
+</script>
+<script>
+/* v415: दिशा शूल — ⓘ उपाय (यात्रा आवश्यक हो तो क्या करें) */
+(function(){try{
+var D=document,G='#2e7d32',B='#b3261e',M='#b7791f';
+var DS=[['रविवार','पश्चिम','दलिया और घी खाकर (कुछ स्रोत पान भी बताते हैं)'],['सोमवार','पूर्व','दर्पण में अपना मुँह देखकर'],['मंगलवार','उत्तर','गुड़ खाकर'],['बुधवार','उत्तर','तिल या धनिया खाकर'],['गुरुवार','दक्षिण','जीरा या दही खाकर'],['शुक्रवार','पश्चिम','जौ खाकर (कुछ स्रोत सरसों/राई भी बताते हैं)'],['शनिवार','पूर्व','अदरक का टुकड़ा खाकर']];
+function nz(x){return String(x||'').replace(/\s+/g,' ').trim();}
+function wd(){var dv=(D.getElementById('pn_date')||{}).value,p=(dv||'').split('-');if(p.length<3)return -1;return new Date(Date.UTC(+p[0],+p[1]-1,+p[2])).getUTCDay();}
+function btn(){var b=D.createElement('button');b.type='button';b.className='vjyi';b.setAttribute('data-vjds','1');b.textContent='ⓘ उपाय';return b;}
+function dec2(){var r=D.getElementById('pn_res');if(!r)return;
+ [].forEach.call(r.querySelectorAll('.tw>table>tbody>tr'),function(tr){if(tr.cells.length<2||tr.getAttribute('data-vjds'))return;if(nz(tr.cells[0].textContent).indexOf('दिशा शूल')!==0)return;tr.setAttribute('data-vjds','1');tr.cells[1].appendChild(D.createTextNode(' '));tr.cells[1].appendChild(btn());});
+ [].forEach.call(r.querySelectorAll('.vjch .c'),function(c){if(c.getAttribute('data-vjds'))return;var sm=c.querySelector('small');if(!sm||nz(sm.textContent)!=='दिशा शूल')return;c.setAttribute('data-vjds','1');c.appendChild(btn());});}
+function show(){var w=wd();if(w<0)return;var e=DS[w],o=D.getElementById('vjyo');if(o)o.remove();o=D.createElement('div');o.id='vjyo';
+ var P=['<p><span class="tg" style="background:'+B+'">अशुभ दिशा: '+e[1]+'</span></p>',
+ '<p><b>'+e[0]+'</b> को '+e[1]+' दिशा की यात्रा में दिशा शूल माना जाता है।</p>',
+ '<p><b>यात्रा आवश्यक हो तो:</b></p>',
+ '<p>1. घर से निकलने से पहले '+e[2]+' निकलें।</p>',
+ '<p>2. घर से निकलते समय पहले पाँच कदम पीछे की ओर चलें, फिर आगे बढ़ें।</p>',
+ '<p>3. वैकल्पिक उपाय: पहले थोड़ी दूरी किसी और दिशा में जाएँ, वहाँ रुककर प्रार्थना करें और फिर गंतव्य की ओर मुड़ें।</p>',
+ '<p>4. जैन परंपरा के अनुसार णमोकार मंत्र का स्मरण करके यात्रा आरंभ करें।</p>',
+ '<p><b>ध्यान दें:</b> दिशा शूल मुख्यतः नई यात्रा, तीर्थ-यात्रा या शुभ कार्य के लिए देखा जाता है। रोज़ की अनिवार्य आवाजाही पर यह लागू नहीं माना जाता। अलग-अलग पंचांगों में उपाय की वस्तुओं में थोड़ा भेद मिलता है।</p>'].join('');
+ o.innerHTML='<div class="c"><h3><span>दिशा शूल — '+e[0]+'</span><button type="button" data-vjy="x">✕ बंद</button></h3>'+P+'<div class="sn">परंपरा के अनुसार संक्षिप्त जानकारी; यात्रा का अंतिम निर्णय अपने पंडित/गुरु की रीति से करें।</div></div>';
+ o.addEventListener('click',function(ev){if(ev.target===o)o.remove();});D.body.appendChild(o);}
+D.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('[data-vjds]');if(!b||b.tagName!=='BUTTON')return;e.preventDefault();e.stopPropagation();show();},true);
+new MutationObserver(function(){try{dec2();}catch(e){console.error('v415',e);}}).observe(D.body,{childList:true,subtree:true});dec2();
+}catch(e){console.error('v415',e);}})();
 </script>
 </body>
 </html>
